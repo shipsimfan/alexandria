@@ -12,7 +12,7 @@ pub struct Vector4 {
 }
 
 impl Vector4 {
-    pub fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
+    pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
         Vector4 { x, y, z, w }
     }
 
