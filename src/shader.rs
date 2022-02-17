@@ -1,5 +1,5 @@
 use crate::Window;
-use std::ffi::CString;
+use std::{ffi::CString, marker::PhantomData, mem::size_of};
 use win32::{DirectXError, ID3DBlob};
 
 pub use win32::DXGIFormat as Format;
@@ -10,10 +10,19 @@ pub struct Shader {
     input_layout: win32::ID3D11InputLayout,
 }
 
+pub struct ShaderCB<T: Sized> {
+    shader: Shader,
+    constant_buffer: win32::ID3D11Buffer,
+    phantom: PhantomData<T>,
+}
+
 pub struct ShaderCreationError {
     error: DirectXError,
     blob: Option<ID3DBlob>,
 }
+
+#[derive(Debug)]
+pub struct SetConstantBufferError(DirectXError);
 
 impl Shader {
     pub fn new<S: AsRef<str>>(
@@ -99,6 +108,67 @@ impl Shader {
     }
 }
 
+impl<T: Sized> ShaderCB<T> {
+    pub fn new<S: AsRef<str>>(
+        code: S,
+        vertex_layout: &[(&str, Format)],
+        initial_data: Option<T>,
+        window: &mut Window,
+    ) -> Result<Self, ShaderCreationError> {
+        let buffer_desc = win32::D3D11BufferDesc::new(
+            size_of::<T>() as u32,
+            win32::D3D11Usage::Dynamic,
+            &[win32::D3D11BindFlag::ConstantBuffer],
+            &[win32::D3D11CPUAccessFlag::Write],
+            &[],
+            0,
+        );
+
+        let initial_data = match initial_data {
+            Some(initial_data) => {
+                let arr = [initial_data];
+                Some(win32::D3D11SubresourceData::new(&arr, 0, 0))
+            }
+            None => None,
+        };
+
+        let buffer = window
+            .device()
+            .create_buffer(&buffer_desc, initial_data.as_ref())?;
+
+        Ok(ShaderCB {
+            shader: Shader::new(code, vertex_layout, window)?,
+            constant_buffer: buffer,
+            phantom: PhantomData,
+        })
+    }
+
+    pub fn set_constant_buffer(
+        &mut self,
+        new_data: T,
+        window: &mut Window,
+    ) -> Result<(), SetConstantBufferError> {
+        let mut mapped_resource = window.device_context().map(
+            &mut self.constant_buffer,
+            0,
+            win32::D3D11Map::WriteDiscard,
+            &[],
+        )?;
+
+        let data = mapped_resource.as_ref::<T>();
+        *data = new_data;
+
+        Ok(())
+    }
+
+    pub fn set_active_shader(&mut self, window: &mut Window) {
+        self.shader.set_active_shader(window);
+        window
+            .device_context()
+            .vs_set_constant_buffers(0, &mut [&mut self.constant_buffer]);
+    }
+}
+
 impl std::error::Error for ShaderCreationError {}
 
 impl std::fmt::Display for ShaderCreationError {
@@ -123,5 +193,18 @@ impl std::fmt::Debug for ShaderCreationError {
 impl From<win32::DirectXError> for ShaderCreationError {
     fn from(error: win32::DirectXError) -> Self {
         ShaderCreationError { error, blob: None }
+    }
+}
+
+impl std::error::Error for SetConstantBufferError {}
+
+impl std::fmt::Display for SetConstantBufferError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+impl From<win32::DirectXError> for SetConstantBufferError {
+    fn from(error: win32::DirectXError) -> Self {
+        SetConstantBufferError(error)
     }
 }

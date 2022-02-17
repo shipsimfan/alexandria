@@ -30,7 +30,7 @@ impl<V> Mesh<V> {
 
         let vertex_data = win32::D3D11SubresourceData::new(vertices, 0, 0);
 
-        let vertex_buffer = device.create_buffer(&vertex_buffer_desc, &vertex_data)?;
+        let vertex_buffer = device.create_buffer(&vertex_buffer_desc, Some(&vertex_data))?;
 
         let index_buffer_desc = win32::D3D11BufferDesc::new(
             (std::mem::size_of::<u32>() * indices.len()) as u32,
@@ -43,7 +43,7 @@ impl<V> Mesh<V> {
 
         let index_data = win32::D3D11SubresourceData::new(indices, 0, 0);
 
-        let index_buffer = device.create_buffer(&index_buffer_desc, &index_data)?;
+        let index_buffer = device.create_buffer(&index_buffer_desc, Some(&index_data))?;
 
         Ok(Mesh {
             vertex_buffer,

@@ -24,6 +24,14 @@ impl Vector2 {
         self.magnitude_squared().sqrt()
     }
 
+    pub fn normal(self) -> Vector2 {
+        self / self.magnitude()
+    }
+
+    pub fn normalize(&mut self) {
+        *self = self.normal()
+    }
+
     pub fn x(&self) -> f32 {
         self.x
     }
@@ -126,5 +134,11 @@ impl Div<f32> for Vector2 {
 impl DivAssign<f32> for Vector2 {
     fn div_assign(&mut self, rhs: f32) {
         *self = *self / rhs;
+    }
+}
+
+impl std::fmt::Display for Vector2 {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
     }
 }
