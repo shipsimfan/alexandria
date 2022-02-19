@@ -77,7 +77,8 @@ fn test() {
 
     let mut mesh = graphics::Mesh::new(&VERTICES, &INDICES, &mut window).unwrap();
 
-    let mut rotation = 0.0;
+    let mut y_rotation = 0.0;
+    let mut x_rotation = 0.0;
     while window.poll_message() {
         window.begin_render([0.0, 0.0, 0.0, 1.0]);
 
@@ -89,11 +90,41 @@ fn test() {
 
         window.end_render().unwrap();
 
-        rotation += 0.01;
-        if rotation >= 2.0 * PI {
-            rotation -= 2.0 * PI;
+        if window.get_key(b'D') || window.get_key(win32::VK_RIGHT) {
+            y_rotation += 0.01;
         }
 
-        matrix_buffer.world = (translation * graphics::Matrix::rotation_y(rotation)).into();
+        if window.get_key(b'A') || window.get_key(win32::VK_LEFT) {
+            y_rotation -= 0.01;
+        }
+
+        if window.get_key(b'W') || window.get_key(win32::VK_UP) {
+            x_rotation -= 0.01;
+        }
+
+        if window.get_key(b'S') || window.get_key(win32::VK_DOWN) {
+            x_rotation += 0.01;
+        }
+
+        if y_rotation <= -2.0 * PI {
+            y_rotation += 2.0 * PI;
+        }
+
+        if y_rotation >= 2.0 * PI {
+            y_rotation -= 2.0 * PI;
+        }
+
+        if x_rotation <= -2.0 * PI {
+            x_rotation += 2.0 * PI;
+        }
+
+        if x_rotation >= 2.0 * PI {
+            x_rotation -= 2.0 * PI;
+        }
+
+        matrix_buffer.world = (translation
+            * graphics::Matrix::rotation_y(y_rotation)
+            * graphics::Matrix::rotation_x(x_rotation))
+        .into();
     }
 }

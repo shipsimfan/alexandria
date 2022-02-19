@@ -1,6 +1,7 @@
 #![allow(mixed_script_confusables)]
 
 mod graphics;
+mod input;
 mod math;
 mod mesh;
 mod shader;

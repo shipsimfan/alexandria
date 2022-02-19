@@ -1,5 +1,6 @@
 use crate::{
     graphics::{Graphics, GraphicsCreationError},
+    input::Input,
     RenderError,
 };
 use std::{ffi::CString, ptr::null};
@@ -7,6 +8,7 @@ use std::{ffi::CString, ptr::null};
 pub struct Window {
     h_wnd: win32::HWnd,
     msg: win32::Msg,
+    input: Input,
     graphics: Option<Graphics>,
 }
 
@@ -39,6 +41,7 @@ impl Window {
         let mut window = Box::new(Window {
             h_wnd: null(),
             msg: win32::Msg::default(),
+            input: Input::new(),
             graphics: None,
         });
 
@@ -87,6 +90,8 @@ impl Window {
     }
 
     pub fn poll_message(&mut self) -> bool {
+        self.input.frame_reset();
+
         while win32::peek_message(&mut self.msg, None, 0, 0, &[win32::Pm::Remove]) {
             if self.msg.message == win32::WM_QUIT {
                 return false;
@@ -115,6 +120,18 @@ impl Window {
         self.graphics.as_mut().unwrap().end_render()
     }
 
+    pub fn get_key(&self, key: u8) -> bool {
+        self.input.get_key(key)
+    }
+
+    pub fn get_key_down(&self, key: u8) -> bool {
+        self.input.get_key_down(key)
+    }
+
+    pub fn get_key_up(&self, key: u8) -> bool {
+        self.input.get_key_up(key)
+    }
+
     fn wnd_proc(
         &mut self,
         h_wnd: win32::HWnd,
@@ -123,17 +140,14 @@ impl Window {
         l_param: win32::LParam,
     ) -> win32::LResult {
         match msg {
-            win32::WM_DESTROY => {
-                win32::post_quit_message(0);
-                0
-            }
-            win32::WM_CLOSE => {
-                win32::destroy_window(h_wnd).unwrap_or(());
-                0
-            }
-
-            _ => win32::def_window_proc(h_wnd, msg, w_param, l_param),
+            win32::WM_DESTROY => win32::post_quit_message(0),
+            win32::WM_CLOSE => win32::destroy_window(h_wnd).unwrap_or(()),
+            win32::WM_KEYDOWN => self.input.key_down(w_param as u8),
+            win32::WM_KEYUP => self.input.key_up(w_param as u8),
+            _ => return win32::def_window_proc(h_wnd, msg, w_param, l_param),
         }
+
+        0
     }
 }
 
