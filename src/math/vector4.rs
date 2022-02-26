@@ -140,6 +140,10 @@ impl Vector4 {
         Vector3::new(self.x, self.y, self.y)
     }
 
+    pub fn xyz(&self) -> Vector3 {
+        Vector3::new(self.x, self.y, self.z)
+    }
+
     pub fn xyw(&self) -> Vector3 {
         Vector3::new(self.x, self.y, self.w)
     }
