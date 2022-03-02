@@ -1,5 +1,5 @@
-use crate::Window;
-use std::marker::PhantomData;
+use crate::{Device, Window};
+use std::{marker::PhantomData, sync::Arc};
 
 pub struct Mesh<V> {
     vertex_buffer: win32::ID3D11Buffer,
@@ -12,13 +12,11 @@ pub struct Mesh<V> {
 pub struct MeshCreationError(win32::DirectXError);
 
 impl<V> Mesh<V> {
-    pub fn new(
+    pub fn new_with_device(
         vertices: &[V],
         indices: &[u32],
-        window: &mut Window,
+        device: &Arc<Device>,
     ) -> Result<Self, MeshCreationError> {
-        let device = window.device();
-
         let vertex_buffer_desc = win32::D3D11BufferDesc::new(
             (std::mem::size_of::<V>() * vertices.len()) as u32,
             win32::D3D11Usage::Default,
@@ -51,6 +49,14 @@ impl<V> Mesh<V> {
             index_count: indices.len() as u32,
             _phantom: PhantomData,
         })
+    }
+
+    pub fn new(
+        vertices: &[V],
+        indices: &[u32],
+        window: &mut Window,
+    ) -> Result<Self, MeshCreationError> {
+        Mesh::new_with_device(vertices, indices, window.device())
     }
 
     pub fn render(&mut self, window: &mut Window) {
