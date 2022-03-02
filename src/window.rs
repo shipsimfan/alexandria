@@ -12,8 +12,8 @@ pub struct Window {
     graphics: Option<Graphics>,
     width: usize,
     height: usize,
-    top: isize,
-    left: isize,
+    mouse_center: (i32, i32),
+    update_mouse_center: bool,
 }
 
 #[derive(Debug)]
@@ -49,8 +49,8 @@ impl Window {
             graphics: None,
             width,
             height,
-            top: 0,
-            left: 0,
+            mouse_center: (0, 0),
+            update_mouse_center: true,
         });
 
         // Register window class
@@ -94,11 +94,7 @@ impl Window {
 
         window.graphics = Some(Graphics::new(window.h_wnd, width as u32, height as u32)?);
 
-        let (top, left, width, height) = win32::get_window_rect(window.h_wnd)?;
-        window.top = top as isize;
-        window.left = left as isize;
-        window.width = width as usize;
-        window.height = height as usize;
+        window.update_mouse_center();
 
         Ok(window)
     }
@@ -136,6 +132,10 @@ impl Window {
 
     pub fn set_mouse_lock(&mut self, state: bool) {
         win32::show_cursor(!state);
+
+        if state {
+            self.reset_mouse_position();
+        }
 
         self.input.set_mouse_lock(state)
     }
@@ -199,14 +199,7 @@ impl Window {
             win32::WM_DESTROY => win32::post_quit_message(0),
             win32::WM_CLOSE => win32::destroy_window(h_wnd).unwrap_or(()),
             win32::WM_WINDOWPOSCHANGED => {
-                let window_pos: *mut win32::WindowPos = l_param as *mut _;
-
-                unsafe {
-                    self.left = (*window_pos).x as isize;
-                    self.top = (*window_pos).y as isize;
-                    self.width = (*window_pos).cx as usize;
-                    self.height = (*window_pos).cy as usize;
-                }
+                self.update_mouse_center = true;
             }
             win32::WM_KEYDOWN => self.input.key_down(w_param as u8),
             win32::WM_KEYUP => self.input.key_up(w_param as u8),
@@ -227,29 +220,37 @@ impl Window {
                     .set_mouse_position(x as isize - width2, y as isize - height2);
 
                 if self.input.is_mouse_locked() {
-                    let (sx, sy) =
-                        win32::client_to_screen(self.h_wnd, width2 as i32, height2 as i32)
-                            .expect("Failed to convert coordinates!");
-
-                    win32::set_cursor_pos(sx, sy).expect("Failed to set coordinates!");
+                    self.reset_mouse_position();
                 }
             }
             win32::WM_SETFOCUS => {
                 if self.input.is_mouse_locked() {
-                    let (sx, sy) = win32::client_to_screen(
-                        self.h_wnd,
-                        self.width as i32 / 2,
-                        self.height as i32 / 2,
-                    )
-                    .expect("Failed to convert coordinates!");
-
-                    win32::set_cursor_pos(sx, sy).expect("Failed to set coordinates!");
+                    self.reset_mouse_position();
                 }
             }
             _ => return win32::def_window_proc(h_wnd, msg, w_param, l_param),
         }
 
         0
+    }
+
+    fn reset_mouse_position(&mut self) {
+        if self.update_mouse_center {
+            self.update_mouse_center()
+        }
+
+        win32::set_cursor_pos(self.mouse_center.0, self.mouse_center.1)
+            .expect("Failed to set mouse position!");
+    }
+
+    fn update_mouse_center(&mut self) {
+        self.mouse_center = win32::client_to_screen(
+            self.h_wnd,
+            (self.width / 2) as i32,
+            (self.height / 2) as i32,
+        )
+        .expect("Failed to convert coordinates!");
+        self.update_mouse_center = false;
     }
 }
 

@@ -48,7 +48,8 @@ impl Input {
     }
 
     pub fn set_mouse_lock(&mut self, state: bool) {
-        self.mouse_lock = state
+        self.mouse_lock = state;
+        self.mouse_position = (0, 0)
     }
 
     pub fn frame_reset(&mut self) {
