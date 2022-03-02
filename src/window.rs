@@ -3,7 +3,7 @@ use crate::{
     input::Input,
     RenderError,
 };
-use std::{ffi::CString, ptr::null};
+use std::{ffi::CString, ptr::null, sync::Arc};
 
 pub struct Window {
     h_wnd: win32::HWnd,
@@ -122,8 +122,8 @@ impl Window {
         self.graphics.as_mut().unwrap().device_context()
     }
 
-    pub fn device(&mut self) -> &mut win32::ID3D11Device {
-        self.graphics.as_mut().unwrap().device()
+    pub fn device(&self) -> &Arc<win32::ID3D11Device> {
+        self.graphics.as_ref().unwrap().device()
     }
 
     pub fn begin_render(&mut self, clear_color: [f32; 4]) {

@@ -1,4 +1,4 @@
-use std::ptr::null;
+use std::{ptr::null, sync::Arc};
 
 #[derive(Debug)]
 pub enum GraphicsCreationErrorClass {
@@ -18,7 +18,7 @@ pub enum GraphicsCreationErrorClass {
 #[allow(dead_code)]
 pub struct Graphics {
     swap_chain: win32::IDXGISwapChain,
-    device: win32::ID3D11Device,
+    device: Arc<win32::ID3D11Device>,
     device_context: win32::ID3D11DeviceContext,
     render_target_view: win32::ID3D11RenderTargetView,
     depth_stencil_buffer: win32::ID3D11Texture2D,
@@ -125,7 +125,7 @@ impl Graphics {
             &[],
         );
 
-        let (mut swap_chain, mut device, mut device_context) =
+        let (mut swap_chain, device, mut device_context) =
             match win32::d3d11_create_device_and_swap_chain(
                 None,
                 win32::D3DDriverType::Hardware,
@@ -267,7 +267,7 @@ impl Graphics {
 
         Ok(Graphics {
             swap_chain,
-            device,
+            device: Arc::new(device),
             device_context,
             render_target_view,
             depth_stencil_buffer,
@@ -306,8 +306,8 @@ impl Graphics {
         Ok(())
     }
 
-    pub fn device(&mut self) -> &mut win32::ID3D11Device {
-        &mut self.device
+    pub fn device(&self) -> &Arc<win32::ID3D11Device> {
+        &self.device
     }
 
     pub fn device_context(&mut self) -> &mut win32::ID3D11DeviceContext {
