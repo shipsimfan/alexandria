@@ -234,6 +234,18 @@ impl Window {
                     win32::set_cursor_pos(sx, sy).expect("Failed to set coordinates!");
                 }
             }
+            win32::WM_SETFOCUS => {
+                if self.input.is_mouse_locked() {
+                    let (sx, sy) = win32::client_to_screen(
+                        self.h_wnd,
+                        self.width as i32 / 2,
+                        self.height as i32 / 2,
+                    )
+                    .expect("Failed to convert coordinates!");
+
+                    win32::set_cursor_pos(sx, sy).expect("Failed to set coordinates!");
+                }
+            }
             _ => return win32::def_window_proc(h_wnd, msg, w_param, l_param),
         }
 
