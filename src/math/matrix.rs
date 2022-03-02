@@ -57,7 +57,28 @@ impl Matrix {
     }
 
     pub fn rotation(x: f32, y: f32, z: f32) -> Matrix {
-        Self::rotation_z(z) * Self::rotation_x(x) * Self::rotation_y(y)
+        let mut matrix = Matrix::identity();
+
+        let cos_a = z.cos();
+        let sin_a = z.sin();
+        let cos_b = y.cos();
+        let sin_b = y.sin();
+        let cos_g = x.cos();
+        let sin_g = x.sin();
+
+        matrix.set(0, 0, cos_a * cos_b);
+        matrix.set(0, 1, sin_a * cos_b);
+        matrix.set(0, 2, -sin_b);
+
+        matrix.set(1, 0, cos_a * sin_b * sin_g - sin_a * cos_g);
+        matrix.set(1, 1, sin_a * sin_b * sin_g + cos_a * cos_g);
+        matrix.set(1, 2, cos_b * sin_g);
+
+        matrix.set(2, 0, cos_a * sin_b * cos_g + sin_a * sin_g);
+        matrix.set(2, 1, sin_a * sin_b * cos_g - cos_a * sin_g);
+        matrix.set(2, 2, cos_b * cos_g);
+
+        matrix
     }
 
     pub fn rotation_x(θ: f32) -> Matrix {
@@ -182,12 +203,18 @@ impl Mul<Vector4> for Matrix {
                 + self.get(1, 0) * rhs.y()
                 + self.get(2, 0) * rhs.z()
                 + self.get(3, 0) * rhs.w(),
-            self.0[4] * rhs.x() + self.0[5] * rhs.y() + self.0[6] * rhs.z() + self.0[7] * rhs.w(),
-            self.0[8] * rhs.x() + self.0[9] * rhs.y() + self.0[10] * rhs.z() + self.0[11] * rhs.w(),
-            self.0[12] * rhs.x()
-                + self.0[13] * rhs.y()
-                + self.0[14] * rhs.z()
-                + self.0[15] * rhs.w(),
+            self.get(0, 1) * rhs.x()
+                + self.get(1, 1) * rhs.y()
+                + self.get(2, 1) * rhs.z()
+                + self.get(3, 1) * rhs.w(),
+            self.get(0, 2) * rhs.x()
+                + self.get(1, 2) * rhs.y()
+                + self.get(2, 2) * rhs.z()
+                + self.get(2, 3) * rhs.w(),
+            self.get(0, 3) * rhs.x()
+                + self.get(1, 3) * rhs.y()
+                + self.get(2, 3) * rhs.z()
+                + self.get(3, 3) * rhs.w(),
         )
     }
 }
