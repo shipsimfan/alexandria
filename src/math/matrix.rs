@@ -1,5 +1,5 @@
 use crate::{Vector3, Vector4};
-use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Index, IndexMut, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Clone, Copy)]
 pub struct Matrix([f32; 4 * 4]);
@@ -258,6 +258,20 @@ impl From<[f32; 4 * 4]> for Matrix {
 impl Into<[f32; 4 * 4]> for Matrix {
     fn into(self) -> [f32; 4 * 4] {
         self.0
+    }
+}
+
+impl Index<(usize, usize)> for Matrix {
+    type Output = f32;
+
+    fn index(&self, index: (usize, usize)) -> &Self::Output {
+        &self.0[index.0 + index.1 * 4]
+    }
+}
+
+impl IndexMut<(usize, usize)> for Matrix {
+    fn index_mut(&mut self, index: (usize, usize)) -> &mut Self::Output {
+        &mut self.0[index.0 + index.1 * 4]
     }
 }
 

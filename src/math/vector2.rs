@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, Sub, SubAssign};
 
 #[repr(C)]
 #[derive(Default, Clone, Copy, Debug, PartialEq)]
@@ -134,6 +134,28 @@ impl Div<f32> for Vector2 {
 impl DivAssign<f32> for Vector2 {
     fn div_assign(&mut self, rhs: f32) {
         *self = *self / rhs;
+    }
+}
+
+impl Index<usize> for Vector2 {
+    type Output = f32;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        match index {
+            0 => &self.x,
+            1 => &self.y,
+            _ => panic!("Index out of bounds for vector 2"),
+        }
+    }
+}
+
+impl IndexMut<usize> for Vector2 {
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        match index {
+            0 => &mut self.x,
+            1 => &mut self.y,
+            _ => panic!("Index out of bounds for vector 2"),
+        }
     }
 }
 
