@@ -2,6 +2,7 @@ use crate::{Vector3, Vector4};
 use std::ops::{Add, AddAssign, Index, IndexMut, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Clone, Copy)]
+#[repr(C)]
 pub struct Matrix([f32; 4 * 4]);
 
 impl Matrix {
