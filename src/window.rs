@@ -39,6 +39,14 @@ extern "C" fn message_router(
     app.wnd_proc(h_wnd, msg, w_param, l_param)
 }
 
+const STYLE: [win32::Ws; 5] = [
+    win32::Ws::Border,
+    win32::Ws::Caption,
+    win32::Ws::MinimizeBox,
+    win32::Ws::SysMenu,
+    win32::Ws::Visible,
+];
+
 impl Window {
     pub fn new(title: &str, width: usize, height: usize) -> Result<Box<Self>, WindowCreationError> {
         // Create window box
@@ -71,21 +79,20 @@ impl Window {
         win32::register_class_ex(&wnd_class)?;
 
         // Create window
+        let mut rect = win32::Rect::default();
+        rect.right = width as i32;
+        rect.bottom = height as i32;
+        win32::adjust_window_rect(&mut rect, &STYLE, false)?;
+
         window.h_wnd = win32::create_window_ex(
             &[],
             &window_name,
             &window_name,
-            &[
-                win32::Ws::Border,
-                win32::Ws::Caption,
-                win32::Ws::MinimizeBox,
-                win32::Ws::SysMenu,
-                win32::Ws::Visible,
-            ],
+            &STYLE,
             None,
             None,
-            width as i32,
-            height as i32,
+            rect.right - rect.left,
+            rect.bottom - rect.top,
             None,
             None,
             None,
