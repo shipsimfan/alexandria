@@ -64,11 +64,11 @@ impl Input {
     }
 
     pub fn get_key_down(&self, key: u8) -> bool {
-        self.key_down.contains(&key)
+        self.key_states[key as usize] && self.key_down.contains(&key)
     }
 
     pub fn get_key_up(&self, key: u8) -> bool {
-        self.key_up.contains(&key)
+        !self.key_states[key as usize] && self.key_up.contains(&key)
     }
 
     pub fn get_mouse_button(&self, button: u8) -> bool {
