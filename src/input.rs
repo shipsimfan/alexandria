@@ -24,12 +24,16 @@ impl Input {
     }
 
     pub fn key_down(&mut self, key: u8) {
-        self.key_down.push(key);
+        if !self.key_states[key as usize] {
+            self.key_down.push(key);
+        }
         self.key_states[key as usize] = true;
     }
 
     pub fn key_up(&mut self, key: u8) {
-        self.key_up.push(key);
+        if self.key_states[key as usize] {
+            self.key_up.push(key);
+        }
         self.key_states[key as usize] = false;
     }
 
@@ -64,11 +68,11 @@ impl Input {
     }
 
     pub fn get_key_down(&self, key: u8) -> bool {
-        self.key_states[key as usize] && self.key_down.contains(&key)
+        self.key_down.contains(&key)
     }
 
     pub fn get_key_up(&self, key: u8) -> bool {
-        !self.key_states[key as usize] && self.key_up.contains(&key)
+        self.key_up.contains(&key)
     }
 
     pub fn get_mouse_button(&self, button: u8) -> bool {
