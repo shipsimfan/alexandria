@@ -125,12 +125,17 @@ impl Graphics {
             &[],
         );
 
+        #[cfg(debug_assertions)]
+        let flags = &[win32::D3D11CreateDeviceFlag::Debug];
+        #[cfg(not(debug_assertions))]
+        let flags = &[];
+
         let (mut swap_chain, device, mut device_context) =
             match win32::d3d11_create_device_and_swap_chain(
                 None,
                 win32::D3DDriverType::Hardware,
                 null(),
-                &[win32::D3D11CreateDeviceFlag::Debug],
+                flags,
                 &[
                     win32::D3DFeatureLevel::Level11_0,
                     win32::D3DFeatureLevel::Level11_1,
