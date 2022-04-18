@@ -27,22 +27,30 @@ impl Input {
     }
 
     pub fn key_down(&mut self, key: u8) {
-        self.key_states_down[key as usize] = true;
+        if !self.key_states[key as usize] {
+            self.key_states_down[key as usize] = true;
+        }
         self.key_states[key as usize] = true;
     }
 
     pub fn key_up(&mut self, key: u8) {
-        self.key_states_up[key as usize] = true;
+        if self.key_states[key as usize] {
+            self.key_states_up[key as usize] = true;
+        }
         self.key_states[key as usize] = false;
     }
 
     pub fn mouse_down(&mut self, button: u8) {
-        self.mouse_states_down[button as usize] = true;
+        if !self.mouse_states[button as usize] {
+            self.mouse_states_down[button as usize] = true;
+        }
         self.mouse_states[button as usize] = true;
     }
 
     pub fn mouse_up(&mut self, button: u8) {
-        self.mouse_states_up[button as usize] = true;
+        if self.mouse_states[button as usize] {
+            self.mouse_states_up[button as usize] = true;
+        }
         self.mouse_states[button as usize] = false;
     }
 
