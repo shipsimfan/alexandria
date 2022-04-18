@@ -72,11 +72,11 @@ impl Input {
     }
 
     pub fn get_key_down(&self, key: u8) -> bool {
-        !self.key_states_down[key as usize] && self.key_states[key as usize]
+        self.key_states_down[key as usize]
     }
 
     pub fn get_key_up(&self, key: u8) -> bool {
-        self.key_states_down[key as usize] && !self.key_states[key as usize]
+        self.key_states_up[key as usize]
     }
 
     pub fn get_mouse_button(&self, button: u8) -> bool {
@@ -84,11 +84,11 @@ impl Input {
     }
 
     pub fn get_mouse_down(&self, button: u8) -> bool {
-        !self.mouse_states_down[button as usize] && self.mouse_states[button as usize]
+        self.mouse_states_down[button as usize]
     }
 
     pub fn get_mouse_up(&self, button: u8) -> bool {
-        self.mouse_states_down[button as usize] && !self.mouse_states[button as usize]
+        self.mouse_states_up[button as usize]
     }
 
     pub fn get_mouse_x(&self) -> isize {
