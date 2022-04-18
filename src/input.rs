@@ -1,8 +1,10 @@
 pub struct Input {
     key_states: [bool; NUM_KEYS],
-    key_states_prev: [bool; NUM_KEYS],
-    mouse_states: [bool; 3],
-    mouse_states_prev: [bool; 3],
+    key_states_down: [bool; NUM_KEYS],
+    key_states_up: [bool; NUM_KEYS],
+    mouse_states: [bool; NUM_BUTTONS],
+    mouse_states_down: [bool; NUM_BUTTONS],
+    mouse_states_up: [bool; NUM_BUTTONS],
     mouse_position: (isize, isize),
     mouse_lock: bool,
 }
@@ -14,27 +16,33 @@ impl Input {
     pub fn new() -> Self {
         Input {
             key_states: [false; NUM_KEYS],
-            key_states_prev: [false; NUM_KEYS],
-            mouse_states: [false; 3],
-            mouse_states_prev: [false; 3],
+            key_states_down: [false; NUM_KEYS],
+            key_states_up: [false; NUM_KEYS],
+            mouse_states: [false; NUM_BUTTONS],
+            mouse_states_down: [false; NUM_BUTTONS],
+            mouse_states_up: [false; NUM_BUTTONS],
             mouse_position: (0, 0),
             mouse_lock: false,
         }
     }
 
     pub fn key_down(&mut self, key: u8) {
+        self.key_states_down[key as usize] = true;
         self.key_states[key as usize] = true;
     }
 
     pub fn key_up(&mut self, key: u8) {
+        self.key_states_up[key as usize] = true;
         self.key_states[key as usize] = false;
     }
 
     pub fn mouse_down(&mut self, button: u8) {
+        self.mouse_states_down[button as usize] = true;
         self.mouse_states[button as usize] = true;
     }
 
     pub fn mouse_up(&mut self, button: u8) {
+        self.mouse_states_up[button as usize] = true;
         self.mouse_states[button as usize] = false;
     }
 
@@ -49,11 +57,13 @@ impl Input {
 
     pub fn frame_reset(&mut self) {
         for i in 0..NUM_KEYS {
-            self.key_states_prev[i] = self.key_states[i];
+            self.key_states_down[i] = false;
+            self.key_states_up[i] = false;
         }
 
         for i in 0..NUM_BUTTONS {
-            self.mouse_states_prev[i] = self.mouse_states[i];
+            self.mouse_states_down[i] = false;
+            self.mouse_states_up[i] = false;
         }
     }
 
@@ -62,11 +72,11 @@ impl Input {
     }
 
     pub fn get_key_down(&self, key: u8) -> bool {
-        !self.key_states_prev[key as usize] && self.key_states[key as usize]
+        !self.key_states_down[key as usize] && self.key_states[key as usize]
     }
 
     pub fn get_key_up(&self, key: u8) -> bool {
-        self.key_states_prev[key as usize] && !self.key_states[key as usize]
+        self.key_states_down[key as usize] && !self.key_states[key as usize]
     }
 
     pub fn get_mouse_button(&self, button: u8) -> bool {
@@ -74,11 +84,11 @@ impl Input {
     }
 
     pub fn get_mouse_down(&self, button: u8) -> bool {
-        !self.mouse_states_prev[button as usize] && self.mouse_states[button as usize]
+        !self.mouse_states_down[button as usize] && self.mouse_states[button as usize]
     }
 
     pub fn get_mouse_up(&self, button: u8) -> bool {
-        self.mouse_states_prev[button as usize] && !self.mouse_states[button as usize]
+        self.mouse_states_down[button as usize] && !self.mouse_states[button as usize]
     }
 
     pub fn get_mouse_x(&self) -> isize {
