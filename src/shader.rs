@@ -166,6 +166,9 @@ impl<T: Sized> ShaderCB<T> {
         window
             .device_context()
             .vs_set_constant_buffers(0, &mut [&mut self.constant_buffer]);
+        window
+            .device_context()
+            .ps_set_constant_buffers(0, &mut [&mut self.constant_buffer]);
     }
 }
 
