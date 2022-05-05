@@ -8,6 +8,11 @@ pub struct Vector2 {
 }
 
 impl Vector2 {
+    pub const ZERO: Vector2 = Vector2::new(0.0, 0.0);
+    pub const ONE: Vector2 = Vector2::new(1.0, 1.0);
+    pub const UP: Vector2 = Vector2::new(0.0, 1.0);
+    pub const RIGHT: Vector2 = Vector2::new(1.0, 0.0);
+
     pub const fn new(x: f32, y: f32) -> Self {
         Vector2 { x, y }
     }
@@ -98,6 +103,14 @@ impl Sub for Vector2 {
 impl SubAssign for Vector2 {
     fn sub_assign(&mut self, rhs: Vector2) {
         *self = *self - rhs;
+    }
+}
+
+impl Mul<Vector2> for f32 {
+    type Output = Vector2;
+
+    fn mul(self, rhs: Vector2) -> Self::Output {
+        rhs * self
     }
 }
 

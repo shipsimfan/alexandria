@@ -12,6 +12,13 @@ pub struct Vector4 {
 }
 
 impl Vector4 {
+    pub const ZERO: Vector4 = Vector4::new(0.0, 0.0, 0.0, 0.0);
+    pub const ONE: Vector4 = Vector4::new(1.0, 1.0, 1.0, 1.0);
+    pub const UP: Vector4 = Vector4::new(0.0, 1.0, 0.0, 0.0);
+    pub const RIGHT: Vector4 = Vector4::new(1.0, 0.0, 0.0, 0.0);
+    pub const FORWARD: Vector4 = Vector4::new(0.0, 0.0, 1.0, 0.0);
+    pub const W_FORWARD: Vector4 = Vector4::new(0.0, 0.0, 0.0, 1.0);
+
     pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
         Vector4 { x, y, z, w }
     }
@@ -460,6 +467,14 @@ impl Sub for Vector4 {
 impl SubAssign for Vector4 {
     fn sub_assign(&mut self, rhs: Vector4) {
         *self = *self - rhs;
+    }
+}
+
+impl Mul<Vector4> for f32 {
+    type Output = Vector4;
+
+    fn mul(self, rhs: Vector4) -> Self::Output {
+        rhs * self
     }
 }
 
