@@ -472,10 +472,15 @@ impl Mul<f32> for Vector4 {
 }
 
 impl Mul for Vector4 {
-    type Output = f32;
+    type Output = Vector4;
 
     fn mul(self, rhs: Vector4) -> Self::Output {
-        self.dot(rhs)
+        Vector4::new(
+            self.x * rhs.x,
+            self.y * rhs.y,
+            self.z * rhs.z,
+            self.w * rhs.w,
+        )
     }
 }
 
