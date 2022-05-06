@@ -11,9 +11,7 @@ pub use crate::graphics::{GraphicsCreationError, RenderError};
 pub use input::*;
 pub use math::*;
 pub use mesh::{Mesh, MeshCreationError};
-pub use shader::{
-    Format, SetConstantBufferError, Shader, ShaderCB, ShaderCB2, ShaderCreationError,
-};
+pub use shader::{ConstantBuffer, Format, SetConstantBufferError, Shader, ShaderCreationError};
 pub use window::{Window, WindowCreationError};
 
 pub use win32::ID3D11Device as Device;
