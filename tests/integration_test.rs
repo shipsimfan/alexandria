@@ -55,7 +55,7 @@ const INDICES: [u32; 36] = [
 
 #[test]
 fn test() {
-    let mut window = graphics::Window::new("Testing", 1920, 1080).unwrap();
+    let mut window: Box<graphics::Window> = graphics::Window::new("Testing", 1920, 1080).unwrap();
 
     let shader_code = std::fs::read_to_string("./default.hlsl").unwrap();
     let translation = graphics::Matrix::translation(0.0, 0.0, 3.0);
@@ -90,19 +90,19 @@ fn test() {
 
         window.end_render().unwrap();
 
-        if window.get_key(b'D') || window.get_key(win32::VK_RIGHT) {
+        if window.input().get_key(b'D') || window.input().get_key(win32::VK_RIGHT) {
             y_rotation += 0.01;
         }
 
-        if window.get_key(b'A') || window.get_key(win32::VK_LEFT) {
+        if window.input().get_key(b'A') || window.input().get_key(win32::VK_LEFT) {
             y_rotation -= 0.01;
         }
 
-        if window.get_key(b'W') || window.get_key(win32::VK_UP) {
+        if window.input().get_key(b'W') || window.input().get_key(win32::VK_UP) {
             x_rotation -= 0.01;
         }
 
-        if window.get_key(b'S') || window.get_key(win32::VK_DOWN) {
+        if window.input().get_key(b'S') || window.input().get_key(win32::VK_DOWN) {
             x_rotation += 0.01;
         }
 

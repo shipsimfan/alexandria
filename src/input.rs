@@ -1,4 +1,17 @@
-pub struct Input {
+pub trait Input {
+    fn new() -> Self;
+
+    fn key_down(&mut self, key: u8);
+    fn key_up(&mut self, key: u8);
+    fn mouse_down(&mut self, key: u8);
+    fn mouse_up(&mut self, key: u8);
+    fn update_mouse_position(&mut self, position: (isize, isize));
+    fn set_mouse_lock(&mut self, state: bool);
+
+    fn is_mouse_locked(&self) -> bool;
+}
+
+pub struct StateTrackingInput {
     key_states: [bool; NUM_KEYS],
     key_states_down: [bool; NUM_KEYS],
     key_states_up: [bool; NUM_KEYS],
@@ -12,9 +25,9 @@ pub struct Input {
 const NUM_KEYS: usize = 256;
 const NUM_BUTTONS: usize = 3;
 
-impl Input {
-    pub fn new() -> Self {
-        Input {
+impl Input for StateTrackingInput {
+    fn new() -> Self {
+        StateTrackingInput {
             key_states: [false; NUM_KEYS],
             key_states_down: [false; NUM_KEYS],
             key_states_up: [false; NUM_KEYS],
@@ -26,43 +39,49 @@ impl Input {
         }
     }
 
-    pub fn key_down(&mut self, key: u8) {
+    fn key_down(&mut self, key: u8) {
         if !self.key_states[key as usize] {
             self.key_states_down[key as usize] = true;
         }
         self.key_states[key as usize] = true;
     }
 
-    pub fn key_up(&mut self, key: u8) {
+    fn key_up(&mut self, key: u8) {
         if self.key_states[key as usize] {
             self.key_states_up[key as usize] = true;
         }
         self.key_states[key as usize] = false;
     }
 
-    pub fn mouse_down(&mut self, button: u8) {
+    fn mouse_down(&mut self, button: u8) {
         if !self.mouse_states[button as usize] {
             self.mouse_states_down[button as usize] = true;
         }
         self.mouse_states[button as usize] = true;
     }
 
-    pub fn mouse_up(&mut self, button: u8) {
+    fn mouse_up(&mut self, button: u8) {
         if self.mouse_states[button as usize] {
             self.mouse_states_up[button as usize] = true;
         }
         self.mouse_states[button as usize] = false;
     }
 
-    pub fn set_mouse_position(&mut self, x: isize, y: isize) {
-        self.mouse_position = (x, y)
+    fn update_mouse_position(&mut self, position: (isize, isize)) {
+        self.mouse_position = position;
     }
 
-    pub fn set_mouse_lock(&mut self, state: bool) {
+    fn set_mouse_lock(&mut self, state: bool) {
         self.mouse_lock = state;
-        self.mouse_position = (0, 0)
+        self.mouse_position = (0, 0);
     }
 
+    fn is_mouse_locked(&self) -> bool {
+        self.mouse_lock
+    }
+}
+
+impl StateTrackingInput {
     pub fn frame_reset(&mut self) {
         for i in 0..NUM_KEYS {
             self.key_states_down[i] = false;
@@ -109,9 +128,5 @@ impl Input {
 
     pub fn get_mouse_position(&self) -> (isize, isize) {
         self.mouse_position
-    }
-
-    pub fn is_mouse_locked(&self) -> bool {
-        self.mouse_lock
     }
 }

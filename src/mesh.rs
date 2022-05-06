@@ -1,4 +1,4 @@
-use crate::{Device, Window};
+use crate::{Device, Input, Window};
 use std::{marker::PhantomData, sync::Arc};
 
 pub struct Mesh<V> {
@@ -51,15 +51,15 @@ impl<V> Mesh<V> {
         })
     }
 
-    pub fn new(
+    pub fn new<I: Input>(
         vertices: &[V],
         indices: &[u32],
-        window: &mut Window,
+        window: &mut Window<I>,
     ) -> Result<Self, MeshCreationError> {
         Mesh::new_with_device(vertices, indices, window.device())
     }
 
-    pub fn render(&mut self, window: &mut Window) {
+    pub fn render<I: Input>(&mut self, window: &mut Window<I>) {
         let dc = window.device_context();
         dc.ia_set_vertex_buffers(
             0,

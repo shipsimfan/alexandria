@@ -1,14 +1,13 @@
 use crate::{
     graphics::{Graphics, GraphicsCreationError},
-    input::Input,
-    RenderError,
+    Input, RenderError, StateTrackingInput,
 };
 use std::{ffi::CString, ptr::null, sync::Arc};
 
-pub struct Window {
+pub struct Window<I: Input = StateTrackingInput> {
     h_wnd: win32::HWnd,
     msg: win32::Msg,
-    input: Input,
+    input: I,
     graphics: Option<Graphics>,
     width: usize,
     height: usize,
@@ -22,13 +21,13 @@ pub enum WindowCreationError {
     GraphicsCreationError(GraphicsCreationError),
 }
 
-extern "C" fn message_router(
+extern "C" fn message_router<I: Input>(
     h_wnd: win32::HWnd,
     msg: win32::UInt,
     w_param: win32::WParam,
     l_param: win32::LParam,
 ) -> win32::LResult {
-    let app: &mut Window = if msg == win32::WM_CREATE {
+    let app: &mut Window<I> = if msg == win32::WM_CREATE {
         let ptr = win32::CreateStructA::from_l_param(l_param).create_params() as *mut _;
         win32::set_window_long_ptr(h_wnd, win32::GWLP_USERDATA, ptr as *const _);
         unsafe { &mut *ptr }
@@ -47,13 +46,13 @@ const STYLE: [win32::Ws; 5] = [
     win32::Ws::Visible,
 ];
 
-impl Window {
+impl<I: Input> Window<I> {
     pub fn new(title: &str, width: usize, height: usize) -> Result<Box<Self>, WindowCreationError> {
         // Create window box
         let mut window = Box::new(Window {
             h_wnd: null(),
             msg: win32::Msg::default(),
-            input: Input::new(),
+            input: I::new(),
             graphics: None,
             width,
             height,
@@ -65,7 +64,7 @@ impl Window {
         let window_name = CString::new(title).unwrap();
         let wnd_class = win32::WndClassEx::new(
             &[win32::Cs::OwnDC, win32::Cs::HRedraw, win32::Cs::VRedraw],
-            message_router,
+            message_router::<I>,
             0,
             0,
             None,
@@ -107,8 +106,6 @@ impl Window {
     }
 
     pub fn poll_message(&mut self) -> bool {
-        self.input.frame_reset();
-
         while win32::peek_message(&mut self.msg, None, 0, 0, &[win32::Pm::Remove]) {
             if self.msg.message == win32::WM_QUIT {
                 return false;
@@ -125,10 +122,6 @@ impl Window {
         self.graphics.as_mut().unwrap().device_context()
     }
 
-    pub fn device(&self) -> &Arc<win32::ID3D11Device> {
-        self.graphics.as_ref().unwrap().device()
-    }
-
     pub fn begin_render(&mut self, clear_color: [f32; 4]) {
         self.graphics.as_mut().unwrap().begin_render(clear_color);
     }
@@ -138,49 +131,22 @@ impl Window {
     }
 
     pub fn set_mouse_lock(&mut self, state: bool) {
-        win32::show_cursor(!state);
+        self.input.set_mouse_lock(state);
 
+        let state = self.input.is_mouse_locked();
+
+        win32::show_cursor(!state);
         if state {
             self.reset_mouse_position();
         }
-
-        self.input.set_mouse_lock(state)
     }
 
-    pub fn get_key(&self, key: u8) -> bool {
-        self.input.get_key(key)
+    pub fn input_mut(&mut self) -> &mut I {
+        &mut self.input
     }
 
-    pub fn get_key_down(&self, key: u8) -> bool {
-        self.input.get_key_down(key)
-    }
-
-    pub fn get_key_up(&self, key: u8) -> bool {
-        self.input.get_key_up(key)
-    }
-
-    pub fn get_mouse_button(&self, button: u8) -> bool {
-        self.input.get_mouse_button(button)
-    }
-
-    pub fn get_mouse_down(&self, button: u8) -> bool {
-        self.input.get_mouse_down(button)
-    }
-
-    pub fn get_mouse_up(&self, button: u8) -> bool {
-        self.input.get_mouse_up(button)
-    }
-
-    pub fn get_mouse_x(&self) -> isize {
-        self.input.get_mouse_x()
-    }
-
-    pub fn get_mouse_y(&self) -> isize {
-        self.input.get_mouse_y()
-    }
-
-    pub fn get_mouse_position(&self) -> (isize, isize) {
-        self.input.get_mouse_position()
+    pub fn input(&self) -> &I {
+        &self.input
     }
 
     pub fn get_width(&self) -> usize {
@@ -191,8 +157,8 @@ impl Window {
         self.height
     }
 
-    pub fn is_mouse_locked(&self) -> bool {
-        self.input.is_mouse_locked()
+    pub fn device(&self) -> &Arc<win32::ID3D11Device> {
+        self.graphics.as_ref().unwrap().device()
     }
 
     fn wnd_proc(
@@ -224,7 +190,7 @@ impl Window {
                 let height2 = self.height as isize / 2;
 
                 self.input
-                    .set_mouse_position(x as isize - width2, y as isize - height2);
+                    .update_mouse_position((x as isize - width2, y as isize - height2));
 
                 if self.input.is_mouse_locked() {
                     self.reset_mouse_position();
