@@ -1,10 +1,16 @@
 use crate::{Device, Input, Window};
 use std::{marker::PhantomData, sync::Arc};
 
+pub enum Topology {
+    Triangle,
+    Line,
+}
+
 pub struct Mesh<V> {
     vertex_buffer: win32::ID3D11Buffer,
     index_buffer: win32::ID3D11Buffer,
     index_count: u32,
+    topology: Topology,
     _phantom: PhantomData<V>,
 }
 
@@ -47,6 +53,7 @@ impl<V> Mesh<V> {
             vertex_buffer,
             index_buffer,
             index_count: indices.len() as u32,
+            topology: Topology::Line,
             _phantom: PhantomData,
         })
     }
@@ -59,8 +66,20 @@ impl<V> Mesh<V> {
         Mesh::new_with_device(vertices, indices, window.device())
     }
 
+    pub fn set_topology(&mut self, topology: Topology) {
+        self.topology = topology;
+    }
+
     pub fn render<I: Input>(&mut self, window: &mut Window<I>) {
         let dc = window.device_context();
+
+        match self.topology {
+            Topology::Triangle => {
+                dc.ia_set_primitive_topology(win32::D3D11PrimitiveTopology::TriangleList)
+            }
+            Topology::Line => dc.ia_set_primitive_topology(win32::D3D11PrimitiveTopology::LineList),
+        }
+
         dc.ia_set_vertex_buffers(
             0,
             &mut [&mut self.vertex_buffer],
@@ -68,6 +87,7 @@ impl<V> Mesh<V> {
             &[0],
         );
         dc.ia_set_index_buffer(&mut self.index_buffer, win32::DXGIFormat::R32Uint, 0);
+
         dc.draw_indexed(self.index_count, 0, 0);
     }
 }
