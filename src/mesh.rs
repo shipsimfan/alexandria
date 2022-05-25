@@ -11,6 +11,7 @@ pub struct Mesh<V> {
 pub struct LineMesh<V> {
     vertex_buffer: win32::ID3D11Buffer,
     vertex_count: u32,
+    strip: bool,
     _phantom: PhantomData<V>,
 }
 
@@ -82,6 +83,7 @@ impl<V> Mesh<V> {
 impl<V> LineMesh<V> {
     pub fn new_with_device(
         vertices: &[V],
+        strip: bool,
         device: &Arc<Device>,
     ) -> Result<Self, MeshCreationError> {
         let vertex_buffer_desc = win32::D3D11BufferDesc::new(
@@ -100,20 +102,26 @@ impl<V> LineMesh<V> {
         Ok(LineMesh {
             vertex_buffer,
             vertex_count: vertices.len() as u32,
+            strip,
             _phantom: PhantomData,
         })
     }
 
     pub fn new<I: Input>(
         vertices: &[V],
+        strip: bool,
         window: &mut Window<I>,
     ) -> Result<Self, MeshCreationError> {
-        LineMesh::new_with_device(vertices, window.device())
+        LineMesh::new_with_device(vertices, strip, window.device())
     }
 
     pub fn render<I: Input>(&mut self, window: &mut Window<I>) {
         let dc = window.device_context();
-        dc.ia_set_primitive_topology(win32::D3D11PrimitiveTopology::LineList);
+        dc.ia_set_primitive_topology(if self.strip {
+            win32::D3D11PrimitiveTopology::LineStrip
+        } else {
+            win32::D3D11PrimitiveTopology::LineList
+        });
         dc.ia_set_vertex_buffers(
             0,
             &mut [&mut self.vertex_buffer],
