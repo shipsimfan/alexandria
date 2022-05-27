@@ -1,6 +1,7 @@
 cbuffer MatrixBuffer {
     matrix worldMatrix;
     matrix projectionMatrix;
+    float4 color;
 }
 
 struct VertexInputType {
@@ -28,5 +29,5 @@ PixelInputType vertex_main(VertexInputType input) {
 }
 
 float4 pixel_main(PixelInputType input) : SV_TARGET {
-    return shader_texture.Sample(sample_type, input.uv);
+    return shader_texture.Sample(sample_type, input.uv) * color;
 }

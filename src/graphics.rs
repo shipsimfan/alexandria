@@ -13,6 +13,7 @@ pub enum GraphicsCreationErrorClass {
     DepthStencilState,
     DepthStencilView,
     Rasterizer,
+    BlendState,
 }
 
 #[allow(dead_code)]
@@ -25,6 +26,7 @@ pub struct Graphics {
     depth_stencil_state: win32::ID3D11DepthStencilState,
     depth_stencil_view: win32::ID3D11DepthStencilView,
     rasterizer_state: win32::ID3D11RasterizerState,
+    blend_state: win32::ID3D11BlendState,
     rendering: bool,
 }
 
@@ -270,6 +272,32 @@ impl Graphics {
         let viewport = win32::D3D11Viewport::new(0.0, 0.0, width as f32, height as f32, 0.0, 1.0);
         device_context.rs_set_viewports(&[&viewport]);
 
+        // Create the blend state
+        let blend_desc = win32::D3D11BlendDesc::new(
+            false,
+            false,
+            &[win32::D3D11RenderTargetBlendDesc::new(
+                true,
+                win32::D3D11Blend::SrcAlpha,
+                win32::D3D11Blend::InvSrcAlpha,
+                win32::D3D11BlendOp::Add,
+                win32::D3D11Blend::One,
+                win32::D3D11Blend::Zero,
+                win32::D3D11BlendOp::Add,
+                win32::D3D11ColorWriteEnable::All,
+            )],
+        );
+
+        let blend_state = match device.create_blend_state(&blend_desc) {
+            Ok(blend_state) => blend_state,
+            Err(error) => {
+                return Err(GraphicsCreationError::new(
+                    GraphicsCreationErrorClass::BlendState,
+                    error,
+                ))
+            }
+        };
+
         Ok(Graphics {
             swap_chain,
             device: Arc::new(device),
@@ -279,6 +307,7 @@ impl Graphics {
             depth_stencil_state,
             depth_stencil_view,
             rasterizer_state,
+            blend_state,
             rendering: false,
         })
     }
@@ -300,6 +329,11 @@ impl Graphics {
         );
         self.device_context
             .ia_set_primitive_topology(win32::D3D11PrimitiveTopology::TriangleList);
+        self.device_context.om_set_blend_state(
+            &mut self.blend_state,
+            [1.0, 1.0, 1.0, 1.0],
+            u32::MAX,
+        );
     }
 
     pub fn end_render(&mut self) -> Result<(), RenderError> {
@@ -356,6 +390,7 @@ impl std::fmt::Display for GraphicsCreationErrorClass {
                 GraphicsCreationErrorClass::DepthStencilView =>
                     "Unable to create depth stencil view",
                 GraphicsCreationErrorClass::Rasterizer => "Unable to create rasterizer",
+                GraphicsCreationErrorClass::BlendState => "Unable to create blend state",
             }
         )
     }

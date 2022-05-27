@@ -9,6 +9,7 @@ struct Vertex {
 struct MatrixBuffer {
     world: alexandria::Matrix,
     projection: alexandria::Matrix,
+    color: alexandria::Vector4,
 }
 
 const VERTICES: [Vertex; 4] = [
@@ -33,6 +34,15 @@ const VERTICES: [Vertex; 4] = [
 const INDICES: [u32; 6] = [0, 1, 2, 2, 3, 0];
 const SPEED: f32 = 2.0;
 
+const COLORS: [alexandria::Vector4; 6] = [
+    alexandria::Vector4::new(0.0, 1.0, 1.0, 1.0),
+    alexandria::Vector4::new(0.0, 0.0, 1.0, 1.0),
+    alexandria::Vector4::new(1.0, 0.0, 0.0, 1.0),
+    alexandria::Vector4::new(1.0, 1.0, 0.0, 1.0),
+    alexandria::Vector4::new(1.0, 0.0, 1.0, 1.0),
+    alexandria::Vector4::new(0.0, 1.0, 0.0, 1.0),
+];
+
 #[test]
 fn dvd() {
     let image: ginger::Image<f32> = ginger::open_image("./tests/dvd_logo.qoi").unwrap();
@@ -47,6 +57,7 @@ fn dvd() {
     let mut matrix_buffer = MatrixBuffer {
         world: alexandria::Matrix::identity(),
         projection,
+        color: COLORS[0],
     };
     let mut shader = alexandria::Shader::new(
         shader_code,
@@ -70,6 +81,7 @@ fn dvd() {
     let mut velocity = alexandria::Vector2::new(SPEED, SPEED);
 
     let mut last_tick = std::time::Instant::now();
+    let mut current_color = 0;
 
     while window.poll_message() {
         window.begin_render([0.0, 0.0, 0.0, 1.0]);
@@ -92,19 +104,28 @@ fn dvd() {
         if position.x() <= -4.45 {
             position.set_x(-4.45);
             velocity.set_x(-velocity.x());
+
+            current_color = (current_color + 1) % 6;
         } else if position.x() >= 4.45 {
             position.set_x(4.45);
             velocity.set_x(-velocity.x());
+
+            current_color = (current_color + 1) % 6;
         }
 
         if position.y() <= -5.0 * (9.0 / 16.0) + 0.325 {
             position.set_y(-5.0 * (9.0 / 16.0) + 0.325);
             velocity.set_y(-velocity.y());
+
+            current_color = (current_color + 1) % 6;
         } else if position.y() >= 5.0 * (9.0 / 16.0) - 0.325 {
             position.set_y(5.0 * (9.0 / 16.0) - 0.325);
             velocity.set_y(-velocity.y());
+
+            current_color = (current_color + 1) % 6;
         }
 
         matrix_buffer.world = alexandria::Matrix::translation(position.x(), position.y(), 0.0);
+        matrix_buffer.color = COLORS[current_color];
     }
 }
