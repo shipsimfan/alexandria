@@ -5,6 +5,7 @@ mod input;
 mod math;
 mod mesh;
 mod shader;
+mod texture;
 mod window;
 
 pub use crate::graphics::{GraphicsCreationError, RenderError};
@@ -12,6 +13,7 @@ pub use input::*;
 pub use math::*;
 pub use mesh::{LineMesh, Mesh, MeshCreationError};
 pub use shader::{ConstantBuffer, Format, SetConstantBufferError, Shader, ShaderCreationError};
+pub use texture::Texture;
 pub use window::{Window, WindowCreationError};
 
 pub use win32::ID3D11Device as Device;

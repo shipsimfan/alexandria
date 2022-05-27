@@ -54,11 +54,11 @@ const INDICES: [u32; 36] = [
 ];
 
 #[test]
-fn test() {
+fn cube() {
     let mut window: Box<alexandria::Window> =
-        alexandria::Window::new("Testing", 1920, 1080).unwrap();
+        alexandria::Window::new("Cube Test", 1920, 1080).unwrap();
 
-    let shader_code = std::fs::read_to_string("./default.hlsl").unwrap();
+    let shader_code = std::fs::read_to_string("./tests/cube.hlsl").unwrap();
     let translation = alexandria::Matrix::translation(0.0, 0.0, 3.0);
     let mut matrix_buffer = MatrixBuffer {
         world: translation.into(),

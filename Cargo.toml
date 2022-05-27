@@ -4,4 +4,5 @@ name = "alexandria"
 version = "0.1.0"
 
 [dependencies]
+ginger = {git = "https://github.com/shipsimfan/ginger.git"}
 win32 = {git = "https://github.com/shipsimfan/lib-win32.git", branch = "main"}
