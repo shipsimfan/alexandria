@@ -1,3 +1,5 @@
+use win32::ID3D11Resource;
+
 use crate::{Device, Input, Window};
 use std::{marker::PhantomData, sync::Arc};
 
@@ -130,6 +132,10 @@ impl<V> LineMesh<V> {
         );
         dc.draw(self.vertex_count, 0);
         dc.ia_set_primitive_topology(win32::D3D11PrimitiveTopology::TriangleList);
+    }
+
+    pub fn buffer(&mut self) -> &mut win32::ID3D11Buffer {
+        &mut self.vertex_buffer
     }
 }
 
