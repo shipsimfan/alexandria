@@ -1,4 +1,6 @@
-use std::ops::{Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{
+    Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, Neg, Sub, SubAssign,
+};
 
 #[repr(C)]
 #[derive(Default, Clone, Copy, Debug, PartialEq)]
@@ -147,6 +149,14 @@ impl Div<f32> for Vector2 {
 impl DivAssign<f32> for Vector2 {
     fn div_assign(&mut self, rhs: f32) {
         *self = *self / rhs;
+    }
+}
+
+impl Neg for Vector2 {
+    type Output = Vector2;
+
+    fn neg(self) -> Self::Output {
+        Vector2::new(-self.x, -self.y)
     }
 }
 

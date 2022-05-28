@@ -1,4 +1,6 @@
-use std::ops::{Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{
+    Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, Neg, Sub, SubAssign,
+};
 
 use crate::Vector2;
 
@@ -307,6 +309,14 @@ impl Div<f32> for Vector3 {
 impl DivAssign<f32> for Vector3 {
     fn div_assign(&mut self, rhs: f32) {
         *self = *self / rhs;
+    }
+}
+
+impl Neg for Vector3 {
+    type Output = Vector3;
+
+    fn neg(self) -> Self::Output {
+        Vector3::new(-self.x, -self.y, -self.z)
     }
 }
 
