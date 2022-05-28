@@ -1,7 +1,5 @@
-use win32::ID3D11Resource;
-
 use crate::{Device, Input, Window};
-use std::{marker::PhantomData, sync::Arc};
+use std::{marker::PhantomData, rc::Rc};
 
 pub struct Mesh<V> {
     vertex_buffer: win32::ID3D11Buffer,
@@ -24,7 +22,7 @@ impl<V> Mesh<V> {
     pub fn new_with_device(
         vertices: &[V],
         indices: &[u32],
-        device: &Arc<Device>,
+        device: &Rc<Device>,
     ) -> Result<Self, MeshCreationError> {
         let vertex_buffer_desc = win32::D3D11BufferDesc::new(
             (std::mem::size_of::<V>() * vertices.len()) as u32,
@@ -80,13 +78,17 @@ impl<V> Mesh<V> {
 
         dc.draw_indexed(self.index_count, 0, 0);
     }
+
+    pub fn vertex_buffer(&mut self) -> &mut win32::ID3D11Buffer {
+        &mut self.vertex_buffer
+    }
 }
 
 impl<V> LineMesh<V> {
     pub fn new_with_device(
         vertices: &[V],
         strip: bool,
-        device: &Arc<Device>,
+        device: &Rc<Device>,
     ) -> Result<Self, MeshCreationError> {
         let vertex_buffer_desc = win32::D3D11BufferDesc::new(
             (std::mem::size_of::<V>() * vertices.len()) as u32,

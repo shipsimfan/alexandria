@@ -2,7 +2,7 @@ use crate::{
     graphics::{Graphics, GraphicsCreationError},
     Input, RenderError, StateTrackingInput,
 };
-use std::{ffi::CString, ptr::null, sync::Arc};
+use std::{ffi::CString, ptr::null, rc::Rc};
 
 pub struct Window<I: Input = StateTrackingInput> {
     h_wnd: win32::HWnd,
@@ -157,7 +157,7 @@ impl<I: Input> Window<I> {
         self.height
     }
 
-    pub fn device(&self) -> &Arc<win32::ID3D11Device> {
+    pub fn device(&self) -> &Rc<win32::ID3D11Device> {
         self.graphics.as_ref().unwrap().device()
     }
 

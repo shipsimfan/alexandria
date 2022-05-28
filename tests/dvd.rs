@@ -69,7 +69,7 @@ fn dvd() {
     )
     .unwrap();
     let mut constant_buffer =
-        alexandria::ConstantBuffer::<_, 0>::new(Some(matrix_buffer.clone()), &mut window).unwrap();
+        alexandria::ConstantBuffer::new(Some(matrix_buffer.clone()), 0, &mut window).unwrap();
 
     let mut mesh = alexandria::Mesh::new(&VERTICES, &INDICES, &mut window).unwrap();
 

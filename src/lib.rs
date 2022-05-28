@@ -8,6 +8,8 @@ mod shader;
 mod texture;
 mod window;
 
+pub mod compute;
+
 pub use crate::graphics::{GraphicsCreationError, RenderError};
 pub use input::*;
 pub use math::*;

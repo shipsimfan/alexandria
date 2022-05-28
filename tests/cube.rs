@@ -75,7 +75,7 @@ fn cube() {
     )
     .unwrap();
     let mut constant_buffer =
-        alexandria::ConstantBuffer::<_, 0>::new(Some(matrix_buffer), &mut window).unwrap();
+        alexandria::ConstantBuffer::new(Some(matrix_buffer), 0, &mut window).unwrap();
 
     let mut mesh = alexandria::Mesh::new(&VERTICES, &INDICES, &mut window).unwrap();
 

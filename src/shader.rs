@@ -10,8 +10,9 @@ pub struct Shader {
     input_layout: win32::ID3D11InputLayout,
 }
 
-pub struct ConstantBuffer<T: Sized, const IDX: u32> {
+pub struct ConstantBuffer<T: Sized> {
     constant_buffer: win32::ID3D11Buffer,
+    slot: usize,
     phantom: PhantomData<T>,
 }
 
@@ -107,9 +108,10 @@ impl Shader {
     }
 }
 
-impl<T: Sized, const IDX: u32> ConstantBuffer<T, IDX> {
+impl<T: Sized> ConstantBuffer<T> {
     pub fn new<I: Input>(
         initial_data: Option<T>,
+        slot: usize,
         window: &mut Window<I>,
     ) -> Result<Self, ShaderCreationError> {
         let buffer_desc = win32::D3D11BufferDesc::new(
@@ -135,6 +137,7 @@ impl<T: Sized, const IDX: u32> ConstantBuffer<T, IDX> {
 
         Ok(ConstantBuffer {
             constant_buffer: buffer,
+            slot,
             phantom: PhantomData,
         })
     }
@@ -157,13 +160,29 @@ impl<T: Sized, const IDX: u32> ConstantBuffer<T, IDX> {
         Ok(())
     }
 
+    pub fn set_slot(&mut self, slot: usize) {
+        self.slot = slot;
+    }
+
     pub fn set_active<I: Input>(&mut self, window: &mut Window<I>) {
         window
             .device_context()
-            .vs_set_constant_buffers(IDX, &mut [&mut self.constant_buffer]);
+            .vs_set_constant_buffers(self.slot as u32, &mut [&mut self.constant_buffer]);
         window
             .device_context()
-            .ps_set_constant_buffers(IDX, &mut [&mut self.constant_buffer]);
+            .ps_set_constant_buffers(self.slot as u32, &mut [&mut self.constant_buffer]);
+    }
+
+    pub fn set_active_compute<I: Input>(&mut self, window: &mut Window<I>) {
+        window
+            .device_context()
+            .cs_set_constant_buffers(self.slot as u32, &mut [&mut self.constant_buffer]);
+    }
+}
+
+impl ShaderCreationError {
+    pub fn new(error: DirectXError, blob: Option<ID3DBlob>) -> Self {
+        ShaderCreationError { error, blob }
     }
 }
 

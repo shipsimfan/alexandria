@@ -1,4 +1,4 @@
-use std::{ptr::null, sync::Arc};
+use std::{ptr::null, rc::Rc};
 
 #[derive(Debug)]
 pub enum GraphicsCreationErrorClass {
@@ -19,7 +19,7 @@ pub enum GraphicsCreationErrorClass {
 #[allow(dead_code)]
 pub struct Graphics {
     swap_chain: win32::IDXGISwapChain,
-    device: Arc<win32::ID3D11Device>,
+    device: Rc<win32::ID3D11Device>,
     device_context: win32::ID3D11DeviceContext,
     render_target_view: win32::ID3D11RenderTargetView,
     depth_stencil_buffer: win32::ID3D11Texture2D,
@@ -300,7 +300,7 @@ impl Graphics {
 
         Ok(Graphics {
             swap_chain,
-            device: Arc::new(device),
+            device: Rc::new(device),
             device_context,
             render_target_view,
             depth_stencil_buffer,
@@ -345,7 +345,7 @@ impl Graphics {
         Ok(())
     }
 
-    pub fn device(&self) -> &Arc<win32::ID3D11Device> {
+    pub fn device(&self) -> &Rc<win32::ID3D11Device> {
         &self.device
     }
 
