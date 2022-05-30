@@ -7,6 +7,7 @@ pub trait Input {
     fn mouse_up(&mut self, key: u8);
     fn update_mouse_position(&mut self, position: (isize, isize));
     fn set_mouse_lock(&mut self, state: bool);
+    fn frame_reset(&mut self);
 
     fn is_mouse_locked(&self) -> bool;
 }
@@ -73,16 +74,15 @@ impl Input for StateTrackingInput {
 
     fn set_mouse_lock(&mut self, state: bool) {
         self.mouse_lock = state;
+
         self.mouse_position = (0, 0);
     }
 
     fn is_mouse_locked(&self) -> bool {
         self.mouse_lock
     }
-}
 
-impl StateTrackingInput {
-    pub fn frame_reset(&mut self) {
+    fn frame_reset(&mut self) {
         for i in 0..NUM_KEYS {
             self.key_states_down[i] = false;
             self.key_states_up[i] = false;
@@ -93,7 +93,9 @@ impl StateTrackingInput {
             self.mouse_states_up[i] = false;
         }
     }
+}
 
+impl StateTrackingInput {
     pub fn get_key(&self, key: u8) -> bool {
         self.key_states[key as usize]
     }

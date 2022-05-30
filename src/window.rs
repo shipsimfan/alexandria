@@ -106,6 +106,8 @@ impl<I: Input> Window<I> {
     }
 
     pub fn poll_message(&mut self) -> bool {
+        self.input.frame_reset();
+
         while win32::peek_message(&mut self.msg, None, 0, 0, &[win32::Pm::Remove]) {
             if self.msg.message == win32::WM_QUIT {
                 return false;
@@ -208,10 +210,6 @@ impl<I: Input> Window<I> {
     }
 
     fn reset_mouse_position(&mut self) {
-        if !self.input.is_mouse_locked() {
-            return;
-        }
-
         if self.update_mouse_center {
             self.update_mouse_center()
         }
