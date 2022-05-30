@@ -28,6 +28,7 @@ pub struct Graphics {
     rasterizer_state: win32::ID3D11RasterizerState,
     blend_state: win32::ID3D11BlendState,
     rendering: bool,
+    viewport: win32::D3D11Viewport,
 }
 
 #[derive(Debug)]
@@ -309,6 +310,7 @@ impl Graphics {
             rasterizer_state,
             blend_state,
             rendering: false,
+            viewport,
         })
     }
 
@@ -334,6 +336,7 @@ impl Graphics {
             [1.0, 1.0, 1.0, 1.0],
             u32::MAX,
         );
+        self.device_context.rs_set_viewports(&[&self.viewport]);
     }
 
     pub fn end_render(&mut self) -> Result<(), RenderError> {

@@ -21,7 +21,10 @@ impl<T> Buffer<T> {
         let buffer_desc = win32::D3D11BufferDesc::new(
             (std::mem::size_of::<T>() * initial_data.len()) as u32,
             win32::D3D11Usage::Default,
-            &[win32::D3D11BindFlag::UnorderedAccess],
+            &[
+                win32::D3D11BindFlag::UnorderedAccess,
+                win32::D3D11BindFlag::ShaderResource,
+            ],
             &[],
             &[win32::D3D11ResourceMiscFlag::BufferStructured],
             std::mem::size_of::<T>() as u32,
@@ -30,19 +33,22 @@ impl<T> Buffer<T> {
         let initial_data = win32::D3D11SubresourceData::new(initial_data, 0, 0);
         let mut buffer = window
             .device()
-            .create_buffer(&buffer_desc, Some(&initial_data))?;
+            .create_buffer(&buffer_desc, Some(&initial_data))
+            .unwrap();
 
         let srv_desc =
             win32::D3D11ShaderResourceViewDesc::new(win32::DXGIFormat::Unknown, &mut buffer);
         let srv = window
             .device()
-            .create_shader_resource_view(&mut buffer, &srv_desc)?;
+            .create_shader_resource_view(&mut buffer, &srv_desc)
+            .unwrap();
 
         let uav_desc =
             win32::D3D11UnorderedAccessViewDesc::new(win32::DXGIFormat::Unknown, &mut buffer);
         let uav = window
             .device()
-            .create_unordered_access_view(&mut buffer, &uav_desc)?;
+            .create_unordered_access_view(&mut buffer, &uav_desc)
+            .unwrap();
 
         Ok(Buffer {
             buffer,
@@ -60,13 +66,13 @@ impl<T> Buffer<T> {
     pub fn set_active<I: Input>(&mut self, window: &mut Window<I>) {
         window
             .device_context()
-            .cs_set_shader_resources(self.slot as u32, &mut [&mut self.srv])
+            .cs_set_shader_resources(self.slot as u32, &mut [Some(&mut self.srv)])
     }
 
     pub fn set_active_rw<I: Input>(&mut self, window: &mut Window<I>) {
         window
             .device_context()
-            .cs_set_unordered_access_views(self.slot as u32, &mut [&mut self.uav])
+            .cs_set_unordered_access_views(self.slot as u32, &mut [Some(&mut self.uav)])
     }
 
     pub fn buffer(&mut self) -> &mut win32::ID3D11Buffer {
