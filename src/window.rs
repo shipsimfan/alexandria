@@ -208,6 +208,10 @@ impl<I: Input> Window<I> {
     }
 
     fn reset_mouse_position(&mut self) {
+        if !self.input.is_mouse_locked() {
+            return;
+        }
+
         if self.update_mouse_center {
             self.update_mouse_center()
         }
