@@ -1,13 +1,13 @@
 use crate::{Input, LineMesh, Mesh, Window};
 
-mod rw_buffer;
+mod buffer;
 mod shader;
 
-pub use rw_buffer::*;
+pub use buffer::*;
 pub use shader::*;
 
 pub fn copy_compute_to_vertex<T, I: Input>(
-    compute_buffer: &mut RWBuffer<T>,
+    compute_buffer: &mut Buffer<T>,
     mesh: &mut Mesh<T>,
     window: &mut Window<I>,
 ) {
@@ -17,7 +17,7 @@ pub fn copy_compute_to_vertex<T, I: Input>(
 }
 
 pub fn copy_compute_to_vertex_line<T, I: Input>(
-    compute_buffer: &mut RWBuffer<T>,
+    compute_buffer: &mut Buffer<T>,
     mesh: &mut LineMesh<T>,
     window: &mut Window<I>,
 ) {

@@ -19,7 +19,6 @@ pub use texture::Texture;
 pub use window::{Window, WindowCreationError};
 
 pub use win32::ID3D11Device as Device;
-
 pub use win32::{
     VK_ACCEPT, VK_ADD, VK_APPS, VK_ATTN, VK_BACK, VK_CANCEL, VK_CAPITAL, VK_CLEAR, VK_CONTROL,
     VK_CONVERT, VK_CRSEL, VK_DECIMAL, VK_DELETE, VK_DIVIDE, VK_DOWN, VK_END, VK_EREOF, VK_ESCAPE,

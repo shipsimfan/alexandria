@@ -73,7 +73,7 @@ fn dvd() {
 
     let mut mesh = alexandria::Mesh::new(&VERTICES, &INDICES, &mut window).unwrap();
 
-    let mut texture = alexandria::Texture::new(&image, &mut window);
+    let mut texture = alexandria::Texture::new(&image, 0, &mut window);
 
     drop(image);
 

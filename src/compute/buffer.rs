@@ -1,9 +1,10 @@
 use crate::{Input, Window};
 use std::marker::PhantomData;
 
-pub struct RWBuffer<T> {
+pub struct Buffer<T> {
     buffer: win32::ID3D11Buffer,
-    view: win32::ID3D11UnorderedAccessView,
+    srv: win32::ID3D11ShaderResourceView,
+    uav: win32::ID3D11UnorderedAccessView,
     slot: usize,
     phantom: PhantomData<T>,
 }
@@ -11,7 +12,7 @@ pub struct RWBuffer<T> {
 #[derive(Debug)]
 pub struct RWBufferCreationError(win32::DirectXError);
 
-impl<T> RWBuffer<T> {
+impl<T> Buffer<T> {
     pub fn new<I: Input>(
         initial_data: &[T],
         slot: usize,
@@ -31,15 +32,22 @@ impl<T> RWBuffer<T> {
             .device()
             .create_buffer(&buffer_desc, Some(&initial_data))?;
 
+        let srv_desc =
+            win32::D3D11ShaderResourceViewDesc::new(win32::DXGIFormat::Unknown, &mut buffer);
+        let srv = window
+            .device()
+            .create_shader_resource_view(&mut buffer, &srv_desc)?;
+
         let uav_desc =
             win32::D3D11UnorderedAccessViewDesc::new(win32::DXGIFormat::Unknown, &mut buffer);
-        let view = window
+        let uav = window
             .device()
             .create_unordered_access_view(&mut buffer, &uav_desc)?;
 
-        Ok(RWBuffer {
+        Ok(Buffer {
             buffer,
-            view,
+            srv,
+            uav,
             slot,
             phantom: PhantomData,
         })
@@ -52,7 +60,13 @@ impl<T> RWBuffer<T> {
     pub fn set_active<I: Input>(&mut self, window: &mut Window<I>) {
         window
             .device_context()
-            .cs_set_unordered_access_views(self.slot as u32, &mut [&mut self.view])
+            .cs_set_shader_resources(self.slot as u32, &mut [&mut self.srv])
+    }
+
+    pub fn set_active_rw<I: Input>(&mut self, window: &mut Window<I>) {
+        window
+            .device_context()
+            .cs_set_unordered_access_views(self.slot as u32, &mut [&mut self.uav])
     }
 
     pub fn buffer(&mut self) -> &mut win32::ID3D11Buffer {
