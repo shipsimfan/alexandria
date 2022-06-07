@@ -4,6 +4,9 @@ use alexandria_common::{Input, Window as CommonWindow};
 #[cfg(target_os = "windows")]
 type WindowType<I> = Box<alexandria_dx11::Window<I>>;
 
+#[cfg(target_os = "linux")]
+type WindowType<I> = alexandria_opengl::Window<I>;
+
 pub struct Window<I: Input = StateTrackingInput>(WindowType<I>);
 
 impl<I: Input> Window<I> {

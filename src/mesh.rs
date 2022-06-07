@@ -4,8 +4,14 @@ use alexandria_common::Mesh as CommonMesh;
 #[cfg(target_os = "windows")]
 type MeshType<V> = alexandria_dx11::Mesh<V>;
 
+#[cfg(target_os = "linux")]
+type MeshType<V> = alexandria_opengl::Mesh<V>;
+
 #[cfg(target_os = "windows")]
 type LineMeshType<V> = alexandria_dx11::LineMesh<V>;
+
+#[cfg(target_os = "linux")]
+type LineMeshType<V> = alexandria_opengl::LineMesh<V>;
 
 pub struct Mesh<V>(MeshType<V>);
 
