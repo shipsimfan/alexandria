@@ -55,8 +55,7 @@ const INDICES: [u32; 36] = [
 
 #[test]
 fn cube() {
-    let mut window: Box<alexandria::Window> =
-        alexandria::Window::new("Cube Test", 1920, 1080).unwrap();
+    let mut window: alexandria::Window = alexandria::Window::new("Cube Test", 1920, 1080).unwrap();
 
     let shader_code = std::fs::read_to_string("./tests/cube.hlsl").unwrap();
     let translation = alexandria::Matrix::translation(0.0, 0.0, 3.0);
@@ -68,42 +67,42 @@ fn cube() {
     let mut shader = alexandria::Shader::new(
         shader_code,
         &[
-            ("POSITION", alexandria::Format::R32G32A32Float),
+            ("POSITION", alexandria::Format::R32G32B32Float),
             ("COLOR", alexandria::Format::R32G32B32A32Float),
         ],
         &mut window,
     )
     .unwrap();
     let mut constant_buffer =
-        alexandria::ConstantBuffer::new(Some(matrix_buffer), 0, &mut window).unwrap();
+        alexandria::ConstantBuffer::new(matrix_buffer, 0, &mut window).unwrap();
 
     let mut mesh = alexandria::Mesh::new(&VERTICES, &INDICES, &mut window).unwrap();
 
     let mut y_rotation = 0.0;
     let mut x_rotation = 0.0;
-    while window.poll_message() {
+    while window.poll_events() {
         window.begin_render([0.0, 0.0, 0.0, 1.0]);
 
-        shader.set_active_shader(&mut window);
-        constant_buffer.set_active(&mut window);
-        constant_buffer.set(matrix_buffer, &mut window).unwrap();
-        mesh.render(&mut window);
+        shader.set_active();
+        constant_buffer.set_active();
+        constant_buffer.set_data(matrix_buffer).unwrap();
+        mesh.render();
 
         window.end_render().unwrap();
 
-        if window.input().get_key(b'D') || window.input().get_key(win32::VK_RIGHT) {
+        if window.input().get_key(b'D') || window.input().get_key(0x27) {
             y_rotation += 0.01;
         }
 
-        if window.input().get_key(b'A') || window.input().get_key(win32::VK_LEFT) {
+        if window.input().get_key(b'A') || window.input().get_key(0x25) {
             y_rotation -= 0.01;
         }
 
-        if window.input().get_key(b'W') || window.input().get_key(win32::VK_UP) {
+        if window.input().get_key(b'W') || window.input().get_key(0x26) {
             x_rotation -= 0.01;
         }
 
-        if window.input().get_key(b'S') || window.input().get_key(win32::VK_DOWN) {
+        if window.input().get_key(b'S') || window.input().get_key(0x28) {
             x_rotation += 0.01;
         }
 

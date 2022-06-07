@@ -47,8 +47,7 @@ const COLORS: [alexandria::Vector4; 6] = [
 fn dvd() {
     let image: ginger::Image<f32> = ginger::open_image("./tests/dvd_logo.qoi").unwrap();
 
-    let mut window: Box<alexandria::Window> =
-        alexandria::Window::new("DVD Logo", 1920, 1080).unwrap();
+    let mut window: alexandria::Window = alexandria::Window::new("DVD Logo", 1920, 1080).unwrap();
 
     let shader_code = std::fs::read_to_string("./tests/dvd.hlsl").unwrap();
     let projection = alexandria::Matrix::translation(0.0, 0.0, 1.0)
@@ -69,11 +68,11 @@ fn dvd() {
     )
     .unwrap();
     let mut constant_buffer =
-        alexandria::ConstantBuffer::new(Some(matrix_buffer.clone()), 0, &mut window).unwrap();
+        alexandria::ConstantBuffer::new(matrix_buffer.clone(), 0, &mut window).unwrap();
 
     let mut mesh = alexandria::Mesh::new(&VERTICES, &INDICES, &mut window).unwrap();
 
-    let mut texture = alexandria::Texture::new(&image, 0, &mut window);
+    let mut texture = alexandria::Texture::new(&image, 0, &mut window).unwrap();
 
     drop(image);
 
@@ -83,16 +82,14 @@ fn dvd() {
     let mut last_tick = std::time::Instant::now();
     let mut current_color = 0;
 
-    while window.poll_message() {
+    while window.poll_events() {
         window.begin_render([0.0, 0.0, 0.0, 1.0]);
 
-        shader.set_active_shader(&mut window);
-        constant_buffer.set_active(&mut window);
-        constant_buffer
-            .set(matrix_buffer.clone(), &mut window)
-            .unwrap();
-        texture.set_active(&mut window);
-        mesh.render(&mut window);
+        shader.set_active();
+        constant_buffer.set_active();
+        constant_buffer.set_data(matrix_buffer.clone()).unwrap();
+        texture.set_active();
+        mesh.render();
 
         window.end_render().unwrap();
 
