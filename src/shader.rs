@@ -20,7 +20,13 @@ impl Shader {
         )?))
     }
 
+    #[inline(always)]
     pub fn set_active(&mut self) {
         self.0.set_active()
+    }
+
+    #[inline(always)]
+    pub fn clear_active(&mut self) {
+        self.0.clear_active()
     }
 }

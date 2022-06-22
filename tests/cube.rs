@@ -2,7 +2,7 @@ use std::f32::consts::PI;
 
 #[repr(C)]
 struct Vertex {
-    position: alexandria::Vector3,
+    position: alexandria::Vector4,
     color: alexandria::Vector4,
 }
 
@@ -16,35 +16,35 @@ struct MatrixBuffer {
 
 const VERTICES: [Vertex; 8] = [
     Vertex {
-        position: alexandria::Vector3::new(1.0, -1.0, 1.0),
+        position: alexandria::Vector4::new(1.0, -1.0, 1.0, 1.0),
         color: alexandria::Vector4::new(1.0, 0.0, 0.0, 1.0),
     },
     Vertex {
-        position: alexandria::Vector3::new(1.0, -1.0, -1.0),
+        position: alexandria::Vector4::new(1.0, -1.0, -1.0, 1.0),
         color: alexandria::Vector4::new(0.0, 1.0, 0.0, 1.0),
     },
     Vertex {
-        position: alexandria::Vector3::new(1.0, 1.0, -1.0),
+        position: alexandria::Vector4::new(1.0, 1.0, -1.0, 1.0),
         color: alexandria::Vector4::new(0.0, 0.0, 1.0, 1.0),
     },
     Vertex {
-        position: alexandria::Vector3::new(1.0, 1.0, 1.0),
+        position: alexandria::Vector4::new(1.0, 1.0, 1.0, 1.0),
         color: alexandria::Vector4::new(1.0, 1.0, 0.0, 1.0),
     },
     Vertex {
-        position: alexandria::Vector3::new(-1.0, -1.0, 1.0),
+        position: alexandria::Vector4::new(-1.0, -1.0, 1.0, 1.0),
         color: alexandria::Vector4::new(1.0, 0.0, 1.0, 1.0),
     },
     Vertex {
-        position: alexandria::Vector3::new(-1.0, -1.0, -1.0),
+        position: alexandria::Vector4::new(-1.0, -1.0, -1.0, 1.0),
         color: alexandria::Vector4::new(0.0, 1.0, 1.0, 1.0),
     },
     Vertex {
-        position: alexandria::Vector3::new(-1.0, 1.0, -1.0),
+        position: alexandria::Vector4::new(-1.0, 1.0, -1.0, 1.0),
         color: alexandria::Vector4::new(1.0, 1.0, 1.0, 1.0),
     },
     Vertex {
-        position: alexandria::Vector3::new(-1.0, 1.0, 1.0),
+        position: alexandria::Vector4::new(-1.0, 1.0, 1.0, 1.0),
         color: alexandria::Vector4::new(0.0, 0.0, 0.0, 1.0),
     },
 ];
@@ -57,7 +57,7 @@ const INDICES: [u32; 36] = [
 fn cube() {
     let mut window: alexandria::Window = alexandria::Window::new("Cube Test", 1920, 1080).unwrap();
 
-    let shader_code = std::fs::read_to_string("./tests/cube.hlsl").unwrap();
+    let shader_code = std::fs::read_to_string("./tests/cube.acsl").unwrap();
     let translation = alexandria::Matrix::translation(0.0, 0.0, 3.0);
     let mut matrix_buffer = MatrixBuffer {
         world: translation.into(),
@@ -67,7 +67,7 @@ fn cube() {
     let mut shader = alexandria::Shader::new(
         shader_code,
         &[
-            ("POSITION", alexandria::Format::R32G32B32Float),
+            ("POSITION", alexandria::Format::R32G32B32A32Float),
             ("COLOR", alexandria::Format::R32G32B32A32Float),
         ],
         &mut window,

@@ -38,7 +38,7 @@ impl<T> ConstantBuffer<T> {
     }
 
     #[inline(always)]
-    pub fn set_active_compute(&mut self) {
-        self.0.set_active_compute()
+    pub fn clear_active(&mut self) {
+        self.0.clear_active()
     }
 }

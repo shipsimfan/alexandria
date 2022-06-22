@@ -49,7 +49,7 @@ fn dvd() {
 
     let mut window: alexandria::Window = alexandria::Window::new("DVD Logo", 1920, 1080).unwrap();
 
-    let shader_code = std::fs::read_to_string("./tests/dvd.hlsl").unwrap();
+    let shader_code = std::fs::read_to_string("./tests/dvd.acsl").unwrap();
     let projection = alexandria::Matrix::translation(0.0, 0.0, 1.0)
         * alexandria::Matrix::orthographic(10.0, 10.0 * (9.0 / 16.0), 0.01, 10.0);
 
@@ -72,7 +72,7 @@ fn dvd() {
 
     let mut mesh = alexandria::Mesh::new(&VERTICES, &INDICES, &mut window).unwrap();
 
-    let mut texture = alexandria::Texture::new(&image, 0, &mut window).unwrap();
+    let mut texture = alexandria::Texture2D::new(&image, 0, &mut window).unwrap();
 
     drop(image);
 
