@@ -4,6 +4,9 @@ use alexandria_common::{Format, Shader as CommonShader};
 #[cfg(target_os = "windows")]
 type ShaderType = alexandria_dx11::Shader;
 
+#[cfg(target_os = "linux")]
+type ShaderType = alexandria_opengl::Shader;
+
 pub struct Shader(ShaderType);
 
 impl Shader {
