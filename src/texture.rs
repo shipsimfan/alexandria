@@ -5,6 +5,9 @@ use ginger::Image;
 #[cfg(target_os = "windows")]
 type Texture2DType = alexandria_dx11::Texture2D;
 
+#[cfg(target_os = "linux")]
+type Texture2DType = alexandria_opengl::Texture2D;
+
 pub struct Texture2D(Texture2DType);
 
 impl Texture2D {

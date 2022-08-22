@@ -14,17 +14,17 @@ struct PixelInputType {
     uv: float2 : TEXCOORD0,
 }
 
-cbuffer buffer: MatrixBuffer : 0;
+cbuffer matrix_buffer: MatrixBuffer : 0;
 
 texture shader_texture : 0;
 
 fn vertex_main(vertex_input: VertexInputType) -> PixelInputType {
     return PixelInputType {
-        position: (float4(vertex_input.position.x, vertex_input.position.y, 0.0, 1.0) * buffer.world) * buffer.projection,
+        position: (float4(vertex_input.position.x, vertex_input.position.y, 0.0, 1.0) * matrix_buffer.world) * matrix_buffer.projection,
         uv: vertex_input.uv,
     };
 }
 
 fn fragment_main(pixel_input: PixelInputType) -> float4 {
-    return sample_texture(shader_texture, pixel_input.uv) * buffer.color;
+    return sample_texture(shader_texture, pixel_input.uv) * matrix_buffer.color;
 }

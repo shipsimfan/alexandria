@@ -4,6 +4,9 @@ use alexandria_common::ConstantBuffer as CommonConstantBuffer;
 #[cfg(target_os = "windows")]
 type ConstantBufferType<T> = alexandria_dx11::ConstantBuffer<T>;
 
+#[cfg(target_os = "linux")]
+type ConstantBufferType<T> = alexandria_opengl::ConstantBuffer<T>;
+
 pub struct ConstantBuffer<T>(ConstantBufferType<T>);
 
 impl<T> ConstantBuffer<T> {

@@ -1,7 +1,7 @@
 #![allow(mixed_script_confusables)]
 
 mod constant_buffer;
-mod math;
+mod matrix;
 mod mesh;
 mod shader;
 mod state_tracking_input;
@@ -10,10 +10,10 @@ mod window;
 
 //pub mod compute;
 
-pub use alexandria_common::{Format, Input};
+pub use alexandria_common::{Format, Input, Vector2, Vector3, Vector4};
 
 pub use constant_buffer::*;
-pub use math::*;
+pub use matrix::*;
 pub use mesh::*;
 pub use shader::*;
 pub use state_tracking_input::*;
