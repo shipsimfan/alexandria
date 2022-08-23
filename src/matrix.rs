@@ -1,9 +1,11 @@
+use alexandria_common::{Vector3, Vector4};
 use std::{
     fmt::{Debug, Display},
     ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign},
 };
 
-use alexandria_common::{Matrix as CommonMatrix, Vector3, Vector4};
+#[cfg(target_os = "windows")]
+type MatrixType = alexandria_dx11::LHRowMajorMatrix;
 
 #[cfg(target_os = "linux")]
 type MatrixType = alexandria_opengl::RHColumnMajorMatrix;
