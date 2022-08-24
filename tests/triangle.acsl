@@ -1,0 +1,20 @@
+struct VertexInputType {
+    position: float4 : POSITION,
+    color: float4 : COLOR,
+}
+
+struct PixelInputType {
+    position: float4 : SV_POSITION,
+    color: float4 : COLOR,
+}
+
+fn vertex_main(vertex_input: VertexInputType) -> PixelInputType {
+    return PixelInputType {
+        position: vertex_input.position,
+        color: vertex_input.color,
+    };
+}
+
+fn fragment_main(pixel_input: PixelInputType) -> float4 {
+    return pixel_input.color;
+}

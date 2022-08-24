@@ -1,4 +1,4 @@
-use alexandria_common::{Vector3, Vector4};
+use alexandria_common::{Matrix as CommonMatrix, Vector3, Vector4};
 use std::{
     fmt::{Debug, Display},
     ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign},
