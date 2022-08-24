@@ -42,6 +42,11 @@ impl<I: Input> Window<I> {
     }
 
     #[inline(always)]
+    pub fn input_mut(&mut self) -> &mut I {
+        self.0.input_mut()
+    }
+
+    #[inline(always)]
     pub fn width(&self) -> usize {
         self.0.width()
     }

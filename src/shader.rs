@@ -1,5 +1,5 @@
 use crate::Window;
-use alexandria_common::{Format, Shader as CommonShader};
+use alexandria_common::{Format, Input, Shader as CommonShader};
 
 #[cfg(target_os = "windows")]
 type ShaderType = alexandria_dx11::Shader;
@@ -11,10 +11,10 @@ pub struct Shader(ShaderType);
 
 impl Shader {
     #[inline(always)]
-    pub fn new<S: AsRef<str>>(
+    pub fn new<S: AsRef<str>, I: Input>(
         code: S,
         vertex_layout: &[(&str, Format)],
-        window: &mut Window,
+        window: &mut Window<I>,
     ) -> Result<Self, Box<dyn std::error::Error>> {
         Ok(Shader(<ShaderType as CommonShader>::new(
             code,

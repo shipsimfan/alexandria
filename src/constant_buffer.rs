@@ -1,5 +1,5 @@
 use crate::Window;
-use alexandria_common::ConstantBuffer as CommonConstantBuffer;
+use alexandria_common::{ConstantBuffer as CommonConstantBuffer, Input};
 
 #[cfg(target_os = "windows")]
 type ConstantBufferType<T> = alexandria_dx11::ConstantBuffer<T>;
@@ -11,10 +11,10 @@ pub struct ConstantBuffer<T>(ConstantBufferType<T>);
 
 impl<T> ConstantBuffer<T> {
     #[inline(always)]
-    pub fn new(
+    pub fn new<I: Input>(
         initial_data: T,
         slot: usize,
-        window: &mut Window,
+        window: &mut Window<I>,
     ) -> Result<Self, Box<dyn std::error::Error>> {
         Ok(ConstantBuffer(
             <ConstantBufferType<T> as CommonConstantBuffer<T>>::new(
