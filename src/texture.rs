@@ -1,5 +1,5 @@
 use crate::Window;
-use alexandria_common::Texture2D as CommonTexture2D;
+use alexandria_common::{Input, Texture2D as CommonTexture2D};
 use ginger::Image;
 
 #[cfg(target_os = "windows")]
@@ -12,10 +12,10 @@ pub struct Texture2D(Texture2DType);
 
 impl Texture2D {
     #[inline(always)]
-    pub fn new(
+    pub fn new<I: Input>(
         image: &Image<f32>,
         slot: usize,
-        window: &mut Window,
+        window: &mut Window<I>,
     ) -> Result<Self, Box<dyn std::error::Error>> {
         Ok(Texture2D(<Texture2DType as CommonTexture2D>::new(
             image,
