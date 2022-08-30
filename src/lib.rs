@@ -10,7 +10,7 @@ mod window;
 
 //pub mod compute;
 
-pub use alexandria_common::{Format, Input, Vector2, Vector3, Vector4};
+pub use alexandria_common::{Format, Input, SampleType, Vector2, Vector3, Vector4};
 
 pub use constant_buffer::*;
 pub use matrix::*;

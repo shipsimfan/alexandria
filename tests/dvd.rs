@@ -72,7 +72,8 @@ fn dvd() {
 
     let mut mesh = alexandria::Mesh::new(&VERTICES, &INDICES, &mut window).unwrap();
 
-    let mut texture = alexandria::Texture2D::new(&image, 0, &mut window).unwrap();
+    let mut texture =
+        alexandria::Texture2D::new(&image, 0, alexandria::SampleType::Point, &mut window).unwrap();
 
     drop(image);
 
