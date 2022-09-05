@@ -32,6 +32,24 @@ impl<V> Mesh<V> {
     }
 
     #[inline(always)]
+    pub fn update_vertices<I: Input>(
+        &mut self,
+        vertices: &[V],
+        window: &mut Window<I>,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        self.0.update_vertices(vertices, window.inner())
+    }
+
+    #[inline(always)]
+    pub fn update_indices<I: Input>(
+        &mut self,
+        indices: &[u32],
+        window: &mut Window<I>,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        self.0.update_indices(indices, window.inner())
+    }
+
+    #[inline(always)]
     pub fn render(&mut self) {
         self.0.render()
     }
