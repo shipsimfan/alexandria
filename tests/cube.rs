@@ -55,7 +55,8 @@ const INDICES: [u32; 36] = [
 
 #[test]
 fn cube() {
-    let mut window: alexandria::Window = alexandria::Window::new("Cube Test", 1920, 1080).unwrap();
+    let mut window: alexandria::Window =
+        alexandria::Window::new("Cube Test", 1920, 1080, true).unwrap();
 
     let shader_code = std::fs::read_to_string("./tests/cube.acsl").unwrap();
     let translation = alexandria::Matrix::translation(0.0, 0.0, 3.0);

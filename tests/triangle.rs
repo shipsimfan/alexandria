@@ -23,7 +23,7 @@ const INDICES: [u32; 3] = [0, 1, 2];
 #[test]
 fn triangle() {
     let mut window: alexandria::Window =
-        alexandria::Window::new("Triangle Test", 1920, 1080).unwrap();
+        alexandria::Window::new("Triangle Test", 1920, 1080, true).unwrap();
 
     let shader_code = std::fs::read_to_string("./tests/triangle.acsl").unwrap();
     let mut shader = alexandria::Shader::new(

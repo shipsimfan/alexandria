@@ -15,9 +15,13 @@ impl<I: Input> Window<I> {
         title: &str,
         width: usize,
         height: usize,
+        debug_logging: bool,
     ) -> Result<Self, Box<dyn std::error::Error>> {
         Ok(Window(<WindowType<I> as CommonWindow<I>>::new(
-            title, width, height,
+            title,
+            width,
+            height,
+            debug_logging,
         )?))
     }
 
@@ -59,5 +63,10 @@ impl<I: Input> Window<I> {
     #[inline(always)]
     pub fn inner(&mut self) -> &mut WindowType<I> {
         &mut self.0
+    }
+
+    #[inline(always)]
+    pub fn set_debug_logging(&mut self, enable: bool) {
+        self.0.set_debug_logging(enable)
     }
 }

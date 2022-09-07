@@ -47,7 +47,8 @@ const COLORS: [alexandria::Vector4; 6] = [
 fn dvd() {
     let image: ginger::Image<f32> = ginger::open_image("./tests/dvd_logo.qoi").unwrap();
 
-    let mut window: alexandria::Window = alexandria::Window::new("DVD Logo", 1920, 1080).unwrap();
+    let mut window: alexandria::Window =
+        alexandria::Window::new("DVD Logo", 1920, 1080, true).unwrap();
 
     let shader_code = std::fs::read_to_string("./tests/dvd.acsl").unwrap();
     let projection = alexandria::Matrix::translation(0.0, 0.0, 1.0)
