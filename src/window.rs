@@ -1,5 +1,7 @@
 use crate::StateTrackingInput;
-use alexandria_common::{Input, Window as CommonWindow};
+use alexandria_common::{
+    FixedAspectUpdater, Input, Vector2, ViewportUpdater, Window as CommonWindow,
+};
 
 #[cfg(target_os = "windows")]
 type WindowType<I> = Box<alexandria_dx11::Window<I>>;
@@ -17,12 +19,21 @@ impl<I: Input> Window<I> {
         height: usize,
         debug_logging: bool,
     ) -> Result<Self, Box<dyn std::error::Error>> {
-        Ok(Window(<WindowType<I> as CommonWindow<I>>::new(
+        let mut window = Window(<WindowType<I> as CommonWindow<I>>::new(
             title,
             width,
             height,
             debug_logging,
-        )?))
+        )?);
+
+        let viewport = window.create_viewport(
+            Vector2::ZERO,
+            Vector2::new(width as f32, height as f32),
+            Some(FixedAspectUpdater::new((width as f32) / (height as f32))),
+        );
+        window.set_default_viewport(viewport);
+
+        Ok(window)
     }
 
     #[inline(always)]
@@ -58,6 +69,36 @@ impl<I: Input> Window<I> {
     #[inline(always)]
     pub fn height(&self) -> usize {
         self.0.height()
+    }
+
+    #[inline(always)]
+    pub fn create_viewport(
+        &mut self,
+        top_left: Vector2,
+        size: Vector2,
+        updater: Option<Box<dyn ViewportUpdater>>,
+    ) -> usize {
+        self.0.create_viewport(top_left, size, updater)
+    }
+
+    #[inline(always)]
+    pub fn set_default_viewport(&mut self, viewport: usize) {
+        self.0.set_default_viewport(viewport);
+    }
+
+    #[inline(always)]
+    pub fn update_viewport(&mut self, viewport: usize, top_left: Vector2, size: Vector2) {
+        self.0.update_viewport(viewport, top_left, size);
+    }
+
+    #[inline(always)]
+    pub fn set_active_viewport(&mut self, viewport: usize) {
+        self.0.set_active_viewport(viewport);
+    }
+
+    #[inline(always)]
+    pub fn remove_viewport(&mut self, viewport: usize) {
+        self.0.remove_viewport(viewport);
     }
 
     #[inline(always)]

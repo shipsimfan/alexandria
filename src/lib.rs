@@ -10,7 +10,10 @@ mod window;
 
 //pub mod compute;
 
-pub use alexandria_common::{Format, Input, SampleType, Vector2, Vector3, Vector4};
+pub use alexandria_common::{
+    FitScreenUpdater, FixedAspectUpdater, Format, Input, SampleType, Vector2, Vector3, Vector4,
+    ViewportUpdater,
+};
 
 pub use constant_buffer::*;
 pub use matrix::*;
