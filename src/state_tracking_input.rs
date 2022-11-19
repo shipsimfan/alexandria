@@ -1,4 +1,5 @@
 use crate::Input;
+use alexandria_common::{Key, MouseButton};
 
 pub struct StateTrackingInput {
     key_states: [bool; NUM_KEYS],
@@ -28,28 +29,28 @@ impl Input for StateTrackingInput {
         }
     }
 
-    fn key_down(&mut self, key: u8) {
+    fn key_down(&mut self, key: Key) {
         if !self.key_states[key as usize] {
             self.key_states_down[key as usize] = true;
         }
         self.key_states[key as usize] = true;
     }
 
-    fn key_up(&mut self, key: u8) {
+    fn key_up(&mut self, key: Key) {
         if self.key_states[key as usize] {
             self.key_states_up[key as usize] = true;
         }
         self.key_states[key as usize] = false;
     }
 
-    fn mouse_down(&mut self, button: u8) {
+    fn mouse_down(&mut self, button: MouseButton) {
         if !self.mouse_states[button as usize] {
             self.mouse_states_down[button as usize] = true;
         }
         self.mouse_states[button as usize] = true;
     }
 
-    fn mouse_up(&mut self, button: u8) {
+    fn mouse_up(&mut self, button: MouseButton) {
         if self.mouse_states[button as usize] {
             self.mouse_states_up[button as usize] = true;
         }
@@ -84,27 +85,27 @@ impl Input for StateTrackingInput {
 }
 
 impl StateTrackingInput {
-    pub fn get_key(&self, key: u8) -> bool {
+    pub fn get_key(&self, key: Key) -> bool {
         self.key_states[key as usize]
     }
 
-    pub fn get_key_down(&self, key: u8) -> bool {
+    pub fn get_key_down(&self, key: Key) -> bool {
         self.key_states_down[key as usize]
     }
 
-    pub fn get_key_up(&self, key: u8) -> bool {
+    pub fn get_key_up(&self, key: Key) -> bool {
         self.key_states_up[key as usize]
     }
 
-    pub fn get_mouse_button(&self, button: u8) -> bool {
+    pub fn get_mouse_button(&self, button: MouseButton) -> bool {
         self.mouse_states[button as usize]
     }
 
-    pub fn get_mouse_down(&self, button: u8) -> bool {
+    pub fn get_mouse_down(&self, button: MouseButton) -> bool {
         self.mouse_states_down[button as usize]
     }
 
-    pub fn get_mouse_up(&self, button: u8) -> bool {
+    pub fn get_mouse_up(&self, button: MouseButton) -> bool {
         self.mouse_states_up[button as usize]
     }
 

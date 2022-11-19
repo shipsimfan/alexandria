@@ -91,19 +91,27 @@ fn cube() {
 
         window.end_render().unwrap();
 
-        if window.input().get_key(b'D') || window.input().get_key(0x27) {
+        if window.input().get_key(alexandria::Key::D)
+            || window.input().get_key(alexandria::Key::RightArrow)
+        {
             y_rotation += 0.01;
         }
 
-        if window.input().get_key(b'A') || window.input().get_key(0x25) {
+        if window.input().get_key(alexandria::Key::A)
+            || window.input().get_key(alexandria::Key::LeftArrow)
+        {
             y_rotation -= 0.01;
         }
 
-        if window.input().get_key(b'W') || window.input().get_key(0x26) {
+        if window.input().get_key(alexandria::Key::W)
+            || window.input().get_key(alexandria::Key::UpArrow)
+        {
             x_rotation -= 0.01;
         }
 
-        if window.input().get_key(b'S') || window.input().get_key(0x28) {
+        if window.input().get_key(alexandria::Key::S)
+            || window.input().get_key(alexandria::Key::DownArrow)
+        {
             x_rotation += 0.01;
         }
 
