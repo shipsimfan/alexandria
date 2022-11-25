@@ -11,8 +11,8 @@ mod window;
 //pub mod compute;
 
 pub use alexandria_common::{
-    FitScreenUpdater, FixedAspectUpdater, Format, Input, Key, MouseButton, SampleType, Vector2,
-    Vector3, Vector4, ViewportUpdater,
+    FitScreenUpdater, FixedAspectUpdater, Format, Input, Key, MouseButton, SampleType,
+    UpdateRegion, Vector2, Vector3, Vector4, ViewportUpdater,
 };
 
 pub use constant_buffer::*;
