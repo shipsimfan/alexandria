@@ -1,14 +1,31 @@
-[package]
+[workspace]
+members = ["dx12", "common"]
+
+[workspace.package]
+authors = ["Lance Hart <me@lancehart.ca>"]
 edition = "2021"
+license-file = "LICENSE.md"
+readme = "README.md"
+repository = "https://github.com/shipsimfan/alexandria"
+version = "0.0.0"
+
+[workspace.dependencies]
+dx12 = { path = "./dx12" }
+common = { path = "./common" }
+
+[package]
 name = "alexandria"
-version = "0.1.0"
+description = "A graphics library"
+
+authors = { workspace = true }
+edition = { workspace = true }
+license-file = { workspace = true }
+readme = { workspace = true }
+repository = { workspace = true }
+version = { workspace = true }
 
 [dependencies]
-alexandria_common = {git = "https://github.com/shipsimfan/alexandria-common.git"}
-ginger = {git = "https://github.com/shipsimfan/ginger.git"}
+common = { workspace = true }
 
 [target.'cfg(windows)'.dependencies]
-alexandria_dx11 = {git = "https://github.com/shipsimfan/alexandria-dx11.git"}
-
-[target.'cfg(unix)'.dependencies]
-alexandria_opengl = {git = "https://github.com/shipsimfan/alexandria-opengl.git"}
+dx12 = { workspace = true }

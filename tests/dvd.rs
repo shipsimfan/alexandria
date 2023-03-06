@@ -1,3 +1,5 @@
+/*use alexandria::Vector4;
+
 #[repr(C)]
 struct Vertex {
     position: alexandria::Vector2,
@@ -73,7 +75,27 @@ fn dvd() {
 
     let mut mesh = alexandria::Mesh::new(&VERTICES, &INDICES, &mut window).unwrap();
 
-    let mut texture = alexandria::Texture2D::new(
+    let mut font = alexandria::Font::new(
+        "Arial",
+        alexandria::FontWeight::Normal,
+        false,
+        14,
+        &mut window,
+    )
+    .unwrap();
+
+    let mut texture = font
+        .render_text(
+            "Testing",
+            image.width(),
+            image.height(),
+            Vector4::ONE,
+            0,
+            &mut window,
+        )
+        .unwrap();
+
+    /*let mut texture = alexandria::Texture2D::new(
         image.pixels(),
         image.width(),
         image.height(),
@@ -81,7 +103,7 @@ fn dvd() {
         alexandria::SampleType::Point,
         &mut window,
     )
-    .unwrap();
+    .unwrap();*/
 
     drop(image);
 
@@ -135,3 +157,4 @@ fn dvd() {
         matrix_buffer.color = COLORS[current_color];
     }
 }
+*/

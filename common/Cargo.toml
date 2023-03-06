@@ -1,0 +1,10 @@
+[package]
+name = "common"
+description = "Common definitions for the different platforms"
+
+authors = { workspace = true }
+edition = { workspace = true }
+license-file = { workspace = true }
+readme = { workspace = true }
+repository = { workspace = true }
+version = { workspace = true }

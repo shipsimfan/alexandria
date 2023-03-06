@@ -1,0 +1,14 @@
+
+[package]
+name = "dx12"
+description = "DirectX 12 implementation of alexandria"
+
+authors = { workspace = true }
+edition = { workspace = true }
+license-file = { workspace = true }
+readme = { workspace = true }
+repository = { workspace = true }
+version = { workspace = true }
+
+[dependencies]
+common = { workspace = true }

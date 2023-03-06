@@ -1,4 +1,4 @@
-#[repr(C)]
+/*#[repr(C)]
 struct Vertex {
     position: alexandria::Vector4,
     color: alexandria::Vector4,
@@ -47,3 +47,4 @@ fn triangle() {
         window.end_render().unwrap();
     }
 }
+*/
