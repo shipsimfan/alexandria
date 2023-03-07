@@ -2,13 +2,25 @@
 fn basic() -> Result<(), alexandria::Error> {
     let mut instance = alexandria::Instance::new()?;
 
-    println!("Adapters:");
+    println!("Adapters & Displays:");
     for adapter in instance.enum_adapters()? {
-        let adapter = adapter?;
+        let mut adapter = adapter?;
         println!("  - {}", adapter.name());
+
+        for display in adapter.enum_displays()? {
+            let display = display?;
+            println!("      - {}", display.name());
+        }
     }
 
-    println!("Default: {}", instance.default_adapter()?.name());
+    let mut default_adapter = instance.default_adapter()?;
+    let default_display = default_adapter.default_display()?;
+
+    println!(
+        "Default: {} - {}",
+        default_adapter.name(),
+        default_display.name()
+    );
 
     Ok(())
 }
