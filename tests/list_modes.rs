@@ -11,13 +11,18 @@ fn list_modes() -> Result<(), alexandria::Error> {
             let display = display?;
             println!("      - {}", display.name());
 
-            for display_mode in display.display_modes() {
-                println!(
-                    "          - {} x {} @ {:.02} Hz",
-                    display_mode.width(),
-                    display_mode.height(),
-                    display_mode.refresh_rate().as_f32(),
-                )
+            for available_resolution in display.available_resolutions() {
+                print!("          - {} (", available_resolution.resolution());
+
+                let refresh_rates = available_resolution.refresh_rates();
+                for i in 0..refresh_rates.len() {
+                    print!("{}", refresh_rates[i]);
+
+                    if i != refresh_rates.len() - 1 {
+                        print!(", ");
+                    }
+                }
+                println!(")");
             }
         }
     }
@@ -26,9 +31,11 @@ fn list_modes() -> Result<(), alexandria::Error> {
     let default_display = default_adapter.default_display()?;
 
     println!(
-        "Default: {} - {}",
+        "Default: {} - {} ({} @ {})",
         default_adapter.name(),
-        default_display.name()
+        default_display.name(),
+        default_display.available_resolutions()[0].resolution(),
+        default_display.available_resolutions()[0].refresh_rates()[0],
     );
 
     Ok(())
