@@ -8,7 +8,7 @@ pub struct Display {
     display_modes: Vec<DisplayMode>,
 }
 
-#[derive(PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct DisplayMode {
     width: usize,
     height: usize,
@@ -28,7 +28,7 @@ fn get_display_modes(display: &mut win32::IDXGIOutput6) -> Result<Vec<DisplayMod
         .get_display_mode_list1(DISPLAY_FORMAT, &[])?
         .into_iter()
         .map(|mode| {
-            DisplayMode::new(
+            DisplayMode::new_rational(
                 mode.width() as usize,
                 mode.height() as usize,
                 mode.refresh_rate(),
@@ -65,14 +65,102 @@ impl Display {
     pub fn display_modes(&self) -> &[DisplayMode] {
         &self.display_modes
     }
+
+    pub fn find_closest_mode(&self, display_mode: &DisplayMode) -> &DisplayMode {
+        // Find the modes which are the same or better
+        let mut matching_resolution = Vec::new();
+        let mut greater_resolution = Vec::new();
+        for mode in &self.display_modes {
+            if mode.width < display_mode.width {
+                // Because of sorting, if the width goes below the target it will never come back above
+                break;
+            }
+
+            if mode.height < display_mode.height || mode.refresh_rate < display_mode.refresh_rate {
+                continue;
+            }
+
+            if mode.width == display_mode.width && mode.height == display_mode.height {
+                matching_resolution.push(mode);
+            } else {
+                greater_resolution.push(mode);
+            }
+        }
+
+        // Find the closest match
+        if matching_resolution.len() > 0 {
+            let mut best_mode = None;
+            let mut lowest_refresh = f32::INFINITY;
+
+            for mode in matching_resolution {
+                if mode.refresh_rate.as_f32() >= display_mode.refresh_rate.as_f32()
+                    && display_mode.refresh_rate.as_f32() < lowest_refresh
+                {
+                    lowest_refresh = mode.refresh_rate.as_f32();
+                    best_mode = Some(mode);
+                }
+            }
+
+            return best_mode.unwrap();
+        }
+
+        // Reversing the list and getting the first with a greater refresh rate
+        //   will guarantee that the mode selected has the closest resolution
+        greater_resolution.reverse();
+        for mode in greater_resolution {
+            if mode.refresh_rate >= display_mode.refresh_rate {
+                return mode;
+            }
+        }
+
+        // If no matches, return the best available mode
+        &self.display_modes[0]
+    }
 }
 
 impl DisplayMode {
-    pub(self) fn new(width: usize, height: usize, refresh_rate: win32::DXGIRational) -> Self {
+    pub(crate) fn new_rational(
+        width: usize,
+        height: usize,
+        refresh_rate: win32::DXGIRational,
+    ) -> Self {
         DisplayMode {
             width,
             height,
             refresh_rate,
+        }
+    }
+
+    pub fn new(width: usize, height: usize, refresh_rate: (usize, usize)) -> Self {
+        Self::new_rational(
+            width,
+            height,
+            win32::DXGIRational::new(refresh_rate.0 as u32, refresh_rate.1 as u32),
+        )
+    }
+
+    pub fn parse_refresh_rate(refresh_rate: &str) -> Option<(usize, usize)> {
+        let mut parts = refresh_rate.split('/');
+
+        let numerator = match parts.next() {
+            Some(numerator) => match numerator.parse() {
+                Ok(numerator) => numerator,
+                Err(_) => return None,
+            },
+            None => return None,
+        };
+
+        let denominator = match parts.next() {
+            Some(denominator) => match denominator.parse() {
+                Ok(denominator) => denominator,
+                Err(_) => return None,
+            },
+            None => return None,
+        };
+
+        match parts.next() {
+            Some(_) => None,
+            None => Some((numerator, denominator)),
         }
     }
 
@@ -86,5 +174,13 @@ impl DisplayMode {
 
     pub fn refresh_rate(&self) -> f32 {
         self.refresh_rate.as_f32()
+    }
+
+    pub fn serialize_refresh_rate(&self) -> String {
+        format!(
+            "{}/{}",
+            self.refresh_rate.numerator(),
+            self.refresh_rate.denominator()
+        )
     }
 }
