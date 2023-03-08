@@ -15,12 +15,14 @@ pub struct Display {
     available_resolutions: Vec<AvailableResolution>,
 }
 
-fn get_display_name(device_name: &[u16]) -> Result<String, crate::Error> {
-    let display_device = win32::enum_display_devices(device_name, 0)?;
-    Ok(String::from_utf16(display_device.device_string())
-        .unwrap()
-        .trim()
-        .to_owned())
+fn get_display_name(device_name: &[u16]) -> String {
+    match win32::enum_display_devices(device_name, 0) {
+        Some(display_device) => String::from_utf16(display_device.device_string())
+            .unwrap()
+            .trim()
+            .to_owned(),
+        None => String::from("Unnamed"),
+    }
 }
 
 impl Display {
@@ -28,7 +30,7 @@ impl Display {
         let mut display: win32::IDXGIOutput6 = display.query_interface()?;
         let desc = display.get_desc1()?;
 
-        let name = get_display_name(desc.device_name())?;
+        let name = get_display_name(desc.device_name());
         let available_resolutions = AvailableResolution::get(&mut display)?;
 
         Ok(Display {
