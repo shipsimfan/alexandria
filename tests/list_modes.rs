@@ -1,5 +1,5 @@
 #[test]
-fn basic() -> Result<(), alexandria::Error> {
+fn list_modes() -> Result<(), alexandria::Error> {
     let mut instance = alexandria::Instance::new()?;
 
     println!("Adapters & Displays:");
