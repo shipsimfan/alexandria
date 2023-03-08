@@ -16,7 +16,7 @@ fn list_modes() -> Result<(), alexandria::Error> {
                     "          - {} x {} @ {:.02} Hz",
                     display_mode.width(),
                     display_mode.height(),
-                    display_mode.refresh_rate(),
+                    display_mode.refresh_rate().as_f32(),
                 )
             }
         }

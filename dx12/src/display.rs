@@ -12,7 +12,12 @@ pub struct Display {
 pub struct DisplayMode {
     width: usize,
     height: usize,
-    refresh_rate: win32::DXGIRational,
+    refresh_rate: RefreshRate,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub struct RefreshRate {
+    inner: win32::DXGIRational,
 }
 
 fn get_display_name(device_name: &[u16]) -> Result<String, crate::Error> {
@@ -90,13 +95,15 @@ impl Display {
         // Find the closest match
         if matching_resolution.len() > 0 {
             let mut best_mode = None;
-            let mut lowest_refresh = f32::INFINITY;
+            let mut lowest_refresh = RefreshRate {
+                inner: win32::DXGIRational::new(u32::MAX, 1),
+            };
 
             for mode in matching_resolution {
-                if mode.refresh_rate.as_f32() >= display_mode.refresh_rate.as_f32()
-                    && display_mode.refresh_rate.as_f32() < lowest_refresh
+                if mode.refresh_rate >= display_mode.refresh_rate
+                    && display_mode.refresh_rate < lowest_refresh
                 {
-                    lowest_refresh = mode.refresh_rate.as_f32();
+                    lowest_refresh = mode.refresh_rate;
                     best_mode = Some(mode);
                 }
             }
@@ -127,19 +134,35 @@ impl DisplayMode {
         DisplayMode {
             width,
             height,
+            refresh_rate: RefreshRate {
+                inner: refresh_rate,
+            },
+        }
+    }
+
+    pub fn new(width: usize, height: usize, refresh_rate: RefreshRate) -> Self {
+        DisplayMode {
+            width,
+            height,
             refresh_rate,
         }
     }
 
-    pub fn new(width: usize, height: usize, refresh_rate: (usize, usize)) -> Self {
-        Self::new_rational(
-            width,
-            height,
-            win32::DXGIRational::new(refresh_rate.0 as u32, refresh_rate.1 as u32),
-        )
+    pub fn width(&self) -> usize {
+        self.width
     }
 
-    pub fn parse_refresh_rate(refresh_rate: &str) -> Option<(usize, usize)> {
+    pub fn height(&self) -> usize {
+        self.height
+    }
+
+    pub fn refresh_rate(&self) -> RefreshRate {
+        self.refresh_rate
+    }
+}
+
+impl RefreshRate {
+    pub fn parse(refresh_rate: &str) -> Option<Self> {
         let mut parts = refresh_rate.split('/');
 
         let numerator = match parts.next() {
@@ -160,27 +183,17 @@ impl DisplayMode {
 
         match parts.next() {
             Some(_) => None,
-            None => Some((numerator, denominator)),
+            None => Some(RefreshRate {
+                inner: win32::DXGIRational::new(numerator, denominator),
+            }),
         }
     }
 
-    pub fn width(&self) -> usize {
-        self.width
+    pub fn serialize(&self) -> String {
+        format!("{}/{}", self.inner.numerator(), self.inner.denominator())
     }
 
-    pub fn height(&self) -> usize {
-        self.height
-    }
-
-    pub fn refresh_rate(&self) -> f32 {
-        self.refresh_rate.as_f32()
-    }
-
-    pub fn serialize_refresh_rate(&self) -> String {
-        format!(
-            "{}/{}",
-            self.refresh_rate.numerator(),
-            self.refresh_rate.denominator()
-        )
+    pub fn as_f32(&self) -> f32 {
+        self.inner.as_f32()
     }
 }
