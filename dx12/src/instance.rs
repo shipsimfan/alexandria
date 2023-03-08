@@ -1,4 +1,4 @@
-use crate::Adapter;
+use crate::{Adapter, Result};
 use win32::DXGIFactory1;
 
 pub struct Instance {
@@ -11,7 +11,7 @@ pub struct AdapterIter<'a> {
 }
 
 impl Instance {
-    pub(self) fn enum_adapter(&mut self, adapter: u32) -> Result<Option<Adapter>, crate::Error> {
+    pub(self) fn enum_adapter(&mut self, adapter: u32) -> Result<Option<Adapter>> {
         match self.dxgi_factory.enum_adapters1(adapter) {
             Ok(adapter) => match adapter {
                 Some(adapter) => Ok(Some(Adapter::new(adapter)?)),
@@ -20,15 +20,8 @@ impl Instance {
             Err(error) => Err(error),
         }
     }
-}
 
-impl common::Instance for Instance {
-    type Error = crate::Error;
-
-    type Adapter = crate::Adapter;
-    type AdapterIter<'a> = AdapterIter<'a>;
-
-    fn new() -> Result<Self, Self::Error> {
+    pub fn new() -> Result<Self> {
         #[cfg(debug_assertions)]
         let flags = &[win32::DXGICreateFactoryFlag::Debug];
         #[cfg(not(debug_assertions))]
@@ -39,20 +32,20 @@ impl common::Instance for Instance {
         Ok(Instance { dxgi_factory })
     }
 
-    fn enum_adapters<'a>(&'a mut self) -> Result<Self::AdapterIter<'a>, Self::Error> {
+    pub fn enum_adapters<'a>(&'a mut self) -> Result<AdapterIter<'a>> {
         Ok(AdapterIter {
             instance: self,
             index: 0,
         })
     }
 
-    fn default_adapter(&mut self) -> Result<Self::Adapter, Self::Error> {
+    pub fn default_adapter(&mut self) -> Result<Adapter> {
         self.enum_adapter(0).map(|adapter| adapter.unwrap())
     }
 }
 
 impl<'a> Iterator for AdapterIter<'a> {
-    type Item = Result<crate::Adapter, crate::Error>;
+    type Item = Result<Adapter>;
 
     fn next(&mut self) -> Option<Self::Item> {
         match self.instance.enum_adapter(self.index as u32) {

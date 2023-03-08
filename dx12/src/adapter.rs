@@ -1,4 +1,4 @@
-use crate::Display;
+use crate::{Display, Result};
 use win32::{DXGIAdapter, Interface};
 
 pub struct Adapter {
@@ -13,7 +13,7 @@ pub struct DisplayIter<'a> {
 }
 
 impl Adapter {
-    pub(crate) fn new(mut adapter: win32::IDXGIAdapter1) -> Result<Self, crate::Error> {
+    pub(crate) fn new(mut adapter: win32::IDXGIAdapter1) -> Result<Self> {
         let mut adapter: win32::IDXGIAdapter4 = adapter.query_interface()?;
 
         let desc = adapter.get_desc3()?;
@@ -23,7 +23,22 @@ impl Adapter {
         Ok(Adapter { adapter, name })
     }
 
-    pub(self) fn enum_display(&mut self, display: u32) -> Result<Option<Display>, crate::Error> {
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn enum_displays<'a>(&'a mut self) -> Result<DisplayIter<'a>> {
+        Ok(DisplayIter {
+            adapter: self,
+            index: 0,
+        })
+    }
+
+    pub fn default_display(&mut self) -> Result<Display> {
+        self.enum_display(0).map(|display| display.unwrap())
+    }
+
+    pub(self) fn enum_display(&mut self, display: u32) -> Result<Option<Display>> {
         match self.adapter.enum_outputs(display) {
             Ok(display) => match display {
                 Some(display) => Ok(Some(Display::new(display)?)),
@@ -34,30 +49,8 @@ impl Adapter {
     }
 }
 
-impl common::Adapter for Adapter {
-    type Error = crate::Error;
-
-    type Display = Display;
-    type DisplayIter<'a> = DisplayIter<'a>;
-
-    fn name(&self) -> &str {
-        &self.name
-    }
-
-    fn enum_displays<'a>(&'a mut self) -> Result<Self::DisplayIter<'a>, Self::Error> {
-        Ok(DisplayIter {
-            adapter: self,
-            index: 0,
-        })
-    }
-
-    fn default_display(&mut self) -> Result<Self::Display, Self::Error> {
-        self.enum_display(0).map(|display| display.unwrap())
-    }
-}
-
 impl<'a> Iterator for DisplayIter<'a> {
-    type Item = Result<Display, crate::Error>;
+    type Item = Result<Display>;
 
     fn next(&mut self) -> Option<Self::Item> {
         match self.adapter.enum_display(self.index as u32) {

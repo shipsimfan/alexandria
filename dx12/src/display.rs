@@ -57,18 +57,13 @@ impl Display {
             display_modes,
         })
     }
-}
 
-impl common::Display for Display {
-    type DisplayMode = DisplayMode;
-    type DisplayModeIter<'a> = std::slice::Iter<'a, Self::DisplayMode>;
-
-    fn name(&self) -> &str {
+    pub fn name(&self) -> &str {
         &self.name
     }
 
-    fn display_modes<'a>(&'a self) -> Self::DisplayModeIter<'a> {
-        self.display_modes.iter()
+    pub fn display_modes(&self) -> &[DisplayMode] {
+        &self.display_modes
     }
 }
 
@@ -80,18 +75,16 @@ impl DisplayMode {
             refresh_rate,
         }
     }
-}
 
-impl common::DisplayMode for DisplayMode {
-    fn width(&self) -> usize {
+    pub fn width(&self) -> usize {
         self.width
     }
 
-    fn height(&self) -> usize {
+    pub fn height(&self) -> usize {
         self.height
     }
 
-    fn refresh_rate(&self) -> f32 {
+    pub fn refresh_rate(&self) -> f32 {
         self.refresh_rate.as_f32()
     }
 }
