@@ -10,6 +10,15 @@ fn basic() -> Result<(), alexandria::Error> {
         for display in adapter.enum_displays()? {
             let display = display?;
             println!("      - {}", display.name());
+
+            for display_mode in display.display_modes() {
+                println!(
+                    "          - {} x {} @ {:.02} Hz",
+                    display_mode.width(),
+                    display_mode.height(),
+                    display_mode.refresh_rate(),
+                )
+            }
         }
     }
 
