@@ -9,8 +9,8 @@ impl Resolution {
         Resolution { width, height }
     }
 
-    pub fn parse(refresh_rate: &str) -> Option<Self> {
-        let mut parts = refresh_rate.split('x');
+    pub fn parse(resolution: &str) -> Option<Self> {
+        let mut parts = resolution.split('x');
 
         let width = match parts.next() {
             Some(width) => match width.parse() {
