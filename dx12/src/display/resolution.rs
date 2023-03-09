@@ -43,7 +43,7 @@ impl Resolution {
     }
 
     pub fn height(&self) -> usize {
-        self.width
+        self.height
     }
 
     pub fn set_width(&mut self, width: usize) {

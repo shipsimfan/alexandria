@@ -65,6 +65,20 @@ impl AvailableResolution {
         &self.refresh_rates
     }
 
+    pub(super) fn closest_refresh_rate(&self, refresh_rate: RefreshRate) -> RefreshRate {
+        for rate in self.refresh_rates.iter().rev() {
+            if *rate >= refresh_rate {
+                return *rate;
+            }
+        }
+
+        self.best_refresh_rate()
+    }
+
+    pub(super) fn best_refresh_rate(&self) -> RefreshRate {
+        self.refresh_rates[0]
+    }
+
     fn add_refresh_rate(&mut self, refresh_rate: RefreshRate) {
         for available_refresh_rate in &self.refresh_rates {
             if *available_refresh_rate == refresh_rate {

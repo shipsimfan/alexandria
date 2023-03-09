@@ -2,11 +2,13 @@ mod adapter;
 mod display;
 mod instance;
 mod message_box;
+mod window;
 
 pub use adapter::*;
 pub use display::*;
 pub use instance::*;
 pub use message_box::*;
+pub use window::*;
 
 pub type Error = win32::Win32Error;
 pub type Result<T> = core::result::Result<T, Error>;
