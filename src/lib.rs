@@ -3,4 +3,4 @@ use dx12 as system;
 
 pub use system::*;
 
-pub use common::MessageBoxClass;
+pub use common::{DebugMessage, DebugMessageLevel, MessageBoxClass};

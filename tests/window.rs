@@ -13,6 +13,11 @@ fn window() -> Result<(), alexandria::Error> {
 
     while window.is_alive() {
         window.poll_events();
+
+        #[cfg(debug_assertions)]
+        while let Some(message) = instance.pop_debug_message()? {
+            println!("[{}] {}", message.level(), message.message());
+        }
     }
 
     Ok(())
