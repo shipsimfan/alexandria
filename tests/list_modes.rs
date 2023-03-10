@@ -1,6 +1,6 @@
 #[test]
 fn list_modes() -> Result<(), alexandria::Error> {
-    let mut instance = alexandria::Instance::new()?;
+    let mut instance = alexandria::Instance::new(false)?;
 
     println!("Adapters & Displays:");
     for adapter in instance.enum_adapters()? {

@@ -1,16 +1,11 @@
 use crate::{Adapter, Result};
-
-#[cfg(debug_assertions)]
 use common::DebugMessage;
-#[cfg(debug_assertions)]
 use debug::Debug;
 
 mod adapter_iter;
 mod class;
-mod wnd_proc;
-
-#[cfg(debug_assertions)]
 mod debug;
+mod wnd_proc;
 
 pub(crate) use class::WindowClass;
 
@@ -22,14 +17,12 @@ pub struct Instance {
     instance_handle: win32::HInstance,
     window_class: WindowClass,
 
-    #[cfg(debug_assertions)]
     debug: Debug,
 }
 
 impl Instance {
-    pub fn new() -> Result<Self> {
-        #[cfg(debug_assertions)]
-        let debug = Debug::new()?;
+    pub fn new(enable_debugging: bool) -> Result<Self> {
+        let debug = Debug::new(enable_debugging)?;
 
         #[cfg(debug_assertions)]
         let flags = &[win32::DXGICreateFactoryFlag::Debug];
@@ -48,7 +41,6 @@ impl Instance {
             instance_handle,
             window_class,
 
-            #[cfg(debug_assertions)]
             debug,
         })
     }
@@ -61,7 +53,6 @@ impl Instance {
         self.enum_adapters()?.next().unwrap()
     }
 
-    #[cfg(debug_assertions)]
     pub fn pop_debug_message(&mut self) -> Result<Option<DebugMessage>> {
         self.debug.pop_message()
     }

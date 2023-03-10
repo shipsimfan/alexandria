@@ -1,6 +1,11 @@
 #[test]
 fn window() -> Result<(), alexandria::Error> {
-    let mut instance = alexandria::Instance::new()?;
+    #[cfg(debug_assertions)]
+    let enable_debugging = true;
+    #[cfg(not(debug_assertions))]
+    let enable_debugging = false;
+
+    let mut instance = alexandria::Instance::new(enable_debugging)?;
 
     let mut window = alexandria::Window::new(
         "Testing",
