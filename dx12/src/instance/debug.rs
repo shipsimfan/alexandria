@@ -1,6 +1,6 @@
 use crate::Result;
 use common::{DebugMessage, DebugMessageLevel};
-use win32::DXGIDebug;
+use win32::{D3D12Debug, DXGIDebug};
 
 pub struct Debug {
     dxgi_info_queue: win32::IDXGIInfoQueue,
@@ -13,6 +13,9 @@ impl Debug {
         dxgi_debug.report_live_objects(win32::DXGIDebugID::All, win32::DXGIDebugRLOFlag::Detail)?;
 
         let dxgi_info_queue = win32::dxgi_get_debug_interface1::<win32::IDXGIInfoQueue>()?;
+
+        let mut d3d12_debug = win32::d3d12_get_debug_interface::<win32::ID3D12Debug3>()?;
+        d3d12_debug.enable_debug_layer();
 
         Ok(Debug {
             dxgi_info_queue,
