@@ -17,12 +17,16 @@ pub struct Instance {
     instance_handle: win32::HInstance,
     window_class: WindowClass,
 
-    debug: Debug,
+    debug: Option<Debug>,
 }
 
 impl Instance {
     pub fn new(enable_debugging: bool) -> Result<Self> {
-        let debug = Debug::new(enable_debugging)?;
+        let debug = if enable_debugging {
+            Some(Debug::new()?)
+        } else {
+            None
+        };
 
         #[cfg(debug_assertions)]
         let flags = &[win32::DXGICreateFactoryFlag::Debug];
@@ -54,7 +58,10 @@ impl Instance {
     }
 
     pub fn pop_debug_message(&mut self) -> Result<Option<DebugMessage>> {
-        self.debug.pop_message()
+        match &mut self.debug {
+            Some(debug) => debug.pop_message(),
+            None => Ok(None),
+        }
     }
 
     pub(crate) fn instance_handle(&self) -> win32::HInstance {
