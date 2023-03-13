@@ -33,4 +33,8 @@ impl Adapter {
     pub fn default_display(&mut self) -> Result<Display> {
         self.enum_displays()?.next().unwrap()
     }
+
+    pub(crate) fn inner(&mut self) -> &mut win32::IDXGIAdapter4 {
+        &mut self.adapter
+    }
 }

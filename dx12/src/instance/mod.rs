@@ -5,7 +5,6 @@ use debug::Debug;
 mod adapter_iter;
 mod class;
 mod debug;
-mod wnd_proc;
 
 pub(crate) use class::WindowClass;
 
@@ -64,11 +63,19 @@ impl Instance {
         }
     }
 
+    pub(crate) fn debug_enabled(&self) -> bool {
+        self.debug.is_some()
+    }
+
     pub(crate) fn instance_handle(&self) -> win32::HInstance {
         self.instance_handle
     }
 
     pub(crate) fn window_class(&self) -> &WindowClass {
         &self.window_class
+    }
+
+    pub(crate) fn dxgi_factory(&mut self) -> &mut win32::IDXGIFactory7 {
+        &mut self.dxgi_factory
     }
 }

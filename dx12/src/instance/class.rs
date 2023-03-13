@@ -1,7 +1,6 @@
-use super::wnd_proc::wnd_proc;
-use crate::Result;
+use crate::{wnd_proc, Result};
 
-pub struct WindowClass {
+pub(crate) struct WindowClass {
     atom: win32::Atom,
 }
 

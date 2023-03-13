@@ -1,3 +1,5 @@
+#![feature(negative_impls)]
+
 mod adapter;
 mod display;
 mod instance;

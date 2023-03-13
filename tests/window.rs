@@ -20,10 +20,27 @@ fn window() -> Result<(), alexandria::Error> {
         window.poll_events();
 
         #[cfg(debug_assertions)]
-        while let Some(message) = instance.pop_debug_message()? {
-            println!("[{}] {}", message.level(), message.message());
-        }
+        print_debug_messages(&mut instance, &mut window)?;
     }
 
     Ok(())
+}
+
+fn print_debug_messages(
+    instance: &mut alexandria::Instance,
+    window: &mut alexandria::Window,
+) -> alexandria::Result<()> {
+    while let Some(message) = instance.pop_debug_message()? {
+        print_debug_message(message)
+    }
+
+    while let Some(message) = window.pop_debug_message()? {
+        print_debug_message(message)
+    }
+
+    Ok(())
+}
+
+fn print_debug_message(message: alexandria::DebugMessage) {
+    println!("[{}] {}", message.level(), message.message());
 }
