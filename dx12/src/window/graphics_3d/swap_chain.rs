@@ -1,7 +1,7 @@
-use super::command_queue::CommandQueue;
+use super::{command_queue::CommandQueue, FRAME_COUNT};
 use crate::{instance::Debug, map_instance_error, Instance, Resolution, Result, DISPLAY_FORMAT};
 use std::sync::{Arc, Mutex};
-use win32::{DXGIFactory2, Interface};
+use win32::{DXGIFactory2, DXGISwapChain, Interface};
 
 pub(super) struct SwapChain {
     swap_chain: win32::IDXGISwapChain4,
@@ -25,7 +25,7 @@ impl SwapChain {
             false,
             win32::DXGISampleDesc::new(1, 0),
             win32::DXGIUsage::RenderTargetOutput,
-            2,
+            FRAME_COUNT,
             win32::DXGIScaling::Stretch,
             win32::DXGISwapEffect::FlipDiscard,
             win32::DXGIAlphaMode::Ignore,
@@ -50,5 +50,13 @@ impl SwapChain {
         )?;
 
         Ok(SwapChain { swap_chain, debug })
+    }
+
+    pub(super) fn get_buffer(&mut self, buffer: usize) -> Result<win32::ID3D12Resource> {
+        map_instance_error!(
+            self.swap_chain.get_buffer(buffer as u32),
+            EnumBackBuffer,
+            self.debug
+        )
     }
 }

@@ -10,11 +10,13 @@ pub enum ErrorKind {
     CreateD3D12Debug,
     CreateCommandQueue,
     CreateSwapChain,
+    CreateHeap,
 
     // Enumeration Errors
     EnumAdapter,
     EnumDisplay,
     EnumAvailableResolution,
+    EnumBackBuffer,
 }
 
 impl std::fmt::Debug for ErrorKind {
@@ -40,11 +42,13 @@ impl std::fmt::Display for ErrorKind {
                 ErrorKind::CreateD3D12Debug => "Unable to create the D3D12 debugger",
                 ErrorKind::CreateCommandQueue => "Unable to create the command queue",
                 ErrorKind::CreateSwapChain => "Unable to create the swap chain",
+                ErrorKind::CreateHeap => "Unable to create a heap",
 
                 // Enumeration Errors
                 ErrorKind::EnumAdapter => "Unable to enumerate an adapter",
                 ErrorKind::EnumDisplay => "Unable to enumerate a display",
                 ErrorKind::EnumAvailableResolution => "Unable to enumerate an available resolution",
+                ErrorKind::EnumBackBuffer => "Unable to enumerate a back buffer",
             }
         )
     }

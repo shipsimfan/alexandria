@@ -26,4 +26,32 @@ impl Device {
     ) -> Result<win32::ID3D12CommandQueue> {
         self.device.create_command_queue(desc)
     }
+
+    pub(super) fn create_command_allocator(
+        &mut self,
+        r#type: win32::D3D12CommandListType,
+    ) -> Result<win32::ID3D12CommandAllocator> {
+        self.device.create_command_allocator(r#type)
+    }
+
+    pub(super) fn create_heap(
+        &mut self,
+        desc: &win32::D3D12DescriptorHeapDesc,
+    ) -> Result<(win32::ID3D12DescriptorHeap, usize)> {
+        let r#type = desc.r#type();
+
+        let heap = self.device.create_descriptor_heap(desc)?;
+        let increment_size = self.device.get_descriptor_handle_increment(r#type);
+
+        Ok((heap, increment_size as usize))
+    }
+
+    pub(super) fn create_render_target_view(
+        &mut self,
+        resource: &mut win32::ID3D12Resource,
+        handle: win32::D3D12CPUDescriptorHandle,
+    ) {
+        self.device
+            .create_render_target_view(Some(resource), None, handle)
+    }
 }

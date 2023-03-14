@@ -2,20 +2,26 @@ use crate::{map_raw_error, Adapter, Instance, Resolution, Result};
 use command_queue::CommandQueue;
 use common::DebugMessage;
 use device::Device;
+use render_target_view::RenderTargetView;
 use std::sync::{Arc, Mutex};
 use swap_chain::SwapChain;
 
 mod command_queue;
 mod debug;
 mod device;
+mod heap;
+mod render_target_view;
 mod swap_chain;
 
 pub(crate) use debug::Debug;
+
+const FRAME_COUNT: u32 = 2;
 
 pub struct Graphics3D {
     device: Device,
     command_queue: CommandQueue,
     swap_chain: SwapChain,
+    render_target_view: RenderTargetView,
 
     debug: Option<Arc<Mutex<Debug>>>,
 }
@@ -37,12 +43,20 @@ impl Graphics3D {
 
         let mut command_queue = CommandQueue::new(&mut device, debug.clone())?;
 
-        let swap_chain = SwapChain::new(resolution, &mut command_queue, wnd, instance)?;
+        let mut swap_chain = SwapChain::new(resolution, &mut command_queue, wnd, instance)?;
+
+        let render_target_view = RenderTargetView::new(
+            &mut device,
+            &mut swap_chain,
+            debug.clone(),
+            FRAME_COUNT as usize,
+        )?;
 
         Ok(Graphics3D {
             device,
             command_queue,
             swap_chain,
+            render_target_view,
 
             debug,
         })
