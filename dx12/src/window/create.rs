@@ -1,4 +1,4 @@
-use crate::{Display, Instance, Resolution, Result};
+use crate::{map_raw_error, Display, Instance, Resolution, Result};
 
 pub(super) fn create_window(
     instance: &Instance,
@@ -8,24 +8,27 @@ pub(super) fn create_window(
     y: isize,
     title: &[u16],
 ) -> Result<win32::HWnd> {
-    win32::create_window_ex(
-        &[],
-        instance.window_class().as_class_name(),
-        title,
-        &[
-            win32::WindowStyle::Caption,
-            win32::WindowStyle::SysMenu,
-            win32::WindowStyle::MinimizeBox,
-            win32::WindowStyle::Visible,
-        ],
-        x as i32,
-        y as i32,
-        width as i32,
-        height as i32,
-        None,
-        None,
-        Some(instance.instance_handle()),
-        None,
+    map_raw_error!(
+        win32::create_window_ex(
+            &[],
+            instance.window_class().as_class_name(),
+            title,
+            &[
+                win32::WindowStyle::Caption,
+                win32::WindowStyle::SysMenu,
+                win32::WindowStyle::MinimizeBox,
+                win32::WindowStyle::Visible,
+            ],
+            x as i32,
+            y as i32,
+            width as i32,
+            height as i32,
+            None,
+            None,
+            Some(instance.instance_handle()),
+            None,
+        ),
+        CreateWindow
     )
 }
 

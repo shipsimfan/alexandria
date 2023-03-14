@@ -1,4 +1,4 @@
-use crate::{wnd_proc, Result};
+use crate::window::wnd_proc;
 
 pub(crate) struct WindowClass {
     atom: win32::Atom,
@@ -10,7 +10,7 @@ const CLASS_NAME: &[u16] = &[
 ]; // "Alexandria Window Class"
 
 impl WindowClass {
-    pub(super) fn new(instance: win32::HInstance) -> Result<Self> {
+    pub(super) fn new(instance: win32::HInstance) -> Result<Self, win32::Win32Error> {
         let wnd_class = win32::WndClassEx::new(
             &[
                 win32::ClassStyle::HRedraw,

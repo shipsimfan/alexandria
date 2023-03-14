@@ -1,25 +1,21 @@
-use crate::{Adapter, Display, Instance, RefreshRate, Resolution, Result, DISPLAY_FORMAT};
-use common::DebugMessage;
-use debug::Debug;
-use win32::{string_to_utf16, D3D12Device, D3D12Object, DXGIFactory, DXGIFactory2, Interface};
+use crate::{Adapter, Display, Instance, RefreshRate, Resolution, Result};
+use win32::string_to_utf16;
 
 pub struct Window {
     wnd: win32::HWnd,
     alive: bool,
 
-    device: win32::ID3D12Device,
-    command_queue: win32::ID3D12CommandQueue,
-
-    swap_chain: win32::IDXGISwapChain4,
-
-    debug: Option<Debug>,
+    graphics_3d: Graphics3D,
 }
 
 mod create;
-mod debug;
 mod wnd_proc;
 
+pub(crate) mod graphics_3d;
+
 pub(crate) use wnd_proc::wnd_proc;
+
+pub use graphics_3d::Graphics3D;
 
 impl Window {
     pub fn new(
@@ -43,7 +39,7 @@ impl Window {
 
         // Convert the provided values
         let title = string_to_utf16!(title);
-        let (resolution, refresh_rate) = display.find_closest_resolution(resolution, refresh_rate);
+        let (resolution, _) = display.find_closest_resolution(resolution, refresh_rate);
         let (x, y) = create::calculate_window_position(resolution, &display);
 
         // Create the window
@@ -56,68 +52,22 @@ impl Window {
             &title,
         )?;
 
-        // Create the D3D12 Device
-        let mut device: win32::ID3D12Device =
-            win32::d3d12_create_device(adapter.inner(), win32::D3DFeatureLevel::_12_1)?;
-        device.set_name(&string_to_utf16!("D3D12 Device"))?;
-
-        let debug = if instance.debug_enabled() {
-            Some(Debug::new(&mut device)?)
-        } else {
-            None
-        };
-
-        // Create the command queue
-        let command_queue_desc = win32::D3D12CommandQueueDesc::new(
-            win32::D3D12CommandListType::Direct,
-            win32::D3D12CommandQueuePriority::Normal as i32,
-            &[],
-            0,
-        );
-        let mut command_queue: win32::ID3D12CommandQueue =
-            device.create_command_queue(&command_queue_desc)?;
-        command_queue.set_name(&string_to_utf16!("D3D12 Command Queue"))?;
-
-        // Create the swap chain
-        let swap_chain_desc = win32::DXGISwapChainDesc1::new(
-            resolution.width() as u32,
-            resolution.height() as u32,
-            DISPLAY_FORMAT,
-            false,
-            win32::DXGISampleDesc::new(1, 0),
-            win32::DXGIUsage::RenderTargetOutput,
-            2,
-            win32::DXGIScaling::Stretch,
-            win32::DXGISwapEffect::FlipDiscard,
-            win32::DXGIAlphaMode::Ignore,
-            &[],
-        );
-        let swap_chain = instance
-            .dxgi_factory()
-            .create_swap_chain_for_hwnd(
-                &mut command_queue,
-                wnd,
-                &swap_chain_desc,
-                None,
-                None::<&mut win32::IDXGIOutput>,
-            )?
-            .query_interface()?;
+        // Create the 3D graphics context
+        let graphics_3d = Graphics3D::new(instance, &mut adapter, resolution, wnd)?;
 
         Ok(Window {
             wnd,
             alive: true,
-
-            device,
-            command_queue,
-
-            swap_chain,
-
-            debug,
+            graphics_3d,
         })
     }
 
     pub fn is_alive(&self) -> bool {
         self.alive
+    }
+
+    pub fn graphics_3d(&self) -> &Graphics3D {
+        &self.graphics_3d
     }
 
     pub fn poll_events(&mut self) {
@@ -130,13 +80,6 @@ impl Window {
             win32::dispatch_message(&msg);
         }
     }
-
-    pub fn pop_debug_message(&mut self) -> Result<Option<DebugMessage>> {
-        match &mut self.debug {
-            Some(debug) => debug.pop_message(),
-            None => Ok(None),
-        }
-    }
 }
 
 impl Drop for Window {
@@ -146,7 +89,3 @@ impl Drop for Window {
 }
 
 impl !Send for Window {}
-
-fn print_debug_message(message: common::DebugMessage) {
-    println!("[{}] {}", message.level(), message.message());
-}

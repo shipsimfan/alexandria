@@ -1,4 +1,5 @@
-use crate::{RefreshRate, Resolution, Result, DISPLAY_FORMAT};
+use crate::{instance::Debug, map_instance_error, RefreshRate, Resolution, Result, DISPLAY_FORMAT};
+use std::sync::{Arc, Mutex};
 use win32::{DXGIOutput1, IDXGIOutput6};
 
 #[derive(PartialEq, Eq)]
@@ -23,8 +24,15 @@ fn get_resolution<'a>(
 }
 
 impl AvailableResolution {
-    pub(crate) fn get(output: &mut IDXGIOutput6) -> Result<Vec<AvailableResolution>> {
-        let display_modes = output.get_display_mode_list1(DISPLAY_FORMAT, &[])?;
+    pub(crate) fn get(
+        output: &mut IDXGIOutput6,
+        debug: Option<&Arc<Mutex<Debug>>>,
+    ) -> Result<Vec<AvailableResolution>> {
+        let display_modes = map_instance_error!(
+            output.get_display_mode_list1(DISPLAY_FORMAT, &[]),
+            EnumAvailableResolution,
+            debug
+        )?;
 
         let mut available_resolutions = Vec::new();
         for display_mode in display_modes {

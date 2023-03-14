@@ -9,7 +9,7 @@ fn window() -> Result<(), alexandria::Error> {
 
     let mut window = alexandria::Window::new(
         "Testing",
-        Some(alexandria::Resolution::new(1920, 1080)),
+        Some(alexandria::Resolution::new(1280, 720)),
         None,
         &mut instance,
         None,
@@ -30,11 +30,11 @@ fn print_debug_messages(
     instance: &mut alexandria::Instance,
     window: &mut alexandria::Window,
 ) -> alexandria::Result<()> {
-    while let Some(message) = instance.pop_debug_message()? {
+    for message in instance.get_debug_messages()? {
         print_debug_message(message)
     }
 
-    while let Some(message) = window.pop_debug_message()? {
+    for message in window.graphics_3d().get_debug_messages()? {
         print_debug_message(message)
     }
 

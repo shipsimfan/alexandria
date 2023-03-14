@@ -44,10 +44,6 @@ impl RefreshRate {
     pub fn as_f32(&self) -> f32 {
         self.numerator as f32 / self.denominator as f32
     }
-
-    pub(crate) fn into_rational(&self) -> win32::DXGIRational {
-        win32::DXGIRational::new(self.numerator as u32, self.denominator as u32)
-    }
 }
 
 impl std::fmt::Display for RefreshRate {

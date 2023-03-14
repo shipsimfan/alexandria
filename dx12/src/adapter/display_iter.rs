@@ -1,23 +1,36 @@
-use crate::{Display, Result};
+use crate::{instance::Debug, instance_error, Display, Result};
+use std::sync::{Arc, Mutex};
 use win32::DXGIAdapter;
 
 pub struct DisplayIter<'a> {
     adapter: &'a mut win32::IDXGIAdapter4,
     index: usize,
+
+    debug: Option<&'a Arc<Mutex<Debug>>>,
 }
 
 impl<'a> DisplayIter<'a> {
-    pub(super) fn new(adapter: &'a mut win32::IDXGIAdapter4) -> Self {
-        DisplayIter { adapter, index: 0 }
+    pub(super) fn new(
+        adapter: &'a mut win32::IDXGIAdapter4,
+        debug: Option<&'a Arc<Mutex<Debug>>>,
+    ) -> Self {
+        DisplayIter {
+            adapter,
+            index: 0,
+            debug,
+        }
     }
 
     fn enum_display(&mut self, display: u32) -> Result<Option<Display>> {
         match self.adapter.enum_outputs(display) {
             Ok(display) => match display {
-                Some(display) => Ok(Some(Display::new(display)?)),
+                Some(display) => Ok(Some(Display::new(
+                    display,
+                    self.debug.clone().map(|debug| debug.to_owned()),
+                )?)),
                 None => Ok(None),
             },
-            Err(error) => Err(error),
+            Err(error) => Err(instance_error!(EnumDisplay, error, self.debug)),
         }
     }
 }

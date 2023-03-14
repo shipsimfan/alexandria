@@ -1,3 +1,5 @@
+use crate::{instance::Debug, map_instance_error};
+use std::sync::{Arc, Mutex};
 use win32::Interface;
 
 mod available_resolution;
@@ -8,6 +10,7 @@ pub use available_resolution::AvailableResolution;
 pub use refresh_rate::RefreshRate;
 pub use resolution::Resolution;
 
+#[allow(unused)]
 pub struct Display {
     display: win32::IDXGIOutput6,
 
@@ -16,6 +19,8 @@ pub struct Display {
 
     position: (isize, isize),
     size: (isize, isize),
+
+    debug: Option<Arc<Mutex<Debug>>>,
 }
 
 fn get_display_name(device_name: &[u16]) -> String {
@@ -44,12 +49,16 @@ fn get_position_and_size(monitor: win32::HMonitor) -> ((isize, isize), (isize, i
 }
 
 impl Display {
-    pub(crate) fn new(mut display: win32::IDXGIOutput) -> Result<Self, crate::Error> {
-        let mut display: win32::IDXGIOutput6 = display.query_interface()?;
-        let desc = display.get_desc1()?;
+    pub(crate) fn new(
+        mut display: win32::IDXGIOutput,
+        debug: Option<Arc<Mutex<Debug>>>,
+    ) -> Result<Self, crate::Error> {
+        let mut display: win32::IDXGIOutput6 =
+            map_instance_error!(display.query_interface(), CreateDisplay, debug)?;
+        let desc = map_instance_error!(display.get_desc1(), CreateDisplay, debug)?;
 
         let name = get_display_name(desc.device_name());
-        let available_resolutions = AvailableResolution::get(&mut display)?;
+        let available_resolutions = AvailableResolution::get(&mut display, debug.as_ref())?;
 
         let (position, size) = get_position_and_size(desc.monitor());
 
@@ -59,6 +68,7 @@ impl Display {
             available_resolutions,
             position,
             size,
+            debug,
         })
     }
 
