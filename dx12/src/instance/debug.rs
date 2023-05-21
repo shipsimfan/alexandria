@@ -1,28 +1,32 @@
 use common::{DebugMessage, DebugMessageLevel};
 use std::sync::{Arc, Mutex};
-use win32::{D3D12Debug, DXGIDebug};
+use win32::DXGIDebug;
 
 pub(crate) struct Debug {
-    info_queue: win32::IDXGIInfoQueue,
+    //info_queue: win32::IDXGIInfoQueue,
     current_message: u64,
 }
 
 impl Debug {
-    pub(super) fn new() -> Result<Arc<Mutex<Self>>, win32::Win32Error> {
+    pub(super) fn new() -> Result<Arc<Mutex<Self>>, win32::Error> {
         let mut debug = win32::dxgi_get_debug_interface1::<win32::IDXGIDebug1>()?;
-        debug.report_live_objects(win32::DXGIDebugID::All, win32::DXGIDebugRLOFlag::Summary)?;
+        unsafe { debug.as_mut() }
+            .report_live_objects(win32::DXGI_DEBUG_ALL, win32::DXGIDebugRLOFlag::Summary)?;
 
-        let info_queue = win32::dxgi_get_debug_interface1::<win32::IDXGIInfoQueue>()?;
+        //let info_queue = win32::dxgi_get_debug_interface1::<win32::IDXGIInfoQueue>()?;
 
+        /*
         let mut debug = win32::d3d12_get_debug_interface::<win32::ID3D12Debug3>()?;
         debug.enable_debug_layer();
+        */
 
         Ok(Arc::new(Mutex::new(Debug {
-            info_queue,
+            //info_queue,
             current_message: 0,
         })))
     }
 
+    /*
     pub(crate) fn pop_message(&mut self) -> Option<DebugMessage> {
         let num_messages = self
             .info_queue
@@ -49,4 +53,5 @@ impl Debug {
             },
         ))
     }
+    */
 }

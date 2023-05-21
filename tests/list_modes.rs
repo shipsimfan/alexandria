@@ -2,6 +2,7 @@
 fn list_modes() -> Result<(), alexandria::Error> {
     let mut instance = alexandria::Instance::new(false)?;
 
+    /*
     println!("Adapters & Displays:");
     for adapter in instance.enum_adapters()? {
         let mut adapter = adapter?;
@@ -37,6 +38,7 @@ fn list_modes() -> Result<(), alexandria::Error> {
         default_display.available_resolutions()[0].resolution(),
         default_display.available_resolutions()[0].refresh_rates()[0],
     );
+    */
 
     Ok(())
 }

@@ -7,6 +7,7 @@ fn window() -> Result<(), alexandria::Error> {
 
     let mut instance = alexandria::Instance::new(enable_debugging)?;
 
+    /*
     let mut window = alexandria::Window::new(
         "Testing",
         Some(alexandria::Resolution::new(1280, 720)),
@@ -22,10 +23,12 @@ fn window() -> Result<(), alexandria::Error> {
         #[cfg(debug_assertions)]
         print_debug_messages(&mut instance, &mut window)?;
     }
+    */
 
     Ok(())
 }
 
+/*
 fn print_debug_messages(
     instance: &mut alexandria::Instance,
     window: &mut alexandria::Window,
@@ -44,3 +47,4 @@ fn print_debug_messages(
 fn print_debug_message(message: alexandria::DebugMessage) {
     println!("[{}] {}", message.level(), message.message());
 }
+*/

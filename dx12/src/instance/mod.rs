@@ -1,22 +1,21 @@
-use crate::{map_instance_error, map_raw_error, Adapter, Result};
+use crate::{map_instance_error, map_raw_error, /*Adapter,*/ Result};
 use common::DebugMessage;
 use std::sync::{Arc, Mutex};
 
-mod adapter_iter;
-mod class;
+//mod adapter_iter;
+//mod class;
 mod debug;
 
-pub(crate) use class::WindowClass;
+//pub(crate) use class::WindowClass;
 pub(crate) use debug::Debug;
 
-pub use adapter_iter::*;
+//pub use adapter_iter::*;
 
 pub struct Instance {
-    dxgi_factory: win32::IDXGIFactory7,
+    //dxgi_factory: win32::IDXGIFactory7,
 
-    instance_handle: win32::HInstance,
-    window_class: WindowClass,
-
+    //instance_handle: win32::HInstance,
+    //window_class: WindowClass,
     debug: Option<Arc<Mutex<Debug>>>,
 }
 
@@ -28,6 +27,7 @@ impl Instance {
             None
         };
 
+        /*
         #[cfg(debug_assertions)]
         let flags = &[win32::DXGICreateFactoryFlag::Debug];
         #[cfg(not(debug_assertions))]
@@ -44,16 +44,17 @@ impl Instance {
         .into();
         let window_class =
             map_instance_error!(WindowClass::new(instance_handle), CreateWindowClass, debug)?;
+        */
 
         Ok(Instance {
-            dxgi_factory,
-            instance_handle,
-            window_class,
-
+            //dxgi_factory,
+            //instance_handle,
+            //window_class,
             debug,
         })
     }
 
+    /*
     pub fn enum_adapters<'a>(&'a mut self) -> Result<AdapterIter<'a>> {
         Ok(AdapterIter::new(
             &mut self.dxgi_factory,
@@ -97,4 +98,5 @@ impl Instance {
     pub(crate) fn dxgi_factory(&mut self) -> &mut win32::IDXGIFactory7 {
         &mut self.dxgi_factory
     }
+    */
 }

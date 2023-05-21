@@ -1,4 +1,3 @@
-use crate::{instance, window};
 use common::DebugMessage;
 
 mod kind;
@@ -8,12 +7,12 @@ pub use kind::ErrorKind;
 
 pub struct Error {
     kind: ErrorKind,
-    error: win32::Win32Error,
+    error: win32::Error,
     debug_messages: Vec<DebugMessage>,
 }
 
 impl Error {
-    pub(crate) fn new(kind: ErrorKind, error: win32::Win32Error) -> Self {
+    pub(crate) fn new(kind: ErrorKind, error: win32::Error) -> Self {
         Error {
             kind,
             error,
@@ -25,7 +24,7 @@ impl Error {
         &self.kind
     }
 
-    pub fn error(&self) -> &win32::Win32Error {
+    pub fn error(&self) -> &win32::Error {
         &self.error
     }
 
@@ -33,6 +32,7 @@ impl Error {
         &self.debug_messages
     }
 
+    /*
     pub(crate) fn get_instance_debug_messages(&mut self, debug: &mut instance::Debug) {
         while let Some(message) = debug.pop_message() {
             self.debug_messages.push(message);
@@ -44,6 +44,7 @@ impl Error {
             self.debug_messages.push(message);
         }
     }
+    */
 }
 
 impl std::error::Error for Error {
