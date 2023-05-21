@@ -1,0 +1,2 @@
+[env]
+VK_LOADER_DEBUG = "error,warn"

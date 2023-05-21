@@ -1,6 +1,8 @@
+mod instance;
+
+pub use instance::Instance;
+
+pub use vulkan::{Result, VkResult as Error};
+
 #[cfg(target_os = "windows")]
-use dx12 as system;
-
-pub use system::*;
-
-pub use common::{DebugMessage, DebugMessageLevel, MessageBoxClass};
+pub(self) use windows as os;

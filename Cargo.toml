@@ -1,5 +1,5 @@
 [workspace]
-members = ["dx12", "common"]
+members = ["windows"]
 
 [workspace.package]
 authors = ["Lance Hart <me@lancehart.ca>"]
@@ -10,8 +10,9 @@ repository = "https://github.com/shipsimfan/alexandria"
 version = "0.0.0"
 
 [workspace.dependencies]
-dx12 = { path = "./dx12" }
-common = { path = "./common" }
+windows = { path = "windows" }
+
+vulkan = { path = "../lib-vulkan/vulkan" }
 
 [package]
 name = "alexandria"
@@ -25,7 +26,7 @@ repository = { workspace = true }
 version = { workspace = true }
 
 [dependencies]
-common = { workspace = true }
+vulkan = { workspace = true }
 
 [target.'cfg(windows)'.dependencies]
-dx12 = { workspace = true }
+windows = { workspace = true }
