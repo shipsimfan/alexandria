@@ -1,9 +1,9 @@
-use crate::{create_error, os, Result};
+use crate::{create_error, os, Device, Result};
 use std::sync::Arc;
 use vulkan::{VkApplicationInfo, VkInstance, Vulkan, VK_API_VERSION_1_0};
 
 pub struct Instance {
-    vk_instance: VkInstance,
+    vk_instance: Arc<VkInstance>,
     os_instance: os::Instance,
 }
 
@@ -59,6 +59,18 @@ impl Instance {
             vk_instance,
             os_instance,
         }))
+    }
+
+    pub fn enumerate_devices(&self) -> Result<Vec<Device>> {
+        self.vk_instance
+            .enumerate_physical_devices()
+            .map(|devices| {
+                devices
+                    .into_iter()
+                    .map(|device| Device::new(device))
+                    .collect()
+            })
+            .map_err(|error| create_error!(EnumerateDevicesFailed, Some(Vulkan(error))))
     }
 
     pub(crate) fn os_instance(&self) -> &os::Instance {

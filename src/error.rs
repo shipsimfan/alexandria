@@ -8,6 +8,7 @@ pub enum ErrorKind {
     OsInstanceCreationFailed,
     WindowCreationFailed,
     PollEventsFailed,
+    EnumerateDevicesFailed,
 }
 
 pub enum ErrorSource {
@@ -32,6 +33,7 @@ impl std::fmt::Display for ErrorKind {
                 OsInstanceCreationFailed => "OS instance creation failed",
                 WindowCreationFailed => "Window creation failed",
                 PollEventsFailed => "Polling window events failed",
+                EnumerateDevicesFailed => "Enumerating devices failed",
             }
         )
     }
