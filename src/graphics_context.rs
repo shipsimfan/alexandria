@@ -1,9 +1,12 @@
 use crate::{create_error, Device, Instance, Result};
 use std::sync::Arc;
-use vulkan::{VkDevice, VkDeviceCreateInfo, VkDeviceQueueCreateFlags, VkDeviceQueueCreateInfo};
+use vulkan::{
+    VkDevice, VkDeviceCreateInfo, VkDeviceQueueCreateFlags, VkDeviceQueueCreateInfo, VkQueue,
+};
 
 pub struct GraphicsContext {
-    device: VkDevice,
+    device: Arc<VkDevice>,
+    graphics_queue: VkQueue,
 
     instance: Arc<Instance>,
 }
@@ -27,7 +30,13 @@ impl GraphicsContext {
             ))
             .map_err(|error| create_error!(GraphicsContextCreationFailed, Some(Vulkan(error))))?;
 
-        Ok(Arc::new(GraphicsContext { device, instance }))
+        let graphics_queue = device.get_device_queue(graphics_queue_index as u32, 0);
+
+        Ok(Arc::new(GraphicsContext {
+            device,
+            instance,
+            graphics_queue,
+        }))
     }
 
     pub fn instance(&self) -> &Arc<Instance> {
