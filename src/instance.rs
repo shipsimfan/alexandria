@@ -61,13 +61,14 @@ impl Instance {
         }))
     }
 
-    pub fn enumerate_devices(&self) -> Result<Vec<Device>> {
+    pub fn enumerate_devices(self: &Arc<Self>) -> Result<Vec<Device>> {
         self.vk_instance
             .enumerate_physical_devices()
             .map(|devices| {
                 devices
                     .into_iter()
-                    .map(|device| Device::new(device))
+                    .map(|device| Device::new(device, self.clone()))
+                    .filter(|device| device.get_graphics_queue_index().is_some())
                     .collect()
             })
             .map_err(|error| create_error!(EnumerateDevicesFailed, Some(Vulkan(error))))

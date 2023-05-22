@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 #[test]
 fn triangle() {
     let instance = alexandria::Instance::new("Triangle Test\0", 1).unwrap();
@@ -5,12 +7,12 @@ fn triangle() {
     let device = locate_best_device(&instance);
     println!("Selected device: {}", device.name());
 
-    let window = alexandria::Window::new(instance, "Triangle Test", 1920, 1080).unwrap();
+    let window = alexandria::Window::new(device, "Triangle Test", 1920, 1080).unwrap();
 
     while window.poll_events().unwrap() {}
 }
 
-fn locate_best_device(instance: &alexandria::Instance) -> alexandria::Device {
+fn locate_best_device(instance: &Arc<alexandria::Instance>) -> alexandria::Device {
     let mut best_device = None;
     for device in instance.enumerate_devices().unwrap() {
         if let Some(old_best_device) = best_device {
@@ -44,10 +46,6 @@ fn compare_device_types(
 }
 
 fn device_type_score(device: &alexandria::Device) -> Option<usize> {
-    if !device.has_graphics_queues() {
-        return None;
-    }
-
     Some(match device.r#type() {
         alexandria::DeviceType::Other => 0,
         alexandria::DeviceType::CPU => 1,

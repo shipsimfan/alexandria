@@ -9,6 +9,7 @@ pub enum ErrorKind {
     WindowCreationFailed,
     PollEventsFailed,
     EnumerateDevicesFailed,
+    GraphicsContextCreationFailed,
 }
 
 pub enum ErrorSource {
@@ -34,6 +35,7 @@ impl std::fmt::Display for ErrorKind {
                 WindowCreationFailed => "Window creation failed",
                 PollEventsFailed => "Polling window events failed",
                 EnumerateDevicesFailed => "Enumerating devices failed",
+                GraphicsContextCreationFailed => "Graphics context creation failed",
             }
         )
     }

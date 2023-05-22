@@ -1,3 +1,5 @@
+use crate::Instance;
+use std::sync::Arc;
 use vulkan::{
     VkPhysicalDevice, VkPhysicalDeviceFeatures, VkPhysicalDeviceProperties,
     VkQueueFamilyProperties, VkQueueFlagBits,
@@ -6,18 +8,24 @@ use vulkan::{
 pub use vulkan::VkPhysicalDeviceType as DeviceType;
 
 pub struct Device {
+    inner: VkPhysicalDevice,
+    instance: Arc<Instance>,
+
     properties: VkPhysicalDeviceProperties,
     features: VkPhysicalDeviceFeatures,
     queue_family_properties: Vec<VkQueueFamilyProperties>,
 }
 
 impl Device {
-    pub(crate) fn new(inner: VkPhysicalDevice) -> Self {
+    pub(crate) fn new(inner: VkPhysicalDevice, instance: Arc<Instance>) -> Self {
         let properties = inner.get_properties();
         let features = inner.get_features();
         let queue_family_properties = inner.get_queue_family_properties();
 
         Device {
+            inner,
+            instance,
+
             properties,
             features,
             queue_family_properties,
@@ -40,13 +48,24 @@ impl Device {
         self.properties.device_type()
     }
 
-    pub fn has_graphics_queues(&self) -> bool {
-        for queue_family in &self.queue_family_properties {
-            if queue_family.flags().contains(VkQueueFlagBits::Graphics) {
-                return true;
+    pub fn instance(&self) -> &Arc<Instance> {
+        &self.instance
+    }
+
+    pub(crate) fn get_graphics_queue_index(&self) -> Option<usize> {
+        for i in 0..self.queue_family_properties.len() {
+            if self.queue_family_properties[i]
+                .flags()
+                .contains(VkQueueFlagBits::Graphics)
+            {
+                return Some(i);
             }
         }
 
-        false
+        None
+    }
+
+    pub(crate) fn consume(self) -> (VkPhysicalDevice, Arc<Instance>) {
+        (self.inner, self.instance)
     }
 }
