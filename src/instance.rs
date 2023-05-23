@@ -1,5 +1,8 @@
 use crate::{create_error, os, Device, Result};
-use std::sync::Arc;
+use std::{
+    ffi::{c_char, CStr},
+    sync::Arc,
+};
 use vulkan::{VkApplicationInfo, VkInstance, Vulkan, VK_API_VERSION_1_0};
 
 pub struct Instance {
@@ -7,14 +10,16 @@ pub struct Instance {
     os_instance: os::Instance,
 }
 
-const VALIDATION_LAYER_NAME: &str = "VK_LAYER_KHRONOS_validation";
-const VALIDATION_LAYER_NAME_TERMINATED: &str = "VK_LAYER_KHRONOS_validation\0";
+const VALIDATION_LAYER_NAME: &CStr =
+    unsafe { std::mem::transmute("VK_LAYER_KHRONOS_validation\0") };
+const VALIDATION_LAYER_NAME_TERMINATED: &CStr =
+    unsafe { std::mem::transmute("VK_LAYER_KHRONOS_validation\0") };
 
-fn collect_extensions() -> Vec<*const u8> {
+fn collect_extensions() -> Vec<*const c_char> {
     os::get_extension_list()
 }
 
-fn collect_layers(vulkan: &Vulkan) -> Result<Vec<*const u8>> {
+fn collect_layers(vulkan: &Vulkan) -> Result<Vec<*const c_char>> {
     #[cfg(debug_assertions)]
     {
         for layer in vulkan
@@ -31,9 +36,7 @@ fn collect_layers(vulkan: &Vulkan) -> Result<Vec<*const u8>> {
 }
 
 impl Instance {
-    pub fn new(app_name: &str, app_version: u32) -> Result<Arc<Self>> {
-        assert_eq!(app_name.as_bytes()[app_name.len() - 1], 0);
-
+    pub fn new(app_name: &CStr, app_version: u32) -> Result<Arc<Self>> {
         let os_instance = os::Instance::new(app_name)
             .map_err(|error| create_error!(OsInstanceCreationFailed, Some(OS(error))))?;
 
@@ -46,12 +49,12 @@ impl Instance {
                 Some(&VkApplicationInfo::new(
                     Some(app_name),
                     app_version,
-                    Some("Alexandria\0"),
+                    Some(CStr::from_bytes_with_nul(b"Alexandria\0").unwrap()),
                     0,
                     VK_API_VERSION_1_0,
                 )),
-                &collect_layers(&vulkan)?,
-                &collect_extensions(),
+                collect_layers(&vulkan)?.as_slice(),
+                collect_extensions().as_slice(),
             ))
             .map_err(|error| create_error!(VulkanInstanceCreationFailed, Some(Vulkan(error))))?;
 

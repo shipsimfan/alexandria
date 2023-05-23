@@ -19,7 +19,6 @@ impl GraphicsContext {
         let device = physical_device
             .create_device(&VkDeviceCreateInfo::new(
                 &[VkDeviceQueueCreateInfo::new(
-                    None,
                     VkDeviceQueueCreateFlags::new(&[]),
                     graphics_queue_index as u32,
                     &[1.0],

@@ -11,3 +11,4 @@ version = { workspace = true }
 
 [dependencies]
 win32 = { path = "../../lib-win32" }
+vulkan = { workspace = true }

@@ -1,8 +1,10 @@
-use std::sync::Arc;
+use std::{ffi::CStr, sync::Arc};
 
 #[test]
 fn triangle() {
-    let instance = alexandria::Instance::new("Triangle Test\0", 1).unwrap();
+    let instance =
+        alexandria::Instance::new(CStr::from_bytes_with_nul(b"Triangle Test\0").unwrap(), 1)
+            .unwrap();
 
     let device = locate_best_device(&instance);
     println!("Selected device: {}", device.name());
@@ -47,10 +49,10 @@ fn compare_device_types(
 
 fn device_type_score(device: &alexandria::Device) -> Option<usize> {
     Some(match device.r#type() {
-        alexandria::DeviceType::Other => 0,
         alexandria::DeviceType::CPU => 1,
         alexandria::DeviceType::VirtualGPU => 2,
         alexandria::DeviceType::IntegratedGPU => 3,
         alexandria::DeviceType::DiscreteGPU => 4,
+        _ => 0,
     })
 }

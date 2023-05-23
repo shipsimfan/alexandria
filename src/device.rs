@@ -33,7 +33,7 @@ impl Device {
     }
 
     pub fn name(&self) -> &str {
-        self.properties.device_name()
+        self.properties.device_name().to_str().unwrap()
     }
 
     pub fn id(&self) -> (u32, u32) {

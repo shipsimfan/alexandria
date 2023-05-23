@@ -1,8 +1,8 @@
-const SURFACE_EXTENSION: &str = "VK_KHR_surface\0";
-const WIN32_SURFACE_EXTENSION: &str = "VK_KHR_win32_surface\0";
+use std::ffi::c_char;
+use vulkan::bindings::VK_KHR_SURFACE_EXTENSION_NAME;
 
-const EXTENSIONS: &[*const u8] = &[SURFACE_EXTENSION.as_ptr(), WIN32_SURFACE_EXTENSION.as_ptr()];
+const EXTENSIONS: &[*const c_char] = &[VK_KHR_SURFACE_EXTENSION_NAME.as_ptr()];
 
-pub fn get_extension_list() -> Vec<*const u8> {
+pub fn get_extension_list() -> Vec<*const c_char> {
     Vec::from(EXTENSIONS)
 }

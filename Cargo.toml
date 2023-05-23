@@ -12,7 +12,7 @@ version = "0.0.0"
 [workspace.dependencies]
 windows = { path = "windows" }
 
-vulkan = { path = "../lib-vulkan/vulkan" }
+vulkan = { path = "../lib-vulkan" }
 
 [package]
 name = "alexandria"
