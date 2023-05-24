@@ -49,7 +49,7 @@ impl Window {
     }
 
     pub fn create_graphics_context(&self, device: Device) -> Result<GraphicsContext> {
-        GraphicsContext::new(self.ref_count.clone(), device)
+        GraphicsContext::new(self.ref_count.clone(), device, &self.surface)
     }
 
     // Returns whether or not the window is still alive
