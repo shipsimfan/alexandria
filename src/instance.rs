@@ -1,4 +1,4 @@
-use crate::{create_error, os, Device, Result};
+use crate::{create_error, os, Result, Window};
 use std::{
     ffi::{c_char, CStr},
     sync::Arc,
@@ -64,17 +64,17 @@ impl Instance {
         }))
     }
 
-    pub fn enumerate_devices(self: &Arc<Self>) -> Result<Vec<Device>> {
-        self.vk_instance
-            .enumerate_physical_devices()
-            .map(|devices| {
-                devices
-                    .into_iter()
-                    .map(|device| Device::new(device, self.clone()))
-                    .filter(|device| device.get_graphics_queue_index().is_some())
-                    .collect()
-            })
-            .map_err(|error| create_error!(EnumerateDevicesFailed, Some(Vulkan(error))))
+    pub fn create_window(
+        self: Arc<Self>,
+        title: &str,
+        width: usize,
+        height: usize,
+    ) -> Result<Window> {
+        Window::new(self, title, width, height)
+    }
+
+    pub(crate) fn vulkan_instance(&self) -> &Arc<VkInstance> {
+        &self.vk_instance
     }
 
     pub(crate) fn os_instance(&self) -> &os::Instance {

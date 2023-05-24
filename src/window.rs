@@ -1,24 +1,55 @@
-use crate::{create_error, os, Device, GraphicsContext, Result};
+use crate::{create_error, os, Device, GraphicsContext, Instance, Result};
 use std::sync::Arc;
+use vulkan::VkSurfaceKHR;
 
 pub struct Window {
-    graphics_context: Arc<GraphicsContext>,
-
     inner: Box<os::Window>,
+    surface: VkSurfaceKHR,
+
+    instance: Arc<Instance>,
+
+    ref_count: Arc<()>,
 }
 
 impl Window {
-    pub fn new(device: Device, title: &str, width: usize, height: usize) -> Result<Self> {
-        let inner = os::Window::new(device.instance().os_instance(), title, width, height)
+    pub(crate) fn new(
+        instance: Arc<Instance>,
+        title: &str,
+        width: usize,
+        height: usize,
+    ) -> Result<Self> {
+        let inner = os::Window::new(instance.os_instance(), title, width, height)
             .map_err(|error| create_error!(WindowCreationFailed, Some(OS(error))))?;
 
-        let graphics_context = GraphicsContext::new(device)?;
+        let surface = inner
+            .create_surface(instance.vulkan_instance())
+            .map_err(|error| create_error!(WindowCreationFailed, Some(Vulkan(error))))?;
 
         Ok(Window {
-            graphics_context,
-
             inner,
+            surface,
+
+            instance,
+
+            ref_count: Arc::new(()),
         })
+    }
+
+    pub fn enumerate_devices(&self) -> Result<Vec<Device>> {
+        self.instance
+            .vulkan_instance()
+            .enumerate_physical_devices()
+            .map(|devices| {
+                devices
+                    .into_iter()
+                    .filter_map(|device| Device::new(device, &self.surface, self.instance.clone()))
+                    .collect()
+            })
+            .map_err(|error| create_error!(EnumerateDevicesFailed, Some(Vulkan(error))))
+    }
+
+    pub fn create_graphics_context(&self, device: Device) -> Result<GraphicsContext> {
+        GraphicsContext::new(self.ref_count.clone(), device)
     }
 
     // Returns whether or not the window is still alive
@@ -27,14 +58,10 @@ impl Window {
             .poll_events()
             .map_err(|error| create_error!(PollEventsFailed, Some(OS(error))))
     }
-
-    pub fn graphics_context(&self) -> &Arc<GraphicsContext> {
-        &self.graphics_context
-    }
 }
 
 impl Drop for Window {
     fn drop(&mut self) {
-        assert_eq!(Arc::strong_count(&self.graphics_context), 1)
+        assert_eq!(Arc::strong_count(&self.ref_count), 1);
     }
 }

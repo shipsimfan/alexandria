@@ -1,5 +1,5 @@
 use crate::{Instance, Result};
-use std::{ffi::c_int, mem::MaybeUninit};
+use std::{ffi::c_int, mem::MaybeUninit, sync::Arc};
 
 pub struct Window {
     h_wnd: win32::HWnd,
@@ -75,6 +75,16 @@ impl Window {
         }
 
         Ok(result)
+    }
+
+    pub fn create_surface<L: vulkan::Loader>(
+        &self,
+        vk_instance: &Arc<vulkan::VkInstance<L>>,
+    ) -> vulkan::Result<vulkan::VkSurfaceKHR<L>> {
+        vk_instance.create_win32_surface(&vulkan::VkWin32SurfaceCreateInfoKHR::new(
+            win32::get_module_handle(None).unwrap(),
+            self.h_wnd,
+        ))
     }
 
     pub(self) fn wnd_proc(

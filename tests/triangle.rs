@@ -1,22 +1,23 @@
-use std::{ffi::CStr, sync::Arc};
+use std::ffi::CStr;
 
 #[test]
 fn triangle() {
     let instance =
         alexandria::Instance::new(CStr::from_bytes_with_nul(b"Triangle Test\0").unwrap(), 1)
             .unwrap();
+    let window = instance.create_window("Triangle Test", 1920, 1080).unwrap();
 
-    let device = locate_best_device(&instance);
+    let device = locate_best_device(&window);
     println!("Selected device: {}", device.name());
 
-    let window = alexandria::Window::new(device, "Triangle Test", 1920, 1080).unwrap();
+    let graphics_context = window.create_graphics_context(device).unwrap();
 
     while window.poll_events().unwrap() {}
 }
 
-fn locate_best_device(instance: &Arc<alexandria::Instance>) -> alexandria::Device {
+fn locate_best_device(window: &alexandria::Window) -> alexandria::Device {
     let mut best_device = None;
-    for device in instance.enumerate_devices().unwrap() {
+    for device in window.enumerate_devices().unwrap() {
         if let Some(old_best_device) = best_device {
             best_device = Some(compare_device_types(old_best_device, device));
         } else {

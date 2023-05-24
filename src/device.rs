@@ -1,71 +1,82 @@
 use crate::Instance;
 use std::sync::Arc;
-use vulkan::{
-    VkPhysicalDevice, VkPhysicalDeviceFeatures, VkPhysicalDeviceProperties,
-    VkQueueFamilyProperties, VkQueueFlagBits,
-};
+use vulkan::{VkPhysicalDevice, VkQueueFlagBits, VkSurfaceKHR};
 
-pub use vulkan::VkPhysicalDeviceType as DeviceType;
+pub use vulkan::{VkPhysicalDeviceType as DeviceType, VK_UUID_SIZE as DEVICE_UUID_SIZE};
 
 pub struct Device {
     inner: VkPhysicalDevice,
     instance: Arc<Instance>,
 
-    properties: VkPhysicalDeviceProperties,
-    features: VkPhysicalDeviceFeatures,
-    queue_family_properties: Vec<VkQueueFamilyProperties>,
+    name: String,
+    id: (u32, u32),
+    uuid: [u8; DEVICE_UUID_SIZE],
+    r#type: DeviceType,
+
+    graphics_queue_family_index: u32,
 }
 
 impl Device {
-    pub(crate) fn new(inner: VkPhysicalDevice, instance: Arc<Instance>) -> Self {
+    pub(crate) fn new(
+        inner: VkPhysicalDevice,
+        surface: &VkSurfaceKHR,
+        instance: Arc<Instance>,
+    ) -> Option<Self> {
         let properties = inner.get_properties();
-        let features = inner.get_features();
+        let name = properties.device_name().to_string_lossy().to_string();
+        let id = (properties.vendor_id(), properties.device_id());
+        let uuid = *properties.pipeline_cache_uuid();
+        let r#type = properties.device_type();
+
         let queue_family_properties = inner.get_queue_family_properties();
-
-        Device {
-            inner,
-            instance,
-
-            properties,
-            features,
-            queue_family_properties,
-        }
-    }
-
-    pub fn name(&self) -> &str {
-        self.properties.device_name().to_str().unwrap()
-    }
-
-    pub fn id(&self) -> (u32, u32) {
-        (self.properties.vendor_id(), self.properties.device_id())
-    }
-
-    pub fn uuid(&self) -> &[u8; 16] {
-        self.properties.pipeline_cache_uuid()
-    }
-
-    pub fn r#type(&self) -> DeviceType {
-        self.properties.device_type()
-    }
-
-    pub fn instance(&self) -> &Arc<Instance> {
-        &self.instance
-    }
-
-    pub(crate) fn get_graphics_queue_index(&self) -> Option<usize> {
-        for i in 0..self.queue_family_properties.len() {
-            if self.queue_family_properties[i]
+        let mut graphics_queue_family_index = None;
+        for i in 0..queue_family_properties.len() {
+            if queue_family_properties[i]
                 .flags()
                 .contains(VkQueueFlagBits::Graphics)
             {
-                return Some(i);
+                if surface
+                    .get_physical_device_surface_support(&inner, i as u32)
+                    .unwrap()
+                {
+                    graphics_queue_family_index = Some(i as u32);
+                    break;
+                }
             }
         }
 
-        None
+        graphics_queue_family_index.map(|graphics_queue_family_index| Device {
+            inner,
+            instance,
+            name,
+            id,
+            uuid,
+            r#type,
+            graphics_queue_family_index,
+        })
     }
 
-    pub(crate) fn consume(self) -> (VkPhysicalDevice, Arc<Instance>) {
-        (self.inner, self.instance)
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn id(&self) -> (u32, u32) {
+        self.id
+    }
+
+    pub fn uuid(&self) -> [u8; DEVICE_UUID_SIZE] {
+        self.uuid
+    }
+
+    pub fn r#type(&self) -> DeviceType {
+        self.r#type
+    }
+
+    pub(crate) fn inner(&self) -> &VkPhysicalDevice {
+        &self.inner
+    }
+
+    pub(crate) fn graphics_queue_family_index(&self) -> u32 {
+        self.graphics_queue_family_index
     }
 }
