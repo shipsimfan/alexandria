@@ -1,16 +1,18 @@
 use crate::{create_error, Device, Result};
 use std::sync::Arc;
 use vulkan::{
-    VkCompositeAlphaFlagBitsKHR, VkDevice, VkDeviceCreateInfo, VkDeviceQueueCreateFlags,
-    VkDeviceQueueCreateInfo, VkImage, VkImageUsageFlagBits, VkImageUsageFlags, VkQueue,
-    VkSharingMode, VkSurfaceKHR, VkSwapchainCreateFlagsKHR, VkSwapchainCreateInfoKHR,
+    VkComponentMapping, VkComponentSwizzle, VkCompositeAlphaFlagBitsKHR, VkDevice,
+    VkDeviceCreateInfo, VkDeviceQueueCreateFlags, VkDeviceQueueCreateInfo, VkImage,
+    VkImageAspectFlagBits, VkImageAspectFlags, VkImageSubresourceRange, VkImageUsageFlagBits,
+    VkImageUsageFlags, VkImageView, VkImageViewCreateFlags, VkImageViewCreateInfo, VkImageViewType,
+    VkQueue, VkSharingMode, VkSurfaceKHR, VkSwapchainCreateFlagsKHR, VkSwapchainCreateInfoKHR,
     VkSwapchainKHR, VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 };
 
 pub struct GraphicsContext {
     device: Arc<VkDevice>,
     graphics_queue: VkQueue,
-    swapchain_images: Vec<VkImage>,
+    swapchain_images: Vec<(VkImage, VkImageView)>,
     swapchain: VkSwapchainKHR,
 
     #[allow(unused)]
@@ -59,9 +61,38 @@ impl GraphicsContext {
             ))
             .map_err(|error| create_error!(GraphicsContextCreationFailed, Some(Vulkan(error))))?;
 
-        let swapchain_images = swapchain
+        let swapchain_images_only = swapchain
             .get_swapchain_images()
             .map_err(|error| create_error!(GraphicsContextCreationFailed, Some(Vulkan(error))))?;
+
+        let mut swapchain_images = Vec::with_capacity(swapchain_images_only.len());
+        for image in swapchain_images_only {
+            let image_view = vk_device
+                .create_image_view(&VkImageViewCreateInfo::new(
+                    VkImageViewCreateFlags::new(&[]),
+                    &image,
+                    VkImageViewType::_2D,
+                    device.surface_format().format(),
+                    VkComponentMapping::new(
+                        VkComponentSwizzle::Identity,
+                        VkComponentSwizzle::Identity,
+                        VkComponentSwizzle::Identity,
+                        VkComponentSwizzle::Identity,
+                    ),
+                    VkImageSubresourceRange::new(
+                        VkImageAspectFlags::new(&[VkImageAspectFlagBits::Color]),
+                        0,
+                        1,
+                        0,
+                        1,
+                    ),
+                ))
+                .map_err(|error| {
+                    create_error!(GraphicsContextCreationFailed, Some(Vulkan(error)))
+                })?;
+
+            swapchain_images.push((image, image_view));
+        }
 
         Ok(GraphicsContext {
             device: vk_device,
