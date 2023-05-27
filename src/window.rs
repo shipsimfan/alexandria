@@ -1,10 +1,9 @@
 use crate::{create_error, os, Device, GraphicsContext, Instance, Result};
 use std::sync::Arc;
-use vulkan::VkSurfaceKHR;
 
 pub struct Window {
     inner: Box<os::Window>,
-    surface: VkSurfaceKHR,
+    surface: vulkan::Surface,
 
     instance: Arc<Instance>,
 
@@ -22,8 +21,8 @@ impl Window {
             .map_err(|error| create_error!(WindowCreationFailed, Some(OS(error))))?;
 
         let surface = inner
-            .create_surface(instance.vulkan_instance())
-            .map_err(|error| create_error!(WindowCreationFailed, Some(Vulkan(error))))?;
+            .create_surface(instance.vk_instance())
+            .map_err(|error| create_error!(SurfaceCreationFailed, Some(Vulkan(error))))?;
 
         Ok(Window {
             inner,
@@ -35,28 +34,34 @@ impl Window {
         })
     }
 
-    pub fn enumerate_devices(&self) -> Result<Vec<Device>> {
-        self.instance
-            .vulkan_instance()
-            .enumerate_physical_devices()
-            .map(|devices| {
-                devices
-                    .into_iter()
-                    .filter_map(|device| Device::new(device, &self.surface, self.instance.clone()))
-                    .collect()
-            })
-            .map_err(|error| create_error!(EnumerateDevicesFailed, Some(Vulkan(error))))
-    }
-
-    pub fn create_graphics_context(&self, device: Device) -> Result<GraphicsContext> {
-        GraphicsContext::new(self.ref_count.clone(), device, &self.surface)
-    }
-
     // Returns whether or not the window is still alive
-    pub fn poll_events(&self) -> Result<bool> {
+    pub fn poll_events(&mut self) -> Result<bool> {
         self.inner
             .poll_events()
             .map_err(|error| create_error!(PollEventsFailed, Some(OS(error))))
+    }
+
+    pub fn enumerate_devices(&self) -> Result<Vec<Device>> {
+        let devices = self
+            .instance
+            .vk_instance()
+            .enumerate_physical_devices()
+            .map_err(|error| create_error!(EnumerateDevicesFailed, Some(Vulkan(error))))?;
+
+        let mut result = devices
+            .into_iter()
+            .filter_map(|device| Device::new(device, self.instance.clone(), &self.surface))
+            .collect::<Result<Vec<Device>>>()?;
+        result.sort_by(|device1, device2| device1.score().cmp(&device2.score()));
+        Ok(result)
+    }
+
+    pub fn create_graphics_context(&mut self, device: Device) -> Result<GraphicsContext> {
+        GraphicsContext::new(self, self.ref_count.clone(), device)
+    }
+
+    pub(crate) fn surface(&mut self) -> &mut vulkan::Surface {
+        &mut self.surface
     }
 }
 

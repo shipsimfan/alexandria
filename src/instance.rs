@@ -1,61 +1,64 @@
-use crate::{create_error, os, Result, Window};
-use std::{
-    ffi::{c_char, CStr},
-    sync::Arc,
-};
-use vulkan::{VkApplicationInfo, VkInstance, Vulkan, VK_API_VERSION_1_0};
+use crate::{create_error, os, Result, Version, Window};
+use std::sync::Arc;
 
 pub struct Instance {
-    vk_instance: Arc<VkInstance>,
+    vk_instance: Arc<vulkan::Instance>,
     os_instance: os::Instance,
 }
 
-const VALIDATION_LAYER_NAME: &CStr =
-    unsafe { std::mem::transmute("VK_LAYER_KHRONOS_validation\0") };
-const VALIDATION_LAYER_NAME_TERMINATED: &CStr =
-    unsafe { std::mem::transmute("VK_LAYER_KHRONOS_validation\0") };
+#[cfg(debug_assertions)]
+const ENABLE_VALIDATION_LAYERS: bool = true;
 
-fn collect_extensions() -> Vec<*const c_char> {
-    os::get_extension_list()
-}
+#[cfg(not(debug_assertions))]
+const ENABLE_VALIDATION_LAYERS: bool = false;
 
-fn collect_layers(vulkan: &Vulkan) -> Result<Vec<*const c_char>> {
-    #[cfg(debug_assertions)]
-    {
-        for layer in vulkan
-            .enumerate_instance_layer_properties()
-            .map_err(|error| create_error!(VulkanInstanceCreationFailed, Some(Vulkan(error))))?
-        {
-            if layer.layer_name() == VALIDATION_LAYER_NAME {
-                return Ok(vec![VALIDATION_LAYER_NAME_TERMINATED.as_ptr()]);
-            }
+fn is_validation_supported(library: &vulkan::Library) -> Result<bool> {
+    let layers = library
+        .enumerate_layer_properties()
+        .map_err(|error| create_error!(VulkanInstanceCreationFailed, Some(Vulkan(error))))?;
+
+    for layer in layers {
+        if layer.name == "VK_LAYER_KHRONOS_validation" {
+            return Ok(true);
         }
     }
 
-    Ok(Vec::new())
+    Ok(false)
 }
 
 impl Instance {
-    pub fn new(app_name: &CStr, app_version: u32) -> Result<Arc<Self>> {
-        let os_instance = os::Instance::new(app_name)
+    pub fn new(app_name: String, app_version: Version) -> Result<Arc<Self>> {
+        let os_instance = os::Instance::new(&app_name)
             .map_err(|error| create_error!(OsInstanceCreationFailed, Some(OS(error))))?;
 
-        let vulkan = Vulkan::new_native()
+        let library = vulkan::Library::new_native()
             .map_err(|error| create_error!(VulkanInstanceCreationFailed, Some(Vulkan(error))))?;
 
-        let vk_instance = vulkan
-            .create_instance(&vulkan::VkInstanceCreateInfo::new(
-                vulkan::VkInstanceCreateFlags::new(&[]),
-                Some(&VkApplicationInfo::new(
-                    Some(app_name),
-                    app_version,
-                    Some(CStr::from_bytes_with_nul(b"Alexandria\0").unwrap()),
-                    0,
-                    VK_API_VERSION_1_0,
-                )),
-                collect_layers(&vulkan)?.as_slice(),
-                collect_extensions().as_slice(),
-            ))
+        let layers = if ENABLE_VALIDATION_LAYERS {
+            if is_validation_supported(&library)? {
+                vec!["VK_LAYER_KHRONOS_validation".to_owned()]
+            } else {
+                return Err(create_error!(VulkanInstanceCreationFailed, None));
+            }
+        } else {
+            Vec::new()
+        };
+
+        let mut extensions = vec!["VK_KHR_surface".to_owned()];
+        extensions.extend(os::get_extension_list());
+
+        let vk_instance = library
+            .create_instance(vulkan::InstanceCreateInfo {
+                application_info: Some(vulkan::ApplicationInfo {
+                    name: Some(app_name),
+                    version: Some(app_version),
+                    engine_name: Some("Alexandria".to_owned()),
+                    engine_version: Some(Version::new(0, 0, 0, 0)),
+                    api_version: vulkan::VK_API_VERSION_1_0,
+                }),
+                enabled_layers: layers,
+                enabled_extensions: extensions,
+            })
             .map_err(|error| create_error!(VulkanInstanceCreationFailed, Some(Vulkan(error))))?;
 
         Ok(Arc::new(Instance {
@@ -73,7 +76,7 @@ impl Instance {
         Window::new(self, title, width, height)
     }
 
-    pub(crate) fn vulkan_instance(&self) -> &Arc<VkInstance> {
+    pub(crate) fn vk_instance(&self) -> &Arc<vulkan::Instance> {
         &self.vk_instance
     }
 

@@ -9,7 +9,9 @@ pub enum ErrorKind {
     WindowCreationFailed,
     PollEventsFailed,
     EnumerateDevicesFailed,
-    GraphicsContextCreationFailed,
+    DeviceCreationFailed,
+    SurfaceCreationFailed,
+    SwapchainCreationFailed,
 }
 
 pub enum ErrorSource {
@@ -35,7 +37,9 @@ impl std::fmt::Display for ErrorKind {
                 WindowCreationFailed => "Window creation failed",
                 PollEventsFailed => "Polling window events failed",
                 EnumerateDevicesFailed => "Enumerating devices failed",
-                GraphicsContextCreationFailed => "Graphics context creation failed",
+                DeviceCreationFailed => "Device creation failed",
+                SurfaceCreationFailed => "Surface creation failed",
+                SwapchainCreationFailed => "Swapchain creation failed",
             }
         )
     }
@@ -73,6 +77,7 @@ impl std::fmt::Debug for ErrorSource {
 
 macro_rules! create_error {
     ($kind: ident, $source: expr) => {{
+        #[allow(unused)]
         use $crate::ErrorSource::*;
         $crate::Error::new($crate::ErrorKind::$kind, $source)
     }};

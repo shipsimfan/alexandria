@@ -1,13 +1,12 @@
 use crate::{window::wnd_proc, Result};
-use std::ffi::CStr;
 
 pub struct Instance {
     window_class: win32::Atom,
 }
 
 impl Instance {
-    pub fn new(app_name: &CStr) -> Result<Self> {
-        let class_name: Vec<u16> = app_name.to_str().unwrap().encode_utf16().collect();
+    pub fn new(app_name: &str) -> Result<Self> {
+        let class_name: Vec<u16> = win32::string_to_utf16!(app_name);
 
         let wnd_class_ex = win32::WndClassEx::new(
             &[

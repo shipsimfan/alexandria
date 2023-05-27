@@ -1,11 +1,3 @@
-use std::ffi::c_char;
-use vulkan::{bindings::VK_KHR_SURFACE_EXTENSION_NAME, VK_KHR_WIN32_SURFACE_EXTENSION_NAME};
-
-const EXTENSIONS: &[*const c_char] = &[
-    VK_KHR_SURFACE_EXTENSION_NAME.as_ptr(),
-    VK_KHR_WIN32_SURFACE_EXTENSION_NAME.as_ptr(),
-];
-
-pub fn get_extension_list() -> Vec<*const c_char> {
-    Vec::from(EXTENSIONS)
+pub fn get_extension_list() -> Vec<String> {
+    vec!["VK_KHR_win32_surface".to_owned()]
 }

@@ -61,7 +61,7 @@ impl Window {
     }
 
     // Returns whether or not the window is still alive
-    pub fn poll_events(&self) -> Result<bool> {
+    pub fn poll_events(&mut self) -> Result<bool> {
         let mut msg = win32::Msg::default();
         let mut result = true;
 
@@ -79,12 +79,9 @@ impl Window {
 
     pub fn create_surface<L: vulkan::Loader>(
         &self,
-        vk_instance: &Arc<vulkan::VkInstance<L>>,
-    ) -> vulkan::Result<vulkan::VkSurfaceKHR<L>> {
-        vk_instance.create_win32_surface(&vulkan::VkWin32SurfaceCreateInfoKHR::new(
-            win32::get_module_handle(None).unwrap(),
-            self.h_wnd,
-        ))
+        vk_instance: &Arc<vulkan::Instance<L>>,
+    ) -> vulkan::Result<vulkan::Surface<L>> {
+        vk_instance.create_win32_surface(vulkan::Win32SurfaceCreateInfo::from(self.h_wnd))
     }
 
     pub(self) fn wnd_proc(
