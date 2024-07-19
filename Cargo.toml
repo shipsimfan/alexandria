@@ -1,14 +1,15 @@
 [package]
-edition = "2021"
 name = "alexandria"
-version = "0.1.0"
+description = "A graphics library abstracting over Vulkan"
+version = "2.0.0"
+edition = "2021"
+authors = ["Lance Hart <me@lancehart>"]
+repository = "https://github.com/shipsimfan/alexandria.git"
+license = "GPL-3.0-or-later"
+publish = false
 
 [dependencies]
-alexandria_common = {git = "https://github.com/shipsimfan/alexandria-common.git"}
-ginger = {git = "https://github.com/shipsimfan/ginger.git"}
+vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
 
 [target.'cfg(windows)'.dependencies]
-alexandria_dx11 = {git = "https://github.com/shipsimfan/alexandria-dx11.git"}
-
-[target.'cfg(unix)'.dependencies]
-alexandria_opengl = {git = "https://github.com/shipsimfan/alexandria-opengl.git"}
+win32.git = "https://github.com/shipsimfan/lib-win32"
