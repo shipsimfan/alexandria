@@ -6,4 +6,5 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 
-pub use vk::Window;
+pub use util::Error;
+pub use vk::{message_box, Window, WindowCreationError};

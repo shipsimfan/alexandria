@@ -1,4 +1,4 @@
-//! Wrappers for Vulkan
+//! Common utilities for all crates in this workspace
 
 #![deny(missing_docs)]
 #![deny(rustdoc::private_intra_doc_links)]
@@ -6,7 +6,6 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 
-#[cfg(target_os = "windows")]
-use windows as os;
+mod error;
 
-pub use os::{message_box, Window, WindowCreationError};
+pub use error::Error;

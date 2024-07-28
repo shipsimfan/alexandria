@@ -12,6 +12,7 @@ publish = false
 [workspace.dependencies]
 vk.path = "vk"
 windows.path = "windows"
+util.path = "util"
 
 
 [package]
@@ -27,3 +28,4 @@ publish.workspace = true
 
 [dependencies]
 vk.workspace = true
+util.workspace = true

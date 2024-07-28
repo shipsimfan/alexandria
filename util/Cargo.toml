@@ -1,6 +1,6 @@
 [package]
-name = "windows"
-description = "Wrappers for Windows"
+name = "util"
+description = "Common utilities for all crates in this workspace"
 
 version.workspace = true
 edition.workspace = true
@@ -8,8 +8,3 @@ authors.workspace = true
 repository.workspace = true
 license.workspace = true
 publish.workspace = true
-
-[dependencies]
-win32.git = "https://github.com/shipsimfan/lib-win32"
-
-util.workspace = true

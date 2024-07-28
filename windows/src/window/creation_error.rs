@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+use util::Error;
 
 /// The source of the error
 #[derive(Debug, Clone)]
@@ -35,6 +36,12 @@ impl WindowCreationError {
             source: WindowCreationErrorSource::WindowCreationFailed,
             error,
         }
+    }
+}
+
+impl Error for WindowCreationError {
+    fn title(&self) -> &'static str {
+        "Window Creation Error"
     }
 }
 
