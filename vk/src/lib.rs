@@ -6,7 +6,17 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 
+mod create_error;
+mod functions;
+mod global;
+mod instance;
+
 #[cfg(target_os = "windows")]
 use windows as os;
 
+pub use create_error::CreateError;
+pub use global::Global;
+pub use instance::{DebugUtilsMessenger, Instance, InstanceExtension, InstanceLayer};
 pub use os::{message_box, Window, WindowCreationError};
+
+pub use vulkan::VkResult;

@@ -49,3 +49,6 @@ impl Drop for Window {
         unsafe { DestroyWindow(self.wnd) };
     }
 }
+
+impl !Send for Window {}
+impl !Sync for Window {}

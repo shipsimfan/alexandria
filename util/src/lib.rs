@@ -6,6 +6,11 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 
+mod cstr;
 mod error;
+mod flags;
+mod severity;
 
+pub use cstr::{i8_slice_to_cstr, slice_to_cstr};
 pub use error::Error;
+pub use severity::Severity;

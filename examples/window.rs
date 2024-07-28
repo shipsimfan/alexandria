@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 fn main() {
     if let Err(error) = run() {
         eprintln!("{}: {}", error.title(), error);
@@ -7,9 +9,20 @@ fn main() {
 }
 
 fn run() -> Result<(), Box<dyn alexandria::Error>> {
+    let instance = alexandria::Instance::new(Some(log_callback))?;
+
     let mut window = alexandria::Window::new("Window Example", 1280, 720)?;
 
     while window.poll_events() {}
 
+    drop(instance);
     Ok(())
+}
+
+fn log_callback<'a, 'b>(severity: alexandria::Severity, message: &str, objects: Vec<Cow<str>>) {
+    eprint!("[{}] {}", severity, message);
+    if objects.len() > 0 {
+        eprint!(" ({:?})", objects);
+    }
+    eprintln!();
 }
