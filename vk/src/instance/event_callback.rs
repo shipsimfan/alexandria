@@ -7,7 +7,7 @@ pub trait EventCallback: 'static {
     fn callback(&self, severity: Severity, message: &str, objects: Vec<Cow<str>>);
 }
 
-impl<F: Fn(Severity, &str, Vec<Cow<str>>) + 'static> EventCallback for F {
+impl<F: for<'a, 'b> Fn(Severity, &'a str, Vec<Cow<'b, str>>) + 'static> EventCallback for F {
     fn callback(&self, severity: Severity, message: &str, objects: Vec<Cow<str>>) {
         self(severity, message, objects)
     }
