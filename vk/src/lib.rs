@@ -1,4 +1,4 @@
-//! A graphics library built on Vulkan
+//! Wrappers for Vulkan
 
 #![deny(missing_docs)]
 #![deny(rustdoc::private_intra_doc_links)]
