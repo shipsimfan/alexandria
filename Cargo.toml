@@ -1,8 +1,6 @@
 [workspace]
 default-members = ["."]
 
-members = [".", "vk"]
-
 [workspace.package]
 version = "2.0.0"
 edition = "2021"
@@ -10,6 +8,10 @@ authors = ["Lance Hart <me@lancehart>"]
 repository = "https://github.com/shipsimfan/alexandria.git"
 license = "GPL-3.0-or-later"
 publish = false
+
+[workspace.dependencies]
+vk.path = "vk"
+windows.path = "windows"
 
 
 [package]
@@ -24,4 +26,4 @@ license.workspace = true
 publish.workspace = true
 
 [dependencies]
-vk.path = "vk"
+vk.workspace = true
