@@ -1,5 +1,5 @@
+use crate::EventCallback;
 use std::{
-    borrow::Cow,
     ffi::{c_void, CStr},
     ptr::{null, null_mut},
 };
@@ -14,14 +14,14 @@ pub(super) extern "system" fn log_callback(
     message_severity: VkDebugUtilsMessageSeverityFlagBitsEXT,
     _: VkDebugUtilsMessageTypeFlagsEXT,
     message_data: *const VkDebugUtilsMessengerCallbackDataEXT,
-    log: *mut c_void,
+    event_callback: *mut c_void,
 ) -> VkBool32 {
-    if log == null_mut() || message_data == null() {
+    if event_callback == null_mut() || message_data == null() {
         return VK_FALSE;
     }
 
     let message_data = unsafe { &*message_data };
-    let log: &Box<dyn Fn(Severity, &str, Vec<Cow<str>>)> = unsafe { &*(log as *const _) };
+    let event_callback: &Box<dyn EventCallback> = unsafe { &*(event_callback as *const _) };
 
     if message_data.message == null() {
         return VK_FALSE;
@@ -78,7 +78,7 @@ pub(super) extern "system" fn log_callback(
         }
     }
 
-    log(severity, &message, objects);
+    event_callback.callback(severity, &message, objects);
 
     VK_FALSE
 }

@@ -1,13 +1,15 @@
 use crate::functions::InstanceFunctions;
-use std::ptr::null;
+use std::ptr::{null, null_mut};
 use vulkan::VkInstance;
 
 mod debug_messenger;
+mod event_callback;
 mod extensions;
 mod layers;
 mod new;
 
 pub use debug_messenger::DebugUtilsMessenger;
+pub use event_callback::EventCallback;
 pub use extensions::InstanceExtension;
 pub use layers::InstanceLayer;
 
@@ -18,6 +20,9 @@ pub struct Instance {
 
     /// Instance-level functions
     functions: InstanceFunctions,
+
+    /// The callback for events that Vulkan emits
+    event_callback: *mut Box<dyn EventCallback>,
 }
 
 impl Instance {
@@ -35,5 +40,9 @@ impl Instance {
 impl Drop for Instance {
     fn drop(&mut self) {
         self.f().destroy_instance(self.handle, null());
+
+        if self.event_callback != null_mut() {
+            drop(unsafe { Box::from_raw(self.event_callback) });
+        }
     }
 }

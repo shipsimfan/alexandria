@@ -1,7 +1,6 @@
 use crate::{functions::DebugUtilsFunctions, Instance};
 use callback::log_callback;
-use std::{borrow::Cow, ptr::null, rc::Rc};
-use util::Severity;
+use std::{ptr::null, rc::Rc};
 use vulkan::VkDebugUtilsMessengerEXT;
 
 mod callback;
@@ -14,10 +13,6 @@ pub(super) use create_info::debug_messenger_create_info;
 pub struct DebugUtilsMessenger {
     /// The handle to the messenger
     handle: VkDebugUtilsMessengerEXT,
-
-    /// The logging callback itself
-    #[allow(unused)]
-    callback: *mut dyn Fn(Severity, &str, Vec<Cow<str>>),
 
     /// The instance that created this messenger
     instance: Rc<Instance>,
@@ -35,8 +30,6 @@ impl Drop for DebugUtilsMessenger {
         self.f()
             .unwrap()
             .destroy_messenger(self.instance.handle(), self.handle, null());
-
-        drop(unsafe { Box::from_raw(self.callback) });
     }
 }
 

@@ -9,7 +9,7 @@ fn main() {
 }
 
 fn run() -> Result<(), Box<dyn alexandria::Error>> {
-    let instance = alexandria::Instance::new(Some(log_callback))?;
+    let instance = alexandria::Instance::new(Some(Box::new(log_callback)))?;
 
     let mut window = alexandria::Window::new("Window Example", 1280, 720)?;
 

@@ -1,7 +1,6 @@
 use super::debug_messenger_create_info;
 use crate::{DebugUtilsMessenger, Instance};
-use std::{borrow::Cow, ptr::null, rc::Rc};
-use util::Severity;
+use std::{ptr::null, rc::Rc};
 use vulkan::VkResult;
 
 impl DebugUtilsMessenger {
@@ -11,13 +10,8 @@ impl DebugUtilsMessenger {
     ///  * `severity` - The [`Severity`] of the message
     ///  * `message` - The text describing the message
     ///  * `objects` - A list of names of objects related to this message
-    pub fn new(
-        instance: Rc<Instance>,
-        callback: Box<dyn Fn(Severity, &str, Vec<Cow<str>>)>,
-    ) -> Result<Self, VkResult> {
-        let callback = Box::into_raw(Box::new(callback));
-
-        let create_info = debug_messenger_create_info(callback);
+    pub fn new(instance: Rc<Instance>) -> Result<Self, VkResult> {
+        let create_info = debug_messenger_create_info(instance.event_callback);
         let handle =
             instance
                 .f()
@@ -25,10 +19,6 @@ impl DebugUtilsMessenger {
                 .unwrap()
                 .create_messenger(instance.handle(), &create_info, null())?;
 
-        Ok(DebugUtilsMessenger {
-            handle,
-            callback,
-            instance,
-        })
+        Ok(DebugUtilsMessenger { handle, instance })
     }
 }

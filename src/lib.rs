@@ -10,4 +10,4 @@ mod instance;
 
 pub use instance::{Instance, InstanceCreateError};
 pub use util::{Error, Severity};
-pub use vk::{message_box, Window, WindowCreationError};
+pub use vk::{message_box, EventCallback, Window, WindowCreationError};

@@ -1,6 +1,5 @@
 use super::log_callback;
-use std::borrow::Cow;
-use util::Severity;
+use crate::EventCallback;
 use vulkan::{
     VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagBitsEXT,
     VkDebugUtilsMessengerCreateInfoEXT,
@@ -8,7 +7,7 @@ use vulkan::{
 
 /// Creates [`VkDebugUtilsMessengerCreateInfoEXT`] for `log` function
 pub(in crate::instance) fn debug_messenger_create_info(
-    callback: *const Box<dyn Fn(Severity, &str, Vec<Cow<str>>)>,
+    callback: *const Box<dyn EventCallback>,
 ) -> VkDebugUtilsMessengerCreateInfoEXT {
     VkDebugUtilsMessengerCreateInfoEXT {
         message_severity: VkDebugUtilsMessageSeverityFlagBitsEXT::VerboseBitEXT as u32

@@ -1,5 +1,4 @@
-use std::{borrow::Cow, rc::Rc};
-use util::Severity;
+use std::rc::Rc;
 use vk::DebugUtilsMessenger;
 
 mod new;

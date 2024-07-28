@@ -16,7 +16,9 @@ use windows as os;
 
 pub use create_error::CreateError;
 pub use global::Global;
-pub use instance::{DebugUtilsMessenger, Instance, InstanceExtension, InstanceLayer};
+pub use instance::{
+    DebugUtilsMessenger, EventCallback, Instance, InstanceExtension, InstanceLayer,
+};
 pub use os::{message_box, Window, WindowCreationError};
 
 pub use vulkan::VkResult;
