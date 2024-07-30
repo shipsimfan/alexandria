@@ -42,6 +42,11 @@ impl Window {
 
         self.should_run
     }
+
+    /// Signals the window to exit at the next event loop
+    pub fn exit(&mut self) {
+        self.should_run = false;
+    }
 }
 
 impl Drop for Window {
