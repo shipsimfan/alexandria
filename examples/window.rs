@@ -13,6 +13,12 @@ fn run() -> Result<(), Box<dyn alexandria::Error>> {
 
     let mut window = alexandria::Window::new("Window Example", 1280, 720)?;
 
+    let physical_devices = instance.physical_devices(&window)?;
+    println!("Available devices:");
+    for physical_device in physical_devices {
+        println!(" - {}", physical_device.name());
+    }
+
     while window.poll_events() {}
 
     drop(instance);

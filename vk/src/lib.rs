@@ -17,8 +17,9 @@ use windows as os;
 pub use create_error::CreateError;
 pub use global::Global;
 pub use instance::{
-    DebugUtilsMessenger, EventCallback, Instance, InstanceExtension, InstanceLayer,
+    DebugUtilsMessenger, EventCallback, Instance, InstanceExtension, InstanceLayer, PhysicalDevice,
+    PhysicalDeviceProperties,
 };
 pub use os::{message_box, Window, WindowCreationError};
 
-pub use vulkan::VkResult;
+pub use vulkan::{VkPhysicalDeviceType, VkQueueFamilyProperties, VkQueueFlagBits, VkResult};
