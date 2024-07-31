@@ -7,6 +7,7 @@
 #![warn(rustdoc::broken_intra_doc_links)]
 
 mod create_error;
+mod device;
 mod functions;
 mod global;
 mod instance;
@@ -15,6 +16,7 @@ mod instance;
 use windows as os;
 
 pub use create_error::CreateError;
+pub use device::Device;
 pub use global::Global;
 pub use instance::{
     DebugUtilsMessenger, EventCallback, Instance, InstanceExtension, InstanceLayer, PhysicalDevice,
