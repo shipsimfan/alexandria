@@ -19,6 +19,11 @@ impl Window {
         self.0.poll_events()
     }
 
+    /// Signals the window to exit at the next event loop
+    pub fn exit(&mut self) {
+        self.0.exit()
+    }
+
     /// Gets the underlying Vulkan window
     pub(crate) fn inner(&self) -> &vk::Window {
         &self.0
