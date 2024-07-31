@@ -4,7 +4,7 @@ use crate::{
 };
 use std::{
     ptr::{null, null_mut},
-    rc::Rc,
+    sync::Arc,
 };
 use vulkan::{VkApplicationInfo, VkInstanceCreateInfo};
 
@@ -22,13 +22,13 @@ impl Instance {
         layers: &[InstanceLayer],
         extensions: &[InstanceExtension],
         event_callback: *mut Box<dyn EventCallback>,
-    ) -> Result<Rc<Self>, CreateError> {
+    ) -> Result<Arc<Self>, CreateError> {
         let layers: Vec<_> = layers
             .into_iter()
             .map(|layer| layer.as_cstr().as_ptr())
             .collect();
 
-        let extensions: Vec<_> = extensions
+        let extensions_cstr: Vec<_> = extensions
             .into_iter()
             .map(|extension| extension.as_cstr().as_ptr())
             .collect();
@@ -47,8 +47,8 @@ impl Instance {
             application_info: &application_info,
             enabled_layer_count: layers.len() as _,
             enabled_layer_names: layers.as_ptr(),
-            enabled_extension_count: extensions.len() as _,
-            enabled_extension_names: extensions.as_ptr(),
+            enabled_extension_count: extensions_cstr.len() as _,
+            enabled_extension_names: extensions_cstr.as_ptr(),
             next: debug_messenger_create_info
                 .as_ref()
                 .map(|info| info as *const _ as _)
@@ -57,9 +57,9 @@ impl Instance {
         };
 
         let handle = global.f().create_instance(&create_info, null())?;
-        let functions = InstanceFunctions::new(handle, event_callback != null_mut())?;
+        let functions = InstanceFunctions::new(handle, extensions)?;
 
-        Ok(Rc::new(Instance {
+        Ok(Arc::new(Instance {
             handle,
             functions,
             event_callback,

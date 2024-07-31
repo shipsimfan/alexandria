@@ -1,7 +1,7 @@
 use crate::Instance;
 use check_extension_support::check_extension_support;
 use check_layer_support::check_layer_support;
-use std::ptr::null_mut;
+use std::{ptr::null_mut, sync::Arc};
 use vk::{os_instance_extensions, DebugUtilsMessenger, EventCallback, Global};
 
 mod check_extension_support;
@@ -19,7 +19,7 @@ impl Instance {
     ///  * `objects` - A list of names of objects related to this message
     pub fn new(
         event_callback: Option<Box<dyn EventCallback>>,
-    ) -> Result<Self, InstanceCreateError> {
+    ) -> Result<Arc<Self>, InstanceCreateError> {
         let debug = event_callback.is_some();
         let event_callback = event_callback
             .map(|callback| Box::into_raw(Box::new(callback)))
@@ -44,9 +44,9 @@ impl Instance {
             None
         };
 
-        Ok(Instance {
+        Ok(Arc::new(Instance {
             instance,
             debug_messenger,
-        })
+        }))
     }
 }

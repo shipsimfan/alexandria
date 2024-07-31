@@ -8,11 +8,12 @@
 
 mod device;
 mod instance;
+mod window;
 
 pub use device::{Device, DeviceCreateError};
 pub use instance::{EnumeratePhysicalDevicesError, Instance, InstanceCreateError, PhysicalDevice};
 pub use util::{Error, Severity};
 pub use vk::{
-    message_box, EventCallback, VkPhysicalDeviceType as PhysicalDeviceType, Window,
-    WindowCreationError,
+    message_box, EventCallback, VkPhysicalDeviceType as PhysicalDeviceType, WindowCreationError,
 };
+pub use window::Window;

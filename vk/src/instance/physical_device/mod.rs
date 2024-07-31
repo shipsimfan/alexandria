@@ -1,6 +1,6 @@
 use super::Instance;
 use crate::functions::PhysicalDeviceFunctions;
-use std::rc::Rc;
+use std::sync::Arc;
 use vulkan::VkPhysicalDevice;
 
 mod new;
@@ -15,7 +15,7 @@ pub struct PhysicalDevice {
     handle: VkPhysicalDevice,
 
     /// The instance the physical device belongs to
-    instance: Rc<Instance>,
+    instance: Arc<Instance>,
 }
 
 impl PhysicalDevice {
@@ -25,7 +25,7 @@ impl PhysicalDevice {
     }
 
     /// Gets the instance that created this physical device
-    pub(crate) fn instance(&self) -> &Rc<Instance> {
+    pub(crate) fn instance(&self) -> &Arc<Instance> {
         &self.instance
     }
 

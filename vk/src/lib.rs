@@ -18,7 +18,7 @@ pub use device::{Device, Queue, QueueCreateInfo};
 pub use global::Global;
 pub use instance::{
     DebugUtilsMessenger, EventCallback, Instance, InstanceExtension, InstanceLayer, PhysicalDevice,
-    PhysicalDeviceProperties,
+    PhysicalDeviceProperties, Surface,
 };
 pub use os::{
     instance_extensions as os_instance_extensions, message_box, Window, WindowCreationError,

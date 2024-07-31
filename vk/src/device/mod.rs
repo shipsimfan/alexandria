@@ -1,5 +1,5 @@
 use crate::{functions::DeviceFunctions, Instance};
-use std::{ptr::null, rc::Rc};
+use std::{ptr::null, sync::Arc};
 use vulkan::VkDevice;
 
 mod new;
@@ -20,7 +20,7 @@ pub struct Device {
 
     /// The instance that created this device
     #[allow(unused)]
-    instance: Rc<Instance>,
+    instance: Arc<Instance>,
 }
 
 impl Device {

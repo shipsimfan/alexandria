@@ -9,12 +9,14 @@ mod layers;
 mod new;
 mod physical_device;
 mod physical_devices;
+mod surface;
 
 pub use debug_messenger::DebugUtilsMessenger;
 pub use event_callback::EventCallback;
 pub use extensions::InstanceExtension;
 pub use layers::InstanceLayer;
 pub use physical_device::{PhysicalDevice, PhysicalDeviceProperties};
+pub use surface::Surface;
 
 /// A Vulkan Instance
 pub struct Instance {

@@ -1,8 +1,8 @@
 use super::PhysicalDevice;
-use crate::Instance;
+use crate::{Instance, Window};
 use std::fmt::Display;
 use util::Error;
-use vk::{VkResult, Window};
+use vk::VkResult;
 
 /// An error occurred while getting the physical devices
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -19,7 +19,9 @@ impl Instance {
             .map(|physical_devices| {
                 physical_devices
                     .into_iter()
-                    .filter_map(|physical_device| PhysicalDevice::new(physical_device, window))
+                    .filter_map(|physical_device| {
+                        PhysicalDevice::new(physical_device, window.inner())
+                    })
                     .collect()
             })
             .map_err(EnumeratePhysicalDevicesError)

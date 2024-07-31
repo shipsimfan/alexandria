@@ -8,4 +8,7 @@ mod instance;
 
 pub(crate) use device::DeviceFunctions;
 pub(crate) use global::GlobalFunctions;
-pub(crate) use instance::{DebugUtilsFunctions, InstanceFunctions, PhysicalDeviceFunctions};
+pub(crate) use instance::{
+    DebugUtilsFunctions, InstanceFunctions, PhysicalDeviceFunctions, SurfaceFunctions,
+    Win32SurfaceFunctions,
+};

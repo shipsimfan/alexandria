@@ -6,11 +6,12 @@ use win32::{
 use wnd_proc::wnd_proc;
 
 mod class;
-mod creation_error;
 mod new;
 mod wnd_proc;
 
-pub use creation_error::WindowCreationError;
+pub use new::WindowCreationError;
+
+use crate::Surface;
 
 /// A visible window
 pub struct Window {
@@ -20,6 +21,9 @@ pub struct Window {
 
     /// Should this window continue to run?
     should_run: bool,
+
+    /// The surface that allows rendering to this window
+    surface: Surface,
 
     /// The handle to the window
     wnd: HWND,

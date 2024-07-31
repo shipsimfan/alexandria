@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::sync::Arc;
 use vk::DebugUtilsMessenger;
 
 mod new;
@@ -10,9 +10,16 @@ pub use physical_device::{EnumeratePhysicalDevicesError, PhysicalDevice};
 /// The instance of this library for the application to interact with
 pub struct Instance {
     /// The Vulkan instance
-    instance: Rc<vk::Instance>,
+    instance: Arc<vk::Instance>,
 
     /// The Vulkan debug messenger
     #[allow(unused)]
     debug_messenger: Option<DebugUtilsMessenger>,
+}
+
+impl Instance {
+    /// Gets the underlying Vulkan instance
+    pub(crate) fn inner(&self) -> &Arc<vk::Instance> {
+        &self.instance
+    }
 }

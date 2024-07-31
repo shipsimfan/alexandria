@@ -1,8 +1,8 @@
 use super::{get_device_proc_addr, InstanceFunctions};
 use std::{ffi::CStr, ptr::null_mut};
 use vulkan::{
-    VkAllocationCallbacks, VkDestroyDevice, VkDevice, VkGetDeviceQueue, VkQueue, VkResult,
-    VK_DESTROY_DEVICE, VK_GET_DEVICE_QUEUE,
+    VkAllocationCallbacks, VkDestroyDevice, VkDevice, VkGetDeviceQueue, VkQueue, VK_DESTROY_DEVICE,
+    VK_GET_DEVICE_QUEUE,
 };
 
 /// Device-level function pointers

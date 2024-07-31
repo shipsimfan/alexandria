@@ -7,8 +7,6 @@ pub(crate) struct QueueFamilies {
     graphics: u32,
 }
 
-const QUEUE_PRIORITY: f32 = 1.0;
-
 impl QueueFamilies {
     /// Gets the indices of the queue families for `handle`
     pub(super) fn new(physical_device: &vk::PhysicalDevice) -> Option<Self> {

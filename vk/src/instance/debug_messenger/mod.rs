@@ -1,6 +1,6 @@
 use crate::{functions::DebugUtilsFunctions, Instance};
 use callback::log_callback;
-use std::{ptr::null, rc::Rc};
+use std::{ptr::null, sync::Arc};
 use vulkan::VkDebugUtilsMessengerEXT;
 
 mod callback;
@@ -15,7 +15,7 @@ pub struct DebugUtilsMessenger {
     handle: VkDebugUtilsMessengerEXT,
 
     /// The instance that created this messenger
-    instance: Rc<Instance>,
+    instance: Arc<Instance>,
 }
 
 impl DebugUtilsMessenger {

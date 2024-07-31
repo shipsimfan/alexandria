@@ -11,7 +11,7 @@ fn main() {
 fn run() -> Result<(), Box<dyn alexandria::Error>> {
     let instance = alexandria::Instance::new(Some(Box::new(log_callback)))?;
 
-    let mut window = alexandria::Window::new("Window Example", 1280, 720)?;
+    let mut window = alexandria::Window::new(&instance, "Window Example", 1280, 720)?;
 
     let physical_devices = instance.physical_devices(&window)?;
     println!("Available devices:");

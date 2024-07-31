@@ -1,10 +1,10 @@
 use crate::{Instance, PhysicalDevice};
-use std::{ptr::null_mut, rc::Rc};
+use std::{ptr::null_mut, sync::Arc};
 use vulkan::VkResult;
 
 impl Instance {
     /// Enumerates the physical devices accessible to a Vulkan instance
-    pub fn physical_devices(self: &Rc<Self>) -> Result<Vec<PhysicalDevice>, VkResult> {
+    pub fn physical_devices(self: &Arc<Self>) -> Result<Vec<PhysicalDevice>, VkResult> {
         let mut count = 0;
         self.f()
             .enumerate_physical_devices(self.handle, &mut count, null_mut())?;

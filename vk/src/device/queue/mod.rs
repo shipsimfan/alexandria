@@ -1,5 +1,3 @@
-use crate::Device;
-use std::rc::Rc;
 use vulkan::VkQueue;
 
 mod create_info;

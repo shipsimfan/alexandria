@@ -1,7 +1,7 @@
 use crate::{
     functions::DeviceFunctions, CreateError, Device, PhysicalDevice, Queue, QueueCreateInfo,
 };
-use std::{ptr::null, rc::Rc};
+use std::{ptr::null, sync::Arc};
 use vulkan::{VkDeviceCreateInfo, VkPhysicalDeviceFeatures};
 
 impl Device {
@@ -9,7 +9,7 @@ impl Device {
     pub fn new(
         physical_device: &PhysicalDevice,
         queues: Vec<QueueCreateInfo>,
-    ) -> Result<Rc<Self>, CreateError> {
+    ) -> Result<Arc<Self>, CreateError> {
         let queue_create_info: Vec<_> = queues.iter().map(|queue| queue.to_vk()).collect();
 
         let device_features = VkPhysicalDeviceFeatures::default();
@@ -39,7 +39,7 @@ impl Device {
             }
         }
 
-        Ok(Rc::new(Device {
+        Ok(Arc::new(Device {
             queues,
             handle,
             functions,

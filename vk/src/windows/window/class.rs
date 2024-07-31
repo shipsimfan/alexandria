@@ -22,7 +22,7 @@ impl WindowClass {
 
         try_get_last_error!(RegisterClassEx(&wnd_class))
             .map(|atom| WindowClass(atom))
-            .map_err(WindowCreationError::class_creation)
+            .map_err(WindowCreationError::ClassCreationFailed)
     }
 
     /// Gets the underlying [`ATOM`]
