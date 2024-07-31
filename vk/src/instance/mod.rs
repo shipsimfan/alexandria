@@ -49,3 +49,6 @@ impl Drop for Instance {
         }
     }
 }
+
+unsafe impl Send for Instance {}
+unsafe impl Sync for Instance {}

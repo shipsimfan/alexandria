@@ -15,3 +15,6 @@ impl Global {
         &self.functions
     }
 }
+
+unsafe impl Send for Global {}
+unsafe impl Sync for Global {}

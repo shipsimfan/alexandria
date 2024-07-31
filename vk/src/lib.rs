@@ -16,7 +16,7 @@ mod instance;
 use windows as os;
 
 pub use create_error::CreateError;
-pub use device::Device;
+pub use device::{Device, Queue, QueueCreateInfo};
 pub use global::Global;
 pub use instance::{
     DebugUtilsMessenger, EventCallback, Instance, InstanceExtension, InstanceLayer, PhysicalDevice,

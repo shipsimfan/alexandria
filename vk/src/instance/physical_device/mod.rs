@@ -34,3 +34,6 @@ impl PhysicalDevice {
         self.instance.f().pd()
     }
 }
+
+unsafe impl Send for PhysicalDevice {}
+unsafe impl Sync for PhysicalDevice {}
