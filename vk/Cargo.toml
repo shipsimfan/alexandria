@@ -15,4 +15,4 @@ vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
 util.workspace = true
 
 [target.'cfg(windows)'.dependencies]
-windows.workspace = true
+win32.git = "https://github.com/shipsimfan/lib-win32"

@@ -2,7 +2,7 @@ use crate::Instance;
 use check_extension_support::check_extension_support;
 use check_layer_support::check_layer_support;
 use std::ptr::null_mut;
-use vk::{DebugUtilsMessenger, EventCallback, Global, InstanceExtension};
+use vk::{os_instance_extensions, DebugUtilsMessenger, EventCallback, Global};
 
 mod check_extension_support;
 mod check_layer_support;
@@ -29,7 +29,7 @@ impl Instance {
         let global = Global::new().map_err(InstanceCreateError::GlobalFunctionMissing)?;
 
         let layers = check_layer_support(&global, debug)?;
-        let extensions = check_extension_support(InstanceExtension::os(), &global, debug)?;
+        let extensions = check_extension_support(os_instance_extensions(), &global, debug)?;
 
         let instance = vk::Instance::new(&global, layers, &extensions, event_callback)
             .map_err(InstanceCreateError::CreateInstanceFailed)?;

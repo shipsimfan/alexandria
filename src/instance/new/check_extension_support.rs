@@ -33,6 +33,7 @@ pub(super) fn check_extension_support(
 
 fn get_required_extensions(debug: bool) -> &'static [InstanceExtension] {
     const ALL_EXTENSIONS: &[InstanceExtension] = &[
+        InstanceExtension::Surface,
         // The last `DEBUG_EXTENSIONS` extensions must be the extensions only to be enabled in
         // debug
         InstanceExtension::DebugUtils,

@@ -5,15 +5,13 @@
 #![deny(rustdoc::unescaped_backticks)]
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
+#![feature(negative_impls)]
 
 mod create_error;
 mod device;
 mod functions;
 mod global;
 mod instance;
-
-#[cfg(target_os = "windows")]
-use windows as os;
 
 pub use create_error::CreateError;
 pub use device::{Device, Queue, QueueCreateInfo};
@@ -22,9 +20,17 @@ pub use instance::{
     DebugUtilsMessenger, EventCallback, Instance, InstanceExtension, InstanceLayer, PhysicalDevice,
     PhysicalDeviceProperties,
 };
-pub use os::{message_box, Window, WindowCreationError};
+pub use os::{
+    instance_extensions as os_instance_extensions, message_box, Window, WindowCreationError,
+};
 
 pub use vulkan::{
     VkDeviceQueueCreateInfo, VkPhysicalDeviceType, VkQueueFamilyProperties, VkQueueFlagBits,
     VkResult,
 };
+
+#[cfg(target_os = "windows")]
+mod windows;
+
+#[cfg(target_os = "windows")]
+use windows as os;
