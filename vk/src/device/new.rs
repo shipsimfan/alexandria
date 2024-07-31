@@ -6,24 +6,13 @@ impl Device {
     /// Creates a new [`Device`]
     pub fn new(
         physical_device: &PhysicalDevice,
-        queue_families: &[u32],
+        queues: Vec<VkDeviceQueueCreateInfo>,
     ) -> Result<Rc<Self>, CreateError> {
-        let queue_priority = 1.0;
-        let queue_create_info: Vec<_> = queue_families
-            .into_iter()
-            .map(|queue_family| VkDeviceQueueCreateInfo {
-                queue_family_index: *queue_family,
-                queue_count: 1,
-                queue_priorities: &queue_priority,
-                ..Default::default()
-            })
-            .collect();
-
         let device_features = VkPhysicalDeviceFeatures::default();
 
         let create_info = VkDeviceCreateInfo {
-            queue_create_infos: queue_create_info.as_ptr(),
-            queue_create_info_count: queue_create_info.len() as _,
+            queue_create_infos: queues.as_ptr(),
+            queue_create_info_count: queues.len() as _,
             enabled_features: &device_features,
             ..Default::default()
         };

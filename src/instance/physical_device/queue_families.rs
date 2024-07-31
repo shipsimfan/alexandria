@@ -1,11 +1,13 @@
 use util::flags_contains;
-use vk::VkQueueFlagBits;
+use vk::{VkDeviceQueueCreateInfo, VkQueueFlagBits};
 
 /// The indices of the queue families a device will use
 pub(crate) struct QueueFamilies {
     /// The index of the graphics queue family
     graphics: u32,
 }
+
+const QUEUE_PRIORITY: f32 = 1.0;
 
 impl QueueFamilies {
     /// Gets the indices of the queue families for `handle`
@@ -31,7 +33,12 @@ impl QueueFamilies {
     }
 
     /// Gets the queue families as a slice
-    pub(crate) fn to_slice(&self) -> [u32; 1] {
-        [self.graphics]
+    pub(crate) fn to_vec(&self) -> Vec<VkDeviceQueueCreateInfo> {
+        vec![VkDeviceQueueCreateInfo {
+            queue_family_index: self.graphics,
+            queue_count: 1,
+            queue_priorities: &QUEUE_PRIORITY,
+            ..Default::default()
+        }]
     }
 }

@@ -24,4 +24,7 @@ pub use instance::{
 };
 pub use os::{message_box, Window, WindowCreationError};
 
-pub use vulkan::{VkPhysicalDeviceType, VkQueueFamilyProperties, VkQueueFlagBits, VkResult};
+pub use vulkan::{
+    VkDeviceQueueCreateInfo, VkPhysicalDeviceType, VkQueueFamilyProperties, VkQueueFlagBits,
+    VkResult,
+};
