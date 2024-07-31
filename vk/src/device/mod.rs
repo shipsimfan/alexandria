@@ -2,6 +2,8 @@ use crate::{functions::DeviceFunctions, Instance};
 use std::{ptr::null, rc::Rc};
 use vulkan::VkDevice;
 
+mod new;
+
 /// A Vulkan device
 pub struct Device {
     /// The handle to the device

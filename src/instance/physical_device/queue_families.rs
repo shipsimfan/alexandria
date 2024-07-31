@@ -29,4 +29,9 @@ impl QueueFamilies {
     pub(crate) fn graphics(&self) -> u32 {
         self.graphics
     }
+
+    /// Gets the queue families as a slice
+    pub(crate) fn to_slice(&self) -> [u32; 1] {
+        [self.graphics]
+    }
 }

@@ -1,4 +1,4 @@
-use super::{util::get_device_proc_addr, InstanceFunctions};
+use super::{get_device_proc_addr, InstanceFunctions};
 use std::ffi::CStr;
 use vulkan::{VkAllocationCallbacks, VkDestroyDevice, VkDevice, VK_DESTROY_DEVICE};
 

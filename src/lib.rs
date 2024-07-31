@@ -6,8 +6,10 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 
+mod device;
 mod instance;
 
+pub use device::{Device, DeviceCreateError};
 pub use instance::{EnumeratePhysicalDevicesError, Instance, InstanceCreateError, PhysicalDevice};
 pub use util::{Error, Severity};
 pub use vk::{

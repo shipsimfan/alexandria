@@ -41,4 +41,14 @@ impl PhysicalDevice {
     pub fn r#type(&self) -> PhysicalDeviceType {
         self.properties.r#type
     }
+
+    /// Gets the handle to the underlying physical device
+    pub(crate) fn handle(&self) -> &vk::PhysicalDevice {
+        &self.physical_device
+    }
+
+    /// Gets the available queue families for this device
+    pub(crate) fn queue_families(&self) -> &QueueFamilies {
+        &self.queue_families
+    }
 }

@@ -19,6 +19,16 @@ pub struct PhysicalDevice {
 }
 
 impl PhysicalDevice {
+    /// Gets the underlying handle to the physical device
+    pub(crate) fn handle(&self) -> VkPhysicalDevice {
+        self.handle
+    }
+
+    /// Gets the instance that created this physical device
+    pub(crate) fn instance(&self) -> &Rc<Instance> {
+        &self.instance
+    }
+
     /// Gets the functions for physical devices
     pub(crate) fn f(&self) -> &PhysicalDeviceFunctions {
         self.instance.f().pd()

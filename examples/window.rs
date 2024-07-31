@@ -15,12 +15,14 @@ fn run() -> Result<(), Box<dyn alexandria::Error>> {
 
     let physical_devices = instance.physical_devices(&window)?;
     println!("Available devices:");
-    for physical_device in physical_devices {
+    for physical_device in &physical_devices {
         println!(" - {}", physical_device.name());
     }
+    let device = alexandria::Device::new(&physical_devices[0])?;
 
     while window.poll_events() {}
 
+    drop(device);
     drop(instance);
     Ok(())
 }
