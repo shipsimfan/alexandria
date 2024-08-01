@@ -22,7 +22,7 @@ pub struct PhysicalDevice {
 impl PhysicalDevice {
     /// Creates a new [`PhysicalDevice`]
     pub(self) fn new(physical_device: vk::PhysicalDevice, window: &Window) -> Option<Self> {
-        let queue_families = QueueFamilies::new(&physical_device)?;
+        let queue_families = QueueFamilies::new(&physical_device, window.surface())?;
         let properties = physical_device.properties();
 
         Some(PhysicalDevice {

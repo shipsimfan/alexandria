@@ -19,8 +19,13 @@ impl Surface {
         Surface { handle, instance }
     }
 
+    /// Gets the handle to the underlying Vulkan surface
+    pub(crate) fn handle(&self) -> VkSurfaceKHR {
+        self.handle
+    }
+
     /// Gets the surface Vulkan functions
-    fn f(&self) -> &SurfaceFunctions {
+    pub(crate) fn f(&self) -> &SurfaceFunctions {
         self.instance.f().s().unwrap()
     }
 }

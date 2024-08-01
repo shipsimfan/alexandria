@@ -51,6 +51,11 @@ impl Window {
     pub fn exit(&mut self) {
         self.should_run = false;
     }
+
+    /// Gets the surface for rendering to this window
+    pub fn surface(&self) -> &Surface {
+        &self.surface
+    }
 }
 
 impl Drop for Window {
