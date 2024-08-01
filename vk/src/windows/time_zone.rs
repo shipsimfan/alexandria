@@ -7,5 +7,5 @@ pub fn get_time_zone() -> i16 {
         return 0;
     }
 
-    time_zone_info.bias as i16
+    -time_zone_info.bias as i16
 }
