@@ -21,7 +21,8 @@ pub use instance::{
     PhysicalDeviceProperties, Surface,
 };
 pub use os::{
-    instance_extensions as os_instance_extensions, message_box, Window, WindowCreationError,
+    get_time_zone, instance_extensions as os_instance_extensions, message_box, Window,
+    WindowCreationError,
 };
 
 pub use vulkan::{
