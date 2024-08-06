@@ -2,9 +2,11 @@ use crate::{functions::DeviceFunctions, Instance};
 use std::{ptr::null, sync::Arc};
 use vulkan::VkDevice;
 
+mod extensions;
 mod new;
 mod queue;
 
+pub use extensions::DeviceExtension;
 pub use queue::{Queue, QueueCreateInfo};
 
 /// A Vulkan device

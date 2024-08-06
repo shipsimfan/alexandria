@@ -1,7 +1,9 @@
 use crate::PhysicalDeviceType;
+use check_extension_support::check_extension_support;
 use queue_families::QueueFamilies;
-use vk::{PhysicalDeviceProperties, Window};
+use vk::{DeviceExtension, PhysicalDeviceProperties, Window};
 
+mod check_extension_support;
 mod get;
 mod queue_families;
 
@@ -17,6 +19,9 @@ pub struct PhysicalDevice {
 
     /// The properties describing this physical device
     properties: PhysicalDeviceProperties,
+
+    /// The extensions this device will use
+    extensions: Vec<DeviceExtension>,
 }
 
 impl PhysicalDevice {
@@ -24,11 +29,13 @@ impl PhysicalDevice {
     pub(self) fn new(physical_device: vk::PhysicalDevice, window: &Window) -> Option<Self> {
         let queue_families = QueueFamilies::new(&physical_device, window.surface())?;
         let properties = physical_device.properties();
+        let extensions = check_extension_support(&physical_device)?;
 
         Some(PhysicalDevice {
             physical_device,
             queue_families,
             properties,
+            extensions,
         })
     }
 

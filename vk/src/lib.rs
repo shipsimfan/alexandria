@@ -14,7 +14,7 @@ mod global;
 mod instance;
 
 pub use create_error::CreateError;
-pub use device::{Device, Queue, QueueCreateInfo};
+pub use device::{Device, DeviceExtension, Queue, QueueCreateInfo};
 pub use global::Global;
 pub use instance::{
     DebugUtilsMessenger, EventCallback, Instance, InstanceExtension, InstanceLayer, PhysicalDevice,

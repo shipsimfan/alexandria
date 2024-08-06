@@ -3,6 +3,7 @@ use crate::functions::PhysicalDeviceFunctions;
 use std::sync::Arc;
 use vulkan::VkPhysicalDevice;
 
+mod instance_extensions;
 mod is_surface_supported;
 mod new;
 mod properties;
