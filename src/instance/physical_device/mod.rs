@@ -58,4 +58,9 @@ impl PhysicalDevice {
     pub(crate) fn queue_families(&self) -> &QueueFamilies {
         &self.queue_families
     }
+
+    /// Gets the extensions this device will use
+    pub(crate) fn extensions(&self) -> &[DeviceExtension] {
+        &self.extensions
+    }
 }

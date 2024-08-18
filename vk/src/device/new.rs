@@ -1,5 +1,6 @@
 use crate::{
-    functions::DeviceFunctions, CreateError, Device, PhysicalDevice, Queue, QueueCreateInfo,
+    functions::DeviceFunctions, CreateError, Device, DeviceExtension, PhysicalDevice, Queue,
+    QueueCreateInfo,
 };
 use std::{ptr::null, sync::Arc};
 use vulkan::{VkDeviceCreateInfo, VkPhysicalDeviceFeatures};
@@ -8,15 +9,22 @@ impl Device {
     /// Creates a new [`Device`]
     pub fn new(
         physical_device: &PhysicalDevice,
-        queues: Vec<QueueCreateInfo>,
+        queues: &[QueueCreateInfo],
+        extensions: &[DeviceExtension],
     ) -> Result<Arc<Self>, CreateError> {
         let queue_create_info: Vec<_> = queues.iter().map(|queue| queue.to_vk()).collect();
+        let extensions: Vec<_> = extensions
+            .iter()
+            .map(|extension| extension.as_cstr().as_ptr())
+            .collect();
 
         let device_features = VkPhysicalDeviceFeatures::default();
 
         let create_info = VkDeviceCreateInfo {
             queue_create_infos: queue_create_info.as_ptr(),
             queue_create_info_count: queue_create_info.len() as _,
+            enabled_extension_count: extensions.len() as _,
+            enabled_extension_names: extensions.as_ptr(),
             enabled_features: &device_features,
             ..Default::default()
         };
