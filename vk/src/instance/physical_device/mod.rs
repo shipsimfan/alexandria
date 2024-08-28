@@ -3,11 +3,14 @@ use crate::functions::PhysicalDeviceFunctions;
 use std::sync::Arc;
 use vulkan::VkPhysicalDevice;
 
-mod instance_extensions;
+mod device_extensions;
 mod is_surface_supported;
 mod new;
 mod properties;
 mod queue_families;
+mod surface_capabilities;
+mod surface_formats;
+mod surface_present_modes;
 
 pub use properties::PhysicalDeviceProperties;
 

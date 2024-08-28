@@ -26,8 +26,8 @@ pub use os::{
 };
 
 pub use vulkan::{
-    VkDeviceQueueCreateInfo, VkPhysicalDeviceType, VkQueueFamilyProperties, VkQueueFlagBits,
-    VkResult,
+    VkDeviceQueueCreateInfo, VkPhysicalDeviceType, VkPresentModeKHR, VkQueueFamilyProperties,
+    VkQueueFlagBits, VkResult, VkSurfaceCapabilitiesKHR, VkSurfaceFormatKHR,
 };
 
 #[cfg(target_os = "windows")]
