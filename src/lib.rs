@@ -1,24 +1,7 @@
-#![allow(mixed_script_confusables)]
+//! Graphics library wrapping low-level graphics APIs
 
-mod constant_buffer;
-mod matrix;
-mod mesh;
-mod shader;
-mod state_tracking_input;
-mod texture;
-mod window;
-
-//pub mod compute;
-
-pub use alexandria_common::{
-    FitScreenUpdater, FixedAspectUpdater, Format, Input, Key, MouseButton, SampleType,
-    UpdateRegion, Vector2, Vector3, Vector4, ViewportUpdater,
-};
-
-pub use constant_buffer::*;
-pub use matrix::*;
-pub use mesh::*;
-pub use shader::*;
-pub use state_tracking_input::*;
-pub use texture::*;
-pub use window::*;
+#![deny(missing_docs)]
+#![deny(rustdoc::private_intra_doc_links)]
+#![deny(rustdoc::unescaped_backticks)]
+#![deny(rustdoc::redundant_explicit_links)]
+#![warn(rustdoc::broken_intra_doc_links)]
