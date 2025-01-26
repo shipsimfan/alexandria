@@ -7,3 +7,6 @@ edition = "2021"
 repository = "https://github.com/shipsimfan/alexandria"
 license = "GPL-3.0-or-later"
 publish = false
+
+[dependencies]
+win32.git = "https://github.com/shipsimfan/lib-win32"
