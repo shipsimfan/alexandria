@@ -1,4 +1,7 @@
 #[test]
 pub fn enumerate_adapters() {
-    alexandria::enumerate_adapters().unwrap();
+    let adapters = alexandria::Adapter::enumerate().unwrap();
+    for adapter in adapters {
+        println!("Adapter: {}", adapter.name());
+    }
 }
