@@ -9,6 +9,49 @@ pub fn main() {
 
     println!("Adapters:");
     for (i, adapter) in adapters.into_iter().enumerate() {
-        println!(" {}. {}", i + 1, adapter.name());
+        println!(
+            " {}. {} ({}, {})",
+            i + 1,
+            adapter.name(),
+            ByteSize(adapter.video_memory()),
+            if adapter.is_software() {
+                "Software"
+            } else {
+                "Hardware"
+            }
+        );
+    }
+}
+
+struct ByteSize(u64);
+
+const KILO: u64 = 1024;
+const MEGA: u64 = KILO * 1024;
+
+impl std::fmt::Display for ByteSize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if self.0 < KILO {
+            write!(f, "{}b", self.0)
+        } else if self.0 < MEGA {
+            let kilo = self.0 / KILO;
+            write!(f, "{kilo}")?;
+
+            let frac = ((self.0 * 1000) / KILO) % 1000;
+            if frac != 0 {
+                write!(f, ".{frac:03}")?;
+            }
+
+            write!(f, "Kb")
+        } else {
+            let mega = self.0 / MEGA;
+            write!(f, "{mega}")?;
+
+            let frac = ((self.0 * 1000) / MEGA) % 1000;
+            if frac != 0 {
+                write!(f, ".{frac:03}")?;
+            }
+
+            write!(f, "Mb")
+        }
     }
 }
