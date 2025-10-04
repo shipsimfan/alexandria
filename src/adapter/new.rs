@@ -1,4 +1,4 @@
-use crate::Adapter;
+use crate::{Adapter, Result};
 use win32::{
     dxgi::{IDXGIAdapter1, DXGI_ADAPTER_DESC1, DXGI_ADAPTER_FLAG},
     try_hresult, ComPtr,
@@ -6,7 +6,7 @@ use win32::{
 
 impl Adapter {
     /// Create a new [`Adapter`]
-    pub(super) fn new(mut adapter: ComPtr<IDXGIAdapter1>) -> Result<Self, win32::Error> {
+    pub(super) fn new(mut adapter: ComPtr<IDXGIAdapter1>) -> Result<Self> {
         let mut desc = DXGI_ADAPTER_DESC1::default();
         try_hresult!(adapter.get_desc1(&mut desc))?;
 

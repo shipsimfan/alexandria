@@ -1,4 +1,4 @@
-use crate::Adapter;
+use crate::{Adapter, Result};
 use std::{cmp::Ordering, ptr::null_mut};
 use win32::{
     dxgi::{CreateDXGIFactory1, IDXGIFactory1},
@@ -8,7 +8,7 @@ use win32::{
 
 impl Adapter {
     /// Enumerate the adapters on the system
-    pub fn enumerate() -> Result<Vec<Self>, win32::Error> {
+    pub fn enumerate() -> Result<Vec<Self>> {
         // Create the factory
         let mut factory = ComPtr::<IDXGIFactory1>::new_in(|factory| {
             try_hresult!(CreateDXGIFactory1(&IDXGIFactory1::IID, factory.cast()))
@@ -24,7 +24,7 @@ impl Adapter {
             } else if result == DXGI_ERROR_NOT_FOUND {
                 break;
             } else {
-                return Err(win32::Error::new(result));
+                return Err(win32::Error::new(result).into());
             }
         }
 

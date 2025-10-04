@@ -7,5 +7,9 @@
 #![warn(rustdoc::broken_intra_doc_links)]
 
 mod adapter;
+mod error;
+mod window;
 
 pub use adapter::Adapter;
+pub use error::{Error, Result};
+pub use window::Window;

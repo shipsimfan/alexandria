@@ -1,6 +1,6 @@
 //! Uses alexandria to enumerate the adapters in the system
 
-pub fn main() {
+fn main() {
     let adapters = alexandria::Adapter::enumerate().unwrap();
     if adapters.len() == 0 {
         println!("No adapters on the system!");
