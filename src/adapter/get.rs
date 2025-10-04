@@ -1,4 +1,5 @@
-use crate::Adapter;
+use crate::{Adapter, Output};
+use std::slice::SliceIndex;
 
 impl Adapter {
     /// Get the name of this adapter
@@ -7,17 +8,25 @@ impl Adapter {
     }
 
     /// Get the dedicated video memory, in bytes, this adapter has
-    pub fn video_memory(&self) -> u64 {
+    pub const fn video_memory(&self) -> u64 {
         self.video_memory
     }
 
-    /// Is this a software based adapter?
-    pub fn is_software(&self) -> bool {
-        self.is_software
+    /// Get the outputs this adapter can display to
+    pub fn outputs(&self) -> &[Output] {
+        &self.outputs
     }
 
-    /// Is this a hardware based adapter?
-    pub fn is_hardware(&self) -> bool {
-        !self.is_software
+    /// Get the output at index `index`
+    pub fn output<I>(&self, index: I) -> Option<&I::Output>
+    where
+        I: SliceIndex<[Output]>,
+    {
+        self.outputs.get::<I>(index)
+    }
+
+    /// Get the number of outputs this output can display on
+    pub const fn num_outputs(&self) -> usize {
+        self.outputs.len()
     }
 }

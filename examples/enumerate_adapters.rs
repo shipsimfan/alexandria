@@ -10,16 +10,28 @@ fn main() {
     println!("Adapters:");
     for (i, adapter) in adapters.into_iter().enumerate() {
         println!(
-            " {}. {} ({}, {})",
+            " {}. {} ({})",
             i + 1,
             adapter.name(),
-            ByteSize(adapter.video_memory()),
-            if adapter.is_software() {
-                "Software"
-            } else {
-                "Hardware"
-            }
+            ByteSize(adapter.video_memory())
         );
+
+        for output in adapter.outputs() {
+            println!("   - {} (@ {})", output.name(), output.position());
+            for resolution in output.resolutions() {
+                print!("     - {}x{} (@ ", resolution.width(), resolution.height());
+                let mut first = true;
+                for refresh_rate in resolution.refresh_rates() {
+                    if first {
+                        first = false;
+                    } else {
+                        print!(", ");
+                    }
+                    print!("{:.02}Hz", refresh_rate);
+                }
+                println!(")");
+            }
+        }
     }
 }
 

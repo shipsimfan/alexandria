@@ -1,16 +1,11 @@
 use crate::{
     window::{WindowClass, WindowHandle},
-    Adapter, Result, Window,
+    Output, Result, Window,
 };
 
 impl Window {
     /// Create a new [`Window`] for rendering
-    pub fn new(
-        title: &str,
-        width: u32,
-        height: u32,
-        adapter: Option<&Adapter>,
-    ) -> Result<Box<Self>> {
+    pub fn new(title: &str, width: u32, height: u32, output: Option<&Output>) -> Result<Box<Self>> {
         let mut utf16_title: Vec<_> = title.encode_utf16().collect();
         utf16_title.push(0);
 
