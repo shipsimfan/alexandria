@@ -1,11 +1,12 @@
 use crate::{
     window::{WindowClass, WindowHandle},
-    Result, Window,
+    DisplayMode, Result, Window,
 };
 use std::ptr::null_mut;
 use win32::{
     CreateWindowEx, GetModuleHandle, SetWindowLongPtr, CW_USEDEFAULT, GWLP_USERDATA, WS_BORDER,
-    WS_CAPTION, WS_MINIMIZEBOX, WS_SYSMENU, WS_VISIBLE,
+    WS_CAPTION, WS_EX_APPWINDOW, WS_MINIMIZEBOX, WS_OVERLAPPEDWINDOW, WS_POPUP, WS_SYSMENU,
+    WS_VISIBLE,
 };
 
 impl WindowHandle {
@@ -13,23 +14,33 @@ impl WindowHandle {
     pub fn create(
         title: &[u16],
         class: &WindowClass,
-        width: u32,
-        height: u32,
+        x: Option<i32>,
+        y: Option<i32>,
+        width: Option<u32>,
+        height: Option<u32>,
+        display_mode: DisplayMode,
         window_ptr: *mut Window,
     ) -> Result<Self> {
         assert!(title.last().is_some());
         assert_eq!(*title.last().unwrap(), 0);
 
+        let (mut style, ex_style) = match display_mode {
+            DisplayMode::Resizable => (WS_OVERLAPPEDWINDOW, 0),
+            DisplayMode::Windowed => (WS_BORDER | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 0),
+            DisplayMode::Borderless => (WS_POPUP, WS_EX_APPWINDOW),
+        };
+        style |= WS_VISIBLE;
+
         let handle = unsafe {
             CreateWindowEx(
-                0,
+                ex_style,
                 **class as _,
                 title.as_ptr(),
-                WS_BORDER | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE,
-                CW_USEDEFAULT,
-                CW_USEDEFAULT,
-                width as _,
-                height as _,
+                style,
+                x.unwrap_or(CW_USEDEFAULT),
+                y.unwrap_or(CW_USEDEFAULT),
+                width.unwrap_or(CW_USEDEFAULT as _) as _,
+                height.unwrap_or(CW_USEDEFAULT as _) as _,
                 null_mut(),
                 null_mut(),
                 GetModuleHandle(null_mut()),

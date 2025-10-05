@@ -14,6 +14,6 @@ mod window;
 
 pub use adapter::{Adapter, Output, OutputResolution};
 pub use error::{Error, Result};
-pub use window::Window;
+pub use window::{DisplayMode, Window, WindowBuilder};
 
 const FORMAT: win32::dxgi::DXGI_FORMAT = win32::dxgi::DXGI_FORMAT::B8G8R8A8UNorm;

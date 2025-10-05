@@ -1,6 +1,8 @@
 use window_class::WindowClass;
 use window_handle::WindowHandle;
 
+mod builder;
+mod display_mode;
 mod window_class;
 mod window_handle;
 
@@ -8,6 +10,9 @@ mod get;
 mod new;
 mod process_inputs;
 mod window_proc;
+
+pub use builder::WindowBuilder;
+pub use display_mode::DisplayMode;
 
 /// A window which can be rendered into and receive input
 pub struct Window {

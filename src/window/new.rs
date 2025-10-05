@@ -1,22 +1,35 @@
 use crate::{
     window::{WindowClass, WindowHandle},
-    Output, Result, Window,
+    Adapter, DisplayMode, Result, Window,
 };
 
 impl Window {
     /// Create a new [`Window`] for rendering
-    pub fn new(title: &str, width: u32, height: u32, output: Option<&Output>) -> Result<Box<Self>> {
-        let mut utf16_title: Vec<_> = title.encode_utf16().collect();
-        utf16_title.push(0);
+    pub(in crate::window) fn new(
+        title: &[u16],
+        x: Option<i32>,
+        y: Option<i32>,
+        width: Option<u32>,
+        height: Option<u32>,
+        display_mode: DisplayMode,
+        adapter: &Adapter,
+    ) -> Result<Box<Self>> {
+        assert!(title.last().is_some());
+        assert_eq!(*title.last().unwrap(), 0);
 
-        let class = WindowClass::register(&utf16_title)?;
+        let class = WindowClass::register(&title)?;
 
         let mut window = Box::new_uninit();
-        let handle = WindowHandle::create(&utf16_title, &class, width, height, window.as_mut_ptr())
-            .map_err(|error| {
-                eprintln!("Error: {}", error);
-                error
-            })?;
+        let handle = WindowHandle::create(
+            &title,
+            &class,
+            x,
+            y,
+            width,
+            height,
+            display_mode,
+            window.as_mut_ptr(),
+        )?;
 
         Ok(Box::write(
             window,
