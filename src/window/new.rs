@@ -1,6 +1,7 @@
 use crate::{
+    math::Rational,
     window::{WindowClass, WindowHandle},
-    Adapter, DisplayMode, Result, Window,
+    Adapter, DisplayMode, GraphicsContext, Result, Window,
 };
 
 impl Window {
@@ -11,8 +12,10 @@ impl Window {
         y: Option<i32>,
         width: Option<u32>,
         height: Option<u32>,
+        refresh_rate: Option<Rational<u32>>,
+        vsync: bool,
         display_mode: DisplayMode,
-        adapter: &Adapter,
+        adapter: &mut Adapter,
     ) -> Result<Box<Self>> {
         assert!(title.last().is_some());
         assert_eq!(*title.last().unwrap(), 0);
@@ -31,10 +34,25 @@ impl Window {
             window.as_mut_ptr(),
         )?;
 
+        let (position, size) = handle.get_rect()?;
+
+        let graphics_context = GraphicsContext::new(
+            &handle,
+            adapter,
+            size.x,
+            size.y,
+            refresh_rate.unwrap_or(Rational::zero()),
+            vsync,
+        )?;
+
         Ok(Box::write(
             window,
             Window {
                 is_running: true,
+                position,
+                size,
+                graphics_context,
+                wnd_proc_result: Ok(()),
                 handle,
                 class,
             },

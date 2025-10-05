@@ -1,0 +1,84 @@
+use crate::{
+    math::Rational, window::WindowHandle, Adapter, GraphicsContext, Result, BUFFER_COUNT, FORMAT,
+};
+use std::ptr::null_mut;
+use win32::{
+    d3d11::{D3D11CreateDeviceAndSwapChain, D3D11_CREATE_DEVICE_FLAG, D3D11_SDK_VERSION},
+    d3dcommon::{D3D_DRIVER_TYPE, D3D_FEATURE_LEVEL},
+    dxgi::{
+        DXGI_MODE_DESC, DXGI_RATIONAL, DXGI_SWAP_CHAIN_DESC, DXGI_SWAP_EFFECT,
+        DXGI_USAGE_RENDER_TARGET_OUTPUT,
+    },
+    try_hresult, ComPtr, TRUE, UINT,
+};
+
+const BASE_DEVICE_FLAGS: UINT = D3D11_CREATE_DEVICE_FLAG::BgraSupport as _;
+
+#[cfg(debug_assertions)]
+const DEVICE_FLAGS: UINT = BASE_DEVICE_FLAGS | D3D11_CREATE_DEVICE_FLAG::Debug as UINT;
+#[cfg(not(debug_assertions))]
+const DEVICE_FLAGS: UINT = BASE_DEVICE_FLAGS;
+
+const FEATURE_LEVELS: &[D3D_FEATURE_LEVEL] = &[D3D_FEATURE_LEVEL::_11_0, D3D_FEATURE_LEVEL::_11_1];
+
+impl GraphicsContext {
+    /// Creates a new [`GraphicsContext`] given the options
+    pub(in crate::window) fn new(
+        window: &WindowHandle,
+        adapter: &mut Adapter,
+        width: u32,
+        height: u32,
+        refresh_rate: Rational<u32>,
+        vsync: bool,
+    ) -> Result<Self> {
+        let swap_chain_desc = DXGI_SWAP_CHAIN_DESC {
+            buffer_desc: DXGI_MODE_DESC {
+                width,
+                height,
+                refresh_rate: DXGI_RATIONAL {
+                    numerator: refresh_rate.numerator,
+                    denominator: refresh_rate.denominator,
+                },
+                format: FORMAT,
+                ..Default::default()
+            },
+            buffer_usage: DXGI_USAGE_RENDER_TARGET_OUTPUT as _,
+            buffer_count: BUFFER_COUNT,
+            output_window: **window,
+            windowed: TRUE,
+            swap_effect: DXGI_SWAP_EFFECT::FlipDiscard,
+            ..Default::default()
+        };
+
+        let mut device = null_mut();
+        let mut device_context = null_mut();
+        let mut swap_chain = null_mut();
+        try_hresult!(D3D11CreateDeviceAndSwapChain(
+            adapter.handle() as *mut _ as _,
+            D3D_DRIVER_TYPE::Unknown,
+            null_mut(),
+            DEVICE_FLAGS,
+            FEATURE_LEVELS.as_ptr(),
+            2,
+            D3D11_SDK_VERSION,
+            &swap_chain_desc,
+            &mut swap_chain,
+            &mut device,
+            null_mut(),
+            &mut device_context
+        ))
+        .map_err(|error| eprintln!("Error: {}", error))
+        .unwrap();
+
+        let device = ComPtr::new(device);
+        let device_context = ComPtr::new(device_context);
+        let swap_chain = ComPtr::new(swap_chain);
+
+        Ok(GraphicsContext {
+            vsync,
+            swap_chain,
+            device_context,
+            device,
+        })
+    }
+}

@@ -1,4 +1,4 @@
-use crate::{Adapter, DisplayMode, WindowBuilder};
+use crate::{math::Rational, Adapter, DisplayMode, WindowBuilder};
 
 impl<'a> WindowBuilder<'a> {
     /// Set the window's title
@@ -31,6 +31,18 @@ impl<'a> WindowBuilder<'a> {
         self
     }
 
+    /// Set the refresh rate to render the window at
+    pub fn refresh_rate(mut self, refresh_rate: Rational<u32>) -> Self {
+        self.refresh_rate = Some(refresh_rate);
+        self
+    }
+
+    /// Should presents be synchronized with vertical blanks?
+    pub fn vsync(mut self, vsync: bool) -> Self {
+        self.vsync = vsync;
+        self
+    }
+
     /// Set the mode the window should be displayed in
     pub fn display_mode(mut self, display_mode: DisplayMode) -> Self {
         self.display_mode = display_mode;
@@ -53,7 +65,7 @@ impl<'a> WindowBuilder<'a> {
     }
 
     /// Set the adapter to use for rendering
-    pub fn adapter(mut self, adapter: &'a Adapter) -> Self {
+    pub fn adapter(mut self, adapter: &'a mut Adapter) -> Self {
         self.adapter = Some(adapter);
         self
     }

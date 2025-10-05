@@ -1,4 +1,4 @@
-use crate::{Adapter, DisplayMode};
+use crate::{math::Rational, Adapter, DisplayMode};
 
 mod create;
 mod new;
@@ -21,9 +21,15 @@ pub struct WindowBuilder<'a> {
     /// The height of the window
     pub height: Option<u32>,
 
+    /// The refresh rate to render in the window
+    pub refresh_rate: Option<Rational<u32>>,
+
+    /// Should presents be synchronized with vertical blanks?
+    pub vsync: bool,
+
     /// The mode the window should be displayed with
     pub display_mode: DisplayMode,
 
     /// The adapter to use for rendering
-    pub adapter: Option<&'a Adapter>,
+    pub adapter: Option<&'a mut Adapter>,
 }

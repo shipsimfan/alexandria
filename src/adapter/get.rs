@@ -1,3 +1,5 @@
+use win32::dxgi::IDXGIAdapter1;
+
 use crate::{Adapter, Output};
 use std::slice::SliceIndex;
 
@@ -28,5 +30,10 @@ impl Adapter {
     /// Get the number of outputs this output can display on
     pub const fn num_outputs(&self) -> usize {
         self.outputs.len()
+    }
+
+    /// Get the underlying adapter handle
+    pub(crate) fn handle(&mut self) -> &mut IDXGIAdapter1 {
+        &mut self.adapter
     }
 }

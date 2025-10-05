@@ -1,7 +1,10 @@
-use crate::Window;
+use crate::{
+    math::{Vector2i, Vector2u},
+    Window,
+};
 use win32::{
-    DefWindowProc, GetWindowLongPtr, GWLP_USERDATA, HWND, LPARAM, LRESULT, UINT, WM_CLOSE, WM_QUIT,
-    WPARAM,
+    DefWindowProc, GetWindowLongPtr, GWLP_USERDATA, HWND, LPARAM, LRESULT, UINT, WM_CLOSE, WM_MOVE,
+    WM_QUIT, WM_SIZE, WPARAM,
 };
 
 impl Window {
@@ -28,11 +31,28 @@ impl Window {
         l_param: LPARAM,
     ) -> LRESULT {
         match msg {
-            WM_CLOSE | WM_QUIT => {
-                self.is_running = false;
-                0
+            // The window is closing or the app is quiting
+            WM_CLOSE | WM_QUIT => self.is_running = false,
+
+            // The window has changed size
+            WM_SIZE => {
+                let width = (l_param & 0xFFFF) as u32;
+                let height = ((l_param >> 16) & 0xFFFF) as u32;
+                self.size = Vector2u::new(width, height);
+                self.wnd_proc_result = self.graphics_context.resize(self.size);
             }
-            _ => unsafe { DefWindowProc(*self.handle, msg, w_param, l_param) },
+
+            // The window has moved
+            WM_MOVE => {
+                let x = (l_param & 0xFFFF) as i16;
+                let y = ((l_param >> 16) & 0xFFFF) as i16;
+                self.position = Vector2i::new(x as _, y as _);
+            }
+
+            // All other events
+            _ => return unsafe { DefWindowProc(*self.handle, msg, w_param, l_param) },
         }
+
+        0
     }
 }

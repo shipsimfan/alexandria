@@ -9,6 +9,8 @@ impl<'a> WindowBuilder<'a> {
             y: None,
             width: None,
             height: None,
+            refresh_rate: None,
+            vsync: true,
             display_mode: DisplayMode::default(),
             adapter: None,
         }

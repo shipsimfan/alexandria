@@ -2,12 +2,12 @@ use crate::{Adapter, Error, Result, Window, WindowBuilder};
 
 /// "Owned or borrowed"
 enum Orb<'a, T> {
-    Borrowed(&'a T),
+    Borrowed(&'a mut T),
     Owned(T),
 }
 
-impl<'a, T> AsRef<T> for Orb<'a, T> {
-    fn as_ref(&self) -> &T {
+impl<'a, T> AsMut<T> for Orb<'a, T> {
+    fn as_mut(&mut self) -> &mut T {
         match self {
             Orb::Borrowed(borrowed) => borrowed,
             Orb::Owned(owned) => owned,
@@ -21,7 +21,7 @@ impl<'a> WindowBuilder<'a> {
         let mut title: Vec<_> = self.title.encode_utf16().collect();
         title.push(0);
 
-        let adapter = match self.adapter {
+        let mut adapter = match self.adapter {
             Some(adapter) => Orb::Borrowed(adapter),
             None => {
                 let mut adapters = Adapter::enumerate()?;
@@ -38,8 +38,10 @@ impl<'a> WindowBuilder<'a> {
             self.y,
             self.width,
             self.height,
+            self.refresh_rate,
+            self.vsync,
             self.display_mode,
-            adapter.as_ref(),
+            adapter.as_mut(),
         )
     }
 }

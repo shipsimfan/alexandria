@@ -4,7 +4,9 @@ fn main() {
         .unwrap();
 
     while window.is_running() {
-        window.process_inputs();
+        window.process_inputs().unwrap();
+
+        window.end_render().unwrap();
     }
 
     drop(window);
