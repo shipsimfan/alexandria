@@ -32,8 +32,14 @@ pub struct Window {
     /// The size of the client area of the window
     size: Vector2u,
 
+    /// Should presents be synchronized with vertical blanks?
+    vsync: bool,
+
     /// The context used for rendering
     graphics_context: GraphicsContext,
+
+    /// Is the window being actively moved or resized?
+    in_move: bool,
 
     /// The result of the window procedure
     wnd_proc_result: Result<()>,

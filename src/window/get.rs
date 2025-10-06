@@ -38,4 +38,9 @@ impl Window {
     pub fn size(&self) -> Vector2u {
         self.size
     }
+
+    /// Is vertical sync enabled?
+    pub fn vsync(&self) -> bool {
+        self.vsync
+    }
 }

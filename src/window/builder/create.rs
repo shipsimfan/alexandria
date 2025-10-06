@@ -38,7 +38,6 @@ impl<'a> WindowBuilder<'a> {
             self.y,
             self.width,
             self.height,
-            self.refresh_rate,
             self.vsync,
             self.display_mode,
             adapter.as_mut(),

@@ -1,13 +1,14 @@
 use crate::{
-    math::Rational, window::WindowHandle, Adapter, GraphicsContext, Result, BUFFER_COUNT, FORMAT,
+    math::Vector2u,
+    window::{graphics_context::SWAP_CHAIN_FLAGS, WindowHandle},
+    Adapter, GraphicsContext, Result, BUFFER_COUNT, FORMAT,
 };
 use std::ptr::null_mut;
 use win32::{
     d3d11::{D3D11CreateDeviceAndSwapChain, D3D11_CREATE_DEVICE_FLAG, D3D11_SDK_VERSION},
     d3dcommon::{D3D_DRIVER_TYPE, D3D_FEATURE_LEVEL},
     dxgi::{
-        DXGI_MODE_DESC, DXGI_RATIONAL, DXGI_SWAP_CHAIN_DESC, DXGI_SWAP_EFFECT,
-        DXGI_USAGE_RENDER_TARGET_OUTPUT,
+        DXGI_MODE_DESC, DXGI_SWAP_CHAIN_DESC, DXGI_SWAP_EFFECT, DXGI_USAGE_RENDER_TARGET_OUTPUT,
     },
     try_hresult, ComPtr, TRUE, UINT,
 };
@@ -28,17 +29,11 @@ impl GraphicsContext {
         adapter: &mut Adapter,
         width: u32,
         height: u32,
-        refresh_rate: Rational<u32>,
-        vsync: bool,
     ) -> Result<Self> {
         let swap_chain_desc = DXGI_SWAP_CHAIN_DESC {
             buffer_desc: DXGI_MODE_DESC {
                 width,
                 height,
-                refresh_rate: DXGI_RATIONAL {
-                    numerator: refresh_rate.numerator,
-                    denominator: refresh_rate.denominator,
-                },
                 format: FORMAT,
                 ..Default::default()
             },
@@ -47,6 +42,7 @@ impl GraphicsContext {
             output_window: **window,
             windowed: TRUE,
             swap_effect: DXGI_SWAP_EFFECT::FlipDiscard,
+            flags: SWAP_CHAIN_FLAGS,
             ..Default::default()
         };
 
@@ -66,16 +62,14 @@ impl GraphicsContext {
             &mut device,
             null_mut(),
             &mut device_context
-        ))
-        .map_err(|error| eprintln!("Error: {}", error))
-        .unwrap();
+        ))?;
 
         let device = ComPtr::new(device);
         let device_context = ComPtr::new(device_context);
         let swap_chain = ComPtr::new(swap_chain);
 
         Ok(GraphicsContext {
-            vsync,
+            swap_chain_size: Vector2u::new(width, height),
             swap_chain,
             device_context,
             device,

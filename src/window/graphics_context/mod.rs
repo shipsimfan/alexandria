@@ -1,7 +1,8 @@
+use crate::math::Vector2u;
 use win32::{
     d3d11::{ID3D11Device, ID3D11DeviceContext},
-    dxgi::IDXGISwapChain,
-    ComPtr,
+    dxgi::{IDXGISwapChain, DXGI_SWAP_CHAIN_FLAG},
+    ComPtr, UINT,
 };
 
 mod end_render;
@@ -10,8 +11,8 @@ mod resize;
 
 /// The context for rendering
 pub struct GraphicsContext {
-    /// Should presents be synchronized with vertical blanks?
-    vsync: bool,
+    /// The current size of the swapchain
+    swap_chain_size: Vector2u,
 
     /// The swap chain to render onto
     swap_chain: ComPtr<IDXGISwapChain>,
@@ -24,3 +25,5 @@ pub struct GraphicsContext {
     #[allow(unused)]
     device: ComPtr<ID3D11Device>,
 }
+
+const SWAP_CHAIN_FLAGS: UINT = DXGI_SWAP_CHAIN_FLAG::AllowTearing as _;

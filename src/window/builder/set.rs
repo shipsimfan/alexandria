@@ -1,4 +1,4 @@
-use crate::{math::Rational, Adapter, DisplayMode, WindowBuilder};
+use crate::{Adapter, DisplayMode, WindowBuilder};
 
 impl<'a> WindowBuilder<'a> {
     /// Set the window's title
@@ -28,12 +28,6 @@ impl<'a> WindowBuilder<'a> {
     /// Set the height of the window
     pub fn height(mut self, height: u32) -> Self {
         self.height = Some(height);
-        self
-    }
-
-    /// Set the refresh rate to render the window at
-    pub fn refresh_rate(mut self, refresh_rate: Rational<u32>) -> Self {
-        self.refresh_rate = Some(refresh_rate);
         self
     }
 

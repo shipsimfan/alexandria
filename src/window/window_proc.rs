@@ -3,8 +3,8 @@ use crate::{
     Window,
 };
 use win32::{
-    DefWindowProc, GetWindowLongPtr, GWLP_USERDATA, HWND, LPARAM, LRESULT, UINT, WM_CLOSE, WM_MOVE,
-    WM_QUIT, WM_SIZE, WPARAM,
+    DefWindowProc, GetWindowLongPtr, GWLP_USERDATA, HWND, LPARAM, LRESULT, UINT, WM_CLOSE,
+    WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_MOVE, WM_QUIT, WM_SIZE, WPARAM,
 };
 
 impl Window {
@@ -34,12 +34,27 @@ impl Window {
             // The window is closing or the app is quiting
             WM_CLOSE | WM_QUIT => self.is_running = false,
 
+            // The user has begun moving or resizing the window
+            WM_ENTERSIZEMOVE => {
+                self.in_move = true;
+            }
+
+            // The user has stopped moving or resizing the window
+            WM_EXITSIZEMOVE => {
+                self.in_move = false;
+
+                self.wnd_proc_result = self.graphics_context.resize(self.size);
+            }
+
             // The window has changed size
             WM_SIZE => {
                 let width = (l_param & 0xFFFF) as u32;
                 let height = ((l_param >> 16) & 0xFFFF) as u32;
                 self.size = Vector2u::new(width, height);
-                self.wnd_proc_result = self.graphics_context.resize(self.size);
+
+                if !self.in_move {
+                    self.wnd_proc_result = self.graphics_context.resize(self.size);
+                }
             }
 
             // The window has moved

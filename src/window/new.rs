@@ -1,5 +1,4 @@
 use crate::{
-    math::Rational,
     window::{WindowClass, WindowHandle},
     Adapter, DisplayMode, GraphicsContext, Result, Window,
 };
@@ -12,7 +11,6 @@ impl Window {
         y: Option<i32>,
         width: Option<u32>,
         height: Option<u32>,
-        refresh_rate: Option<Rational<u32>>,
         vsync: bool,
         display_mode: DisplayMode,
         adapter: &mut Adapter,
@@ -36,14 +34,7 @@ impl Window {
 
         let (position, size) = handle.get_rect()?;
 
-        let graphics_context = GraphicsContext::new(
-            &handle,
-            adapter,
-            size.x,
-            size.y,
-            refresh_rate.unwrap_or(Rational::zero()),
-            vsync,
-        )?;
+        let graphics_context = GraphicsContext::new(&handle, adapter, size.x, size.y)?;
 
         Ok(Box::write(
             window,
@@ -51,7 +42,9 @@ impl Window {
                 is_running: true,
                 position,
                 size,
+                vsync,
                 graphics_context,
+                in_move: false,
                 wnd_proc_result: Ok(()),
                 handle,
                 class,
