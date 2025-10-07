@@ -4,7 +4,7 @@ use crate::{
 };
 use std::ptr::null_mut;
 use win32::{
-    try_get_last_error, AdjustWindowRect, CreateWindowEx, GetModuleHandle, SetWindowLongPtr,
+    try_get_last_error, AdjustWindowRectEx, CreateWindowEx, GetModuleHandle, SetWindowLongPtr,
     CW_USEDEFAULT, FALSE, GWLP_USERDATA, RECT, WS_BORDER, WS_CAPTION, WS_EX_APPWINDOW,
     WS_MINIMIZEBOX, WS_OVERLAPPEDWINDOW, WS_POPUP, WS_SYSMENU, WS_VISIBLE,
 };
@@ -31,7 +31,7 @@ impl WindowHandle {
         };
         style |= WS_VISIBLE;
 
-        let (width, height) = match (width, height) {
+        let (x, y, width, height) = match (width, height) {
             (Some(width), Some(height)) => {
                 let left = x.unwrap_or(0);
                 let top = y.unwrap_or(0);
@@ -42,10 +42,23 @@ impl WindowHandle {
                     right: left + width as i32,
                     bottom: top + height as i32,
                 };
-                try_get_last_error!(AdjustWindowRect(&mut rect, style, FALSE))?;
-                (rect.right - rect.left, rect.bottom - rect.top)
+                try_get_last_error!(AdjustWindowRectEx(&mut rect, style, FALSE, ex_style))?;
+                (
+                    match x {
+                        Some(_) => rect.left,
+                        None => CW_USEDEFAULT,
+                    },
+                    match y {
+                        Some(_) => rect.top,
+                        None => CW_USEDEFAULT,
+                    },
+                    rect.right - rect.left,
+                    rect.bottom - rect.top,
+                )
             }
             (_, _) => (
+                x.unwrap_or(CW_USEDEFAULT),
+                y.unwrap_or(CW_USEDEFAULT),
                 width.unwrap_or(CW_USEDEFAULT as _) as i32,
                 height.unwrap_or(CW_USEDEFAULT as _) as i32,
             ),
@@ -57,8 +70,8 @@ impl WindowHandle {
                 **class as _,
                 title.as_ptr(),
                 style,
-                x.unwrap_or(CW_USEDEFAULT),
-                y.unwrap_or(CW_USEDEFAULT),
+                x,
+                y,
                 width,
                 height,
                 null_mut(),
@@ -74,6 +87,10 @@ impl WindowHandle {
 
         unsafe { SetWindowLongPtr(handle, GWLP_USERDATA, window_ptr as _) };
 
-        Ok(WindowHandle { handle })
+        Ok(WindowHandle {
+            handle,
+            style,
+            ex_style,
+        })
     }
 }

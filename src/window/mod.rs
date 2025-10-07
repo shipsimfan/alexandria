@@ -15,6 +15,7 @@ mod end_render;
 mod get;
 mod new;
 mod process_inputs;
+mod set;
 mod window_proc;
 
 pub use builder::WindowBuilder;

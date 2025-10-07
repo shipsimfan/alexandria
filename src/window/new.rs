@@ -32,7 +32,7 @@ impl Window {
             window.as_mut_ptr(),
         )?;
 
-        let (position, size) = handle.get_rect()?;
+        let (position, size) = handle.get_size_and_position()?;
 
         let graphics_context = GraphicsContext::new(&handle, adapter, size.x, size.y)?;
 
