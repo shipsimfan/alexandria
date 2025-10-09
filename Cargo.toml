@@ -9,4 +9,6 @@ license = "GPL-3.0-or-later"
 publish = false
 
 [dependencies]
-win32.git = "https://github.com/shipsimfan/lib-win32"
+win32 = { git = "https://github.com/shipsimfan/lib-win32", features = [
+    "d3d11",
+] }

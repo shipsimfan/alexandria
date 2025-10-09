@@ -26,4 +26,16 @@ impl Window {
     pub fn set_position(&mut self, position: Vector2i) -> Result<()> {
         self.set_size_and_position(self.size, position)
     }
+
+    /// Sets if the rendering will be aligned with vertical syncs
+    pub fn set_vsync(&mut self, vsync: bool) {
+        self.vsync = vsync;
+    }
+
+    /// Set the window title
+    pub fn set_title(&mut self, title: &str) -> Result<()> {
+        let mut utf16_title: Vec<_> = title.encode_utf16().collect();
+        utf16_title.push(0);
+        self.handle.set_title(&utf16_title)
+    }
 }

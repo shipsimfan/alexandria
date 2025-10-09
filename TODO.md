@@ -1,8 +1,6 @@
 # ToDo
  1. Add window control functions
-    1. `set_vsync`
-    2. `set_display_mode`
-    3. `set_window_title`
+    1. `set_display_mode`
  2. Add clearing of render target
     1. Add `SwapChainObjects` struct with relevant objects
     2. Add clearing of the render target view in `end_render`
