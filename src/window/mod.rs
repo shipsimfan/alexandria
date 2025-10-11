@@ -36,6 +36,9 @@ pub struct Window {
     /// Should presents be synchronized with vertical blanks?
     vsync: bool,
 
+    /// The current display mode of the window
+    display_mode: DisplayMode,
+
     /// The context used for rendering
     graphics_context: GraphicsContext,
 

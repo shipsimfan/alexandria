@@ -43,6 +43,7 @@ impl Window {
                 position,
                 size,
                 vsync,
+                display_mode,
                 graphics_context,
                 in_move: false,
                 wnd_proc_result: Ok(()),

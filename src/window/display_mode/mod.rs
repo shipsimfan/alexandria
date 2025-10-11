@@ -1,4 +1,6 @@
+mod client_to_window;
 mod display;
+mod style;
 
 /// The mode a window should be displayed with
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]

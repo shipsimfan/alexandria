@@ -1,6 +1,6 @@
 use crate::{
     math::{Vector2i, Vector2u},
-    Result, Window,
+    DisplayMode, Result, Window,
 };
 
 impl Window {
@@ -9,12 +9,24 @@ impl Window {
         self.is_running = false;
     }
 
-    /// Set the windows size and position
-    pub fn set_size_and_position(&mut self, size: Vector2u, position: Vector2i) -> Result<()> {
-        self.handle.set_size_and_position(size, position)?;
+    /// Set the window's display mode, size, and position
+    pub fn set_display_mode_size_and_position(
+        &mut self,
+        display_mode: DisplayMode,
+        size: Vector2u,
+        position: Vector2i,
+    ) -> Result<()> {
+        self.handle
+            .set_display_mode_size_and_position(display_mode, size, position)?;
+        self.display_mode = display_mode;
         self.size = size;
         self.position = position;
         Ok(())
+    }
+
+    /// Set the window's size and position
+    pub fn set_size_and_position(&mut self, size: Vector2u, position: Vector2i) -> Result<()> {
+        self.set_display_mode_size_and_position(self.display_mode, size, position)
     }
 
     /// Set the size of the window
@@ -25,6 +37,11 @@ impl Window {
     /// Set the position of the window
     pub fn set_position(&mut self, position: Vector2i) -> Result<()> {
         self.set_size_and_position(self.size, position)
+    }
+
+    /// Set the mode the window should display as
+    pub fn set_display_mode(&mut self, display_mode: DisplayMode) -> Result<()> {
+        self.set_display_mode_size_and_position(display_mode, self.size, self.position)
     }
 
     /// Sets if the rendering will be aligned with vertical syncs

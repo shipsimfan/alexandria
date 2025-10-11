@@ -1,13 +1,10 @@
 use crate::{
+    math::{Vector2i, Vector2u},
     window::{WindowClass, WindowHandle},
     DisplayMode, Result, Window,
 };
 use std::ptr::null_mut;
-use win32::{
-    try_get_last_error, AdjustWindowRectEx, CreateWindowEx, GetModuleHandle, SetWindowLongPtr,
-    CW_USEDEFAULT, FALSE, GWLP_USERDATA, RECT, WS_BORDER, WS_CAPTION, WS_EX_APPWINDOW,
-    WS_MINIMIZEBOX, WS_OVERLAPPEDWINDOW, WS_POPUP, WS_SYSMENU, WS_VISIBLE,
-};
+use win32::{CreateWindowEx, GetModuleHandle, SetWindowLongPtr, CW_USEDEFAULT, GWLP_USERDATA};
 
 impl WindowHandle {
     /// Creates a new window and returns the handle to it
@@ -24,36 +21,26 @@ impl WindowHandle {
         assert!(title.last().is_some());
         assert_eq!(*title.last().unwrap(), 0);
 
-        let (mut style, ex_style) = match display_mode {
-            DisplayMode::Resizable => (WS_OVERLAPPEDWINDOW, 0),
-            DisplayMode::Windowed => (WS_BORDER | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 0),
-            DisplayMode::Borderless => (WS_POPUP, WS_EX_APPWINDOW),
-        };
-        style |= WS_VISIBLE;
+        let (style, ex_style) = display_mode.style();
 
         let (x, y, width, height) = match (width, height) {
             (Some(width), Some(height)) => {
-                let left = x.unwrap_or(0);
-                let top = y.unwrap_or(0);
+                let (size, position) = display_mode.client_to_window(
+                    Vector2u::new(width, height),
+                    Vector2i::new(x.unwrap_or(0), y.unwrap_or(0)),
+                )?;
 
-                let mut rect = RECT {
-                    left,
-                    top,
-                    right: left + width as i32,
-                    bottom: top + height as i32,
-                };
-                try_get_last_error!(AdjustWindowRectEx(&mut rect, style, FALSE, ex_style))?;
                 (
                     match x {
-                        Some(_) => rect.left,
+                        Some(_) => position.x,
                         None => CW_USEDEFAULT,
                     },
                     match y {
-                        Some(_) => rect.top,
+                        Some(_) => position.y,
                         None => CW_USEDEFAULT,
                     },
-                    rect.right - rect.left,
-                    rect.bottom - rect.top,
+                    size.x as _,
+                    size.y as _,
                 )
             }
             (_, _) => (
@@ -87,10 +74,6 @@ impl WindowHandle {
 
         unsafe { SetWindowLongPtr(handle, GWLP_USERDATA, window_ptr as _) };
 
-        Ok(WindowHandle {
-            handle,
-            style,
-            ex_style,
-        })
+        Ok(WindowHandle { handle })
     }
 }
