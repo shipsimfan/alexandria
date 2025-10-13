@@ -32,7 +32,9 @@ fn main() {
         }
 
         // Render
-        window.end_render().unwrap();
+        let render_context = window.begin_render([1.0, 0.0, 1.0, 0.0]);
+
+        render_context.end().unwrap();
     }
 
     drop(window);

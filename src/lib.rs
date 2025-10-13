@@ -14,7 +14,7 @@ mod window;
 
 pub use adapter::{Adapter, Output, OutputResolution};
 pub use error::{Error, Result};
-pub use window::{DisplayMode, GraphicsContext, Window, WindowBuilder};
+pub use window::{DisplayMode, GraphicsContext, RenderContext, Window, WindowBuilder};
 
 const FORMAT: win32::dxgi::DXGI_FORMAT = win32::dxgi::DXGI_FORMAT::B8G8R8A8UNorm;
 const BUFFER_COUNT: win32::UINT = 3;

@@ -1,6 +1,6 @@
 use crate::{
     math::{Vector2i, Vector2u},
-    Window,
+    DisplayMode, GraphicsContext, Window,
 };
 
 impl Window {
@@ -42,5 +42,15 @@ impl Window {
     /// Is vertical sync enabled?
     pub fn vsync(&self) -> bool {
         self.vsync
+    }
+
+    /// Get the current display mode
+    pub fn display_mode(&self) -> DisplayMode {
+        self.display_mode
+    }
+
+    /// Get the graphics context for object creation
+    pub fn graphics_context(&self) -> &GraphicsContext {
+        &self.graphics_context
     }
 }

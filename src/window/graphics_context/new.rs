@@ -66,13 +66,18 @@ impl GraphicsContext {
 
         let device = ComPtr::new(device);
         let device_context = ComPtr::new(device_context);
-        let swap_chain = ComPtr::new(swap_chain);
+        let swapchain = ComPtr::new(swap_chain);
 
-        Ok(GraphicsContext {
-            swap_chain_size: Vector2u::new(width, height),
-            swap_chain,
+        let mut graphics_context = GraphicsContext {
+            swapchain_size: Vector2u::new(width, height),
+            swapchain_objects: None,
+            swapchain,
             device_context,
             device,
-        })
+        };
+
+        graphics_context.force_resize(graphics_context.swapchain_size)?;
+
+        Ok(graphics_context)
     }
 }

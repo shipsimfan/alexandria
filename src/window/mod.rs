@@ -11,7 +11,7 @@ mod graphics_context;
 mod window_class;
 mod window_handle;
 
-mod end_render;
+mod begin_render;
 mod get;
 mod new;
 mod process_inputs;
@@ -20,7 +20,7 @@ mod window_proc;
 
 pub use builder::WindowBuilder;
 pub use display_mode::DisplayMode;
-pub use graphics_context::GraphicsContext;
+pub use graphics_context::{GraphicsContext, RenderContext};
 
 /// A window which can be rendered into and receive input
 pub struct Window {

@@ -1,21 +1,30 @@
 use crate::math::Vector2u;
+use swapchain_objects::SwapchainObjects;
 use win32::{
     d3d11::{ID3D11Device, ID3D11DeviceContext},
     dxgi::{IDXGISwapChain, DXGI_SWAP_CHAIN_FLAG},
     ComPtr, UINT,
 };
 
-mod end_render;
+mod render_context;
+mod swapchain_objects;
+
+mod begin_render;
 mod new;
 mod resize;
+
+pub use render_context::RenderContext;
 
 /// The context for rendering
 pub struct GraphicsContext {
     /// The current size of the swapchain
-    swap_chain_size: Vector2u,
+    swapchain_size: Vector2u,
+
+    /// The objects directly associated with the swapchain
+    swapchain_objects: Option<SwapchainObjects>,
 
     /// The swap chain to render onto
-    swap_chain: ComPtr<IDXGISwapChain>,
+    swapchain: ComPtr<IDXGISwapChain>,
 
     /// The device context for issuing rendering commands
     #[allow(unused)]
