@@ -1,4 +1,4 @@
-use crate::{Adapter, Error, Result};
+use crate::{graphics::Adapter, Error, Result};
 use std::{cmp::Ordering, ptr::null_mut};
 use win32::{
     dxgi::IDXGIFactory1Trait, dxgi1_2::IDXGIFactory2, dxgi1_3::CreateDXGIFactory2, strsafe::S_OK,

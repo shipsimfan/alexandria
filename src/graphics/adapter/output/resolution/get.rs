@@ -1,6 +1,6 @@
 use crate::{
+    graphics::OutputResolution,
     math::{Rational, Vector2u},
-    OutputResolution,
 };
 use std::slice::SliceIndex;
 

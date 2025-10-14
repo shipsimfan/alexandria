@@ -1,7 +1,7 @@
 //! Uses alexandria to enumerate the adapters in the system
 
 fn main() {
-    let adapters = alexandria::Adapter::enumerate().unwrap();
+    let adapters = alexandria::graphics::Adapter::enumerate().unwrap();
     if adapters.len() == 0 {
         println!("No adapters on the system!");
         return;

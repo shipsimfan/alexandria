@@ -1,4 +1,8 @@
-use crate::{math::Vector2, Error, Output, OutputResolution, Result};
+use crate::{
+    graphics::{Output, OutputResolution},
+    math::Vector2,
+    Error, Result,
+};
 use win32::{
     dxgi::{IDXGIAdapter1, IDXGIOutput, IDXGIOutputTrait, DXGI_OUTPUT_DESC},
     dxgi1_2::IDXGIOutput1,
@@ -7,7 +11,7 @@ use win32::{
 
 impl Output {
     /// Create a new [`Output`]
-    pub(in crate::adapter::output) fn new(
+    pub(in crate::graphics::adapter::output) fn new(
         mut output: ComPtr<IDXGIOutput>,
         adapter: ComPtr<IDXGIAdapter1>,
     ) -> Result<Self> {

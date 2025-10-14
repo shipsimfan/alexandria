@@ -1,4 +1,7 @@
-use crate::{math::Vector2i, Output, OutputResolution};
+use crate::{
+    graphics::{Output, OutputResolution},
+    math::Vector2i,
+};
 use std::slice::SliceIndex;
 
 impl Output {

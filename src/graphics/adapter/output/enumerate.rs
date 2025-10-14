@@ -1,4 +1,4 @@
-use crate::{Error, Output, Result};
+use crate::{graphics::Output, Error, Result};
 use std::ptr::null_mut;
 use win32::{
     dxgi::{IDXGIAdapter1, IDXGIAdapterTrait},
@@ -7,7 +7,9 @@ use win32::{
 
 impl Output {
     /// Enumerates the outputs available for `adapter` to output on
-    pub(in crate::adapter) fn enumerate(adapter: &mut ComPtr<IDXGIAdapter1>) -> Result<Vec<Self>> {
+    pub(in crate::graphics::adapter) fn enumerate(
+        adapter: &mut ComPtr<IDXGIAdapter1>,
+    ) -> Result<Vec<Self>> {
         let mut outputs = Vec::new();
         loop {
             let mut output = null_mut();

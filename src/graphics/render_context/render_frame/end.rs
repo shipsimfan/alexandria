@@ -1,11 +1,12 @@
-use crate::{Error, RenderContext, Result};
+use crate::{graphics::RenderFrame, Error, Result};
 use win32::{dxgi::DXGI_PRESENT_ALLOW_TEARING, try_hresult};
 
-impl<'a> RenderContext<'a> {
+impl<'a> RenderFrame<'a> {
     /// End the rendering of the current frame
     pub fn end(mut self) -> Result<()> {
         self.frame_ended = true;
-        try_hresult!(self.graphics_context.swapchain.present(
+
+        try_hresult!(self.render_context.swapchain.present(
             if self.vsync { 1 } else { 0 },
             if self.vsync {
                 0
@@ -14,6 +15,7 @@ impl<'a> RenderContext<'a> {
             }
         ))
         .map_err(|os| Error::new_os("unable to render frame", os))?;
+
         Ok(())
     }
 }

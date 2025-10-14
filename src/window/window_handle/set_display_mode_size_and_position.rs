@@ -11,7 +11,7 @@ use win32::{
 
 impl WindowHandle {
     /// Sets the display mode, position, and size of the window
-    pub fn set_display_mode_size_and_position(
+    pub(in crate::window) fn set_display_mode_size_and_position(
         &self,
         display_mode: DisplayMode,
         size: Vector2u,

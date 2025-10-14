@@ -1,7 +1,8 @@
 use crate::{
+    graphics::{render_context::SWAP_CHAIN_FLAGS, Adapter, GraphicsContext, RenderContext},
     math::Vector2u,
-    window::{graphics_context::SWAP_CHAIN_FLAGS, WindowHandle},
-    Adapter, Error, GraphicsContext, Result, BUFFER_COUNT, FORMAT,
+    window::WindowHandle,
+    Error, Result, BUFFER_COUNT, FORMAT,
 };
 use std::ptr::null_mut;
 use win32::{
@@ -22,14 +23,14 @@ const DEVICE_FLAGS: UINT = BASE_DEVICE_FLAGS;
 
 const FEATURE_LEVELS: &[D3D_FEATURE_LEVEL] = &[D3D_FEATURE_LEVEL::_11_0, D3D_FEATURE_LEVEL::_11_1];
 
-impl GraphicsContext {
+impl RenderContext {
     /// Creates a new [`GraphicsContext`] given the options
-    pub(in crate::window) fn new(
+    pub(crate) fn new(
         window: &WindowHandle,
         adapter: &mut Adapter,
         width: u32,
         height: u32,
-    ) -> Result<Self> {
+    ) -> Result<(Self, GraphicsContext)> {
         let swap_chain_desc = DXGI_SWAP_CHAIN_DESC {
             buffer_desc: DXGI_MODE_DESC {
                 width,
@@ -69,16 +70,16 @@ impl GraphicsContext {
         let device_context = ComPtr::new(device_context);
         let swapchain = ComPtr::new(swap_chain);
 
-        let mut graphics_context = GraphicsContext {
+        let mut render_context = RenderContext {
             swapchain_size: Vector2u::new(width, height),
             swapchain_objects: None,
             swapchain,
             device_context,
-            device,
         };
+        let graphics_context = GraphicsContext::new(device);
 
-        graphics_context.force_resize(graphics_context.swapchain_size)?;
+        render_context.force_resize(&&graphics_context, render_context.swapchain_size)?;
 
-        Ok(graphics_context)
+        Ok((render_context, graphics_context))
     }
 }

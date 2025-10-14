@@ -1,22 +1,22 @@
 use crate::math::Vector2u;
 use swapchain_objects::SwapchainObjects;
 use win32::{
-    d3d11::{ID3D11Device, ID3D11DeviceContext},
+    d3d11::ID3D11DeviceContext,
     dxgi::{IDXGISwapChain, DXGI_SWAP_CHAIN_FLAG},
     ComPtr, UINT,
 };
 
-mod render_context;
+mod render_frame;
 mod swapchain_objects;
 
 mod begin_render;
 mod new;
 mod resize;
 
-pub use render_context::RenderContext;
+pub use render_frame::RenderFrame;
 
 /// The context for rendering
-pub struct GraphicsContext {
+pub struct RenderContext {
     /// The current size of the swapchain
     swapchain_size: Vector2u,
 
@@ -29,10 +29,6 @@ pub struct GraphicsContext {
     /// The device context for issuing rendering commands
     #[allow(unused)]
     device_context: ComPtr<ID3D11DeviceContext>,
-
-    /// The device for creating render objects
-    #[allow(unused)]
-    device: ComPtr<ID3D11Device>,
 }
 
 const SWAP_CHAIN_FLAGS: UINT = DXGI_SWAP_CHAIN_FLAG::AllowTearing as _;

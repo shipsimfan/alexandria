@@ -1,6 +1,7 @@
 use crate::{
+    graphics::GraphicsContext,
     math::{Vector2i, Vector2u},
-    DisplayMode, GraphicsContext, Window,
+    DisplayMode, Window,
 };
 
 impl Window {

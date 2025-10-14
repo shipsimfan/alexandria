@@ -1,4 +1,4 @@
-use crate::{window::graphics_context::SwapchainObjects, Error, Result, FORMAT};
+use crate::{graphics::render_context::SwapchainObjects, Error, Result, FORMAT};
 use win32::{
     d3d11::{
         ID3D11Device, ID3D11Resource, D3D11_RENDER_TARGET_VIEW_DESC, D3D11_RTV_DIMENSION,

@@ -6,15 +6,14 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 
+pub mod graphics;
 pub mod math;
 
-mod adapter;
 mod error;
 mod window;
 
-pub use adapter::{Adapter, Output, OutputResolution};
 pub use error::{Error, Result};
-pub use window::{DisplayMode, GraphicsContext, RenderContext, Window, WindowBuilder};
+pub use window::{DisplayMode, Window, WindowBuilder};
 
 const FORMAT: win32::dxgi::DXGI_FORMAT = win32::dxgi::DXGI_FORMAT::B8G8R8A8UNorm;
 const BUFFER_COUNT: win32::UINT = 3;

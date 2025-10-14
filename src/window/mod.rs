@@ -1,13 +1,12 @@
 use crate::{
+    graphics::{GraphicsContext, RenderContext},
     math::{Vector2i, Vector2u},
     Result,
 };
 use window_class::WindowClass;
-use window_handle::WindowHandle;
 
 mod builder;
 mod display_mode;
-mod graphics_context;
 mod window_class;
 mod window_handle;
 
@@ -20,7 +19,8 @@ mod window_proc;
 
 pub use builder::WindowBuilder;
 pub use display_mode::DisplayMode;
-pub use graphics_context::{GraphicsContext, RenderContext};
+
+pub(crate) use window_handle::WindowHandle;
 
 /// A window which can be rendered into and receive input
 pub struct Window {
@@ -40,6 +40,9 @@ pub struct Window {
     display_mode: DisplayMode,
 
     /// The context used for rendering
+    render_context: RenderContext,
+
+    /// The context used for creating graphics objects
     graphics_context: GraphicsContext,
 
     /// Is the window being actively moved or resized?

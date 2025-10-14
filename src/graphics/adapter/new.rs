@@ -1,4 +1,7 @@
-use crate::{Adapter, Error, Output, Result};
+use crate::{
+    graphics::{Adapter, Output},
+    Error, Result,
+};
 use win32::{
     dxgi::{IDXGIAdapter1, DXGI_ADAPTER_DESC1, DXGI_ADAPTER_FLAG},
     try_hresult, ComPtr,
@@ -6,7 +9,9 @@ use win32::{
 
 impl Adapter {
     /// Create a new [`Adapter`] if the adapter has outputs and is real hardware
-    pub(in crate::adapter) fn new(mut adapter: ComPtr<IDXGIAdapter1>) -> Result<Option<Self>> {
+    pub(in crate::graphics::adapter) fn new(
+        mut adapter: ComPtr<IDXGIAdapter1>,
+    ) -> Result<Option<Self>> {
         let mut desc = DXGI_ADAPTER_DESC1::default();
         try_hresult!(adapter.get_desc1(&mut desc))
             .map_err(|os| Error::new_os("unable to get adapter description", os))?;

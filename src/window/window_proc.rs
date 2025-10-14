@@ -43,7 +43,9 @@ impl Window {
             WM_EXITSIZEMOVE => {
                 self.in_move = false;
 
-                self.wnd_proc_result = self.graphics_context.resize(self.size);
+                self.wnd_proc_result = self
+                    .render_context
+                    .resize(&self.graphics_context, self.size);
             }
 
             // The window has changed size
@@ -53,7 +55,9 @@ impl Window {
                 self.size = Vector2u::new(width, height);
 
                 if !self.in_move {
-                    self.wnd_proc_result = self.graphics_context.resize(self.size);
+                    self.wnd_proc_result = self
+                        .render_context
+                        .resize(&self.graphics_context, self.size);
                 }
             }
 

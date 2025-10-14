@@ -1,7 +1,6 @@
-use win32::dxgi::IDXGIAdapter1;
-
-use crate::{Adapter, Output};
+use crate::graphics::{Adapter, Output};
 use std::slice::SliceIndex;
+use win32::dxgi::IDXGIAdapter1;
 
 impl Adapter {
     /// Get the name of this adapter

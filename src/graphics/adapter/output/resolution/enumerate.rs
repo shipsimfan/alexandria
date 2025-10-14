@@ -1,13 +1,14 @@
 use crate::{
+    graphics::OutputResolution,
     math::{number::IntoF32, Rational, Vector2u},
-    Error, OutputResolution, Result, FORMAT,
+    Error, Result, FORMAT,
 };
 use std::{cmp::Ordering, ptr::null_mut};
 use win32::{dxgi1_2::IDXGIOutput1, try_hresult, ComPtr};
 
 impl OutputResolution {
     /// Enumerates the available resolutions for `output`
-    pub(in crate::adapter::output) fn enumerate(
+    pub(in crate::graphics::adapter::output) fn enumerate(
         output: &mut ComPtr<IDXGIOutput1>,
     ) -> Result<Vec<Self>> {
         // Get the list of formats

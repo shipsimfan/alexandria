@@ -11,7 +11,7 @@ use win32::{
 
 impl WindowHandle {
     /// Gets the current position and size of the window
-    pub fn get_size_and_position(&self) -> Result<(Vector2i, Vector2u)> {
+    pub(in crate::window) fn get_size_and_position(&self) -> Result<(Vector2i, Vector2u)> {
         let mut rect = RECT::default();
         try_get_last_error!(GetClientRect(self.handle, &mut rect))
             .map_err(|os| Error::new_os("unable to get window size", os))?;

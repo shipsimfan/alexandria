@@ -8,7 +8,7 @@ use win32::{CreateWindowEx, GetModuleHandle, SetWindowLongPtr, CW_USEDEFAULT, GW
 
 impl WindowHandle {
     /// Creates a new window and returns the handle to it
-    pub fn create(
+    pub(in crate::window) fn create(
         title: &[u16],
         class: &WindowClass,
         x: Option<i32>,

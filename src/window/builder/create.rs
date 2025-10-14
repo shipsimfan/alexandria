@@ -1,4 +1,4 @@
-use crate::{Adapter, Error, Result, Window, WindowBuilder};
+use crate::{graphics::Adapter, Error, Result, Window, WindowBuilder};
 
 /// "Owned or borrowed"
 enum Orb<'a, T> {

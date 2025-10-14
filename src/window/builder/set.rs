@@ -1,4 +1,4 @@
-use crate::{Adapter, DisplayMode, WindowBuilder};
+use crate::{graphics::Adapter, DisplayMode, WindowBuilder};
 
 impl<'a> WindowBuilder<'a> {
     /// Set the window's title

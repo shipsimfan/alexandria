@@ -1,4 +1,4 @@
-use crate::window::graphics_context::SwapchainObjects;
+use crate::graphics::render_context::SwapchainObjects;
 use win32::d3d11::ID3D11DeviceContext;
 
 impl SwapchainObjects {

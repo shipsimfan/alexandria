@@ -9,7 +9,7 @@ mod unbind;
 
 /// The objects associated directly with the swapchain that must be re-created when the swapchan is
 /// resized
-pub(in crate::window::graphics_context) struct SwapchainObjects {
+pub(in crate::graphics::render_context) struct SwapchainObjects {
     /// A reference to the swapchain's back buffer
     #[allow(unused)]
     back_buffer: ComPtr<ID3D11Resource>,

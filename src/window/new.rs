@@ -1,6 +1,7 @@
 use crate::{
+    graphics::{Adapter, RenderContext},
     window::{WindowClass, WindowHandle},
-    Adapter, DisplayMode, GraphicsContext, Result, Window,
+    DisplayMode, Result, Window,
 };
 
 impl Window {
@@ -34,7 +35,8 @@ impl Window {
 
         let (position, size) = handle.get_size_and_position()?;
 
-        let graphics_context = GraphicsContext::new(&handle, adapter, size.x, size.y)?;
+        let (render_context, graphics_context) =
+            RenderContext::new(&handle, adapter, size.x, size.y)?;
 
         Ok(Box::write(
             window,
@@ -44,6 +46,7 @@ impl Window {
                 size,
                 vsync,
                 display_mode,
+                render_context,
                 graphics_context,
                 in_move: false,
                 wnd_proc_result: Ok(()),

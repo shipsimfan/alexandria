@@ -1,4 +1,4 @@
-use crate::{Adapter, DisplayMode};
+use crate::{graphics::Adapter, DisplayMode};
 
 mod create;
 mod new;
