@@ -1,7 +1,7 @@
 use crate::{
     math::{Vector2i, Vector2u},
     window::WindowHandle,
-    DisplayMode, Result,
+    DisplayMode, Error, Result,
 };
 use std::ptr::null_mut;
 use win32::{
@@ -23,13 +23,19 @@ impl WindowHandle {
         unsafe { SetLastError(0) };
         if unsafe { SetWindowLong(self.handle, GWL_STYLE, style as _) } == 0 {
             if unsafe { GetLastError() != 0 } {
-                return Err(win32::Error::get_last_error().into());
+                return Err(Error::new_os(
+                    "unable to set window style",
+                    win32::Error::get_last_error(),
+                ));
             }
         }
 
         if unsafe { SetWindowLong(self.handle, GWL_EXSTYLE, ex_style as _) } == 0 {
             if unsafe { GetLastError() != 0 } {
-                return Err(win32::Error::get_last_error().into());
+                return Err(Error::new_os(
+                    "unable to set extended window style",
+                    win32::Error::get_last_error(),
+                ));
             }
         }
 
@@ -41,7 +47,8 @@ impl WindowHandle {
             size.x as _,
             size.y as _,
             0
-        ))?;
+        ))
+        .map_err(|os| Error::new_os("unable to set window position and size", os))?;
 
         Ok(())
     }

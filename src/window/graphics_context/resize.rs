@@ -1,7 +1,7 @@
 use crate::{
     math::Vector2u,
     window::graphics_context::{SwapchainObjects, SWAP_CHAIN_FLAGS},
-    GraphicsContext, Result, BUFFER_COUNT, FORMAT,
+    Error, GraphicsContext, Result, BUFFER_COUNT, FORMAT,
 };
 use win32::try_hresult;
 
@@ -31,7 +31,8 @@ impl GraphicsContext {
             new_size.y,
             FORMAT,
             SWAP_CHAIN_FLAGS,
-        ))?;
+        ))
+        .map_err(|os| Error::new_os("unable to resize swapcahin", os))?;
 
         self.swapchain_objects = Some(SwapchainObjects::new(&mut self.swapchain, &self.device)?);
 

@@ -1,7 +1,7 @@
 use crate::{
     math::{Vector2i, Vector2u},
     window::{WindowClass, WindowHandle},
-    DisplayMode, Result, Window,
+    DisplayMode, Error, Result, Window,
 };
 use std::ptr::null_mut;
 use win32::{CreateWindowEx, GetModuleHandle, SetWindowLongPtr, CW_USEDEFAULT, GWLP_USERDATA};
@@ -69,7 +69,10 @@ impl WindowHandle {
         };
 
         if handle == null_mut() {
-            return Err(win32::Error::get_last_error().into());
+            return Err(Error::new_os(
+                "unable to create window",
+                win32::Error::get_last_error(),
+            ));
         }
 
         unsafe { SetWindowLongPtr(handle, GWLP_USERDATA, window_ptr as _) };

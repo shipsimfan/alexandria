@@ -1,4 +1,4 @@
-use crate::{math::Vector2, Output, OutputResolution, Result};
+use crate::{math::Vector2, Error, Output, OutputResolution, Result};
 use win32::{
     dxgi::{IDXGIAdapter1, IDXGIOutput, IDXGIOutputTrait, DXGI_OUTPUT_DESC},
     dxgi1_2::IDXGIOutput1,
@@ -11,11 +11,14 @@ impl Output {
         mut output: ComPtr<IDXGIOutput>,
         adapter: ComPtr<IDXGIAdapter1>,
     ) -> Result<Self> {
-        let mut output = output.query_interface::<IDXGIOutput1>()?;
+        let mut output = output
+            .query_interface::<IDXGIOutput1>()
+            .map_err(|os| Error::new_os("unable to get modern adapter interface", os))?;
 
         // Get the description
         let mut desc = DXGI_OUTPUT_DESC::default();
-        try_hresult!(output.get_desc(&mut desc))?;
+        try_hresult!(output.get_desc(&mut desc))
+            .map_err(|os| Error::new_os("unable to get adapter description", os))?;
 
         // Get resolutions
         let resolutions = OutputResolution::enumerate(&mut output)?;

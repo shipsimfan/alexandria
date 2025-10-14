@@ -1,6 +1,6 @@
 use crate::{
     math::{number::IntoF32, Rational, Vector2u},
-    OutputResolution, Result, FORMAT,
+    Error, OutputResolution, Result, FORMAT,
 };
 use std::{cmp::Ordering, ptr::null_mut};
 use win32::{dxgi1_2::IDXGIOutput1, try_hresult, ComPtr};
@@ -12,7 +12,8 @@ impl OutputResolution {
     ) -> Result<Vec<Self>> {
         // Get the list of formats
         let mut num_formats = 0;
-        try_hresult!(output.get_display_mode_list1(FORMAT, 0, &mut num_formats, null_mut()))?;
+        try_hresult!(output.get_display_mode_list1(FORMAT, 0, &mut num_formats, null_mut()))
+            .map_err(|os| Error::new_os("unable to enumerate output resolutions", os))?;
 
         let mut formats = Vec::with_capacity(num_formats as _);
         try_hresult!(output.get_display_mode_list1(
@@ -20,7 +21,8 @@ impl OutputResolution {
             0,
             &mut num_formats,
             formats.as_mut_ptr()
-        ))?;
+        ))
+        .map_err(|os| Error::new_os("unable to enumerate output resolutions", os))?;
         unsafe { formats.set_len(num_formats as _) };
 
         // Process the formats

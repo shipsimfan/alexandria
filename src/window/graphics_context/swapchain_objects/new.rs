@@ -1,4 +1,4 @@
-use crate::{window::graphics_context::SwapchainObjects, Result, FORMAT};
+use crate::{window::graphics_context::SwapchainObjects, Error, Result, FORMAT};
 use win32::{
     d3d11::{
         ID3D11Device, ID3D11Resource, D3D11_RENDER_TARGET_VIEW_DESC, D3D11_RTV_DIMENSION,
@@ -13,7 +13,8 @@ impl SwapchainObjects {
     pub fn new(swapchain: &mut IDXGISwapChain, device: &ID3D11Device) -> Result<Self> {
         let mut back_buffer = ComPtr::<ID3D11Resource>::new_in(|ptr| {
             try_hresult!(swapchain.get_buffer(0, &ID3D11Resource::IID, ptr.cast()))
-        })?;
+        })
+        .map_err(|os| Error::new_os("unable to get swapchain back buffer", os))?;
 
         let rtv = ComPtr::new_in(|ptr| {
             try_hresult!(device.create_render_target_view(
@@ -27,7 +28,8 @@ impl SwapchainObjects {
                 },
                 ptr
             ))
-        })?;
+        })
+        .map_err(|os| Error::new_os("unable to create render target view", os))?;
 
         Ok(SwapchainObjects { back_buffer, rtv })
     }

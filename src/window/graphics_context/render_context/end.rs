@@ -1,4 +1,4 @@
-use crate::{RenderContext, Result};
+use crate::{Error, RenderContext, Result};
 use win32::{dxgi::DXGI_PRESENT_ALLOW_TEARING, try_hresult};
 
 impl<'a> RenderContext<'a> {
@@ -12,7 +12,8 @@ impl<'a> RenderContext<'a> {
             } else {
                 DXGI_PRESENT_ALLOW_TEARING
             }
-        ))?;
+        ))
+        .map_err(|os| Error::new_os("unable to render frame", os))?;
         Ok(())
     }
 }

@@ -26,7 +26,7 @@ impl<'a> WindowBuilder<'a> {
             None => {
                 let mut adapters = Adapter::enumerate()?;
                 if adapters.len() == 0 {
-                    return Err(Error::NoValidAdapter);
+                    return Err(Error::new("no valid adapter available"));
                 }
                 Orb::Owned(adapters.swap_remove(0))
             }

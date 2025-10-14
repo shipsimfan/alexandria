@@ -1,4 +1,4 @@
-use crate::{Output, Result};
+use crate::{Error, Output, Result};
 use std::ptr::null_mut;
 use win32::{
     dxgi::{IDXGIAdapter1, IDXGIAdapterTrait},
@@ -17,7 +17,10 @@ impl Output {
             } else if result == DXGI_ERROR_NOT_FOUND {
                 break;
             } else {
-                return Err(win32::Error::new(result).into());
+                return Err(Error::new_os(
+                    "unable to enumerate adapter outputs",
+                    win32::Error::new(result),
+                ));
             }
         }
 

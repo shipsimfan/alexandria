@@ -1,4 +1,4 @@
-use crate::{window::WindowClass, Result, Window};
+use crate::{window::WindowClass, Error, Result, Window};
 use std::ptr::null;
 use win32::{GetModuleHandle, RegisterClassEx, CS_HREDRAW, CS_OWNDC, CS_VREDRAW, WNDCLASSEX};
 
@@ -18,7 +18,10 @@ impl WindowClass {
 
         let class = unsafe { RegisterClassEx(&wnd_class) };
         if class == 0 {
-            return Err(win32::Error::get_last_error().into());
+            return Err(Error::new_os(
+                "unable to register window class",
+                win32::Error::get_last_error(),
+            ));
         }
 
         Ok(WindowClass { class })

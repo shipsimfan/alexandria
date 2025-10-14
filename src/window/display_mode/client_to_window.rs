@@ -1,6 +1,6 @@
 use crate::{
     math::{Vector2i, Vector2u},
-    DisplayMode, Result,
+    DisplayMode, Error, Result,
 };
 use win32::{try_get_last_error, AdjustWindowRectEx, FALSE, RECT};
 
@@ -20,7 +20,8 @@ impl DisplayMode {
             bottom: (size.y as i32) + position.y,
         };
 
-        try_get_last_error!(AdjustWindowRectEx(&mut rect, style, FALSE, ex_style))?;
+        try_get_last_error!(AdjustWindowRectEx(&mut rect, style, FALSE, ex_style))
+            .map_err(|os| Error::new_os("unable to convert window coordinates", os))?;
 
         Ok((
             Vector2u::new((rect.right - rect.left) as _, (rect.bottom - rect.top) as _),

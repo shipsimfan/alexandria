@@ -1,7 +1,7 @@
 use crate::{
     math::Vector2u,
     window::{graphics_context::SWAP_CHAIN_FLAGS, WindowHandle},
-    Adapter, GraphicsContext, Result, BUFFER_COUNT, FORMAT,
+    Adapter, Error, GraphicsContext, Result, BUFFER_COUNT, FORMAT,
 };
 use std::ptr::null_mut;
 use win32::{
@@ -62,7 +62,8 @@ impl GraphicsContext {
             &mut device,
             null_mut(),
             &mut device_context
-        ))?;
+        ))
+        .map_err(|os| Error::new_os("unable to start D3D11", os))?;
 
         let device = ComPtr::new(device);
         let device_context = ComPtr::new(device_context);

@@ -1,4 +1,4 @@
-use crate::{Adapter, Result};
+use crate::{Adapter, Error, Result};
 use std::{cmp::Ordering, ptr::null_mut};
 use win32::{
     dxgi::IDXGIFactory1Trait, dxgi1_2::IDXGIFactory2, dxgi1_3::CreateDXGIFactory2, strsafe::S_OK,
@@ -21,7 +21,8 @@ impl Adapter {
                 &IDXGIFactory2::IID,
                 factory.cast()
             ))
-        })?;
+        })
+        .map_err(|os| Error::new_os("unable to start DXGI", os))?;
 
         // Enumerate the adapters
         let mut adapters = Vec::new();
@@ -37,7 +38,10 @@ impl Adapter {
             } else if result == DXGI_ERROR_NOT_FOUND {
                 break;
             } else {
-                return Err(win32::Error::new(result).into());
+                return Err(Error::new_os(
+                    "unable to enumerate adapters",
+                    win32::Error::new(result),
+                ));
             }
         }
 

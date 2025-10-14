@@ -1,4 +1,4 @@
-use crate::{window::WindowHandle, Result};
+use crate::{window::WindowHandle, Error, Result};
 use win32::{try_get_last_error, SetWindowText};
 
 impl WindowHandle {
@@ -7,7 +7,8 @@ impl WindowHandle {
         assert!(title.len() > 0);
         assert_eq!(title[title.len() - 1], 0);
 
-        try_get_last_error!(SetWindowText(self.handle, title.as_ptr()))?;
+        try_get_last_error!(SetWindowText(self.handle, title.as_ptr()))
+            .map_err(|os| Error::new_os("unable to set window title", os))?;
         Ok(())
     }
 }
