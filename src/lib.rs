@@ -15,5 +15,7 @@ mod window;
 pub use error::{Error, Result};
 pub use window::{DisplayMode, Window, WindowBuilder};
 
+pub use acsl;
+
 const FORMAT: win32::dxgi::DXGI_FORMAT = win32::dxgi::DXGI_FORMAT::B8G8R8A8UNorm;
 const BUFFER_COUNT: win32::UINT = 3;

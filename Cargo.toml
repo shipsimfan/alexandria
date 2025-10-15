@@ -1,12 +1,28 @@
-[package]
-name = "alexandria"
-description = "Graphics library wrapping low-level graphics APIs"
-version = "0.0.2"
+[workspace]
+
+[workspace.package]
+version = "0.0.3"
 authors = ["Lance Hart <me@lancehart.ca>"]
 edition = "2021"
 repository = "https://github.com/shipsimfan/alexandria"
 license = "GPL-3.0-or-later"
 publish = false
 
+[workspace.dependencies]
+acsl.path = "acsl"
+
+[package]
+name = "alexandria"
+description = "Graphics library wrapping low-level graphics APIs"
+
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+publish.workspace = true
+
 [dependencies]
+acsl.workspace = true
+
 win32 = { path = "../../Platform/lib-win32", features = ["d3d11"] }
