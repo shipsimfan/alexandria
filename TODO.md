@@ -10,11 +10,12 @@
     7. Color4
  3. Add `message_box` function
  4. Add ACSL
- 5. Add shaders
- 6. Add meshes
- 7. Add mesh rendering
- 8. Fully implement triangle example
- 9. Add constant buffers
- 10. Add input system
- 11. Add keyboard input support
- 12. Add cube example with movement
+ 5. Add debug layer and info queue
+ 6. Add shaders
+ 7. Add meshes
+ 8. Add mesh rendering
+ 9. Fully implement triangle example
+ 10. Add constant buffers
+ 11. Add input system
+ 12. Add keyboard input support
+ 13. Add cube example with movement
