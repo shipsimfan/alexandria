@@ -23,6 +23,8 @@ license.workspace = true
 publish.workspace = true
 
 [dependencies]
-acsl.workspace = true
+acsl = { workspace = true, default-features = false, features = ["d3d"] }
 
-win32 = { path = "../../Platform/lib-win32", features = ["d3d11"] }
+win32 = { git = "https://github.com/shipsimfan/lib-win32", features = [
+    "d3d11",
+] }
