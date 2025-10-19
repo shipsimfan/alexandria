@@ -1,8 +1,10 @@
 use crate::Program;
+use ast::Ast;
 use lct_diagnostics::{Diag, DiagCtxt, Source};
 use lexer::Lexer;
 use tokens::Token;
 
+mod ast;
 mod lexer;
 mod tokens;
 
