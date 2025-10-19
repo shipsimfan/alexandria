@@ -1,6 +1,7 @@
 use crate::compile::tokens::{FloatingPoint, Identifier, Integer, Keyword, Punctuation};
 
 mod display;
+mod parse;
 mod span;
 
 /// A token that can appear in an ACSL stream

@@ -9,6 +9,9 @@ pub(in crate::compile) enum PunctuationKind {
     /// A comma ','
     Comma,
 
+    /// A dash '-'
+    Dash,
+
     /// A dot '.'
     Dot,
 

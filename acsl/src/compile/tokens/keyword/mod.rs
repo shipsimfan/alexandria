@@ -5,6 +5,7 @@ mod kind;
 mod display;
 mod eq;
 mod get;
+mod parse;
 
 pub(in crate::compile) use kind::KeywordKind;
 

@@ -3,6 +3,7 @@ use lct_diagnostics::Span;
 mod display;
 mod eq;
 mod get;
+mod parse;
 
 /// An floating point number token in a stream
 #[derive(Debug, Clone)]

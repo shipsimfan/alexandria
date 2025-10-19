@@ -3,6 +3,7 @@ use lct_diagnostics::Span;
 mod display;
 mod eq;
 mod get;
+mod parse;
 
 /// A name of a code element
 #[derive(Debug, Clone)]

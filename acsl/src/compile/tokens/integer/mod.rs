@@ -3,6 +3,8 @@ use lct_diagnostics::Span;
 mod display;
 mod eq;
 mod get;
+mod new;
+mod parse;
 
 /// An integer token in a stream
 #[derive(Debug, Clone)]

@@ -5,6 +5,7 @@ impl std::fmt::Display for PunctuationKind {
         match self {
             PunctuationKind::Colon => ":",
             PunctuationKind::Comma => ",",
+            PunctuationKind::Dash => "-",
             PunctuationKind::Dot => ".",
             PunctuationKind::Hash => "#",
             PunctuationKind::Semicolon => ";",
