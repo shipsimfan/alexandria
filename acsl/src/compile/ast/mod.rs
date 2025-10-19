@@ -23,7 +23,7 @@ pub(in crate::compile) struct Ast<'a> {
 /// Displays the prefix based on `depth`
 fn display_prefix(depth: usize, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
     for _ in 0..depth {
-        write!(f, "  ")?;
+        write!(f, "    ")?;
     }
     Ok(())
 }

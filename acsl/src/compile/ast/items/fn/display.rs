@@ -31,7 +31,7 @@ impl<'a> Fn<'a> {
             write!(f, " -> {}", return_type)?;
         }
 
-        writeln!(f, "{{")?;
+        writeln!(f, " {{")?;
 
         for statement in &self.body {
             statement.display(depth + 1, true, f)?;

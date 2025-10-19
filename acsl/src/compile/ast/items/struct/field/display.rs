@@ -17,7 +17,7 @@ impl<'a> StructField<'a> {
         }
 
         display_prefix(depth, f)?;
-        writeln!(f, "{}: {}", self.name, self.r#type)
+        writeln!(f, "{}: {},", self.name, self.r#type)
     }
 }
 

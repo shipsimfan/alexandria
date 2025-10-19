@@ -1,6 +1,7 @@
 use lct_diagnostics::Span;
 
 mod display;
+mod parse;
 
 /// A parameter passed into a function
 #[derive(Debug)]

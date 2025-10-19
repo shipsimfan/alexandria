@@ -1,6 +1,9 @@
+use lct_diagnostics::Span;
+
 use crate::compile::ast::expressions::Expression;
 
 mod display;
+mod parse;
 
 /// A field defined in the creation of a struct
 #[derive(Debug)]
@@ -10,4 +13,7 @@ pub(in crate::compile) struct StructCreationField<'a> {
 
     /// The value to fill the field with
     value: Expression<'a>,
+
+    /// The location of this field
+    span: Span,
 }

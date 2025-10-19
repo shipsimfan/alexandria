@@ -1,4 +1,12 @@
-use crate::compile::{ast::Expression, Lexer, Token};
+use crate::compile::{
+    ast::{
+        expressions::{FunctionCall, StructCreation},
+        path::Path,
+        Expression,
+    },
+    tokens::PunctuationKind,
+    Lexer, Token,
+};
 use lct_diagnostics::{Diag, DiagCtxt};
 
 impl<'a> Expression<'a> {
@@ -17,6 +25,22 @@ impl<'a> Expression<'a> {
             _ => return Err(diag.err_span(format!("unexpected {}", token), token.span())),
         };
 
-        todo!("check for struct creation or function call: {}", identifier)
+        match lexer.next(diag)? {
+            Some(Token::Punctuation(punctuation)) => match punctuation.kind() {
+                PunctuationKind::DoubleColon => {
+                    FunctionCall::parse_path(identifier, lexer, diag).map(Expression::FunctionCall)
+                }
+                PunctuationKind::OpenParentheses => {
+                    FunctionCall::parse(Path::new_one(identifier), lexer, diag)
+                        .map(Expression::FunctionCall)
+                }
+                PunctuationKind::OpenBrace => {
+                    StructCreation::parse(identifier, lexer, diag).map(Expression::StructCreation)
+                }
+                _ => Err(diag.err_span(format!("unexpected {}", punctuation), punctuation.span())),
+            },
+            Some(token) => Err(diag.err_span(format!("unexpected {}", token), token.span())),
+            None => Err(diag.err_span(format!("unexpected end of file"), lexer.span())),
+        }
     }
 }

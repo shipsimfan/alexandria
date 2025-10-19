@@ -2,6 +2,7 @@ use crate::compile::ast::expressions::{FunctionCall, Literal, StructCreation};
 
 mod display;
 mod parse;
+mod span;
 
 /// An expression which may result in a value
 #[derive(Debug)]

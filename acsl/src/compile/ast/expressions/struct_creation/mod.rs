@@ -1,7 +1,10 @@
 use lct_diagnostics::Span;
 
-mod display;
 mod field;
+
+mod display;
+mod get;
+mod parse;
 
 pub(in crate::compile) use field::StructCreationField;
 

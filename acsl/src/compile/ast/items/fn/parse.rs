@@ -1,5 +1,8 @@
 use crate::compile::{
-    ast::{items::Fn, Attribute, Statement},
+    ast::{
+        items::{Fn, FnParameter},
+        Attribute, Statement,
+    },
     tokens::{KeywordKind, PunctuationKind},
     Lexer, Token,
 };
@@ -50,11 +53,11 @@ impl<'a> Fn<'a> {
 
         // Parse parameters
         lexer.expect(PunctuationKind::OpenParentheses, diag)?;
-        let parameters = Vec::new();
+        let mut parameters = Vec::new();
         loop {
             match lexer.next(diag)? {
                 Some(Token::Identifier(parameter_name)) => {
-                    todo!("parse parameter name: {}", parameter_name)
+                    parameters.push(FnParameter::parse(parameter_name, lexer, diag)?);
                 }
                 Some(Token::Punctuation(punctuation)) => match punctuation.kind() {
                     PunctuationKind::CloseParentheses => break,

@@ -2,6 +2,8 @@ use crate::compile::ast::{expressions::Expression, Path};
 use lct_diagnostics::Span;
 
 mod display;
+mod get;
+mod parse;
 
 /// A call to a static function
 #[derive(Debug)]

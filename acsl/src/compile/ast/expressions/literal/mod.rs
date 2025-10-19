@@ -1,9 +1,10 @@
 use lct_diagnostics::Span;
 
-mod from;
 mod kind;
 
 mod display;
+mod from;
+mod get;
 
 pub(in crate::compile) use kind::LiteralKind;
 

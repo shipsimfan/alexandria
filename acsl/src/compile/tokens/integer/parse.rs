@@ -20,6 +20,7 @@ impl Integer {
                 None => break,
             };
 
+            stream.next().unwrap();
             digit = true;
 
             value = match value.checked_mul(base as _) {
@@ -39,6 +40,10 @@ impl Integer {
                     );
                 }
             };
+        }
+
+        if !digit {
+            return Err(diag.err_span("no digits in number", stream.span()));
         }
 
         Ok(Integer {

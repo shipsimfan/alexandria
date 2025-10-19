@@ -1,6 +1,8 @@
 use lct_diagnostics::Span;
 
 mod display;
+mod get;
+mod new;
 
 /// A path to an item
 #[derive(Debug)]

@@ -37,16 +37,18 @@ impl FloatingPoint {
         // Parse the integer portion
         let mut decimal = false;
         while let Some(c) = stream
-            .next()
+            .peek()
             .map_err(|error| diag.err_span(error.to_string(), stream.span()))?
         {
             match c {
                 '.' => {
+                    stream.next().unwrap();
                     decimal = true;
                     end = stream.offset();
                     break;
                 }
                 c if c.is_ascii_digit() => {
+                    stream.next().unwrap();
                     end = stream.offset();
 
                     f = match f.checked_mul(10) {
@@ -79,13 +81,14 @@ impl FloatingPoint {
         let mut potential_f = f;
         let mut potential_e = e;
         while let Some(c) = stream
-            .next()
+            .peek()
             .map_err(|error| diag.err_span(error.to_string(), stream.span()))?
         {
             if !c.is_ascii_digit() {
                 break;
             }
 
+            stream.next().unwrap();
             end = stream.offset();
 
             if c == '0' {
@@ -113,7 +116,7 @@ impl FloatingPoint {
         }
 
         // Convert fractional and exponent into float
-        let mut value = if f == 0 {
+        let value = if f == 0 {
             0.0
         } else {
             (f as f64) * 10f64.powi(e)
