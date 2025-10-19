@@ -7,6 +7,10 @@ impl<'a> Fn<'a> {
         depth: usize,
         f: &mut std::fmt::Formatter<'_>,
     ) -> std::fmt::Result {
+        for attribute in &self.attributes {
+            attribute.display(depth, f)?;
+        }
+
         display_prefix(0, f)?;
         write!(f, "fn {}(", self.name)?;
 

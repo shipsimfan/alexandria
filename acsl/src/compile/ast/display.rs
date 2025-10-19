@@ -12,7 +12,7 @@ impl<'a> Ast<'a> {
             if first {
                 first = false;
             } else {
-                writeln!(f);
+                writeln!(f)?;
             }
 
             item.display(depth, f)?;

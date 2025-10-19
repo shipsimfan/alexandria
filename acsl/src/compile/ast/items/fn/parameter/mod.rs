@@ -1,3 +1,5 @@
+use lct_diagnostics::Span;
+
 mod display;
 
 /// A parameter passed into a function
@@ -8,4 +10,7 @@ pub(in crate::compile) struct FnParameter<'a> {
 
     /// The type of the parameter
     r#type: &'a str,
+
+    /// The location of this [`FnParameter`]
+    span: Span,
 }

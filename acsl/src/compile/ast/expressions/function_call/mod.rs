@@ -1,4 +1,5 @@
 use crate::compile::ast::{expressions::Expression, Path};
+use lct_diagnostics::Span;
 
 mod display;
 
@@ -10,4 +11,7 @@ pub(in crate::compile) struct FunctionCall<'a> {
 
     /// The parameters being passed into the function
     parameters: Vec<Expression<'a>>,
+
+    /// The location of this [`FunctionCall`]
+    span: Span,
 }

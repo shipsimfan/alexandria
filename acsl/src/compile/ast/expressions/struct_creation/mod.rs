@@ -1,3 +1,5 @@
+use lct_diagnostics::Span;
+
 mod display;
 mod field;
 
@@ -11,4 +13,7 @@ pub(in crate::compile) struct StructCreation<'a> {
 
     /// The fields with their values to fill the struct
     fields: Vec<StructCreationField<'a>>,
+
+    /// The location of this [`StructCreation`] expression
+    span: Span,
 }

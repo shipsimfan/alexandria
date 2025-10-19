@@ -1,4 +1,4 @@
-use crate::compile::ast::{attribute::Attribute, display_prefix};
+use crate::compile::ast::{display_prefix, Attribute};
 
 impl<'a> Attribute<'a> {
     /// Pretty-prints an [`Attribute`]

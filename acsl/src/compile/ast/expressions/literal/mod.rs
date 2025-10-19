@@ -1,5 +1,6 @@
 use lct_diagnostics::Span;
 
+mod from;
 mod kind;
 
 mod display;
@@ -12,6 +13,6 @@ pub(in crate::compile) struct Literal {
     /// The kind of value contained
     kind: LiteralKind,
 
-    /// The location of this literal
+    /// The location of this [`Literal`]
     span: Span,
 }

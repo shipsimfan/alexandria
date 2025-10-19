@@ -1,3 +1,5 @@
+use lct_diagnostics::Span;
+
 mod display;
 
 /// A path to an item
@@ -8,4 +10,7 @@ pub(in crate::compile) struct Path<'a> {
 
     /// The second item in the path
     second: Option<&'a str>,
+
+    /// The location of this [`Path`]
+    span: Span,
 }

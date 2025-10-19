@@ -2,6 +2,7 @@ use lct_diagnostics::Span;
 
 mod display;
 mod eq;
+mod from;
 mod get;
 mod new;
 mod parse;

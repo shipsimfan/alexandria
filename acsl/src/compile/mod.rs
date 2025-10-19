@@ -10,15 +10,9 @@ mod tokens;
 
 /// Compile ACSL `source` into a [`Program`]
 pub fn compile<'a, 'b>(source: &Source, diag: &'b DiagCtxt<'a>) -> Result<Program, Diag<'a, 'b>> {
-    let mut lexer = Lexer::new(source);
+    let ast = Ast::parse(source, diag)?;
 
-    while let Some(token) = lexer.next(diag)? {
-        println!(
-            " - Token: {} at {}",
-            token,
-            source.span_to_pos(token.span())
-        );
-    }
+    println!("{}", ast);
 
     todo!()
 }

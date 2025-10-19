@@ -12,7 +12,7 @@ impl<'a> Struct<'a> {
 
         let mut first = true;
         for field in &self.fields {
-            field.display(depth + 1, first, f);
+            field.display(depth + 1, first, f)?;
             first = false;
         }
 

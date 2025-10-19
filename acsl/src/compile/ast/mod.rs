@@ -11,6 +11,7 @@ mod path;
 mod statements;
 
 mod display;
+mod parse;
 
 /// An abstract syntax tree describing an ACSL source file
 #[derive(Debug)]

@@ -3,6 +3,7 @@ use lct_diagnostics::Span;
 mod field;
 
 mod display;
+mod parse;
 
 pub(in crate::compile) use field::StructField;
 
@@ -15,6 +16,6 @@ pub(in crate::compile) struct Struct<'a> {
     /// The fields making up the struct
     fields: Vec<StructField<'a>>,
 
-    /// The location of the structure
+    /// The location of the [`Struct`]
     span: Span,
 }

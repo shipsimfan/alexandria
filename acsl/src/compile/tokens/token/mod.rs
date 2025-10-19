@@ -1,6 +1,7 @@
 use crate::compile::tokens::{FloatingPoint, Identifier, Integer, Keyword, Punctuation};
 
 mod display;
+mod from;
 mod parse;
 mod span;
 

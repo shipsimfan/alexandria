@@ -1,14 +1,19 @@
-use crate::compile::ast::Statement;
+use crate::compile::ast::{Attribute, Statement};
+use lct_diagnostics::Span;
 
 mod parameter;
 
 mod display;
+mod parse;
 
 pub(in crate::compile) use parameter::FnParameter;
 
 /// A function definition
 #[derive(Debug)]
 pub(in crate::compile) struct Fn<'a> {
+    /// The attributes affecting this function
+    attributes: Vec<Attribute<'a>>,
+
     /// The name of the function
     name: &'a str,
 
@@ -23,4 +28,7 @@ pub(in crate::compile) struct Fn<'a> {
 
     /// The statement which contains a return value
     return_statement: Option<Statement<'a>>,
+
+    /// The location of this [`Fn`]
+    span: Span,
 }

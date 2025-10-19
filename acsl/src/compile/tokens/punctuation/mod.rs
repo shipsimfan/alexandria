@@ -4,6 +4,7 @@ mod kind;
 
 mod display;
 mod eq;
+mod from;
 mod get;
 mod parse;
 
