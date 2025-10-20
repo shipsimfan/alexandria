@@ -11,7 +11,7 @@ mod hlsl;
 #[cfg(feature = "input_layout")]
 mod input_layout;
 #[cfg(feature = "program")]
-mod program;
+pub mod program;
 
 #[cfg(feature = "compile")]
 pub use compile::compile;

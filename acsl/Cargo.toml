@@ -24,6 +24,6 @@ d3dcompile = ["hlsl", "d3d", "dep:win32"]
 [dependencies]
 lct-diagnostics = { git = "https://github.com/shipsimfan/lct", optional = true }
 
-win32 = { path = "../../../Platform/lib-win32", features = [
+win32 = { git = "https://github.com/shipsimfan/lib-win32", features = [
     "d3dcompiler",
 ], optional = true }

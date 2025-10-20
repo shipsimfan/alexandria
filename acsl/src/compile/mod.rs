@@ -14,5 +14,8 @@ pub fn compile<'a, 'b>(source: &Source, diag: &'b DiagCtxt<'a>) -> Result<Progra
 
     println!("{}", ast);
 
-    todo!()
+    let program = Program::new();
+    println!("{:#?}", program);
+
+    Ok(program)
 }
