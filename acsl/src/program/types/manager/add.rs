@@ -9,12 +9,18 @@ impl TypeManager {
             !r#type.is_builtin(),
             "Cannot add raw built-in types to the type manager"
         );
+
+        // TODO: Check for a type with the same name
+
         self.inner_add(r#type)
     }
 
     /// Register a new [`Type`] into the manager without verifying it isn't a raw built-in type
     pub(in crate::program::types) fn inner_add<T: Into<Type>>(&mut self, r#type: T) -> Rc<Type> {
-        let r#type = Rc::new(r#type.into());
+        let mut r#type = r#type.into();
+        unsafe { r#type.set_id(self.types.len() as _) };
+
+        let r#type = Rc::new(r#type);
         self.types.push(r#type.clone());
         r#type
     }

@@ -11,11 +11,13 @@ mod tokens;
 /// Compile ACSL `source` into a [`Program`]
 pub fn compile<'a, 'b>(source: &Source, diag: &'b DiagCtxt<'a>) -> Result<Program, Diag<'a, 'b>> {
     let ast = Ast::parse(source, diag)?;
-
+    println!("\x1B[1;36mABSTRACT SYNTAX TREE:\x1B[0m");
     println!("{}", ast);
 
     let program = Program::new();
-    println!("{:#?}", program);
+    println!();
+    println!("\x1B[1;36mPROGRAM IR:\x1B[0m");
+    println!("{}", program);
 
     Ok(program)
 }

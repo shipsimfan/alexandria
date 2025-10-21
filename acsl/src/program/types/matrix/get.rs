@@ -7,6 +7,11 @@ impl Matrix {
         self.name
     }
 
+    /// Get the id of this matrix type
+    pub fn id(&self) -> u32 {
+        self.id
+    }
+
     /// Gets the number of columns in matrices of this type
     pub fn columns(&self) -> u8 {
         self.columns

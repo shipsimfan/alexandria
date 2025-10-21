@@ -1,6 +1,8 @@
 use crate::program::types::{Matrix, Primitive, Vector};
 
+mod display;
 mod from;
+mod id;
 mod is_primitive;
 mod name;
 

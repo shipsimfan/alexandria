@@ -1,4 +1,6 @@
 mod add_all;
+mod display;
+mod id;
 mod name;
 
 /// A simple primitive type which cannot be deconstructed any further

@@ -3,6 +3,7 @@ use std::rc::Rc;
 
 mod add;
 mod get;
+mod iter;
 mod new;
 
 /// The list of all types in a program

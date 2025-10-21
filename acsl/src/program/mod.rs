@@ -2,6 +2,7 @@ use types::TypeManager;
 
 pub mod types;
 
+mod display;
 mod new;
 
 pub use types::Type;

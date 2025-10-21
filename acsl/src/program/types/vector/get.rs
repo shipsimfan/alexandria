@@ -7,6 +7,11 @@ impl Vector {
         self.name
     }
 
+    /// Get the id of this vector type
+    pub fn id(&self) -> u32 {
+        self.id
+    }
+
     /// Gets the number of elements in vectors of this type
     pub fn size(&self) -> u8 {
         self.size
