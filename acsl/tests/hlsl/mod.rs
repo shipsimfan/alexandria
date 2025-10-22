@@ -39,5 +39,8 @@ pub fn run_hlsl_test(input_name: &str, input: &[u8], target: &str) {
     };
 
     let hlsl = acsl::HlslProgram::lower(program);
+    println!();
+    println!("\x1B[1;36mHLSL:\x1B[0m");
+    print!("{}", hlsl.content());
     assert_eq!(hlsl.content(), target);
 }

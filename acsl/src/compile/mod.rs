@@ -12,12 +12,12 @@ mod tokens;
 pub fn compile<'a, 'b>(source: &Source, diag: &'b DiagCtxt<'a>) -> Result<Program, Diag<'a, 'b>> {
     let ast = Ast::parse(source, diag)?;
     println!("\x1B[1;36mABSTRACT SYNTAX TREE:\x1B[0m");
-    println!("{}", ast);
+    print!("{}", ast);
 
     let program = Program::new();
     println!();
     println!("\x1B[1;36mPROGRAM IR:\x1B[0m");
-    println!("{}", program);
+    print!("{}", program);
 
     Ok(program)
 }
