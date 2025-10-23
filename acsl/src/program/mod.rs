@@ -2,9 +2,9 @@ use types::TypeManager;
 
 pub mod types;
 
-mod display;
 mod get;
 mod new;
+mod pretty_print;
 
 pub use types::Type;
 

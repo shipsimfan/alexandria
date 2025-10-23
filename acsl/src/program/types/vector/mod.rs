@@ -2,8 +2,8 @@ use crate::program::Type;
 use std::rc::Rc;
 
 mod add_all;
-mod display;
 mod get;
+mod pretty_print;
 mod set_id;
 
 /// A built-in vector of primitive values

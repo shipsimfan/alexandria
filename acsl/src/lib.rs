@@ -10,6 +10,9 @@ mod d3dcompile;
 mod hlsl;
 #[cfg(feature = "input_layout")]
 mod input_layout;
+
+#[cfg(feature = "program")]
+pub mod pretty_print;
 #[cfg(feature = "program")]
 pub mod program;
 

@@ -5,6 +5,7 @@ impl Type {
     pub fn is_builtin(&self) -> bool {
         match self {
             Type::Primitive(_) | Type::Vector(_) | Type::Matrix(_) => true,
+            Type::Struct(_) => false,
         }
     }
 }

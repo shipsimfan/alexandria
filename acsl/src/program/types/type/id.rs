@@ -7,6 +7,7 @@ impl Type {
             Type::Primitive(primitive) => primitive.id(),
             Type::Vector(vector) => vector.id(),
             Type::Matrix(matrix) => matrix.id(),
+            Type::Struct(r#struct) => r#struct.id(),
         }
     }
 
@@ -16,6 +17,7 @@ impl Type {
             Type::Primitive(primitive) => primitive.set_id(id),
             Type::Vector(vector) => vector.set_id(id),
             Type::Matrix(matrix) => matrix.set_id(id),
+            Type::Struct(r#struct) => r#struct.set_id(id),
         }
     }
 }

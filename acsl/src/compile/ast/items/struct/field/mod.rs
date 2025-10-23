@@ -1,8 +1,9 @@
 use crate::compile::ast::Attribute;
 use lct_diagnostics::Span;
 
-mod display;
+mod get;
 mod parse;
+mod pretty_print;
 
 /// A field defining a variable in a structure
 #[derive(Debug)]

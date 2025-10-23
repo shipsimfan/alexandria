@@ -1,7 +1,7 @@
 use crate::compile::ast::expressions::{FunctionCall, Literal, StructCreation};
 
-mod display;
 mod parse;
+mod pretty_print;
 mod span;
 
 /// An expression which may result in a value

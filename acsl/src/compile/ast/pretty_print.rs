@@ -1,21 +1,20 @@
 use crate::{
-    compile::ast::expressions::FunctionCall,
+    compile::Ast,
     pretty_print::{PrettyFormatter, PrettyPrint},
 };
 
-impl<'a> PrettyPrint for FunctionCall<'a> {
+impl<'a> PrettyPrint for Ast<'a> {
     fn fmt(&self, depth: usize, f: &mut PrettyFormatter) -> std::fmt::Result {
-        write!(f, "{}(", self.path)?;
         let mut first = true;
-        for parameter in &self.parameters {
+        for item in &self.items {
             if first {
                 first = false;
             } else {
-                write!(f, ", ")?;
+                writeln!(f)?;
             }
 
-            parameter.pretty_print(depth, false, f)?;
+            item.fmt(depth, f)?;
         }
-        write!(f, ")")
+        Ok(())
     }
 }

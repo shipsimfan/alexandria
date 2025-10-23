@@ -2,8 +2,8 @@ use lct_diagnostics::Span;
 
 mod field;
 
-mod display;
 mod parse;
+mod pretty_print;
 
 pub(in crate::compile) use field::StructField;
 

@@ -1,7 +1,7 @@
 use crate::compile::ast::items::{Fn, Struct};
 
-mod display;
 mod parse;
+mod pretty_print;
 
 /// An item definition
 #[derive(Debug)]

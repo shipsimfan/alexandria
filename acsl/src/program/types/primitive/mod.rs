@@ -1,7 +1,7 @@
 mod add_all;
-mod display;
 mod id;
 mod name;
+mod pretty_print;
 
 /// A simple primitive type which cannot be deconstructed any further
 #[derive(Debug)]

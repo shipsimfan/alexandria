@@ -6,7 +6,7 @@ use std::rc::Rc;
 
 impl Matrix {
     /// Create a new [`Matrix`]
-    fn new(name: &'static str, columns: u8, rows: u8, r#type: Rc<Type>) -> Self {
+    const fn new(name: &'static str, columns: u8, rows: u8, r#type: Rc<Type>) -> Self {
         Matrix {
             name,
             id: 0,

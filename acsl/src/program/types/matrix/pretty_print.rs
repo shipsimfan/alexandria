@@ -1,11 +1,11 @@
 use crate::{
-    compile::ast::Attribute,
     pretty_print::{PrettyFormatter, PrettyPrint},
+    program::types::Matrix,
 };
 
-impl<'a> PrettyPrint for Attribute<'a> {
+impl PrettyPrint for Matrix {
     fn fmt(&self, depth: usize, f: &mut PrettyFormatter) -> std::fmt::Result {
         f.print_prefix(depth)?;
-        writeln!(f, "#[{}]", self.name)
+        writeln!(f, "Matrix {} #{}", self.name(), self.id())
     }
 }

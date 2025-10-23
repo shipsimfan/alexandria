@@ -1,12 +1,12 @@
-use crate::compile::ast::{display_prefix, expressions::StructCreation};
+use crate::{compile::ast::expressions::StructCreation, pretty_print::PrettyFormatter};
 
 impl<'a> StructCreation<'a> {
     /// Pretty-prints a [`StructCreation`]
-    pub(in crate::compile) fn display(
+    pub(in crate::compile) fn pretty_print(
         &self,
         depth: usize,
         top_level: bool,
-        f: &mut std::fmt::Formatter<'_>,
+        f: &mut PrettyFormatter,
     ) -> std::fmt::Result {
         write!(f, "{} {{", self.name)?;
         if top_level {
@@ -25,21 +25,15 @@ impl<'a> StructCreation<'a> {
                 }
             }
 
-            field.display(depth + 1, top_level, f)?;
+            field.pretty_print(depth + 1, top_level, f)?;
             if top_level {
                 writeln!(f, ",")?;
             }
         }
 
         if top_level {
-            display_prefix(depth, f)?;
+            f.print_prefix(depth)?;
         }
         write!(f, "}}")
-    }
-}
-
-impl<'a> std::fmt::Display for StructCreation<'a> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.display(0, true, f)
     }
 }

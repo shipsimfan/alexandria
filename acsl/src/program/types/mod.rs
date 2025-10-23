@@ -13,4 +13,5 @@ pub use r#type::Type;
 
 pub use matrix::Matrix;
 pub use primitive::Primitive;
+pub use r#struct::{Struct, StructField, StructFieldMeta};
 pub use vector::Vector;

@@ -2,8 +2,8 @@ use lct_diagnostics::Span;
 
 use crate::compile::ast::expressions::Expression;
 
-mod display;
 mod parse;
+mod pretty_print;
 
 /// A field defined in the creation of a struct
 #[derive(Debug)]

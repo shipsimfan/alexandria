@@ -3,8 +3,8 @@ use lct_diagnostics::Span;
 
 mod parameter;
 
-mod display;
 mod parse;
+mod pretty_print;
 
 pub(in crate::compile) use parameter::FnParameter;
 
