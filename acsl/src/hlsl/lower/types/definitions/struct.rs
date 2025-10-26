@@ -3,7 +3,7 @@ use crate::program::types::{Struct, StructField, StructFieldMeta};
 /// Lower a struct definition
 pub(super) fn lower(content: &mut String, r#struct: &Struct) {
     content.push_str("struct ");
-    content.push_str(r#struct.name());
+    content.push_str(r#struct.hlsl_name());
     content.push_str(" {\n");
 
     for field in r#struct.fields() {

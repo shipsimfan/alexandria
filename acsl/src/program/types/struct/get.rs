@@ -20,4 +20,10 @@ impl Struct {
     pub const fn fields(&self) -> &[StructField] {
         self.fields.as_slice()
     }
+
+    /// Gets the name of this vector type in HLSL
+    #[cfg(feature = "hlsl")]
+    pub const fn hlsl_name(&self) -> &str {
+        self.hlsl_name.as_str()
+    }
 }

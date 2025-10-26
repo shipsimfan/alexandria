@@ -17,7 +17,7 @@ impl Type {
             Type::Primitive(primitive) => primitive.hlsl_name(),
             Type::Vector(vector) => vector.hlsl_name(),
             Type::Matrix(matrix) => matrix.hlsl_name(),
-            Type::Struct(r#struct) => r#struct.name(),
+            Type::Struct(r#struct) => r#struct.hlsl_name(),
         }
     }
 }

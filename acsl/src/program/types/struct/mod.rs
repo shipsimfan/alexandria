@@ -21,4 +21,8 @@ pub struct Struct {
 
     /// The fields which make it up
     fields: Vec<StructField>,
+
+    /// The name of this vector type in HLSL
+    #[cfg(feature = "hlsl")]
+    hlsl_name: String,
 }
