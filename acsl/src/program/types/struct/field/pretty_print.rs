@@ -5,11 +5,10 @@ use crate::{
 
 impl PrettyPrint for StructField {
     fn fmt(&self, depth: usize, f: &mut PrettyFormatter) -> std::fmt::Result {
-        for meta in self.meta() {
+        if let Some(meta) = &self.meta {
             meta.fmt(depth, f)?;
         }
-
         f.print_prefix(depth)?;
-        writeln!(f, "{}: {}", self.name(), self.r#type())
+        writeln!(f, "{}: {},", self.name(), self.r#type())
     }
 }

@@ -6,13 +6,21 @@ use std::rc::Rc;
 
 impl Matrix {
     /// Create a new [`Matrix`]
-    const fn new(name: &'static str, columns: u8, rows: u8, r#type: Rc<Type>) -> Self {
+    const fn new(
+        name: &'static str,
+        #[cfg(feature = "hlsl")] hlsl_name: &'static str,
+        columns: u8,
+        rows: u8,
+        r#type: Rc<Type>,
+    ) -> Self {
         Matrix {
             name,
             id: 0,
             columns,
             rows,
             r#type,
+            #[cfg(feature = "hlsl")]
+            hlsl_name,
         }
     }
 
@@ -20,6 +28,13 @@ impl Matrix {
     pub(in crate::program::types) fn add_all(types: &mut TypeManager) {
         let f32 = types.get("f32").unwrap().clone();
 
-        types.inner_add(Matrix::new("mat4x4f32", 4, 4, f32));
+        types.inner_add(Matrix::new(
+            "mat4x4f32",
+            #[cfg(feature = "hlsl")]
+            "float4x4",
+            4,
+            4,
+            f32,
+        ));
     }
 }

@@ -11,6 +11,16 @@ impl Type {
         }
     }
 
+    /// Get the AST type ID of the node that defined this type
+    pub fn ast_id(&self) -> Option<u32> {
+        match self {
+            Type::Primitive(primitive) => None,
+            Type::Vector(vector) => None,
+            Type::Matrix(matrix) => None,
+            Type::Struct(r#struct) => Some(r#struct.ast_id()),
+        }
+    }
+
     /// Set the type id reported
     pub(in crate::program::types) unsafe fn set_id(&mut self, id: u32) {
         match self {

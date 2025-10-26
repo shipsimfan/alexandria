@@ -10,8 +10,6 @@ impl TypeManager {
             "Cannot add raw built-in types to the type manager"
         );
 
-        // TODO: Check for a type with the same name
-
         self.inner_add(r#type)
     }
 

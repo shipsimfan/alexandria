@@ -4,6 +4,7 @@ use std::rc::Rc;
 mod meta;
 
 mod get;
+mod new;
 mod pretty_print;
 
 pub use meta::StructFieldMeta;
@@ -11,8 +12,8 @@ pub use meta::StructFieldMeta;
 /// A field in a structure
 #[derive(Debug)]
 pub struct StructField {
-    /// The metadata flags affecting this field
-    meta: Vec<StructFieldMeta>,
+    /// The metadata flag affecting this field
+    meta: Option<StructFieldMeta>,
 
     /// The name of the field
     name: String,

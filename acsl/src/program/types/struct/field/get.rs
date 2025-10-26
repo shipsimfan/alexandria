@@ -16,7 +16,7 @@ impl StructField {
     }
 
     /// Get the metadata effecting this field
-    pub const fn meta(&self) -> &[StructFieldMeta] {
-        self.meta.as_slice()
+    pub const fn meta(&self) -> Option<StructFieldMeta> {
+        self.meta
     }
 }

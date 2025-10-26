@@ -4,8 +4,9 @@ impl Primitive {
     /// Get the id of this [`Primitive`] type
     pub const fn id(&self) -> u32 {
         match self {
-            Primitive::F32 => 0,
-            Primitive::U32 => 1,
+            Primitive::Unit => 0,
+            Primitive::F32 => 1,
+            Primitive::U32 => 2,
         }
     }
 

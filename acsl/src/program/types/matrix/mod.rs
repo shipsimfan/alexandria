@@ -23,4 +23,8 @@ pub struct Matrix {
 
     /// The underlying primitive type of the matrix
     r#type: Rc<Type>,
+
+    /// The name of this matrix type in HLSL
+    #[cfg(feature = "hlsl")]
+    hlsl_name: &'static str,
 }

@@ -12,7 +12,7 @@ impl<'a> Struct<'a> {
         lexer: &mut Lexer<'a>,
         diag: &'c DiagCtxt<'b>,
     ) -> Result<Self, Diag<'b, 'c>> {
-        let name = lexer.expect_identifier(diag)?.content();
+        let name = lexer.expect_identifier(diag)?;
         lexer.expect(PunctuationKind::OpenBrace, diag)?;
 
         let mut fields = Vec::new();
@@ -59,6 +59,7 @@ impl<'a> Struct<'a> {
             name,
             fields,
             span: Span::new(start, end),
+            type_id: lexer.allocate_type_id(),
         })
     }
 }

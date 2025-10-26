@@ -11,6 +11,11 @@ impl Struct {
         self.id
     }
 
+    /// Get the id of the AST node that defined this type
+    pub const fn ast_id(&self) -> u32 {
+        self.ast_id
+    }
+
     /// Get the fields that make up this struct
     pub const fn fields(&self) -> &[StructField] {
         self.fields.as_slice()

@@ -1,7 +1,9 @@
+use crate::compile::tokens::Identifier;
 use lct_diagnostics::Span;
 
 mod field;
 
+mod get;
 mod parse;
 mod pretty_print;
 
@@ -11,11 +13,14 @@ pub(in crate::compile) use field::StructField;
 #[derive(Debug)]
 pub(in crate::compile) struct Struct<'a> {
     /// The name of the structure
-    name: &'a str,
+    name: Identifier<'a>,
 
     /// The fields making up the struct
     fields: Vec<StructField<'a>>,
 
     /// The location of the [`Struct`]
     span: Span,
+
+    /// An ID that uniquely identifies this AST type definition
+    type_id: u32,
 }

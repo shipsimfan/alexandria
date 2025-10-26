@@ -6,6 +6,7 @@ use tokens::Token;
 
 mod ast;
 mod lexer;
+mod semantic_analysis;
 mod tokens;
 
 /// Compile ACSL `source` into a [`Program`]
@@ -14,7 +15,7 @@ pub fn compile<'a, 'b>(source: &Source, diag: &'b DiagCtxt<'a>) -> Result<Progra
     println!("\x1B[1;36mABSTRACT SYNTAX TREE:\x1B[0m");
     print!("{}", ast);
 
-    let program = Program::new();
+    let program = semantic_analysis::semantic_analysis(ast, diag)?;
     println!();
     println!("\x1B[1;36mPROGRAM IR:\x1B[0m");
     print!("{}", program);

@@ -1,4 +1,4 @@
-use crate::compile::ast::Attribute;
+use crate::compile::{ast::Attribute, tokens::Identifier};
 use lct_diagnostics::Span;
 
 mod get;
@@ -15,7 +15,7 @@ pub(in crate::compile) struct StructField<'a> {
     name: &'a str,
 
     /// The type of the field
-    r#type: &'a str,
+    r#type: Identifier<'a>,
 
     /// The location of this [`StructField`]
     span: Span,

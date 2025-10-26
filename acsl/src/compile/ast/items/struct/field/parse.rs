@@ -47,11 +47,12 @@ impl<'a> StructField<'a> {
         lexer.expect(PunctuationKind::Colon, diag)?;
         let r#type = lexer.expect_identifier(diag)?;
 
+        let end = r#type.span().end();
         Ok(StructField {
             attributes,
-            name: name,
-            r#type: r#type.content(),
-            span: Span::new(start, r#type.span().end()),
+            name,
+            r#type,
+            span: Span::new(start, end),
         })
     }
 }

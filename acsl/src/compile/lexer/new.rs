@@ -6,6 +6,9 @@ impl<'a> Lexer<'a> {
     pub fn new(source: &'a Source) -> Self {
         let stream = source.char_stream();
 
-        Lexer { stream }
+        Lexer {
+            stream,
+            next_type_id: 0,
+        }
     }
 }

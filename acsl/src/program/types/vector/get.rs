@@ -21,4 +21,10 @@ impl Vector {
     pub const fn r#type(&self) -> &Rc<Type> {
         &self.r#type
     }
+
+    /// Gets the name of this vector type in HLSL
+    #[cfg(feature = "hlsl")]
+    pub const fn hlsl_name(&self) -> &str {
+        self.hlsl_name
+    }
 }

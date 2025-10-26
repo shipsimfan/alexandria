@@ -1,6 +1,7 @@
 mod field;
 
 mod get;
+mod new;
 mod pretty_print;
 mod set_id;
 
@@ -14,6 +15,9 @@ pub struct Struct {
 
     /// The ID given to this type
     id: u32,
+
+    /// The ID of the AST node that defined this type
+    ast_id: u32,
 
     /// The fields which make it up
     fields: Vec<StructField>,

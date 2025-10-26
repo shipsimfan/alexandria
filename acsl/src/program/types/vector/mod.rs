@@ -20,4 +20,8 @@ pub struct Vector {
 
     /// The underlying primitive type of the vector
     r#type: Rc<Type>,
+
+    /// The name of this vector type in HLSL
+    #[cfg(feature = "hlsl")]
+    hlsl_name: &'static str,
 }

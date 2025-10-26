@@ -1,7 +1,7 @@
 struct VOut;
 
 struct VOut {
-    float position : SV_POSITION;
+    float4 position : SV_POSITION;
 }
 
 float4 vertex_main();

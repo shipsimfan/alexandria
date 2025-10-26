@@ -6,6 +6,9 @@ mod pretty_print;
 /// A simple primitive type which cannot be deconstructed any further
 #[derive(Debug)]
 pub enum Primitive {
+    /// A type representing nothing
+    Unit,
+
     /// A 32-bit floating point number
     F32,
 

@@ -1,18 +1,21 @@
 use attribute::Attribute;
 use expressions::Expression;
-use items::Item;
 use path::Path;
 use statements::Statement;
 
 mod attribute;
 mod expressions;
-mod items;
 mod path;
 mod statements;
 
+pub mod items;
+
 mod display;
+mod get;
 mod parse;
 mod pretty_print;
+
+pub(in crate::compile) use items::Item;
 
 /// An abstract syntax tree describing an ACSL source file
 #[derive(Debug)]

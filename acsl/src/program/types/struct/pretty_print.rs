@@ -10,6 +10,6 @@ impl PrettyPrint for Struct {
         for field in self.fields() {
             field.fmt(depth + 1, f)?;
         }
-        write!(f, "}}")
+        writeln!(f, "}}")
     }
 }

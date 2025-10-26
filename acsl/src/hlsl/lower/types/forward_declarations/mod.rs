@@ -1,11 +1,16 @@
 use crate::program::{types::TypeManager, Type};
 
+mod r#struct;
+
 /// Produce forward declarations for types
 pub(super) fn lower_type_forward_declarations(content: &mut String, types: &TypeManager) {
     for r#type in types {
         match &**r#type {
             Type::Primitive(_) | Type::Vector(_) | Type::Matrix(_) => {}
-            Type::Struct(_) => todo!(),
+            Type::Struct(r#struct) => r#struct::lower(content, r#struct),
         }
+    }
+    if types.len() > 0 {
+        content.push('\n');
     }
 }
