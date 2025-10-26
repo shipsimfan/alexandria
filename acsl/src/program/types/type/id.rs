@@ -14,9 +14,9 @@ impl Type {
     /// Get the AST type ID of the node that defined this type
     pub fn ast_id(&self) -> Option<u32> {
         match self {
-            Type::Primitive(primitive) => None,
-            Type::Vector(vector) => None,
-            Type::Matrix(matrix) => None,
+            Type::Primitive(_) => None,
+            Type::Vector(_) => None,
+            Type::Matrix(_) => None,
             Type::Struct(r#struct) => Some(r#struct.ast_id()),
         }
     }

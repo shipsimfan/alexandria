@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use crate::compile::ast::{Attribute, Statement};
 use lct_diagnostics::Span;
 

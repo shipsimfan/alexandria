@@ -11,10 +11,10 @@ impl HlslProgram {
         lower_types(&mut content, program.types());
 
         HlslProgram {
-            content,
+            content: content.into(),
             input_layout: InputLayout::new(),
-            vertex_entry: String::new(),
-            pixel_entry: String::new(),
+            vertex_entry: String::new().into(),
+            pixel_entry: String::new().into(),
         }
     }
 }

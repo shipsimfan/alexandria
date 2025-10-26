@@ -19,6 +19,7 @@ pub(in crate::compile) struct Struct<'a> {
     fields: Vec<StructField<'a>>,
 
     /// The location of the [`Struct`]
+    #[allow(unused)]
     span: Span,
 
     /// An ID that uniquely identifies this AST type definition

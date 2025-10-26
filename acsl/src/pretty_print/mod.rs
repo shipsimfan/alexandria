@@ -12,7 +12,7 @@ pub trait PrettyPrint {
     fn fmt<'a, 'b>(&self, depth: usize, f: &mut PrettyFormatter<'a, 'b>) -> std::fmt::Result;
 
     /// Print the value using pretty printing
-    fn pretty_print(&self) -> PrettyPrinter<Self> {
+    fn pretty_print<'a>(&'a self) -> PrettyPrinter<'a, Self> {
         PrettyPrinter::new(self)
     }
 }

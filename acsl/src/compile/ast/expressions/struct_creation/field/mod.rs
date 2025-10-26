@@ -15,5 +15,6 @@ pub(in crate::compile) struct StructCreationField<'a> {
     value: Expression<'a>,
 
     /// The location of this field
+    #[allow(unused)]
     span: Span,
 }
