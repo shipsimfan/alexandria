@@ -1,4 +1,6 @@
 use crate::math::Vector2u;
+#[cfg(debug_assertions)]
+use info_queue::InfoQueue;
 use swapchain_objects::SwapchainObjects;
 use win32::{
     d3d11::ID3D11DeviceContext,
@@ -6,10 +8,13 @@ use win32::{
     ComPtr, UINT,
 };
 
+#[cfg(debug_assertions)]
+mod info_queue;
 mod render_frame;
 mod swapchain_objects;
 
 mod begin_render;
+mod get_debug_messages;
 mod new;
 mod resize;
 
@@ -29,6 +34,10 @@ pub struct RenderContext {
     /// The device context for issuing rendering commands
     #[allow(unused)]
     device_context: ComPtr<ID3D11DeviceContext>,
+
+    /// The info queue producing debug messages from the system graphics API
+    #[cfg(debug_assertions)]
+    info_queue: InfoQueue,
 }
 
 const SWAP_CHAIN_FLAGS: UINT = DXGI_SWAP_CHAIN_FLAG::AllowTearing as _;

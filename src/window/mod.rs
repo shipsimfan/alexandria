@@ -12,6 +12,7 @@ mod window_handle;
 
 mod begin_render;
 mod get;
+mod get_debug_messages;
 mod new;
 mod process_inputs;
 mod set;

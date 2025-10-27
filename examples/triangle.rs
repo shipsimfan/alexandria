@@ -8,6 +8,13 @@ fn main() {
         .create()
         .unwrap();
 
+    if let Err(error) = run(&mut window) {
+        window.get_debug_messages().unwrap();
+        panic!("{}", error);
+    }
+}
+
+fn run(window: &mut Box<alexandria::Window>) -> alexandria::Result<()> {
     // Setup fps counter
     let mut frames = 0;
     let mut second_counter = Duration::from_secs(0);
@@ -15,7 +22,7 @@ fn main() {
 
     // Main loop
     while window.is_running() {
-        window.process_inputs().unwrap();
+        window.process_inputs()?;
 
         // Calculate FPS
         let frame_time = Instant::now();
@@ -32,10 +39,10 @@ fn main() {
         }
 
         // Render
-        let render_context = window.begin_render([1.0, 0.0, 1.0, 0.0]);
+        let render_context = window.begin_render([1.0, 0.0, 1.0, 0.0])?;
 
-        render_context.end().unwrap();
+        render_context.end()?;
     }
 
-    drop(window);
+    Ok(())
 }

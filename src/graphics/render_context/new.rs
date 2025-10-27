@@ -1,3 +1,5 @@
+#[cfg(debug_assertions)]
+use crate::graphics::render_context::info_queue::InfoQueue;
 use crate::{
     graphics::{render_context::SWAP_CHAIN_FLAGS, Adapter, GraphicsContext, RenderContext},
     math::Vector2u,
@@ -66,19 +68,30 @@ impl RenderContext {
         ))
         .map_err(|os| Error::new_os("unable to start D3D11", os))?;
 
-        let device = ComPtr::new(device);
+        let mut device = ComPtr::new(device);
         let device_context = ComPtr::new(device_context);
         let swapchain = ComPtr::new(swap_chain);
+
+        #[cfg(debug_assertions)]
+        let info_queue = InfoQueue::new(&mut device)?;
 
         let mut render_context = RenderContext {
             swapchain_size: Vector2u::new(width, height),
             swapchain_objects: None,
             swapchain,
             device_context,
+            #[cfg(debug_assertions)]
+            info_queue,
         };
         let graphics_context = GraphicsContext::new(device);
 
-        render_context.force_resize(&&graphics_context, render_context.swapchain_size)?;
+        render_context
+            .force_resize(&&graphics_context, render_context.swapchain_size)
+            .map_err(|error| {
+                #[cfg(debug_assertions)]
+                render_context.info_queue.empty_queue().unwrap();
+                error
+            })?;
 
         Ok((render_context, graphics_context))
     }

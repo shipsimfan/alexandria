@@ -27,4 +27,6 @@ acsl = { workspace = true, default-features = false, features = ["d3d"] }
 
 win32 = { git = "https://github.com/shipsimfan/lib-win32", features = [
     "d3d11",
+    "d3d11sdklayers",
+    "dxgi1_3",
 ] }

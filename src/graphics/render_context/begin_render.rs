@@ -1,4 +1,7 @@
-use crate::graphics::{RenderContext, RenderFrame};
+use crate::{
+    graphics::{RenderContext, RenderFrame},
+    Result,
+};
 
 impl RenderContext {
     /// Begin rendering a new frame
@@ -6,7 +9,10 @@ impl RenderContext {
         &'a mut self,
         vsync: bool,
         clear_color: [f32; 4],
-    ) -> RenderFrame<'a> {
-        RenderFrame::new(self, vsync, clear_color)
+    ) -> Result<RenderFrame<'a>> {
+        #[cfg(debug_assertions)]
+        self.info_queue.empty_queue()?;
+
+        Ok(RenderFrame::new(self, vsync, clear_color))
     }
 }
