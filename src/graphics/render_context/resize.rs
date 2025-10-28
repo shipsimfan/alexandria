@@ -4,7 +4,7 @@ use crate::{
         GraphicsContext, RenderContext,
     },
     math::Vector2u,
-    Error, Result, BUFFER_COUNT, FORMAT,
+    Error, LogCallbacks, Result, BUFFER_COUNT, FORMAT,
 };
 use win32::try_hresult;
 
@@ -14,12 +14,13 @@ impl RenderContext {
         &mut self,
         graphics_context: &GraphicsContext,
         new_size: Vector2u,
+        log_callbacks: &mut dyn LogCallbacks,
     ) -> Result<()> {
         if self.swapchain_size == new_size {
             return Ok(());
         }
 
-        self.force_resize(graphics_context, new_size)
+        self.force_resize(graphics_context, new_size, log_callbacks)
     }
 
     /// Forcefully resize any assets directly tied to window size
@@ -27,6 +28,7 @@ impl RenderContext {
         &mut self,
         graphics_context: &GraphicsContext,
         new_size: Vector2u,
+        log_callbacks: &mut dyn LogCallbacks,
     ) -> Result<()> {
         if let Some(swapchain_objects) = &mut self.swapchain_objects {
             swapchain_objects.unbind(&mut self.device_context);
@@ -48,6 +50,7 @@ impl RenderContext {
         )?);
 
         self.swapchain_size = new_size;
+        log_callbacks.on_resize(new_size);
         Ok(())
     }
 }

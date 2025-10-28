@@ -1,9 +1,13 @@
-use crate::graphics::{RenderContext, RenderFrame};
+use crate::{
+    graphics::{RenderContext, RenderFrame},
+    LogCallbacks,
+};
 
 impl<'a> RenderFrame<'a> {
     /// Create a new [`RenderContext`] and begin a new frame
     pub(in crate::graphics::render_context) fn new(
         render_context: &'a mut RenderContext,
+        log_callbacks: &'a mut dyn LogCallbacks,
         vsync: bool,
         clear_color: [f32; 4],
     ) -> Self {
@@ -15,6 +19,7 @@ impl<'a> RenderFrame<'a> {
 
         RenderFrame {
             render_context,
+            log_callbacks,
             vsync,
             frame_ended: false,
         }

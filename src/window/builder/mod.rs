@@ -5,7 +5,7 @@ mod new;
 mod set;
 
 /// Builds a [`Window`](crate::Window) using provided parameters and sensible defaults otherwise
-pub struct WindowBuilder<'a> {
+pub struct WindowBuilder<'a, LogCallbacks: crate::LogCallbacks = ()> {
     /// The title of the window
     pub title: &'a str,
 
@@ -26,6 +26,9 @@ pub struct WindowBuilder<'a> {
 
     /// The mode the window should be displayed with
     pub display_mode: DisplayMode,
+
+    /// The callbacks used for logging
+    pub log_callbacks: LogCallbacks,
 
     /// The adapter to use for rendering
     pub adapter: Option<&'a mut Adapter>,

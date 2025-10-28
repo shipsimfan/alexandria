@@ -4,7 +4,7 @@ use crate::{
     DisplayMode, Result, Window,
 };
 
-impl Window {
+impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
     /// Create a new [`Window`] for rendering
     pub(in crate::window) fn new(
         title: &[u16],
@@ -14,12 +14,13 @@ impl Window {
         height: Option<u32>,
         vsync: bool,
         display_mode: DisplayMode,
+        mut log_callbacks: LogCallbacks,
         adapter: &mut Adapter,
     ) -> Result<Box<Self>> {
         assert!(title.last().is_some());
         assert_eq!(*title.last().unwrap(), 0);
 
-        let class = WindowClass::register(&title)?;
+        let class = WindowClass::register::<LogCallbacks>(&title)?;
 
         let mut window = Box::new_uninit();
         let handle = WindowHandle::create(
@@ -36,11 +37,12 @@ impl Window {
         let (position, size) = handle.get_size_and_position()?;
 
         let (render_context, graphics_context) =
-            RenderContext::new(&handle, adapter, size.x, size.y)?;
+            RenderContext::new(&handle, adapter, size.x, size.y, &mut log_callbacks)?;
 
         Ok(Box::write(
             window,
             Window {
+                log_callbacks,
                 is_running: true,
                 position,
                 size,

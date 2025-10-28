@@ -10,6 +10,7 @@ impl<'a> WindowBuilder<'a> {
             width: None,
             height: None,
             vsync: true,
+            log_callbacks: (),
             display_mode: DisplayMode::default(),
             adapter: None,
         }

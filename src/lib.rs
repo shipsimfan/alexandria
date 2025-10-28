@@ -10,9 +10,11 @@ pub mod graphics;
 pub mod math;
 
 mod error;
+mod log_callbacks;
 mod window;
 
 pub use error::{Error, Result};
+pub use log_callbacks::{GraphicsApiLogSeverity, LogCallbacks, StdoutLogger};
 pub use window::{DisplayMode, Window, WindowBuilder};
 
 pub use acsl;

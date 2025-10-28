@@ -1,6 +1,9 @@
-use crate::{graphics::render_context::InfoQueue, Error, Result};
+use crate::{
+    graphics::render_context::InfoQueue, Error, GraphicsApiLogSeverity, LogCallbacks, Result,
+};
 use std::{
     alloc::{alloc_zeroed, dealloc, Layout},
+    borrow::Cow,
     ffi::CStr,
 };
 use win32::{
@@ -18,7 +21,7 @@ const MESSAGE_BUFFER_LAYOUT: Layout = unsafe {
 
 impl InfoQueue {
     /// Empty all messages from the queue
-    pub fn empty_queue(&mut self) -> Result<()> {
+    pub fn empty_queue(&mut self, log_callbacks: &mut dyn LogCallbacks) -> Result<()> {
         let message_ptr = unsafe { alloc_zeroed(MESSAGE_BUFFER_LAYOUT) };
         let message = unsafe { &mut *(message_ptr as *mut D3D11_MESSAGE) };
 
@@ -30,17 +33,20 @@ impl InfoQueue {
                 Error::new_os("unable to get info queue message", error)
             })?;
 
-            let description = unsafe { CStr::from_ptr(message.description) };
+            let description = match unsafe { CStr::from_ptr(message.description) }.to_string_lossy()
+            {
+                Cow::Owned(owned) => owned,
+                Cow::Borrowed(borrowed) => borrowed.to_string(),
+            };
             let severity = match message.severity {
-                D3D11_MESSAGE_SEVERITY::Corruption => "CORRUPTION",
-                D3D11_MESSAGE_SEVERITY::Error => "ERROR",
-                D3D11_MESSAGE_SEVERITY::Warning => "WARNING",
-                D3D11_MESSAGE_SEVERITY::Info => "INFO",
-                D3D11_MESSAGE_SEVERITY::Message => "DEBUG",
-                _ => "UNKNOWN",
+                D3D11_MESSAGE_SEVERITY::Corruption | D3D11_MESSAGE_SEVERITY::Error => {
+                    GraphicsApiLogSeverity::Error
+                }
+                D3D11_MESSAGE_SEVERITY::Warning => GraphicsApiLogSeverity::Warning,
+                _ => GraphicsApiLogSeverity::Info,
             };
 
-            println!("{}: {}", severity, description.to_string_lossy());
+            log_callbacks.on_graphics_api_log(severity, description);
         }
 
         self.handle.clear_stored_messages();

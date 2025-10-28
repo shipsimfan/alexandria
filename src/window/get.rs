@@ -4,7 +4,7 @@ use crate::{
     DisplayMode, Window,
 };
 
-impl Window {
+impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
     /// Is the window still running?
     pub fn is_running(&self) -> bool {
         self.is_running

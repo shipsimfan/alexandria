@@ -17,7 +17,9 @@ impl<'a> RenderFrame<'a> {
         .map_err(|os| Error::new_os("unable to render frame", os))?;
 
         #[cfg(debug_assertions)]
-        self.render_context.info_queue.empty_queue()?;
+        self.render_context
+            .info_queue
+            .empty_queue(self.log_callbacks)?;
 
         Ok(())
     }

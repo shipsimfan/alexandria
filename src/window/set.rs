@@ -3,7 +3,7 @@ use crate::{
     DisplayMode, Result, Window,
 };
 
-impl Window {
+impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
     /// Quit the application at the end of the next frame
     pub fn quit(&mut self) {
         self.is_running = false;

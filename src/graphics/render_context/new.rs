@@ -4,7 +4,7 @@ use crate::{
     graphics::{render_context::SWAP_CHAIN_FLAGS, Adapter, GraphicsContext, RenderContext},
     math::Vector2u,
     window::WindowHandle,
-    Error, Result, BUFFER_COUNT, FORMAT,
+    Error, LogCallbacks, Result, BUFFER_COUNT, FORMAT,
 };
 use std::ptr::null_mut;
 use win32::{
@@ -32,6 +32,7 @@ impl RenderContext {
         adapter: &mut Adapter,
         width: u32,
         height: u32,
+        log_callbacks: &mut dyn LogCallbacks,
     ) -> Result<(Self, GraphicsContext)> {
         let swap_chain_desc = DXGI_SWAP_CHAIN_DESC {
             buffer_desc: DXGI_MODE_DESC {
@@ -86,10 +87,17 @@ impl RenderContext {
         let graphics_context = GraphicsContext::new(device);
 
         render_context
-            .force_resize(&&graphics_context, render_context.swapchain_size)
+            .force_resize(
+                &&graphics_context,
+                render_context.swapchain_size,
+                log_callbacks,
+            )
             .map_err(|error| {
                 #[cfg(debug_assertions)]
-                render_context.info_queue.empty_queue().unwrap();
+                render_context
+                    .info_queue
+                    .empty_queue(log_callbacks)
+                    .unwrap();
                 error
             })?;
 

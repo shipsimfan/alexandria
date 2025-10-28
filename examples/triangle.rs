@@ -5,6 +5,7 @@ const SECOND: Duration = Duration::from_secs(1);
 fn main() {
     // Create the window
     let mut window = alexandria::WindowBuilder::new("Triangle Example")
+        .log_callbacks(alexandria::StdoutLogger)
         .create()
         .unwrap();
 
@@ -14,7 +15,7 @@ fn main() {
     }
 }
 
-fn run(window: &mut Box<alexandria::Window>) -> alexandria::Result<()> {
+fn run(window: &mut Box<alexandria::Window<alexandria::StdoutLogger>>) -> alexandria::Result<()> {
     // Setup fps counter
     let mut frames = 0;
     let mut second_counter = Duration::from_secs(0);

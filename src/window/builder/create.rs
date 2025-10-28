@@ -15,9 +15,9 @@ impl<'a, T> AsMut<T> for Orb<'a, T> {
     }
 }
 
-impl<'a> WindowBuilder<'a> {
+impl<'a, LogCallbacks: crate::LogCallbacks> WindowBuilder<'a, LogCallbacks> {
     /// Create a new [`Window`] with the provided settings
-    pub fn create(self) -> Result<Box<Window>> {
+    pub fn create(self) -> Result<Box<Window<LogCallbacks>>> {
         let mut title: Vec<_> = self.title.encode_utf16().collect();
         title.push(0);
 
@@ -40,6 +40,7 @@ impl<'a> WindowBuilder<'a> {
             self.height,
             self.vsync,
             self.display_mode,
+            self.log_callbacks,
             adapter.as_mut(),
         )
     }

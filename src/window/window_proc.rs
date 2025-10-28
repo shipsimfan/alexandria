@@ -7,7 +7,7 @@ use win32::{
     WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_MOVE, WM_QUIT, WM_SIZE, WPARAM,
 };
 
-impl Window {
+impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
     /// Called to establish [`Window::window_proc`] as the main window procedure
     pub(in crate::window) extern "system" fn init_window_proc(
         wnd: HWND,
@@ -19,7 +19,8 @@ impl Window {
         if window_ptr == 0 {
             unsafe { DefWindowProc(wnd, msg, w_param, l_param) }
         } else {
-            unsafe { &mut *(window_ptr as *mut Window) }.window_proc(msg, w_param, l_param)
+            unsafe { &mut *(window_ptr as *mut Window<LogCallbacks>) }
+                .window_proc(msg, w_param, l_param)
         }
     }
 
@@ -43,9 +44,11 @@ impl Window {
             WM_EXITSIZEMOVE => {
                 self.in_move = false;
 
-                self.wnd_proc_result = self
-                    .render_context
-                    .resize(&self.graphics_context, self.size);
+                self.wnd_proc_result = self.render_context.resize(
+                    &self.graphics_context,
+                    self.size,
+                    &mut self.log_callbacks,
+                );
             }
 
             // The window has changed size
@@ -55,9 +58,11 @@ impl Window {
                 self.size = Vector2u::new(width, height);
 
                 if !self.in_move {
-                    self.wnd_proc_result = self
-                        .render_context
-                        .resize(&self.graphics_context, self.size);
+                    self.wnd_proc_result = self.render_context.resize(
+                        &self.graphics_context,
+                        self.size,
+                        &mut self.log_callbacks,
+                    );
                 }
             }
 

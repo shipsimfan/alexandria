@@ -8,7 +8,7 @@ use win32::{CreateWindowEx, GetModuleHandle, SetWindowLongPtr, CW_USEDEFAULT, GW
 
 impl WindowHandle {
     /// Creates a new window and returns the handle to it
-    pub(in crate::window) fn create(
+    pub(in crate::window) fn create<LogCallbacks: crate::LogCallbacks>(
         title: &[u16],
         class: &WindowClass,
         x: Option<i32>,
@@ -16,7 +16,7 @@ impl WindowHandle {
         width: Option<u32>,
         height: Option<u32>,
         display_mode: DisplayMode,
-        window_ptr: *mut Window,
+        window_ptr: *mut Window<LogCallbacks>,
     ) -> Result<Self> {
         assert!(title.last().is_some());
         assert_eq!(*title.last().unwrap(), 0);

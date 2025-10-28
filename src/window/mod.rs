@@ -24,7 +24,10 @@ pub use display_mode::DisplayMode;
 pub(crate) use window_handle::WindowHandle;
 
 /// A window which can be rendered into and receive input
-pub struct Window {
+pub struct Window<LogCallbacks: crate::LogCallbacks = ()> {
+    /// The callback functions for logging events
+    log_callbacks: LogCallbacks,
+
     /// Is the window still running?
     is_running: bool,
 

@@ -1,6 +1,6 @@
 use crate::{graphics::Adapter, DisplayMode, WindowBuilder};
 
-impl<'a> WindowBuilder<'a> {
+impl<'a, LogCallbacks: crate::LogCallbacks> WindowBuilder<'a, LogCallbacks> {
     /// Set the window's title
     pub fn title(mut self, title: &'a str) -> Self {
         self.title = title;
@@ -35,6 +35,24 @@ impl<'a> WindowBuilder<'a> {
     pub fn vsync(mut self, vsync: bool) -> Self {
         self.vsync = vsync;
         self
+    }
+
+    /// Set the callbacks used for logging
+    pub fn log_callbacks<NewLogCallbacks: crate::LogCallbacks>(
+        self,
+        log_callbacks: NewLogCallbacks,
+    ) -> WindowBuilder<'a, NewLogCallbacks> {
+        WindowBuilder {
+            title: self.title,
+            x: self.x,
+            y: self.y,
+            width: self.width,
+            height: self.height,
+            vsync: self.vsync,
+            display_mode: self.display_mode,
+            log_callbacks,
+            adapter: self.adapter,
+        }
     }
 
     /// Set the mode the window should be displayed in
