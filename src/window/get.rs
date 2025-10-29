@@ -1,3 +1,5 @@
+use win32::HWND;
+
 use crate::{
     graphics::GraphicsContext,
     math::{Vector2i, Vector2u},
@@ -53,5 +55,10 @@ impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
     /// Get the graphics context for object creation
     pub fn graphics_context(&self) -> &GraphicsContext {
         &self.graphics_context
+    }
+
+    /// Get the handle to the underlying window
+    pub(crate) fn handle(&mut self) -> HWND {
+        *self.handle
     }
 }

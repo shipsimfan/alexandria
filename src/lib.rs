@@ -8,6 +8,7 @@
 
 pub mod graphics;
 pub mod math;
+pub mod message_box;
 
 mod error;
 mod log_callbacks;

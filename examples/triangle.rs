@@ -11,6 +11,13 @@ fn main() {
 
     if let Err(error) = run(&mut window) {
         window.get_debug_messages().unwrap();
+        alexandria::message_box::message_box_ok(
+            "Runtime Error",
+            &error.to_string(),
+            alexandria::message_box::MessageBoxStyle::Error,
+            Some(&mut window),
+        )
+        .unwrap();
         panic!("{}", error);
     }
 }
