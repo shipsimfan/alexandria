@@ -52,6 +52,11 @@ impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
         self.display_mode
     }
 
+    /// Is the window currently focused
+    pub fn is_focused(&self) -> bool {
+        self.is_focused
+    }
+
     /// Get the graphics context for object creation
     pub fn graphics_context(&self) -> &GraphicsContext {
         &self.graphics_context

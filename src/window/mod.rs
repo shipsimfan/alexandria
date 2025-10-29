@@ -25,9 +25,6 @@ pub(crate) use window_handle::WindowHandle;
 
 /// A window which can be rendered into and receive input
 pub struct Window<LogCallbacks: crate::LogCallbacks = ()> {
-    /// The callback functions for logging events
-    log_callbacks: LogCallbacks,
-
     /// Is the window still running?
     is_running: bool,
 
@@ -43,14 +40,20 @@ pub struct Window<LogCallbacks: crate::LogCallbacks = ()> {
     /// The current display mode of the window
     display_mode: DisplayMode,
 
+    /// Is this window the one being focused on?
+    is_focused: bool,
+
+    /// Is the window being actively moved or resized?
+    in_move: bool,
+
     /// The context used for rendering
     render_context: RenderContext,
 
     /// The context used for creating graphics objects
     graphics_context: GraphicsContext,
 
-    /// Is the window being actively moved or resized?
-    in_move: bool,
+    /// The callback functions for logging events
+    log_callbacks: LogCallbacks,
 
     /// The result of the window procedure
     wnd_proc_result: Result<()>,

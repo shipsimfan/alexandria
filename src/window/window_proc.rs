@@ -3,8 +3,8 @@ use crate::{
     Window,
 };
 use win32::{
-    DefWindowProc, GetWindowLongPtr, GWLP_USERDATA, HWND, LPARAM, LRESULT, UINT, WM_CLOSE,
-    WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_MOVE, WM_QUIT, WM_SIZE, WPARAM,
+    DefWindowProc, GetWindowLongPtr, GWLP_USERDATA, HWND, LPARAM, LRESULT, UINT, WM_ACTIVATEAPP,
+    WM_CLOSE, WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_MOVE, WM_QUIT, WM_SIZE, WPARAM,
 };
 
 impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
@@ -72,6 +72,9 @@ impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
                 let y = ((l_param >> 16) & 0xFFFF) as i16;
                 self.position = Vector2i::new(x as _, y as _);
             }
+
+            // The window either gained or lost focus
+            WM_ACTIVATEAPP => self.is_focused = w_param != 0,
 
             // All other events
             _ => return unsafe { DefWindowProc(*self.handle, msg, w_param, l_param) },

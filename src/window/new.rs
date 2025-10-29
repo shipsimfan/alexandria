@@ -42,15 +42,16 @@ impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
         Ok(Box::write(
             window,
             Window {
-                log_callbacks,
                 is_running: true,
                 position,
                 size,
                 vsync,
                 display_mode,
+                is_focused: true,
+                in_move: false,
                 render_context,
                 graphics_context,
-                in_move: false,
+                log_callbacks,
                 wnd_proc_result: Ok(()),
                 handle,
                 class,
