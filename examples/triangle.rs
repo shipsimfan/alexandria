@@ -2,6 +2,13 @@ use std::time::{Duration, Instant};
 
 const SECOND: Duration = Duration::from_secs(1);
 
+const SHADER: alexandria::acsl::D3DProgram = alexandria::compile_hlsl!(
+    "Example",
+    "vertex_main",
+    "pixel_main",
+    alexandria::InputLayout::new()
+);
+
 fn main() {
     // Create the window
     let mut window = alexandria::WindowBuilder::new("Triangle Example")

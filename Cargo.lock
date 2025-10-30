@@ -15,7 +15,16 @@ name = "alexandria"
 version = "0.0.3"
 dependencies = [
  "acsl",
+ "alexandria-macros",
  "win32",
+]
+
+[[package]]
+name = "alexandria-macros"
+version = "0.0.3"
+dependencies = [
+ "acsl",
+ "proc-macro-util",
 ]
 
 [[package]]
@@ -48,6 +57,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "proc-macro-util"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-proc-macro-util#dc8dd4731da64fb9af18c5a7de40e1b8c3686570"
+dependencies = [
+ "proc-macro-util-base",
+ "proc-macro-util-macros",
+]
+
+[[package]]
+name = "proc-macro-util-base"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-proc-macro-util#dc8dd4731da64fb9af18c5a7de40e1b8c3686570"
+
+[[package]]
+name = "proc-macro-util-macros"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-proc-macro-util#dc8dd4731da64fb9af18c5a7de40e1b8c3686570"
+dependencies = [
+ "proc-macro-util-base",
+]
+
+[[package]]
 name = "win32"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-win32#47db005477ea6d19126457ad8c83be0f3e63132b"
+source = "git+https://github.com/shipsimfan/lib-win32#f195264580caaef1a10721bb07ef42795d5c7422"

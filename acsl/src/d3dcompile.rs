@@ -11,8 +11,8 @@ pub enum D3DCompileError {
 }
 
 /// Compile an [`HlslProgram`] into a [`D3DProgram`]
-pub fn d3dcompile(program: &HlslProgram) -> Result<D3DProgram, D3DCompileError> {
-    todo!()
+pub fn d3dcompile(program: &HlslProgram) -> Result<D3DProgram<'static>, D3DCompileError> {
+    todo!("Compile program")
 }
 
 impl std::error::Error for D3DCompileError {}

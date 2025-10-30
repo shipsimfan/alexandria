@@ -10,6 +10,7 @@ publish = false
 
 [workspace.dependencies]
 acsl.path = "acsl"
+alexandria-macros.path = "macros"
 
 [package]
 name = "alexandria"
@@ -24,6 +25,7 @@ publish.workspace = true
 
 [dependencies]
 acsl = { workspace = true, default-features = false, features = ["d3d"] }
+alexandria-macros.workspace = true
 
 win32 = { git = "https://github.com/shipsimfan/lib-win32", features = [
     "d3d11",
