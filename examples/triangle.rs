@@ -2,11 +2,11 @@ use std::time::{Duration, Instant};
 
 const SECOND: Duration = Duration::from_secs(1);
 
-const SHADER: alexandria::acsl::D3DProgram = alexandria::compile_hlsl!(
-    "Example",
+const SHADER: alexandria::acsl::D3DProgram = alexandria::compile_hlsl_file!(
+    "triangle.hlsl",
     "vertex_main",
     "pixel_main",
-    alexandria::InputLayout::new()
+    alexandria::acsl::InputLayout::new()
 );
 
 fn main() {

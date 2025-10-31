@@ -2,7 +2,7 @@ struct __t_VOut;
 
 struct __t_VOut {
     float4 position : SV_POSITION;
-}
+};
 
 __t_VOut __f_vertex_main();
 float4 __f_pixel_main() : SV_TARGET;

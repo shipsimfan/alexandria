@@ -1,4 +1,6 @@
-use crate::compile_hlsl::{input::CompileHlslInput, CompileHlsl};
+use std::path::Path;
+
+use crate::compile_hlsl_file::{input::CompileHlslInput, CompileHlslFile};
 use acsl::{HlslProgram, InputLayout};
 use proc_macro_util::{tokens::Literal, Parse, Parser, Result};
 
@@ -13,12 +15,24 @@ fn strip_string(literal: &Literal) -> Result<String> {
     }
 }
 
-impl<'a> Parse<'a> for CompileHlsl {
+impl<'a> Parse<'a> for CompileHlslFile {
     fn parse(parser: &mut Parser<'a>) -> Result<Self> {
         let input = CompileHlslInput::parse(parser)?;
 
+        let path = Path::new(&input.file_name().span().file())
+            .parent()
+            .unwrap_or(Path::new(""))
+            .join(strip_string(input.file_name())?);
+        let content = std::fs::read_to_string(&path).map_err(|error| {
+            input.file_name().span().error(format!(
+                "unable to read \"{}\" - {}",
+                path.display(),
+                error
+            ))
+        })?;
+
         let program = HlslProgram::new(
-            strip_string(input.content())?,
+            content,
             InputLayout::new(),
             strip_string(input.vertex_main())?,
             strip_string(input.pixel_main())?,
@@ -26,12 +40,12 @@ impl<'a> Parse<'a> for CompileHlsl {
 
         let compiled_program = acsl::d3dcompile(&program).map_err(|error| {
             input
-                .content()
+                .file_name()
                 .span()
                 .error(format!("unable to compile program - {}", error))
         })?;
 
-        Ok(CompileHlsl {
+        Ok(CompileHlslFile {
             vertex_content: compiled_program.vertex_content().into(),
             pixel_content: compiled_program.pixel_content().into(),
             input_layout: input.input_layout(),

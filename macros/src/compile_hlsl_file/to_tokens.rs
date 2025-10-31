@@ -1,9 +1,9 @@
-use crate::compile_hlsl::CompileHlsl;
+use crate::compile_hlsl_file::CompileHlslFile;
 use proc_macro_util::{to_tokens, Generator, ToTokens};
 
-impl ToTokens for CompileHlsl {
+impl ToTokens for CompileHlslFile {
     fn to_tokens(self, generator: &mut Generator) {
-        let CompileHlsl {
+        let CompileHlslFile {
             vertex_content,
             pixel_content,
             input_layout,
