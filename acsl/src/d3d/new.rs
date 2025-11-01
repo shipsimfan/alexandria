@@ -1,17 +1,13 @@
-use crate::{D3DProgram, InputLayout};
-use std::borrow::Cow;
+use crate::D3DProgram;
+use std::{borrow::Cow, marker::PhantomData};
 
-impl<'a> D3DProgram<'a> {
+impl<'a, Vertex> D3DProgram<'a, Vertex> {
     /// Create a new [`D3DProgram`]
-    pub const fn new(
-        vertex_content: Cow<'a, [u8]>,
-        pixel_content: Cow<'a, [u8]>,
-        input_layout: InputLayout,
-    ) -> Self {
+    pub const fn new(vertex_content: Cow<'a, [u8]>, pixel_content: Cow<'a, [u8]>) -> Self {
         D3DProgram {
             vertex_content,
             pixel_content,
-            input_layout,
+            _vertex: PhantomData,
         }
     }
 }

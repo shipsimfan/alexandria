@@ -1,4 +1,4 @@
-use crate::{D3DProgram, HlslProgram, InputLayout};
+use crate::{D3DProgram, HlslProgram};
 use std::{
     ffi::{CStr, CString},
     ptr::{null, null_mut},
@@ -16,15 +16,13 @@ pub enum D3DCompileError {
 }
 
 /// Compile an [`HlslProgram`] into a [`D3DProgram`]
-pub fn d3dcompile(program: &HlslProgram) -> Result<D3DProgram<'static>, D3DCompileError> {
+pub fn d3dcompile<Vertex>(
+    program: &HlslProgram,
+) -> Result<D3DProgram<'static, Vertex>, D3DCompileError> {
     let vertex_content = do_compile(program.content(), program.vertex_entry(), c"vs_5_0")?;
     let pixel_content = do_compile(program.content(), program.pixel_entry(), c"ps_5_0")?;
 
-    Ok(D3DProgram::new(
-        vertex_content.into(),
-        pixel_content.into(),
-        InputLayout::new(),
-    ))
+    Ok(D3DProgram::new(vertex_content.into(), pixel_content.into()))
 }
 
 fn do_compile(content: &str, entry: &str, target: &CStr) -> Result<Vec<u8>, D3DCompileError> {

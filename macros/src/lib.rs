@@ -15,14 +15,13 @@ proc_macro_util::proc_macro_function!(
     ///
     /// # Format
     /// ```ignore
-    /// compile_hlsl!(content: literal, vertex_main: literal, pixel_main: literal, input_layout: expr);
+    /// compile_hlsl!(content: literal, vertex_main: literal, pixel_main: literal);
     /// ```
     ///
     /// # Parameters
     ///  * `content` - String literal containing the code content
     ///  * `vertex_main` - The name of the main vertex function
     ///  * `pixel_main` - The name of the main pixel function
-    ///  * `input_layout` - The input layout to use for the shader
     compile_hlsl -> compile_hlsl::CompileHlsl
 );
 
@@ -31,13 +30,12 @@ proc_macro_util::proc_macro_function!(
     ///
     /// # Format
     /// ```ignore
-    /// compile_hlsl_file!(file_name: literal, vertex_main: literal, pixel_main: literal, input_layout: expr);
+    /// compile_hlsl_file!(file_name: literal, vertex_main: literal, pixel_main: literal);
     /// ```
     ///
     /// # Parameters
     ///  * `file_name` - The name of the file, relative to the defining module file
     ///  * `vertex_main` - The name of the main vertex function
     ///  * `pixel_main` - The name of the main pixel function
-    ///  * `input_layout` - The input layout to use for the shader
     compile_hlsl_file -> compile_hlsl_file::CompileHlslFile
 );

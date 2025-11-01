@@ -1,13 +1,23 @@
+use alexandria::math::Vector2f;
 use std::time::{Duration, Instant};
+
+struct Vertex {
+    position: Vector2f,
+}
+
+impl alexandria::graphics::Vertex for Vertex {
+    const INPUT_LAYOUT: &[alexandria::graphics::InputElement] =
+        &[alexandria::graphics::InputElement::new(
+            "POSITION",
+            0,
+            alexandria::graphics::InputElementType::Vector2F32,
+        )];
+}
 
 const SECOND: Duration = Duration::from_secs(1);
 
-const SHADER: alexandria::acsl::D3DProgram = alexandria::compile_hlsl_file!(
-    "triangle.hlsl",
-    "vertex_main",
-    "pixel_main",
-    alexandria::acsl::InputLayout::new()
-);
+const SHADER: alexandria::acsl::D3DProgram<Vertex> =
+    alexandria::compile_hlsl_file!("triangle.hlsl", "vertex_main", "pixel_main");
 
 fn main() {
     // Create the window
@@ -30,6 +40,9 @@ fn main() {
 }
 
 fn run(window: &mut Box<alexandria::Window<alexandria::StdoutLogger>>) -> alexandria::Result<()> {
+    // Create render resources
+    let shader = window.graphics_context().create_shader(&SHADER)?;
+
     // Setup fps counter
     let mut frames = 0;
     let mut second_counter = Duration::from_secs(0);

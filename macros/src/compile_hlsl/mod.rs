@@ -1,4 +1,4 @@
-use proc_macro_util::tokens::{Literal, TokenTree};
+use proc_macro_util::tokens::Literal;
 
 mod input;
 
@@ -11,7 +11,4 @@ pub struct CompileHlsl {
 
     /// The compiled content of the pixel shader
     pixel_content: Literal,
-
-    /// The provided tokens making up the input layout
-    input_layout: Vec<TokenTree>,
 }

@@ -8,14 +8,11 @@ impl<'a> Parse<'a> for CompileHlslInput {
         let vertex_main = parser.parse()?;
         parser.parse::<Token![,]>()?;
         let pixel_main = parser.parse()?;
-        parser.parse::<Token![,]>()?;
-        let input_layout = parser.parse()?;
 
         Ok(CompileHlslInput {
             file_name,
             vertex_main,
             pixel_main,
-            input_layout,
         })
     }
 }

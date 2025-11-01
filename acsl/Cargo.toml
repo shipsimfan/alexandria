@@ -16,9 +16,8 @@ program = []
 compile = ["program", "dep:lct-diagnostics"]
 
 # D3D Specific features
-input_layout = []
-hlsl = ["program", "input_layout"]
-d3d = ["input_layout"]
+d3d = []
+hlsl = ["program"]
 d3dcompile = ["hlsl", "d3d", "dep:win32"]
 
 [dependencies]

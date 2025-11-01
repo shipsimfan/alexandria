@@ -1,6 +1,7 @@
 use crate::math::Vector2u;
 #[cfg(debug_assertions)]
 use info_queue::InfoQueue;
+use std::num::NonZeroU32;
 use swapchain_objects::SwapchainObjects;
 use win32::{
     d3d11::ID3D11DeviceContext,
@@ -22,6 +23,9 @@ pub use render_frame::RenderFrame;
 
 /// The context for rendering
 pub struct RenderContext {
+    /// The currently assigned shader for rendering
+    current_shader: Option<NonZeroU32>,
+
     /// The current size of the swapchain
     swapchain_size: Vector2u,
 

@@ -1,14 +1,9 @@
-use crate::{HlslProgram, InputLayout};
+use crate::HlslProgram;
 
 impl HlslProgram {
     /// Get the content of an [`HlslProgram`]
     pub fn content(&self) -> &str {
         &self.content
-    }
-
-    /// Get the input layout describing the vertices
-    pub fn input_layout(&self) -> &InputLayout {
-        &self.input_layout
     }
 
     /// Get the name of the vertex shader entry point

@@ -1,4 +1,4 @@
-use crate::{HlslProgram, InputLayout, Program};
+use crate::{HlslProgram, Program};
 use types::lower_types;
 
 mod types;
@@ -12,7 +12,6 @@ impl HlslProgram {
 
         HlslProgram {
             content: content.into(),
-            input_layout: InputLayout::new(),
             vertex_entry: String::new().into(),
             pixel_entry: String::new().into(),
         }

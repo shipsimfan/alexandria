@@ -1,4 +1,3 @@
-use crate::InputLayout;
 use std::borrow::Cow;
 
 mod get;
@@ -9,9 +8,6 @@ mod new;
 pub struct HlslProgram {
     /// The HLSL code making up the program
     content: Cow<'static, str>,
-
-    /// The input layout describing input vertices
-    input_layout: InputLayout,
 
     /// The name of the vertex shader entry function
     vertex_entry: Cow<'static, str>,

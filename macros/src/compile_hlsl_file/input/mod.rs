@@ -1,4 +1,4 @@
-use proc_macro_util::tokens::{Literal, TokenTree};
+use proc_macro_util::tokens::Literal;
 
 mod get;
 mod parse;
@@ -13,7 +13,4 @@ pub struct CompileHlslInput {
 
     /// The name of the main pixel function
     pixel_main: Literal,
-
-    /// The provided input layout
-    input_layout: Vec<TokenTree>,
 }

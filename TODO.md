@@ -11,12 +11,11 @@
     1. Implement `d3dcompile`
     2. Add function declarations
     3. Add function definitions
- 3. Add shaders
- 4. Add meshes
- 5. Add mesh rendering
- 6. Fully implement triangle example
- 7. Add constant buffers
- 8. Add input system
- 9. Add keyboard input support
- 10. Add cube example with movement
- 11. Add textures
+ 3. Add meshes
+ 4. Add mesh rendering
+ 5. Fully implement triangle example
+ 6. Add constant buffers
+ 7. Add input system
+ 8. Add keyboard input support
+ 9. Add cube example with movement
+ 10. Add textures

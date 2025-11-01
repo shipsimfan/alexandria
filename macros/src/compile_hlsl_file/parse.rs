@@ -1,8 +1,7 @@
-use std::path::Path;
-
 use crate::compile_hlsl_file::{input::CompileHlslInput, CompileHlslFile};
-use acsl::{HlslProgram, InputLayout};
+use acsl::HlslProgram;
 use proc_macro_util::{tokens::Literal, Parse, Parser, Result};
+use std::path::Path;
 
 fn strip_string(literal: &Literal) -> Result<String> {
     let content = literal.to_string();
@@ -33,12 +32,11 @@ impl<'a> Parse<'a> for CompileHlslFile {
 
         let program = HlslProgram::new(
             content,
-            InputLayout::new(),
             strip_string(input.vertex_main())?,
             strip_string(input.pixel_main())?,
         );
 
-        let compiled_program = acsl::d3dcompile(&program).map_err(|error| {
+        let compiled_program = acsl::d3dcompile::<()>(&program).map_err(|error| {
             input
                 .file_name()
                 .span()
@@ -48,7 +46,6 @@ impl<'a> Parse<'a> for CompileHlslFile {
         Ok(CompileHlslFile {
             vertex_content: compiled_program.vertex_content().into(),
             pixel_content: compiled_program.pixel_content().into(),
-            input_layout: input.input_layout(),
         })
     }
 }

@@ -1,6 +1,6 @@
-use crate::{D3DProgram, InputLayout};
+use crate::D3DProgram;
 
-impl<'a> D3DProgram<'a> {
+impl<'a, Vertex> D3DProgram<'a, Vertex> {
     /// Gets the content of the vertex shader
     pub fn vertex_content(&self) -> &[u8] {
         &self.vertex_content
@@ -9,10 +9,5 @@ impl<'a> D3DProgram<'a> {
     /// Gets the content of the pixel shader
     pub fn pixel_content(&self) -> &[u8] {
         &self.pixel_content
-    }
-
-    /// Gets the input layout for this program
-    pub fn input_layout(&self) -> &InputLayout {
-        &self.input_layout
     }
 }

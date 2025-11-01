@@ -77,6 +77,7 @@ impl RenderContext {
         let info_queue = InfoQueue::new(&mut device)?;
 
         let mut render_context = RenderContext {
+            current_shader: None,
             swapchain_size: Vector2u::new(width, height),
             swapchain_objects: None,
             swapchain,

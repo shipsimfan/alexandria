@@ -8,8 +8,6 @@ mod d3d;
 mod d3dcompile;
 #[cfg(feature = "hlsl")]
 mod hlsl;
-#[cfg(feature = "input_layout")]
-mod input_layout;
 
 #[cfg(feature = "program")]
 pub mod pretty_print;
@@ -24,7 +22,5 @@ pub use d3d::D3DProgram;
 pub use d3dcompile::{d3dcompile, D3DCompileError};
 #[cfg(feature = "hlsl")]
 pub use hlsl::HlslProgram;
-#[cfg(feature = "input_layout")]
-pub use input_layout::InputLayout;
 #[cfg(feature = "program")]
 pub use program::Program;

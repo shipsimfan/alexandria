@@ -1,5 +1,5 @@
 use crate::compile_hlsl::input::CompileHlslInput;
-use proc_macro_util::tokens::{Literal, TokenTree};
+use proc_macro_util::tokens::Literal;
 
 impl CompileHlslInput {
     /// Get the provided content
@@ -15,10 +15,5 @@ impl CompileHlslInput {
     /// Get the provided name of the main pixel function
     pub fn pixel_main(&self) -> &Literal {
         &self.pixel_main
-    }
-
-    /// Get the input layout to use for the final program
-    pub fn input_layout(self) -> Vec<TokenTree> {
-        self.input_layout
     }
 }
