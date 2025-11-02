@@ -1,4 +1,4 @@
-use std::num::NonZeroU32;
+use std::sync::atomic::AtomicU32;
 use win32::{d3d11::ID3D11Device, ComPtr};
 
 mod create;
@@ -12,5 +12,5 @@ pub struct GraphicsContext {
     device: ComPtr<ID3D11Device>,
 
     /// The ID to assign the next created shader
-    next_shader_id: NonZeroU32,
+    next_shader_id: AtomicU32,
 }

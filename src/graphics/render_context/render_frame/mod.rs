@@ -3,6 +3,7 @@ use crate::{graphics::RenderContext, LogCallbacks};
 mod drop;
 mod end;
 mod new;
+mod render;
 mod set_active;
 
 /// The context for actively rendering a frame

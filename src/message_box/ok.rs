@@ -16,7 +16,7 @@ pub fn message_box_ok<LogCallbacks: crate::LogCallbacks>(
     content.push(0);
     let style = style.to_win32() | MB_OK;
 
-    try_get_last_error!(MessageBox(wnd, title.as_ptr(), content.as_ptr(), style))
+    try_get_last_error!(MessageBox(wnd, content.as_ptr(), title.as_ptr(), style))
         .map_err(|error| Error::new_os("unable to display message box", error))
         .map(|_| ())
 }

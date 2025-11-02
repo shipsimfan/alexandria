@@ -46,6 +46,7 @@ impl RenderContext {
 
         self.swapchain_objects = Some(SwapchainObjects::new(
             &mut self.swapchain,
+            new_size,
             graphics_context.device(),
         )?);
 

@@ -1,6 +1,7 @@
 use alexandria::math::Vector2f;
 use std::time::{Duration, Instant};
 
+#[repr(C)]
 struct Vertex {
     position: Vector2f,
 }
@@ -19,6 +20,20 @@ const SECOND: Duration = Duration::from_secs(1);
 const SHADER: alexandria::acsl::D3DProgram<Vertex> =
     alexandria::compile_hlsl_file!("triangle.hlsl", "vertex_main", "pixel_main");
 
+const VERTICES: &[Vertex] = &[
+    Vertex {
+        position: Vector2f::new(-0.5, -0.5),
+    },
+    Vertex {
+        position: Vector2f::new(0.0, 0.5),
+    },
+    Vertex {
+        position: Vector2f::new(0.5, -0.5),
+    },
+];
+
+const INDICES: &[u32] = &[1, 0, 2];
+
 fn main() {
     // Create the window
     let mut window = alexandria::WindowBuilder::new("Triangle Example")
@@ -26,8 +41,10 @@ fn main() {
         .create()
         .unwrap();
 
+    // Run the window
     if let Err(error) = run(&mut window) {
-        window.get_debug_messages().unwrap();
+        // Handle error
+        window.get_debug_messages().ok();
         alexandria::message_box::message_box_ok(
             "Runtime Error",
             &error.to_string(),
@@ -37,11 +54,15 @@ fn main() {
         .unwrap();
         panic!("{}", error);
     }
+
+    // Display shutdown debug messages
+    window.get_debug_messages().unwrap();
 }
 
 fn run(window: &mut Box<alexandria::Window<alexandria::StdoutLogger>>) -> alexandria::Result<()> {
     // Create render resources
-    let shader = window.graphics_context().create_shader(&SHADER)?;
+    let mut shader = window.graphics_context().create_shader(&SHADER)?;
+    let mut mesh = window.graphics_context().create_mesh(VERTICES, INDICES)?;
 
     // Setup fps counter
     let mut frames = 0;
@@ -67,7 +88,9 @@ fn run(window: &mut Box<alexandria::Window<alexandria::StdoutLogger>>) -> alexan
         }
 
         // Render
-        let render_context = window.begin_render([1.0, 0.0, 1.0, 0.0])?;
+        let mut render_context = window.begin_render([0.0, 0.0, 0.0, 0.0])?;
+
+        render_context.render(&mut mesh, &mut shader);
 
         render_context.end()?;
     }

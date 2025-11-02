@@ -4,7 +4,9 @@ use info_queue::InfoQueue;
 use std::num::NonZeroU32;
 use swapchain_objects::SwapchainObjects;
 use win32::{
-    d3d11::ID3D11DeviceContext,
+    d3d11::{
+        ID3D11BlendState, ID3D11DepthStencilState, ID3D11DeviceContext, ID3D11RasterizerState,
+    },
     dxgi::{IDXGISwapChain, DXGI_SWAP_CHAIN_FLAG},
     ComPtr, UINT,
 };
@@ -34,6 +36,15 @@ pub struct RenderContext {
 
     /// The swap chain to render onto
     swapchain: ComPtr<IDXGISwapChain>,
+
+    /// The state describing how the depth stecil view should work
+    depth_stencil_state: ComPtr<ID3D11DepthStencilState>,
+
+    /// The state to use when blending different meshes
+    blend_state: ComPtr<ID3D11BlendState>,
+
+    /// The state to use for the rasterizer
+    rasterizer_state: ComPtr<ID3D11RasterizerState>,
 
     /// The device context for issuing rendering commands
     #[allow(unused)]

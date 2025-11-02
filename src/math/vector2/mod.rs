@@ -26,6 +26,7 @@ mod sub;
 mod swizzle;
 
 /// A vector of size 2
+#[repr(C)]
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Vector2<T> {
     /// The x-axis value of the vector

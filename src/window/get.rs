@@ -58,8 +58,8 @@ impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
     }
 
     /// Get the graphics context for object creation
-    pub fn graphics_context(&mut self) -> &mut GraphicsContext {
-        &mut self.graphics_context
+    pub fn graphics_context(&self) -> &GraphicsContext {
+        &self.graphics_context
     }
 
     /// Get the handle to the underlying window

@@ -6,7 +6,7 @@ impl<'a> RenderFrame<'a> {
             return;
         }
 
-        shader.set_active(&mut self.render_context.device_context);
+        shader.bind(&mut self.render_context.device_context);
         self.render_context.current_shader = Some(shader.id());
     }
 }

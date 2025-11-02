@@ -8,7 +8,10 @@ use crate::{
 };
 use std::ptr::null_mut;
 use win32::{
-    d3d11::{D3D11CreateDeviceAndSwapChain, D3D11_CREATE_DEVICE_FLAG, D3D11_SDK_VERSION},
+    d3d11::{
+        D3D11CreateDeviceAndSwapChain, D3D11_BLEND_DESC, D3D11_CREATE_DEVICE_FLAG,
+        D3D11_DEPTH_STENCIL_DESC, D3D11_RASTERIZER_DESC, D3D11_SDK_VERSION,
+    },
     d3dcommon::{D3D_DRIVER_TYPE, D3D_FEATURE_LEVEL},
     dxgi::{
         DXGI_MODE_DESC, DXGI_SWAP_CHAIN_DESC, DXGI_SWAP_EFFECT, DXGI_USAGE_RENDER_TARGET_OUTPUT,
@@ -34,6 +37,7 @@ impl RenderContext {
         height: u32,
         log_callbacks: &mut dyn LogCallbacks,
     ) -> Result<(Self, GraphicsContext)> {
+        // Prepare swapchain description
         let swap_chain_desc = DXGI_SWAP_CHAIN_DESC {
             buffer_desc: DXGI_MODE_DESC {
                 width,
@@ -50,6 +54,7 @@ impl RenderContext {
             ..Default::default()
         };
 
+        // Create device, device context, and swapchain
         let mut device = null_mut();
         let mut device_context = null_mut();
         let mut swap_chain = null_mut();
@@ -69,24 +74,58 @@ impl RenderContext {
         ))
         .map_err(|os| Error::new_os("unable to start D3D11", os))?;
 
+        // Convert raw pointers into `ComPtr`s
         let mut device = ComPtr::new(device);
         let device_context = ComPtr::new(device_context);
         let swapchain = ComPtr::new(swap_chain);
 
+        // Create info queue
         #[cfg(debug_assertions)]
         let info_queue = InfoQueue::new(&mut device)?;
 
+        // Create rasterizer state
+        let rasterizer_desc = D3D11_RASTERIZER_DESC {
+            front_counter_clockwise: TRUE,
+            ..Default::default()
+        };
+        let rasterizer_state = ComPtr::new_in(|rasterizer_state| {
+            try_hresult!(device.create_rasterizer_state(&rasterizer_desc, rasterizer_state))
+        })
+        .map_err(|error| Error::new_os("unable to create rasterizer state", error))?;
+
+        // Create blend state
+        let blend_state_desc = D3D11_BLEND_DESC::default();
+        let blend_state = ComPtr::new_in(|blend_state| {
+            try_hresult!(device.create_blend_state(&blend_state_desc, blend_state))
+        })
+        .map_err(|error| Error::new_os("unable to create blend state", error))?;
+
+        // Create depth stencil state
+        let depth_stencil_desc = D3D11_DEPTH_STENCIL_DESC::default();
+        let depth_stencil_state =
+            ComPtr::new_in(|depth_stencil_state| {
+                try_hresult!(
+                    device.create_depth_stencil_state(&depth_stencil_desc, depth_stencil_state)
+                )
+            })
+            .map_err(|error| Error::new_os("unable to create depth stencil state", error))?;
+
+        // Create render context and graphics context
         let mut render_context = RenderContext {
             current_shader: None,
             swapchain_size: Vector2u::new(width, height),
             swapchain_objects: None,
             swapchain,
+            depth_stencil_state,
+            rasterizer_state,
+            blend_state,
             device_context,
             #[cfg(debug_assertions)]
             info_queue,
         };
         let graphics_context = GraphicsContext::new(device);
 
+        // Force a resize
         render_context
             .force_resize(
                 &&graphics_context,

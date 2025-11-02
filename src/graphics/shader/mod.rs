@@ -5,9 +5,9 @@ use win32::{
     ComPtr,
 };
 
+mod bind;
 mod get;
 mod new;
-mod set_active;
 
 /// A shader program which can be used to
 pub struct Shader<V: Vertex> {
