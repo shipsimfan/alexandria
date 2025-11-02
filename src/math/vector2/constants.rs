@@ -1,5 +1,5 @@
 use crate::math::{
-    number::{Infinity, NaN, One, Zero},
+    number::{Infinity, NaN, NegInfinity, One, Zero},
     Vector2,
 };
 
@@ -21,6 +21,10 @@ impl<T: Zero + One> Vector2<T> {
 
 impl<T: Infinity> Infinity for Vector2<T> {
     const INFINITY: Self = Vector2::infinity();
+}
+
+impl<T: NegInfinity> NegInfinity for Vector2<T> {
+    const NEG_INFINITY: Self = Vector2::neg_infinity();
 }
 
 impl<T: NaN> NaN for Vector2<T> {

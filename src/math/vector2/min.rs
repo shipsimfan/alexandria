@@ -13,3 +13,9 @@ impl<T: Min + Clone> Vector2<T> {
         Vector2::new(self.x.min(other.clone()), self.y.min(other))
     }
 }
+
+impl<T: Min> Min for Vector2<T> {
+    fn min(self, other: Self) -> Self {
+        self.min_v(other)
+    }
+}

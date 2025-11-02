@@ -13,3 +13,9 @@ impl<T: Max + Clone> Vector2<T> {
         Vector2::new(self.x.max(other.clone()), self.y.max(other))
     }
 }
+
+impl<T: Max> Max for Vector2<T> {
+    fn max(self, other: Self) -> Self {
+        self.max_v(other)
+    }
+}

@@ -1,11 +1,10 @@
 # ToDo
  1. Finish math library
-    1. Vector3
-    2. Vector4
-    3. Matrix4x4
-    4. Quaternion
-    5. Color3
-    6. Color4
+    1. Vector4
+    2. Matrix4x4
+    3. Quaternion
+    4. Color3
+    5. Color4
  2. Add ACSL
     1. Implement `d3dcompile`
     2. Add function declarations

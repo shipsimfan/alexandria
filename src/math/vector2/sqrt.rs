@@ -6,3 +6,9 @@ impl<T: Sqrt> Vector2<T> {
         Vector2::new(self.x.sqrt(), self.y.sqrt())
     }
 }
+
+impl<T: Sqrt> Sqrt for Vector2<T> {
+    fn sqrt(self) -> Self {
+        self.sqrt()
+    }
+}

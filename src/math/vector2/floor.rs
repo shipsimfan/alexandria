@@ -6,3 +6,9 @@ impl<T: Floor> Vector2<T> {
         Vector2::new(self.x.floor(), self.y.floor())
     }
 }
+
+impl<T: Floor> Floor for Vector2<T> {
+    fn floor(self) -> Self {
+        self.floor()
+    }
+}

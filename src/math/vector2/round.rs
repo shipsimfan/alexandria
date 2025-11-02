@@ -6,3 +6,9 @@ impl<T: Round> Vector2<T> {
         Vector2::new(self.x.round(), self.y.round())
     }
 }
+
+impl<T: Round> Round for Vector2<T> {
+    fn round(self) -> Self {
+        self.round()
+    }
+}

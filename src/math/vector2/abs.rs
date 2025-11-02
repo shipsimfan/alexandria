@@ -6,3 +6,9 @@ impl<T: Absolute> Vector2<T> {
         Vector2::new(self.x.abs(), self.y.abs())
     }
 }
+
+impl<T: Absolute> Absolute for Vector2<T> {
+    fn abs(self) -> Self {
+        self.abs()
+    }
+}

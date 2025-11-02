@@ -18,6 +18,7 @@ impl<T> Vector2<T> {
 impl<T: Clone> Vector2<T> {
     /// Create a new [`Vector2`] from a slice
     pub fn from_slice(s: &[T]) -> Self {
+        assert!(s.len() >= 2);
         Vector2::new(s[0].clone(), s[1].clone())
     }
 
@@ -61,7 +62,7 @@ impl<T: Infinity> Vector2<T> {
 }
 
 impl<T: NegInfinity> Vector2<T> {
-    /// Create a new [`Vector2`] containing only negative infinities (∞)
+    /// Create a new [`Vector2`] containing only negative infinities (-∞)
     pub const fn neg_infinity() -> Self {
         Vector2::new(T::NEG_INFINITY, T::NEG_INFINITY)
     }

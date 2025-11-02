@@ -6,3 +6,9 @@ impl<T: Fract> Vector2<T> {
         Vector2::new(self.x.fract(), self.y.fract())
     }
 }
+
+impl<T: Fract> Fract for Vector2<T> {
+    fn fract(self) -> Self {
+        self.fract()
+    }
+}

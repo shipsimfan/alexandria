@@ -6,3 +6,9 @@ impl<T: Ceil> Vector2<T> {
         Vector2::new(self.x.ceil(), self.y.ceil())
     }
 }
+
+impl<T: Ceil> Ceil for Vector2<T> {
+    fn ceil(self) -> Self {
+        self.ceil()
+    }
+}
