@@ -13,9 +13,7 @@ impl<T: Add<Output = T> + Mul<Output = T> + DivAssign + Clone + Sqrt + PartialEq
         }
 
         let length = length_squared.sqrt();
-        self.x /= length.clone();
-        self.y /= length.clone();
-        self.z /= length;
+        *self /= length;
     }
 
     /// Gets a normalized version of this vector, such that the length is 1

@@ -1,15 +1,15 @@
 # ToDo
  1. Finish math library
-    1. Vector4
-    2. Matrix4x4
-    3. Quaternion
-    4. Color4
+    1. Matrix4x4
+    2. Quaternion
+    3. Color4
  2. Add constant buffers
  3. Add input system
  4. Add keyboard input support
  5. Add cube example with movement
- 6. Add textures
- 7. Add ACSL
+ 6. Add instance rendering
+ 7. Add textures
+ 8. Add ACSL
 
 ## Later TODO
  1. Add MSAA

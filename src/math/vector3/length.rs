@@ -4,7 +4,7 @@ use std::ops::{Add, Mul};
 impl<T: Add<Output = T> + Mul<Output = T> + Clone> Vector3<T> {
     /// Calculates the length of the vector squared
     pub fn length_squared(self) -> T {
-        self.x.clone() * self.x + self.y.clone() * self.y + self.z.clone() * self.z
+        self.clone().dot(self)
     }
 }
 
