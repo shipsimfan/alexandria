@@ -1,18 +1,25 @@
-use alexandria::math::Vector2f;
+use alexandria::math::{Color3f, Vector2f};
 use std::time::{Duration, Instant};
 
 #[repr(C)]
 struct Vertex {
     position: Vector2f,
+    color: Color3f,
 }
 
 impl alexandria::graphics::Vertex for Vertex {
-    const INPUT_LAYOUT: &[alexandria::graphics::InputElement] =
-        &[alexandria::graphics::InputElement::new(
+    const INPUT_LAYOUT: &[alexandria::graphics::InputElement] = &[
+        alexandria::graphics::InputElement::new(
             "POSITION",
             0,
             alexandria::graphics::InputElementType::Vector2F32,
-        )];
+        ),
+        alexandria::graphics::InputElement::new(
+            "COLOR",
+            0,
+            alexandria::graphics::InputElementType::Vector3F32,
+        ),
+    ];
 }
 
 const SECOND: Duration = Duration::from_secs(1);
@@ -23,12 +30,15 @@ const SHADER: alexandria::acsl::D3DProgram<Vertex> =
 const VERTICES: &[Vertex] = &[
     Vertex {
         position: Vector2f::new(-0.5, -0.5),
+        color: Color3f::RED,
     },
     Vertex {
         position: Vector2f::new(0.0, 0.5),
+        color: Color3f::GREEN,
     },
     Vertex {
         position: Vector2f::new(0.5, -0.5),
+        color: Color3f::BLUE,
     },
 ];
 
