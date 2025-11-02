@@ -1,0 +1,173 @@
+use crate::math::{
+    number::{Infinity, NaN, NegInfinity, One, Zero},
+    Matrix4x4,
+};
+
+impl<T> Matrix4x4<T> {
+    /// Create a new [`Matrix4x4`]
+    pub const fn new(v: [[T; 4]; 4]) -> Self {
+        Matrix4x4 { v }
+    }
+
+    /// Create a new [`Matrix4x4`] from an array
+    pub fn from_array(
+        [v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23, v30, v31, v32, v33]: [T; 16],
+    ) -> Self {
+        Matrix4x4::new([
+            [v00, v01, v02, v03],
+            [v10, v11, v12, v13],
+            [v20, v21, v22, v23],
+            [v30, v31, v32, v33],
+        ])
+    }
+}
+
+impl<T: Clone> Matrix4x4<T> {
+    /// Create a new [`Matrix4x4`] from a slice
+    pub fn from_slice(s: &[T]) -> Self {
+        assert!(s.len() >= 16);
+        Matrix4x4::new([
+            [s[0].clone(), s[1].clone(), s[2].clone(), s[3].clone()],
+            [s[4].clone(), s[5].clone(), s[6].clone(), s[7].clone()],
+            [s[8].clone(), s[9].clone(), s[10].clone(), s[11].clone()],
+            [s[12].clone(), s[13].clone(), s[14].clone(), s[15].clone()],
+        ])
+    }
+
+    /// Create a new [`Matrix4x4`] from a slice of slices
+    pub fn from_slices(s: &[&[T]]) -> Self {
+        assert!(s.len() >= 4);
+        for i in 0..4 {
+            assert!(s[i].len() >= 4);
+        }
+
+        Matrix4x4::new([
+            [
+                s[0][0].clone(),
+                s[0][1].clone(),
+                s[0][2].clone(),
+                s[0][3].clone(),
+            ],
+            [
+                s[1][0].clone(),
+                s[1][1].clone(),
+                s[1][2].clone(),
+                s[1][3].clone(),
+            ],
+            [
+                s[2][0].clone(),
+                s[2][1].clone(),
+                s[2][2].clone(),
+                s[2][3].clone(),
+            ],
+            [
+                s[3][0].clone(),
+                s[3][1].clone(),
+                s[3][2].clone(),
+                s[3][3].clone(),
+            ],
+        ])
+    }
+
+    /// Create a new [`Matrix4x4`] consisting of the same values
+    pub fn splat(v: T) -> Self {
+        Matrix4x4::new([
+            [v.clone(), v.clone(), v.clone(), v.clone()],
+            [v.clone(), v.clone(), v.clone(), v.clone()],
+            [v.clone(), v.clone(), v.clone(), v.clone()],
+            [v.clone(), v.clone(), v.clone(), v],
+        ])
+    }
+}
+
+impl<T: Zero> Matrix4x4<T> {
+    /// Create a new [`Matrix4x4`] containing only zeroes
+    pub const fn zero() -> Self {
+        Matrix4x4::new([
+            [T::ZERO, T::ZERO, T::ZERO, T::ZERO],
+            [T::ZERO, T::ZERO, T::ZERO, T::ZERO],
+            [T::ZERO, T::ZERO, T::ZERO, T::ZERO],
+            [T::ZERO, T::ZERO, T::ZERO, T::ZERO],
+        ])
+    }
+}
+
+impl<T: One> Matrix4x4<T> {
+    /// Create a new [`Matrix4x4`] containing only ones
+    pub const fn one() -> Self {
+        Matrix4x4::new([
+            [T::ONE, T::ONE, T::ONE, T::ONE],
+            [T::ONE, T::ONE, T::ONE, T::ONE],
+            [T::ONE, T::ONE, T::ONE, T::ONE],
+            [T::ONE, T::ONE, T::ONE, T::ONE],
+        ])
+    }
+}
+
+impl<T: Zero + One> Matrix4x4<T> {
+    /// Create a new identity [`Matrix4x4`]
+    pub const fn identity() -> Self {
+        Matrix4x4::new([
+            [T::ONE, T::ZERO, T::ZERO, T::ZERO],
+            [T::ZERO, T::ONE, T::ZERO, T::ZERO],
+            [T::ZERO, T::ZERO, T::ONE, T::ZERO],
+            [T::ZERO, T::ZERO, T::ZERO, T::ONE],
+        ])
+    }
+}
+
+impl<T: Infinity> Matrix4x4<T> {
+    /// Create a new [`Matrix4x4`] containing only infinities (∞)
+    pub const fn infinity() -> Self {
+        Matrix4x4::new([
+            [T::INFINITY, T::INFINITY, T::INFINITY, T::INFINITY],
+            [T::INFINITY, T::INFINITY, T::INFINITY, T::INFINITY],
+            [T::INFINITY, T::INFINITY, T::INFINITY, T::INFINITY],
+            [T::INFINITY, T::INFINITY, T::INFINITY, T::INFINITY],
+        ])
+    }
+}
+
+impl<T: NegInfinity> Matrix4x4<T> {
+    /// Create a new [`Matrix4x4`] containing only negative infinities (-∞)
+    pub const fn neg_infinity() -> Self {
+        Matrix4x4::new([
+            [
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+            ],
+            [
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+            ],
+            [
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+            ],
+            [
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+                T::NEG_INFINITY,
+            ],
+        ])
+    }
+}
+
+impl<T: NaN> Matrix4x4<T> {
+    /// Create a new [`Matrix4x4`] containing only `NaN` values
+    pub const fn nan() -> Self {
+        Matrix4x4::new([
+            [T::NAN, T::NAN, T::NAN, T::NAN],
+            [T::NAN, T::NAN, T::NAN, T::NAN],
+            [T::NAN, T::NAN, T::NAN, T::NAN],
+            [T::NAN, T::NAN, T::NAN, T::NAN],
+        ])
+    }
+}
