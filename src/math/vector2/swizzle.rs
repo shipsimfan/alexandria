@@ -11,3 +11,15 @@ impl<T> Vector2<T> {
         Vector2::new(self.y, self.x)
     }
 }
+
+impl<T: Clone> Vector2<T> {
+    /// Gets this [`Vector2`] as a [`Vector2`] with values `(x, x)`
+    pub fn xx(self) -> Vector2<T> {
+        Vector2::new(self.x.clone(), self.x)
+    }
+
+    /// Gets this [`Vector2`] as a [`Vector2`] with values `(y, y)`
+    pub fn yy(self) -> Vector2<T> {
+        Vector2::new(self.y.clone(), self.y)
+    }
+}
