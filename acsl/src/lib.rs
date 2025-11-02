@@ -12,6 +12,7 @@ mod hlsl;
 #[cfg(feature = "program")]
 pub mod pretty_print;
 #[cfg(feature = "program")]
+#[allow(unused)]
 pub mod program;
 
 #[cfg(feature = "compile")]

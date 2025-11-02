@@ -2,7 +2,7 @@ use std::time::{Duration, Instant};
 
 #[repr(C)]
 struct Vertex {
-    position: alexandria::math::Vector2f,
+    position: alexandria::math::Vector3f,
     color: alexandria::math::Color3f,
 }
 
@@ -11,7 +11,7 @@ impl alexandria::graphics::Vertex for Vertex {
         alexandria::graphics::InputElement::new(
             "POSITION",
             0,
-            alexandria::graphics::InputElementType::Vector2F32,
+            alexandria::graphics::InputElementType::Vector3F32,
         ),
         alexandria::graphics::InputElement::new(
             "COLOR",
@@ -28,24 +28,47 @@ const SHADER: alexandria::acsl::D3DProgram<Vertex> =
 
 const VERTICES: &[Vertex] = &[
     Vertex {
-        position: alexandria::math::Vector2f::new(-0.5, -0.5),
-        color: alexandria::math::Color3f::RED,
+        position: alexandria::math::Vector3f::new(-1.0, -1.0, -1.0),
+        color: alexandria::math::Color3f::new(0.0, 0.0, 0.0),
     },
     Vertex {
-        position: alexandria::math::Vector2f::new(0.0, 0.5),
-        color: alexandria::math::Color3f::GREEN,
+        position: alexandria::math::Vector3f::new(1.0, -1.0, -1.0),
+        color: alexandria::math::Color3f::new(1.0, 0.0, 0.0),
     },
     Vertex {
-        position: alexandria::math::Vector2f::new(0.5, -0.5),
-        color: alexandria::math::Color3f::BLUE,
+        position: alexandria::math::Vector3f::new(1.0, 1.0, -1.0),
+        color: alexandria::math::Color3f::new(1.0, 1.0, 0.0),
+    },
+    Vertex {
+        position: alexandria::math::Vector3f::new(-1.0, 1.0, -1.0),
+        color: alexandria::math::Color3f::new(0.0, 1.0, 0.0),
+    },
+    Vertex {
+        position: alexandria::math::Vector3f::new(-1.0, -1.0, 1.0),
+        color: alexandria::math::Color3f::new(0.0, 0.0, 1.0),
+    },
+    Vertex {
+        position: alexandria::math::Vector3f::new(1.0, -1.0, 1.0),
+        color: alexandria::math::Color3f::new(1.0, 0.0, 1.0),
+    },
+    Vertex {
+        position: alexandria::math::Vector3f::new(1.0, 1.0, 1.0),
+        color: alexandria::math::Color3f::new(1.0, 1.0, 1.0),
+    },
+    Vertex {
+        position: alexandria::math::Vector3f::new(-1.0, 1.0, 1.0),
+        color: alexandria::math::Color3f::new(0.0, 1.0, 1.0),
     },
 ];
 
-const INDICES: &[u32] = &[1, 0, 2];
+const INDICES: &[u32] = &[
+    4, 5, 6, 4, 6, 7, 1, 0, 3, 1, 3, 2, 5, 1, 2, 5, 2, 6, 0, 4, 7, 0, 7, 3, 7, 6, 2, 7, 2, 3, 0, 1,
+    5, 0, 5, 4,
+];
 
 fn main() {
     // Create the window
-    let mut window = alexandria::WindowBuilder::new("Triangle Example")
+    let mut window = alexandria::WindowBuilder::new("Cube Example")
         .log_callbacks(alexandria::StdoutLogger)
         .create()
         .unwrap();

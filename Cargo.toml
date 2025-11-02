@@ -9,7 +9,7 @@ license = "GPL-3.0-or-later"
 publish = false
 
 [workspace.dependencies]
-acsl.path = "acsl"
+acsl = { path = "acsl", default-features = false }
 alexandria-macros.path = "macros"
 
 [package]
