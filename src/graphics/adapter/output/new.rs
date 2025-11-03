@@ -4,7 +4,7 @@ use crate::{
     Error, Result,
 };
 use win32::{
-    dxgi::{IDXGIAdapter1, IDXGIOutput, IDXGIOutputTrait, DXGI_OUTPUT_DESC},
+    dxgi::{IDXGIAdapter1, IDXGIOutput, DXGI_OUTPUT_DESC},
     dxgi1_2::IDXGIOutput1,
     try_hresult, ComPtr,
 };

@@ -1,8 +1,8 @@
 use crate::{graphics::Adapter, Error, Result};
 use std::{cmp::Ordering, ptr::null_mut};
 use win32::{
-    dxgi::IDXGIFactory1Trait, dxgi1_2::IDXGIFactory2, dxgi1_3::CreateDXGIFactory2, strsafe::S_OK,
-    try_hresult, ComInterface, ComPtr, DXGI_ERROR_NOT_FOUND, UINT,
+    dxgi1_2::IDXGIFactory2, dxgi1_3::CreateDXGIFactory2, strsafe::S_OK, try_hresult, ComInterface,
+    ComPtr, DXGI_ERROR_NOT_FOUND, UINT,
 };
 
 #[cfg(debug_assertions)]

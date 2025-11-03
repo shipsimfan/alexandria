@@ -73,7 +73,7 @@ impl SwapchainObjects {
         };
         let depth_stencil_view = ComPtr::new_in(|depth_stencil_view| {
             try_hresult!(device.create_depth_stencil_view(
-                depth_buffer.as_mut() as *mut _ as _,
+                depth_buffer.as_mut(),
                 &depth_stencil_view_desc,
                 depth_stencil_view
             ))

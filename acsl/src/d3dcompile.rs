@@ -3,7 +3,7 @@ use std::{
     ffi::{CStr, CString},
     ptr::{null, null_mut},
 };
-use win32::{d3dcompiler::D3DCompile, try_hresult, unknwn::IUnknownTrait, ComPtr};
+use win32::{d3dcompiler::D3DCompile, try_hresult, ComPtr};
 
 /// A result the can occur when compiling HLSL
 #[derive(Debug)]

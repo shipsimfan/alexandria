@@ -1,9 +1,6 @@
 use crate::{graphics::Output, Error, Result};
 use std::ptr::null_mut;
-use win32::{
-    dxgi::{IDXGIAdapter1, IDXGIAdapterTrait},
-    ComPtr, DXGI_ERROR_NOT_FOUND, S_OK,
-};
+use win32::{dxgi::IDXGIAdapter1, ComPtr, DXGI_ERROR_NOT_FOUND, S_OK};
 
 impl Output {
     /// Enumerates the outputs available for `adapter` to output on
