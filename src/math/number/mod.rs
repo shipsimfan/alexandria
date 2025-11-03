@@ -16,6 +16,7 @@ mod one;
 mod round;
 mod sin;
 mod sqrt;
+mod tan;
 mod zero;
 
 pub use absolute::Absolute;
@@ -34,4 +35,5 @@ pub use one::One;
 pub use round::Round;
 pub use sin::Sin;
 pub use sqrt::Sqrt;
+pub use tan::Tan;
 pub use zero::Zero;

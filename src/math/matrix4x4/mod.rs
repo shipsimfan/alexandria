@@ -2,6 +2,8 @@ mod mul;
 mod new;
 
 /// A matrix with 4 columns and 4 rows
+///
+/// The matrix is stored in row major
 #[repr(C)]
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Matrix4x4<T> {

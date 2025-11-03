@@ -1,6 +1,6 @@
-/// Computes the cocose of a value in radians
+/// Computes the cosine of a value in radians
 pub trait Cos {
-    /// Computes the cocose of a value in radians
+    /// Computes the cosine of a value in radians
     fn cos(self) -> Self;
 }
 
