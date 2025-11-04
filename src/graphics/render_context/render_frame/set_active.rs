@@ -1,7 +1,10 @@
 use crate::graphics::{RenderFrame, Shader, Vertex};
 
 impl<'a> RenderFrame<'a> {
-    pub(in crate::graphics) fn set_active_shader<V: Vertex>(&mut self, shader: &mut Shader<V>) {
+    pub(in crate::graphics) fn set_active_shader<V: Vertex, CB>(
+        &mut self,
+        shader: &mut Shader<V, CB>,
+    ) {
         if self.render_context.current_shader == Some(shader.id()) {
             return;
         }

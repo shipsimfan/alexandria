@@ -1,6 +1,6 @@
 use crate::math::{
-    number::{Infinity, NaN, NegInfinity, One, Tan, Zero},
-    Matrix4x4,
+    number::{Cos, Infinity, NaN, NegInfinity, One, Sin, Tan, Zero},
+    Matrix4x4, Vector3,
 };
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
@@ -125,6 +125,26 @@ impl<T: Zero + One> Matrix4x4<T> {
             [T::ZERO, T::ZERO, T::ZERO, T::ONE],
         ])
     }
+
+    /// Create a new [`Matrix4x4`] representation `translation`
+    pub fn translation(translation: Vector3<T>) -> Self {
+        Matrix4x4::new([
+            [T::ONE, T::ZERO, T::ZERO, T::ZERO],
+            [T::ZERO, T::ONE, T::ZERO, T::ZERO],
+            [T::ZERO, T::ZERO, T::ONE, T::ZERO],
+            [translation.x, translation.y, translation.z, T::ONE],
+        ])
+    }
+
+    /// Create a new [`Matrix4x4`] representation `scale`
+    pub fn scale(scale: Vector3<T>) -> Self {
+        Matrix4x4::new([
+            [scale.x, T::ZERO, T::ZERO, T::ZERO],
+            [T::ZERO, scale.y, T::ZERO, T::ZERO],
+            [T::ZERO, T::ZERO, scale.z, T::ZERO],
+            [T::ZERO, T::ZERO, T::ZERO, T::ONE],
+        ])
+    }
 }
 
 impl<T: Infinity> Matrix4x4<T> {
@@ -183,6 +203,47 @@ impl<T: NaN> Matrix4x4<T> {
     }
 }
 
+impl<T: Zero + One + Cos + Sin + Clone + Neg<Output = T>> Matrix4x4<T> {
+    /// Create a new [`Matrix4x4`] for an `angle` radian rotation about the x-axis
+    pub fn x_rotation(angle: T) -> Self {
+        let c = angle.clone().cos();
+        let s = angle.sin();
+
+        Matrix4x4::new([
+            [T::ONE, T::ZERO, T::ZERO, T::ZERO],
+            [T::ZERO, c.clone(), s.clone(), T::ZERO],
+            [T::ZERO, -s, c, T::ZERO],
+            [T::ZERO, T::ZERO, T::ZERO, T::ONE],
+        ])
+    }
+
+    /// Create a new [`Matrix4x4`] for an `angle` radian rotation about the y-axis
+    pub fn y_rotation(angle: T) -> Self {
+        let c = angle.clone().cos();
+        let s = angle.sin();
+
+        Matrix4x4::new([
+            [c.clone(), T::ZERO, -s.clone(), T::ZERO],
+            [T::ZERO, T::ONE, T::ZERO, T::ZERO],
+            [s, T::ZERO, c, T::ZERO],
+            [T::ZERO, T::ZERO, T::ZERO, T::ONE],
+        ])
+    }
+
+    /// Create a new [`Matrix4x4`] for an `angle` radian rotation about the z-axis
+    pub fn z_rotation(angle: T) -> Self {
+        let c = angle.clone().cos();
+        let s = angle.sin();
+
+        Matrix4x4::new([
+            [c.clone(), s.clone(), T::ZERO, T::ZERO],
+            [-s, c, T::ZERO, T::ZERO],
+            [T::ZERO, T::ZERO, T::ONE, T::ZERO],
+            [T::ZERO, T::ZERO, T::ZERO, T::ONE],
+        ])
+    }
+}
+
 impl<
         T: Zero
             + One
@@ -214,9 +275,14 @@ impl<
                 T::ZERO,
                 T::ZERO,
                 (far.clone() + near.clone()) / (far.clone() - near.clone()),
-                -(((T::ONE + T::ONE) * far.clone() * near.clone()) / (far - near)),
+                T::ONE,
             ],
-            [T::ZERO, T::ZERO, -T::ONE, T::ZERO],
+            [
+                T::ZERO,
+                T::ZERO,
+                -(((T::ONE + T::ONE) * far.clone() * near.clone()) / (far - near)),
+                T::ZERO,
+            ],
         ])
     }
 }

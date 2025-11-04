@@ -7,9 +7,13 @@ use std::{num::NonZeroU32, sync::atomic::Ordering};
 
 impl GraphicsContext {
     /// Create a new [`Shader`]
-    pub fn create_shader<V: Vertex>(&self, compiled_shader: &D3DProgram<V>) -> Result<Shader<V>> {
+    pub fn create_shader<V: Vertex, CB>(
+        &self,
+        compiled_shader: &D3DProgram<V, CB>,
+        initial_constant_buffer: &CB,
+    ) -> Result<Shader<V, CB>> {
         let id = NonZeroU32::new(self.next_shader_id.fetch_add(1, Ordering::SeqCst)).unwrap();
-        Shader::new(id, compiled_shader, &self.device)
+        Shader::new(id, compiled_shader, initial_constant_buffer, &self.device)
     }
 
     /// Create a new [`Mesh`]

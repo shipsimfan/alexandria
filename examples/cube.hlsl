@@ -1,3 +1,7 @@
+cbuffer world {
+    float4x4 projection;
+}
+
 struct VIn {
     float3 position : POSITION;
     float3 color : COLOR;
@@ -10,7 +14,7 @@ struct VOut {
 
 VOut vertex_main(VIn vin) {
     VOut vout;
-    vout.position = float4(vin.position, 1.0);
+    vout.position = mul(projection, float4(vin.position, 1.0));
     vout.color = float4(vin.color, 1.0);
     return vout;
 }

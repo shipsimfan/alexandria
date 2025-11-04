@@ -6,17 +6,19 @@ use acsl::D3DProgram;
 use std::{ffi::CString, marker::PhantomData, num::NonZeroU32, ptr::null_mut};
 use win32::{
     d3d11::{
-        ID3D11Device, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_CLASSIFICATION,
-        D3D11_INPUT_ELEMENT_DESC,
+        ID3D11Device, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_BIND_FLAG, D3D11_BUFFER_DESC,
+        D3D11_CPU_ACCESS_FLAG, D3D11_INPUT_CLASSIFICATION, D3D11_INPUT_ELEMENT_DESC,
+        D3D11_SUBRESOURCE_DATA, D3D11_USAGE,
     },
     try_hresult, ComPtr,
 };
 
-impl<V: Vertex> Shader<V> {
+impl<V: Vertex, CB> Shader<V, CB> {
     /// Create a new [`Shader`]
     pub(in crate::graphics) fn new(
         id: NonZeroU32,
-        compiled_shader: &D3DProgram<V>,
+        compiled_shader: &D3DProgram<V, CB>,
+        initial_constant_buffer: &CB,
         device: &ID3D11Device,
     ) -> Result<Self> {
         // Create vertex shader
@@ -76,12 +78,43 @@ impl<V: Vertex> Shader<V> {
         })
         .map_err(|error| Error::new_os("unable to create input layout", error))?;
 
+        // Create constant buffer
+        let constant_buffer = if std::mem::size_of::<CB>() == 0 {
+            None
+        } else {
+            let constant_buffer_desc = D3D11_BUFFER_DESC {
+                byte_width: std::mem::size_of::<CB>() as _,
+                usage: D3D11_USAGE::Dynamic,
+                bind_flags: D3D11_BIND_FLAG::ConstantBuffer as _,
+                cpu_access_flags: D3D11_CPU_ACCESS_FLAG::Write as _,
+                misc_flags: 0,
+                structure_byte_stride: 0,
+            };
+            let initial_data = D3D11_SUBRESOURCE_DATA {
+                sys_mem: initial_constant_buffer as *const _ as _,
+                sys_mem_pitch: 0,
+                sys_mem_slice_pitch: 0,
+            };
+            Some(
+                ComPtr::new_in(|constant_buffer| {
+                    try_hresult!(device.create_buffer(
+                        &constant_buffer_desc,
+                        &initial_data,
+                        constant_buffer
+                    ))
+                })
+                .map_err(|error| Error::new_os("unable to create constant buffer", error))?,
+            )
+        };
+
         Ok(Shader {
             id,
             vertex_shader,
             pixel_shader,
             input_layout,
+            constant_buffer,
             _vertex: PhantomData,
+            _constant_buffer_type: PhantomData,
         })
     }
 }

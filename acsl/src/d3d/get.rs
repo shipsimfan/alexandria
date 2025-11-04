@@ -1,6 +1,6 @@
 use crate::D3DProgram;
 
-impl<'a, Vertex> D3DProgram<'a, Vertex> {
+impl<'a, Vertex, ConstantBuffer> D3DProgram<'a, Vertex, ConstantBuffer> {
     /// Gets the content of the vertex shader
     pub fn vertex_content(&self) -> &[u8] {
         &self.vertex_content

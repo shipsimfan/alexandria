@@ -36,7 +36,7 @@ impl<'a> Parse<'a> for CompileHlslFile {
             strip_string(input.pixel_main())?,
         );
 
-        let compiled_program = acsl::d3dcompile::<()>(&program).map_err(|error| {
+        let compiled_program = acsl::d3dcompile::<(), ()>(&program).map_err(|error| {
             input
                 .file_name()
                 .span()

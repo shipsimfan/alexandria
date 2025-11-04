@@ -23,7 +23,7 @@ impl alexandria::graphics::Vertex for Vertex {
 
 const SECOND: Duration = Duration::from_secs(1);
 
-const SHADER: alexandria::acsl::D3DProgram<Vertex> =
+const SHADER: alexandria::acsl::D3DProgram<Vertex, ()> =
     alexandria::compile_hlsl_file!("triangle.hlsl", "vertex_main", "pixel_main");
 
 const VERTICES: &[Vertex] = &[
@@ -70,7 +70,7 @@ fn main() {
 
 fn run(window: &mut Box<alexandria::Window<alexandria::StdoutLogger>>) -> alexandria::Result<()> {
     // Create render resources
-    let mut shader = window.graphics_context().create_shader(&SHADER)?;
+    let mut shader = window.graphics_context().create_shader(&SHADER, &())?;
     let mut mesh = window.graphics_context().create_mesh(VERTICES, INDICES)?;
 
     // Setup fps counter

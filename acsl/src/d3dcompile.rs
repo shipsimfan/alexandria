@@ -16,9 +16,9 @@ pub enum D3DCompileError {
 }
 
 /// Compile an [`HlslProgram`] into a [`D3DProgram`]
-pub fn d3dcompile<Vertex>(
+pub fn d3dcompile<Vertex, ConstantBuffer>(
     program: &HlslProgram,
-) -> Result<D3DProgram<'static, Vertex>, D3DCompileError> {
+) -> Result<D3DProgram<'static, Vertex, ConstantBuffer>, D3DCompileError> {
     let vertex_content = do_compile(program.content(), program.vertex_entry(), c"vs_5_0")?;
     let pixel_content = do_compile(program.content(), program.pixel_entry(), c"ps_5_0")?;
 
