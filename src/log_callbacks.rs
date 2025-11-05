@@ -33,7 +33,7 @@ pub trait LogCallbacks {
     /// Called when the keyboard produces a `scan_code` that couldn't be translated to a
     /// [`crate::input::KeyCode`]
     #[allow(unused_variables)]
-    fn on_unknown_scan_code(&mut self, scan_code: u8, pressed: bool) {}
+    fn on_unknown_scan_code(&mut self, scan_code: u16, pressed: bool) {}
 }
 
 impl LogCallbacks for () {}
@@ -55,7 +55,7 @@ impl LogCallbacks for StdoutLogger {
         println!("Graphics API | {}: {}", severity, message);
     }
 
-    fn on_unknown_scan_code(&mut self, scan_code: u8, pressed: bool) {
+    fn on_unknown_scan_code(&mut self, scan_code: u16, pressed: bool) {
         println!(
             "Input | Unknown scancode {} {}",
             scan_code,
@@ -93,7 +93,7 @@ impl StateTrackingInputLogCallbacks for StdoutLogger {
     fn on_button_event(&mut self, event: &InputButtonEvent, device: &StateTrackingInputDevice) {
         if device.kind() == InputDeviceKind::Keyboard {
             println!(
-                "Input | Key {:?} on device {} {}",
+                "Input | Key [{}] on device {} {}",
                 KeyCode::from_button(event.button()).unwrap(),
                 event.id(),
                 if event.pressed() {

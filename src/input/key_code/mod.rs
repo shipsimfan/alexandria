@@ -1,3 +1,5 @@
+mod as_str;
+mod display;
 mod from_button;
 mod from_scan_code;
 mod into;

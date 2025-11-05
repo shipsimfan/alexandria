@@ -19,8 +19,11 @@ pub struct StateTrackingInputDevice {
     /// The current states of all buttons of the device
     button_states: Vec<bool>,
 
-    /// The previous states of all buttons of the device
-    prev_button_states: Vec<bool>,
+    /// The buttons that have been pressed this frame
+    button_down_states: Vec<bool>,
+
+    /// The buttons that have been released this frame
+    button_up_states: Vec<bool>,
 
     /// The current states of all axes of the device
     axis_states: Vec<f32>,

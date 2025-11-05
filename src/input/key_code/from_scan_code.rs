@@ -2,7 +2,7 @@ use crate::input::KeyCode;
 
 impl KeyCode {
     /// Convert `scan_code` into a [`KeyCode`]
-    pub(crate) fn from_scan_code(scan_code: u8) -> Option<Self> {
+    pub(crate) fn from_scan_code(scan_code: u16) -> Option<Self> {
         Some(match scan_code {
             16 => KeyCode::Q,
             17 => KeyCode::W,
@@ -30,10 +30,10 @@ impl KeyCode {
             48 => KeyCode::B,
             49 => KeyCode::N,
             50 => KeyCode::M,
-            72 => KeyCode::UpArrow,
-            75 => KeyCode::LeftArrow,
-            77 => KeyCode::RightArrow,
-            80 => KeyCode::DownArrow,
+            328 => KeyCode::UpArrow,
+            331 => KeyCode::LeftArrow,
+            333 => KeyCode::RightArrow,
+            336 => KeyCode::DownArrow,
             _ => return None,
         })
     }

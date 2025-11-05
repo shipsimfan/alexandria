@@ -28,12 +28,12 @@ impl StateTrackingInputDevice {
 
     /// Was `button` pressed this frame?
     pub fn is_button_down(&self, button: usize) -> bool {
-        self.button_states[button] && !self.prev_button_states[button]
+        self.button_down_states[button]
     }
 
     /// Was `button` released this frame?
     pub fn is_button_up(&self, button: usize) -> bool {
-        !self.button_states[button] && self.prev_button_states[button]
+        self.button_up_states[button]
     }
 
     /// Get the number of axes on the input device

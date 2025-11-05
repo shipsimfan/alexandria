@@ -83,7 +83,12 @@ impl<LogCallbacks: crate::LogCallbacks, Input: crate::input::Input> Window<LogCa
                     return 0;
                 }
 
-                let scan_code = ((l_param >> 16) & 0xFF) as u8;
+                if (l_param >> 30) & 1 == 1 {
+                    return 0;
+                }
+
+                let scan_code =
+                    ((l_param >> 16) & 0x1FF) as u16 | (((l_param >> 29) & 1) << 9) as u16;
                 let key_code = match KeyCode::from_scan_code(scan_code) {
                     Some(key_code) => key_code,
                     None => {
@@ -104,7 +109,8 @@ impl<LogCallbacks: crate::LogCallbacks, Input: crate::input::Input> Window<LogCa
                     return 0;
                 }
 
-                let scan_code = ((l_param >> 16) & 0xFF) as u8;
+                let scan_code =
+                    ((l_param >> 16) & 0x1FF) as u16 | (((l_param >> 29) & 1) << 9) as u16;
                 let key_code = match KeyCode::from_scan_code(scan_code) {
                     Some(key_code) => key_code,
                     None => {
