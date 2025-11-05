@@ -1,4 +1,5 @@
 mod get;
+mod new;
 
 /// Information which can identify the specific kind of device
 pub struct InputDeviceMetadata {

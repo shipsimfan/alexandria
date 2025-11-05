@@ -3,6 +3,7 @@ mod kind;
 mod metadata;
 
 mod get;
+mod new;
 mod unwrap;
 
 pub use id::InputDeviceId;

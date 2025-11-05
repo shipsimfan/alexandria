@@ -1,6 +1,6 @@
-use crate::input::{StateTrackingInput, StateTrackingInputDevice};
+use crate::input::{StateTrackingInput, StateTrackingInputDevice, StateTrackingInputLogCallbacks};
 
-impl StateTrackingInput {
+impl<LogCallbacks: StateTrackingInputLogCallbacks> StateTrackingInput<LogCallbacks> {
     /// Get the number of registered devices
     pub fn num_devices(&self) -> usize {
         self.num_devices

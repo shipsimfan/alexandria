@@ -70,7 +70,9 @@ fn main() {
     // Create the window
     let mut window = alexandria::WindowBuilder::new("Cube Example")
         .log_callbacks(alexandria::StdoutLogger)
-        .vsync(false)
+        .input(alexandria::input::StateTrackingInput::new(
+            alexandria::StdoutLogger,
+        ))
         .create()
         .unwrap();
 
@@ -92,7 +94,14 @@ fn main() {
     window.get_debug_messages().unwrap();
 }
 
-fn run(window: &mut Box<alexandria::Window<alexandria::StdoutLogger>>) -> alexandria::Result<()> {
+fn run(
+    window: &mut Box<
+        alexandria::Window<
+            alexandria::StdoutLogger,
+            alexandria::input::StateTrackingInput<alexandria::StdoutLogger>,
+        >,
+    >,
+) -> alexandria::Result<()> {
     // Create render resources
     let projection_matrix = alexandria::math::Matrix4x4f::perspective(
         window.width() as f32 / window.height() as f32,

@@ -1,13 +1,15 @@
 use crate::{
+    input::{InputButtonEvent, KeyCode},
     math::{Vector2i, Vector2u},
     Window,
 };
 use win32::{
     DefWindowProc, GetWindowLongPtr, GWLP_USERDATA, HWND, LPARAM, LRESULT, UINT, WM_ACTIVATEAPP,
-    WM_CLOSE, WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_MOVE, WM_QUIT, WM_SIZE, WPARAM,
+    WM_CLOSE, WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_KEYDOWN, WM_KEYUP, WM_MOVE, WM_QUIT, WM_SIZE,
+    WM_SYSKEYDOWN, WM_SYSKEYUP, WPARAM,
 };
 
-impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
+impl<LogCallbacks: crate::LogCallbacks, Input: crate::input::Input> Window<LogCallbacks, Input> {
     /// Called to establish [`Window::window_proc`] as the main window procedure
     pub(in crate::window) extern "system" fn init_window_proc(
         wnd: HWND,
@@ -19,7 +21,7 @@ impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
         if window_ptr == 0 {
             unsafe { DefWindowProc(wnd, msg, w_param, l_param) }
         } else {
-            unsafe { &mut *(window_ptr as *mut Window<LogCallbacks>) }
+            unsafe { &mut *(window_ptr as *mut Window<LogCallbacks, Input>) }
                 .window_proc(msg, w_param, l_param)
         }
     }
@@ -75,6 +77,48 @@ impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
 
             // The window either gained or lost focus
             WM_ACTIVATEAPP => self.is_focused = w_param != 0,
+
+            WM_KEYDOWN | WM_SYSKEYDOWN => {
+                if !self.is_focused {
+                    return 0;
+                }
+
+                let scan_code = ((l_param >> 16) & 0xFF) as u8;
+                let key_code = match KeyCode::from_scan_code(scan_code) {
+                    Some(key_code) => key_code,
+                    None => {
+                        self.log_callbacks.on_unknown_scan_code(scan_code, true);
+                        return 0;
+                    }
+                };
+
+                self.input.button_event(InputButtonEvent::new(
+                    self.keyboard_id,
+                    key_code.into(),
+                    true,
+                ));
+            }
+
+            WM_KEYUP | WM_SYSKEYUP => {
+                if !self.is_focused {
+                    return 0;
+                }
+
+                let scan_code = ((l_param >> 16) & 0xFF) as u8;
+                let key_code = match KeyCode::from_scan_code(scan_code) {
+                    Some(key_code) => key_code,
+                    None => {
+                        self.log_callbacks.on_unknown_scan_code(scan_code, false);
+                        return 0;
+                    }
+                };
+
+                self.input.button_event(InputButtonEvent::new(
+                    self.keyboard_id,
+                    key_code.into(),
+                    false,
+                ));
+            }
 
             // All other events
             _ => return unsafe { DefWindowProc(*self.handle, msg, w_param, l_param) },

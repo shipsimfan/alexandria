@@ -15,11 +15,14 @@ pub enum MessageBoxAbiResult {
 }
 
 /// Display a message box with "abort", "retry", and "ignore" options
-pub fn message_box_abort_retry_ignore<LogCallbacks: crate::LogCallbacks>(
+pub fn message_box_abort_retry_ignore<
+    LogCallbacks: crate::LogCallbacks,
+    Input: crate::input::Input,
+>(
     title: &str,
     content: &str,
     style: MessageBoxStyle,
-    window: Option<&mut Window<LogCallbacks>>,
+    window: Option<&mut Window<LogCallbacks, Input>>,
 ) -> Result<MessageBoxAbiResult> {
     let wnd = window.map(Window::handle).unwrap_or(null_mut());
     let mut title: Vec<u16> = title.encode_utf16().collect();

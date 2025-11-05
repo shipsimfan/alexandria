@@ -3,10 +3,12 @@
 mod device;
 mod events;
 mod impls;
+mod key_code;
 
 pub use device::*;
 pub use events::*;
 pub use impls::*;
+pub use key_code::KeyCode;
 
 /// A subsystem which can consume input events and present and interface for accessing them
 pub trait Input {
@@ -25,4 +27,7 @@ pub trait Input {
 
     /// An axis was changed
     fn axis_event(&mut self, event: InputAxisEvent);
+
+    /// Called when a frame ends and just before new input events are going to be given
+    fn frame(&mut self);
 }

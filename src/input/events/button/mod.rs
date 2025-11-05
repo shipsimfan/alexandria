@@ -1,6 +1,7 @@
 use crate::input::InputDeviceId;
 
 mod get;
+mod new;
 
 /// A button of an input device was pressed or released
 pub struct InputButtonEvent {

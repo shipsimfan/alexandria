@@ -1,6 +1,7 @@
 use crate::input::{InputDeviceKind, InputDeviceMetadata};
 
 mod event;
+mod frame;
 mod get;
 mod new;
 
