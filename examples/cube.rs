@@ -1,3 +1,5 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use std::time::{Duration, Instant};
 
 #[repr(C)]
@@ -70,7 +72,6 @@ fn main() {
     // Create the window
     let mut window = alexandria::WindowBuilder::new("Cube Example")
         .log_callbacks(alexandria::StdoutLogger)
-        .vsync(false)
         .create()
         .unwrap();
 
@@ -94,8 +95,9 @@ fn main() {
 
 fn run(window: &mut Box<alexandria::Window<alexandria::StdoutLogger>>) -> alexandria::Result<()> {
     // Create render resources
-    let projection_matrix = alexandria::math::Matrix4x4f::perspective(
-        window.width() as f32 / window.height() as f32,
+    let mut window_size = window.size();
+    let mut projection_matrix = alexandria::math::Matrix4x4f::perspective(
+        window_size.x as f32 / window_size.y as f32,
         3.14 / 4.0,
         0.01,
         1000.0,
@@ -143,6 +145,16 @@ fn run(window: &mut Box<alexandria::Window<alexandria::StdoutLogger>>) -> alexan
             angle -= 2.0 * 3.14;
         }
         let y_rotation_matrix = alexandria::math::Matrix4x4f::y_rotation(angle);
+
+        if window.size() != window_size {
+            window_size = window.size();
+            projection_matrix = alexandria::math::Matrix4x4f::perspective(
+                window_size.x as f32 / window_size.y as f32,
+                3.14 / 4.0,
+                0.01,
+                1000.0,
+            );
+        }
 
         composition_matrix =
             x_rotation_matrix * y_rotation_matrix * translation_matrix * projection_matrix;
