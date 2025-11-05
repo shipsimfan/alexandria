@@ -3,11 +3,11 @@ use std::ptr::null_mut;
 use win32::{try_get_last_error, MessageBox, MB_OK};
 
 /// Display a message box with an "ok" option
-pub fn message_box_ok<LogCallbacks: crate::LogCallbacks>(
+pub fn message_box_ok<LogCallbacks: crate::LogCallbacks, Input: crate::input::Input>(
     title: &str,
     content: &str,
     style: MessageBoxStyle,
-    window: Option<&mut Window<LogCallbacks>>,
+    window: Option<&mut Window<LogCallbacks, Input>>,
 ) -> Result<()> {
     let wnd = window.map(Window::handle).unwrap_or(null_mut());
     let mut title: Vec<u16> = title.encode_utf16().collect();

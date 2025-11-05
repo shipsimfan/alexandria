@@ -2,7 +2,7 @@ use crate::{Result, Window};
 use std::ptr::null_mut;
 use win32::{DispatchMessage, PeekMessage, TranslateMessage, MSG, PM_REMOVE};
 
-impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
+impl<LogCallbacks: crate::LogCallbacks, Input: crate::input::Input> Window<LogCallbacks, Input> {
     /// Process all inputs and events that have occurred since the last call
     pub fn process_inputs(&mut self) -> Result<()> {
         let mut msg = MSG::default();

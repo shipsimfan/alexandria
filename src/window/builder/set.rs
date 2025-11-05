@@ -1,6 +1,8 @@
 use crate::{graphics::Adapter, DisplayMode, WindowBuilder};
 
-impl<'a, LogCallbacks: crate::LogCallbacks> WindowBuilder<'a, LogCallbacks> {
+impl<'a, LogCallbacks: crate::LogCallbacks, Input: crate::input::Input>
+    WindowBuilder<'a, LogCallbacks, Input>
+{
     /// Set the window's title
     pub fn title(mut self, title: &'a str) -> Self {
         self.title = title;
@@ -37,11 +39,11 @@ impl<'a, LogCallbacks: crate::LogCallbacks> WindowBuilder<'a, LogCallbacks> {
         self
     }
 
-    /// Set the callbacks used for logging
-    pub fn log_callbacks<NewLogCallbacks: crate::LogCallbacks>(
+    /// Set the input subsytem that will be used
+    pub fn input<NewInput: crate::input::Input>(
         self,
-        log_callbacks: NewLogCallbacks,
-    ) -> WindowBuilder<'a, NewLogCallbacks> {
+        input: NewInput,
+    ) -> WindowBuilder<'a, LogCallbacks, NewInput> {
         WindowBuilder {
             title: self.title,
             x: self.x,
@@ -49,6 +51,26 @@ impl<'a, LogCallbacks: crate::LogCallbacks> WindowBuilder<'a, LogCallbacks> {
             width: self.width,
             height: self.height,
             vsync: self.vsync,
+            input,
+            display_mode: self.display_mode,
+            log_callbacks: self.log_callbacks,
+            adapter: self.adapter,
+        }
+    }
+
+    /// Set the callbacks used for logging
+    pub fn log_callbacks<NewLogCallbacks: crate::LogCallbacks>(
+        self,
+        log_callbacks: NewLogCallbacks,
+    ) -> WindowBuilder<'a, NewLogCallbacks, Input> {
+        WindowBuilder {
+            title: self.title,
+            x: self.x,
+            y: self.y,
+            width: self.width,
+            height: self.height,
+            vsync: self.vsync,
+            input: self.input,
             display_mode: self.display_mode,
             log_callbacks,
             adapter: self.adapter,

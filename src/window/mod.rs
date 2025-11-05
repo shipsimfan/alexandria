@@ -1,5 +1,6 @@
 use crate::{
     graphics::{GraphicsContext, RenderContext},
+    input::{InputDeviceId, StateTrackingInput},
     math::{Vector2i, Vector2u},
     Result,
 };
@@ -24,7 +25,10 @@ pub use display_mode::DisplayMode;
 pub(crate) use window_handle::WindowHandle;
 
 /// A window which can be rendered into and receive input
-pub struct Window<LogCallbacks: crate::LogCallbacks = ()> {
+pub struct Window<
+    LogCallbacks: crate::LogCallbacks = (),
+    Input: crate::input::Input = StateTrackingInput,
+> {
     /// Is the window still running?
     is_running: bool,
 
@@ -45,6 +49,12 @@ pub struct Window<LogCallbacks: crate::LogCallbacks = ()> {
 
     /// Is the window being actively moved or resized?
     in_move: bool,
+
+    /// The input subsystem to use
+    input: Input,
+
+    /// The ID the input subsystem gave to the keyboard
+    keyboard_id: InputDeviceId,
 
     /// The context used for rendering
     render_context: RenderContext,

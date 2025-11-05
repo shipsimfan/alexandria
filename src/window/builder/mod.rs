@@ -1,11 +1,15 @@
-use crate::{graphics::Adapter, DisplayMode};
+use crate::{graphics::Adapter, input::StateTrackingInput, DisplayMode};
 
 mod create;
 mod new;
 mod set;
 
 /// Builds a [`Window`](crate::Window) using provided parameters and sensible defaults otherwise
-pub struct WindowBuilder<'a, LogCallbacks: crate::LogCallbacks = ()> {
+pub struct WindowBuilder<
+    'a,
+    LogCallbacks: crate::LogCallbacks = (),
+    Input: crate::input::Input = StateTrackingInput,
+> {
     /// The title of the window
     pub title: &'a str,
 
@@ -23,6 +27,9 @@ pub struct WindowBuilder<'a, LogCallbacks: crate::LogCallbacks = ()> {
 
     /// Should presents be synchronized with vertical blanks?
     pub vsync: bool,
+
+    /// The input subsystem that will be used
+    pub input: Input,
 
     /// The mode the window should be displayed with
     pub display_mode: DisplayMode,

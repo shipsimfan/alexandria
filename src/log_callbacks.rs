@@ -1,4 +1,10 @@
-use crate::math::Vector2u;
+use crate::{
+    input::{
+        InputAxisEvent, InputButtonEvent, InputDeviceKind, KeyCode, StateTrackingInputDevice,
+        StateTrackingInputLogCallbacks,
+    },
+    math::Vector2u,
+};
 
 /// A severity that a log message reported by the underlying graphics API can be
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -23,6 +29,11 @@ pub trait LogCallbacks {
     /// Called when the underlying graphics API emits a log message
     #[allow(unused_variables)]
     fn on_graphics_api_log(&mut self, severity: GraphicsApiLogSeverity, message: String) {}
+
+    /// Called when the keyboard produces a `scan_code` that couldn't be translated to a
+    /// [`crate::input::KeyCode`]
+    #[allow(unused_variables)]
+    fn on_unknown_scan_code(&mut self, scan_code: u8, pressed: bool) {}
 }
 
 impl LogCallbacks for () {}
@@ -42,5 +53,66 @@ impl LogCallbacks for StdoutLogger {
             GraphicsApiLogSeverity::Info => "Info",
         };
         println!("Graphics API | {}: {}", severity, message);
+    }
+
+    fn on_unknown_scan_code(&mut self, scan_code: u8, pressed: bool) {
+        println!(
+            "Input | Unknown scancode {} {}",
+            scan_code,
+            if pressed { "pressed" } else { "released" }
+        );
+    }
+}
+
+impl StateTrackingInputLogCallbacks for StdoutLogger {
+    fn on_device_connected(&mut self, id: usize, device: &StateTrackingInputDevice) {
+        println!(
+            "Input | Device \"{}\" registered with id {}",
+            device.name(),
+            id
+        );
+    }
+
+    fn on_device_disconnected(&mut self, id: usize, device: &StateTrackingInputDevice) {
+        println!(
+            "Input | Device \"{}\" unregistered from id {}",
+            id,
+            device.name()
+        );
+    }
+
+    fn on_axis_event(&mut self, event: &InputAxisEvent, _: &StateTrackingInputDevice) {
+        println!(
+            "Input | Axis {} on device {} set to {}",
+            event.axis(),
+            event.id(),
+            event.value()
+        );
+    }
+
+    fn on_button_event(&mut self, event: &InputButtonEvent, device: &StateTrackingInputDevice) {
+        if device.kind() == InputDeviceKind::Keyboard {
+            println!(
+                "Input | Key {:?} on device {} {}",
+                KeyCode::from_button(event.button()).unwrap(),
+                event.id(),
+                if event.pressed() {
+                    "pressed"
+                } else {
+                    "released"
+                }
+            );
+        } else {
+            println!(
+                "Input | Button {} on device {} {}",
+                event.button(),
+                event.id(),
+                if event.pressed() {
+                    "pressed"
+                } else {
+                    "released"
+                }
+            );
+        }
     }
 }

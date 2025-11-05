@@ -1,4 +1,4 @@
-use crate::{DisplayMode, WindowBuilder};
+use crate::{input::StateTrackingInput, DisplayMode, WindowBuilder};
 
 impl<'a> WindowBuilder<'a> {
     /// Create a new [`WindowBuilder`] with default settings
@@ -10,6 +10,7 @@ impl<'a> WindowBuilder<'a> {
             width: None,
             height: None,
             vsync: true,
+            input: StateTrackingInput::new(()),
             log_callbacks: (),
             display_mode: DisplayMode::default(),
             adapter: None,

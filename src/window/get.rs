@@ -1,12 +1,11 @@
-use win32::HWND;
-
 use crate::{
     graphics::GraphicsContext,
     math::{Vector2i, Vector2u},
     DisplayMode, Window,
 };
+use win32::HWND;
 
-impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
+impl<LogCallbacks: crate::LogCallbacks, Input: crate::input::Input> Window<LogCallbacks, Input> {
     /// Is the window still running?
     pub fn is_running(&self) -> bool {
         self.is_running
@@ -55,6 +54,11 @@ impl<LogCallbacks: crate::LogCallbacks> Window<LogCallbacks> {
     /// Is the window currently focused
     pub fn is_focused(&self) -> bool {
         self.is_focused
+    }
+
+    /// Get a reference to the input subsystem
+    pub fn input(&self) -> &Input {
+        &self.input
     }
 
     /// Get the graphics context for object creation

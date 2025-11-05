@@ -12,11 +12,11 @@ pub enum MessageBoxRcResult {
 }
 
 /// Display a message box with "retry" and "cancel" options
-pub fn message_box_retry_cancel<LogCallbacks: crate::LogCallbacks>(
+pub fn message_box_retry_cancel<LogCallbacks: crate::LogCallbacks, Input: crate::input::Input>(
     title: &str,
     content: &str,
     style: MessageBoxStyle,
-    window: Option<&mut Window<LogCallbacks>>,
+    window: Option<&mut Window<LogCallbacks, Input>>,
 ) -> Result<MessageBoxRcResult> {
     let wnd = window.map(Window::handle).unwrap_or(null_mut());
     let mut title: Vec<u16> = title.encode_utf16().collect();

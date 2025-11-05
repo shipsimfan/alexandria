@@ -15,11 +15,14 @@ pub enum MessageBoxCtcResult {
 }
 
 /// Display a message box with "cancel", "try", and "continue" options
-pub fn message_box_cancel_try_continue<LogCallbacks: crate::LogCallbacks>(
+pub fn message_box_cancel_try_continue<
+    LogCallbacks: crate::LogCallbacks,
+    Input: crate::input::Input,
+>(
     title: &str,
     content: &str,
     style: MessageBoxStyle,
-    window: Option<&mut Window<LogCallbacks>>,
+    window: Option<&mut Window<LogCallbacks, Input>>,
 ) -> Result<MessageBoxCtcResult> {
     let wnd = window.map(Window::handle).unwrap_or(null_mut());
     let mut title: Vec<u16> = title.encode_utf16().collect();
