@@ -20,6 +20,12 @@ pub enum KeyCode {
     /// The right arrow key
     RightArrow = 3,
 
+    /// The left shift key
+    LeftShift = 4,
+
+    /// The right shift key
+    RightShift = 5,
+
     /// The letter "A"
     A = 65,
 

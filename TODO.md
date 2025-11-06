@@ -3,9 +3,8 @@
     1. Matrix4x4
     2. Quaternion
     3. Color4
- 3. Add cube example with movement
- 4. Add instance rendering
- 5. Add textures
+ 2. Add instance rendering
+ 3. Add textures
 
 ## Post Colosseum
  6. Add mouse support

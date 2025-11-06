@@ -244,6 +244,17 @@ impl<T: Zero + One + Cos + Sin + Clone + Neg<Output = T>> Matrix4x4<T> {
     }
 }
 
+impl<T: Zero + One + Cos + Sin + Clone + Neg<Output = T> + Add<Output = T> + Mul<Output = T>>
+    Matrix4x4<T>
+{
+    /// Create a new [`Matrix4x4`] for radian `angles` rotation about the x, y, and z axess
+    pub fn euler_rotation(angles: Vector3<T>) -> Self {
+        Matrix4x4::z_rotation(angles.z)
+            * Matrix4x4::y_rotation(angles.y)
+            * Matrix4x4::x_rotation(angles.x)
+    }
+}
+
 impl<
         T: Zero
             + One

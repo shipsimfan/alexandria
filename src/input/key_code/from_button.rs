@@ -8,6 +8,8 @@ impl KeyCode {
             1 => KeyCode::DownArrow,
             2 => KeyCode::LeftArrow,
             3 => KeyCode::RightArrow,
+            4 => KeyCode::LeftShift,
+            5 => KeyCode::RightShift,
             65 => KeyCode::A,
             66 => KeyCode::B,
             67 => KeyCode::C,

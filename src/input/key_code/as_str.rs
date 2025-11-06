@@ -8,6 +8,8 @@ impl KeyCode {
             KeyCode::DownArrow => "↓",
             KeyCode::LeftArrow => "←",
             KeyCode::RightArrow => "→",
+            KeyCode::LeftShift => "⇧L",
+            KeyCode::RightShift => "⇧R",
             KeyCode::A => "A",
             KeyCode::B => "B",
             KeyCode::C => "C",

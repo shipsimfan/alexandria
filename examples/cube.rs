@@ -104,7 +104,11 @@ fn run(
         >,
     >,
 ) -> alexandria::Result<()> {
-    // Create render resources
+    // Prepare state
+    let mut rotation = alexandria::math::Vector3f::ZERO;
+    let mut translation = alexandria::math::Vector3f::new(0.0, 0.0, 10.0);
+
+    // Create matrices
     let mut window_size = window.size();
     let mut projection_matrix = alexandria::math::Matrix4x4f::perspective(
         window_size.x as f32 / window_size.y as f32,
@@ -112,11 +116,11 @@ fn run(
         0.01,
         1000.0,
     );
-    let translation_matrix =
-        alexandria::math::Matrix4x4f::translation(alexandria::math::Vector3f::new(1.0, -1.0, 10.0));
-    let x_rotation_matrix = alexandria::math::Matrix4x4f::x_rotation(3.14 / 4.0);
 
-    let mut composition_matrix = x_rotation_matrix * translation_matrix * projection_matrix;
+    let mut translation_matrix = alexandria::math::Matrix4x4f::translation(translation);
+    let mut rotation_matrix = alexandria::math::Matrix4x4f::euler_rotation(rotation);
+
+    let mut composition_matrix = rotation_matrix * translation_matrix * projection_matrix;
 
     let mut shader = window
         .graphics_context()
@@ -127,9 +131,6 @@ fn run(
     let mut frames = 0;
     let mut second_counter = Duration::from_secs(0);
     let mut last_frame = Instant::now();
-
-    // Setup animation
-    let mut angle = 0.0;
 
     // Main loop
     while window.is_running() {
@@ -149,15 +150,98 @@ fn run(
             second_counter -= SECOND;
         }
 
-        // Update matrix
-        angle += delta_t.as_secs_f32();
-        if angle > 2.0 * 3.14 {
-            angle -= 2.0 * 3.14;
-        }
-        let y_rotation_matrix = alexandria::math::Matrix4x4f::y_rotation(angle);
+        let delta_t = delta_t.as_secs_f32();
 
+        // Update state
+        let mut update_rotation = false;
+        let mut update_translation = false;
+
+        if window.input().key(alexandria::input::KeyCode::LeftShift)
+            || window.input().key(alexandria::input::KeyCode::RightShift)
+        {
+            if window.input().key(alexandria::input::KeyCode::A)
+                || window.input().key(alexandria::input::KeyCode::LeftArrow)
+            {
+                update_translation = true;
+                translation.x -= delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::D)
+                || window.input().key(alexandria::input::KeyCode::RightArrow)
+            {
+                update_translation = true;
+                translation.x += delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::W)
+                || window.input().key(alexandria::input::KeyCode::UpArrow)
+            {
+                update_translation = true;
+                translation.z += delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::S)
+                || window.input().key(alexandria::input::KeyCode::DownArrow)
+            {
+                update_translation = true;
+                translation.z -= delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::Q) {
+                update_translation = true;
+                translation.y += delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::E) {
+                update_translation = true;
+                translation.y -= delta_t;
+            }
+        } else {
+            if window.input().key(alexandria::input::KeyCode::A)
+                || window.input().key(alexandria::input::KeyCode::LeftArrow)
+            {
+                update_rotation = true;
+                rotation.y += delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::D)
+                || window.input().key(alexandria::input::KeyCode::RightArrow)
+            {
+                update_rotation = true;
+                rotation.y -= delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::W)
+                || window.input().key(alexandria::input::KeyCode::UpArrow)
+            {
+                update_rotation = true;
+                rotation.x += delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::S)
+                || window.input().key(alexandria::input::KeyCode::DownArrow)
+            {
+                update_rotation = true;
+                rotation.x -= delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::Q) {
+                update_rotation = true;
+                rotation.z += delta_t;
+            }
+            if window.input().key(alexandria::input::KeyCode::E) {
+                update_rotation = true;
+                rotation.z -= delta_t;
+            }
+        }
+
+        // Update rotation and translation matrices
+        let mut update_composition = false;
+        if update_rotation {
+            update_composition = true;
+            rotation_matrix = alexandria::math::Matrix4x4f::euler_rotation(rotation);
+        }
+
+        if update_translation {
+            update_composition = true;
+            translation_matrix = alexandria::math::Matrix4x4f::translation(translation);
+        }
+
+        // Update projection
         if window.size() != window_size {
             window_size = window.size();
+            update_composition = true;
             projection_matrix = alexandria::math::Matrix4x4f::perspective(
                 window_size.x as f32 / window_size.y as f32,
                 3.14 / 4.0,
@@ -166,15 +250,17 @@ fn run(
             );
         }
 
-        composition_matrix =
-            x_rotation_matrix * y_rotation_matrix * translation_matrix * projection_matrix;
-
         // Render
         let mut render_context = window.begin_render([0.0, 0.0, 0.0, 0.0])?;
 
-        shader
-            .update_constant_buffer(&composition_matrix, &mut render_context)
-            .unwrap();
+        // Update composition matrix
+        if update_composition {
+            composition_matrix = rotation_matrix * translation_matrix * projection_matrix;
+            shader
+                .update_constant_buffer(&composition_matrix, &mut render_context)
+                .unwrap();
+        }
+
         render_context.render(&mut mesh, &mut shader);
 
         render_context.end()?;
