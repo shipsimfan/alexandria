@@ -1,20 +1,16 @@
 [workspace]
 
 [workspace.package]
-version = "0.0.3"
+version = "0.0.0"
 authors = ["Lance Hart <me@lancehart.ca>"]
 edition = "2021"
 repository = "https://github.com/shipsimfan/alexandria"
 license = "GPL-3.0-or-later"
 publish = false
 
-[workspace.dependencies]
-acsl = { path = "acsl", default-features = false }
-alexandria-macros.path = "macros"
-
 [package]
 name = "alexandria"
-description = "Graphics library wrapping low-level graphics APIs"
+description = "Platform wrapper for various game APIs"
 
 version.workspace = true
 authors.workspace = true
@@ -24,11 +20,7 @@ license.workspace = true
 publish.workspace = true
 
 [dependencies]
-acsl = { workspace = true, default-features = false, features = ["d3d"] }
-alexandria-macros.workspace = true
+vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
 
-win32 = { git = "https://github.com/shipsimfan/lib-win32", features = [
-    "d3d11",
-    "d3d11sdklayers",
-    "dxgi1_3",
-] }
+[target.'cfg(windows)'.dependencies]
+win32.git = "https://github.com/shipsimfan/lib-win32"
