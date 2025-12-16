@@ -1,34 +1,4 @@
-# Color Operations for Game-Oriented Libraries
-
-This document outlines recommended operations for `Color3` and `Color4` types,
-parameterized over a **color space marker** and an **underlying channel type**
-(e.g. `u8` or `f32`). The goal is to provide expressive, ergonomic APIs while
-preventing common color-space and gamma-related bugs.
-
----
-
-## Core Types
-
-- `Color3<Space, T>`: RGB color in a given `Space`
-- `Color4<Space, T>`: RGBA color in a given `Space`
-  - Alpha represents **coverage**, not light intensity
-
----
-
 ## Operations for Both `Color3` and `Color4`
-
-### Construction & Access
-- `new(r, g, b)` / `new(r, g, b, a)`
-- `from_array([T; 3 | 4])`
-- `to_array()`
-- `map_channels(f)`
-- Explicit casts:
-  - `to_f32()`
-  - `to_u8_floor()`, `to_u8_round()`, etc.
-
-### Equality
-- `PartialEq` for integer formats
-- `approx_eq(epsilon)` for floats
 
 ### Clamping & Validation
 - `clamp(min, max)`

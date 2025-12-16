@@ -9,6 +9,7 @@
 // Constant trait features
 #![feature(const_trait_impl)]
 #![feature(const_cmp)]
+#![feature(const_clone)]
 
 pub mod graphics;
 pub mod math;
