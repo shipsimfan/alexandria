@@ -6,4 +6,5 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 
+pub mod graphics;
 pub mod math;
