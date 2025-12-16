@@ -1,6 +1,6 @@
 use crate::graphics::color::{Color3, ColorSpace};
 
-impl<T, Space: ColorSpace<T> + ?Sized> Color3<T, Space> {
+impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     /// Convert the channels of a color
     pub fn map_channels<U, F: FnMut(T) -> U>(self, mut f: F) -> Color3<U, Space>
     where

@@ -1,8 +1,7 @@
 use crate::{
     graphics::color::{Color3, ColorSpace, Linear},
-    math::number::{FromF32, One, Pow},
+    math::number::{FromF32, IntoF32},
 };
-use std::ops::{Add, Div, Mul, Sub};
 
 /// sRGB-encoded RGB (standard display transfer function)
 ///
@@ -26,47 +25,30 @@ use std::ops::{Add, Div, Mul, Sub};
 pub struct Srgb;
 
 /// Convert an individual color `channel` from sRGB to linear
-fn channel_into_linear<T: Add<Output = T> + Mul<Output = T> + Pow + FromF32 + PartialOrd>(
-    channel: T,
-) -> T {
-    if channel < T::from_f32(0.04045) {
-        channel * T::from_f32(0.0773993808)
+fn channel_into_linear(channel: f32) -> f32 {
+    if channel < 0.04045 {
+        channel * 0.0773993808
     } else {
-        (channel * T::from_f32(0.9478672986) + T::from_f32(0.0521327014)).pow(T::from_f32(2.4))
+        (channel * 0.9478672986 + 0.0521327014).powf(2.4)
     }
 }
 
 /// Convert an individual color `channel` from linear to sRGB
-fn channel_from_linear<
-    T: Sub<Output = T> + Mul<Output = T> + Div<Output = T> + Pow + FromF32 + PartialOrd + One,
->(
-    channel: T,
-) -> T {
-    if channel < T::from_f32(0.0031308) {
-        channel * T::from_f32(12.92)
+fn channel_from_linear(channel: f32) -> f32 {
+    if channel < 0.0031308 {
+        channel * 12.92
     } else {
-        T::from_f32(1.055) * channel.pow(T::from_f32(0.41666)) - T::from_f32(0.055)
+        1.055 * channel.powf(1.0 / 2.4) - 0.055
     }
 }
 
-impl<
-        T: Sized
-            + Add<Output = T>
-            + Sub<Output = T>
-            + Mul<Output = T>
-            + Div<Output = T>
-            + Pow
-            + FromF32
-            + PartialOrd
-            + One,
-    > ColorSpace<T> for Srgb
-{
+impl<T: Sized + FromF32 + IntoF32> ColorSpace<T> for Srgb {
     fn from_linear(color: Color3<T, Linear>) -> Color3<T, Self> {
-        color.map_channels_and_space(|channel| channel_from_linear(channel))
+        color.map_channels_and_space(|channel| T::from_f32(channel_from_linear(channel.into_f32())))
     }
 
     fn into_linear(color: Color3<T, Self>) -> Color3<T, Linear> {
-        color.map_channels_and_space(|channel| channel_into_linear(channel))
+        color.map_channels_and_space(|channel| T::from_f32(channel_into_linear(channel.into_f32())))
     }
 }
 
@@ -76,7 +58,7 @@ macro_rules! conversion_tests {
     )*] => {$(
         #[test]
         fn $test_name() {
-            const EPSILON: f32 = 1e-5;
+            const EPSILON: f32 = 1e-6;
 
             const LINEAR: Color3<f32, Linear> = Color3::new($lr, $lg, $lb);
             const SRGB: Color3<f32, Srgb> = Color3::new($sr, $sg, $sb);
