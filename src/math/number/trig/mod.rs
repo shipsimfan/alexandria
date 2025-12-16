@@ -8,7 +8,9 @@ mod atanh;
 mod cos;
 mod cosh;
 mod sin;
+mod sinh;
 mod tan;
+mod tanh;
 
 pub use acos::Acos;
 pub use acosh::Acosh;
@@ -20,4 +22,6 @@ pub use atanh::Atanh;
 pub use cos::Cos;
 pub use cosh::Cosh;
 pub use sin::Sin;
+pub use sinh::Sinh;
 pub use tan::Tan;
+pub use tanh::Tanh;

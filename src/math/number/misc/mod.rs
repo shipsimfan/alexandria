@@ -1,4 +1,4 @@
-mod absolute;
+mod abs;
 mod cbrt;
 mod clamp;
 mod copysign;
@@ -12,10 +12,12 @@ mod ln;
 mod log;
 mod log10;
 mod log2;
+mod pow;
 mod signum;
 mod sqrt;
+mod trunc;
 
-pub use absolute::Abs;
+pub use abs::Abs;
 pub use cbrt::Cbrt;
 pub use clamp::Clamp;
 pub use copysign::CopySign;
@@ -29,5 +31,7 @@ pub use ln::Ln;
 pub use log::Log;
 pub use log10::Log10;
 pub use log2::Log2;
+pub use pow::Pow;
 pub use signum::Signum;
 pub use sqrt::Sqrt;
+pub use trunc::Trunc;

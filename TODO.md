@@ -1,7 +1,6 @@
 # ToDo
  1. Complete `Color` operations w/ tests
  2. Finish math library:
-   1. Complete `number` traits
    1. Complete `Vector` operations w/ tests
    2. Complete `Quaternion` operations w/ tests
    3. Complete `Matrix4x4` operations w/ tests
