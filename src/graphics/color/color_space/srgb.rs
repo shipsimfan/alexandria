@@ -1,4 +1,4 @@
-use crate::graphics::color::ColorSpace;
+use crate::graphics::color::{Color3, ColorSpace, Linear};
 
 /// sRGB-encoded RGB (standard display transfer function)
 ///
@@ -20,4 +20,30 @@ use crate::graphics::color::ColorSpace;
 /// “sRGB-encoded”; it’s still a linear coverage value.
 pub struct Srgb;
 
-impl ColorSpace for Srgb {}
+/// Convert an individual color `value` from sRGB to linear
+fn component_into_linear<T>(value: T) -> T {
+    todo!()
+}
+
+/// Convert an individual color `value` from linear to sRGB
+fn component_from_linear<T>(value: T) -> T {
+    todo!()
+}
+
+impl<T> ColorSpace<T> for Srgb {
+    fn from_linear(color: Color3<T, Linear>) -> Color3<T, Self> {
+        Color3::new(
+            component_from_linear(color.r),
+            component_from_linear(color.g),
+            component_from_linear(color.b),
+        )
+    }
+
+    fn into_linear(color: Color3<T, Self>) -> Color3<T, Linear> {
+        Color3::new(
+            component_into_linear(color.r),
+            component_into_linear(color.g),
+            component_into_linear(color.b),
+        )
+    }
+}

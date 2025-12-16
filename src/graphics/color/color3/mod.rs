@@ -1,12 +1,14 @@
 use crate::graphics::color::ColorSpace;
 use std::marker::PhantomData;
 
+mod new;
+
 /// An RGB color tagged with a compile-time color space marker
 ///
 ///
 #[repr(C)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct Color3<T, Space: ColorSpace> {
+pub struct Color3<T, Space: ColorSpace<T> + ?Sized> {
     /// The red channel value
     pub r: T,
 

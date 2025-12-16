@@ -1,4 +1,4 @@
-/// Computes the acosine of a value in radians
+/// Computes the inverse cosine of a value in radians
 pub trait Acos {
     /// Computes the inverse cosine of a value in radians
     fn acos(self) -> Self;

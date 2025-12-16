@@ -1,4 +1,4 @@
-use crate::graphics::color::ColorSpace;
+use crate::graphics::color::{Color3, ColorSpace};
 
 /// Linear-light RGB (no transfer function).
 ///
@@ -15,4 +15,12 @@ use crate::graphics::color::ColorSpace;
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct Linear;
 
-impl ColorSpace for Linear {}
+impl<T> ColorSpace<T> for Linear {
+    fn from_linear(color: Color3<T, Linear>) -> Color3<T, Self> {
+        color
+    }
+
+    fn into_linear(color: Color3<T, Self>) -> Color3<T, Linear> {
+        color
+    }
+}

@@ -1,6 +1,6 @@
-/// Finds the square root of a value
+/// Computes the square root of a value
 pub trait Sqrt {
-    /// Finds the square root of a value
+    /// Computes the square root of a value
     fn sqrt(self) -> Self;
 }
 

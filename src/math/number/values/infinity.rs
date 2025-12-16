@@ -1,5 +1,5 @@
 /// Defines a infinity (∞) value for a type
-pub trait Infinity {
+pub const trait Infinity {
     /// The infinity (∞) value of this type
     const INFINITY: Self;
 }
