@@ -1,16 +1,3 @@
-## Operations for Both `Color3` and `Color4`
-
-### Clamping & Validation
-- `clamp(min, max)`
-- `saturate()` (float normalized only)
-- `is_finite()` (float only)
-
-### Interpolation
-- `lerp(a, b, t)` — **only for linear-light spaces**
-- Prefer explicit naming like `lerp_linear`
-
----
-
 ## Arithmetic Operations
 
 ### Safe / Component-wise
@@ -67,30 +54,5 @@
 
 ## Integer (`u8`) and Packed Formats
 
-- `from_rgba8(r, g, b, a)`
-- `to_rgba8()`
 - `from_argb32(u32)`
 - `to_argb32()`
-- `from_unorm8()`
-- `to_unorm8()`
-
----
-
-## Trait Gating Strategy (Rust)
-
-Suggested marker traits:
-
-- `LinearLight`
-- `FloatChannel`
-- `Normalized`
-
-Example:
-
-```rust
-impl<Space: LinearLight> Color3<Space, f32> {
-    fn lerp(self, other: Self, t: f32) -> Self;
-}
-
-impl<Space: LinearLight> Color4<Space, f32> {
-    fn over(self, bg: Self) -> Self;
-}

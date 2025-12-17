@@ -1,15 +1,14 @@
 use crate::{
     graphics::color::{Color4, ColorSpace},
-    math::number::Abs,
+    math::number::ApproxEq,
 };
-use std::ops::Sub;
 
-impl<T: Sub<Output = T> + Abs + PartialOrd, Space: ColorSpace<T>> Color4<T, Space> {
+impl<T: ApproxEq + Clone, Space: ColorSpace<T>> Color4<T, Space> {
     /// Is this color approximately equal to `other`?
     pub fn approx_eq(self, other: Self, epsilon: T) -> bool {
-        (self.r - other.r).abs() < epsilon
-            && (self.g - other.g).abs() < epsilon
-            && (self.b - other.b).abs() < epsilon
-            && (self.a - other.a).abs() < epsilon
+        self.r.approx_eq(other.r, epsilon.clone())
+            && self.g.approx_eq(other.g, epsilon.clone())
+            && self.b.approx_eq(other.b, epsilon.clone())
+            && self.a.approx_eq(other.a, epsilon)
     }
 }
