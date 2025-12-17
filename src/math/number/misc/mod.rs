@@ -1,4 +1,5 @@
 mod abs;
+mod approx_eq;
 mod cbrt;
 mod clamp;
 mod copysign;
@@ -19,6 +20,7 @@ mod sqrt;
 mod trunc;
 
 pub use abs::Abs;
+pub use approx_eq::ApproxEq;
 pub use cbrt::Cbrt;
 pub use clamp::Clamp;
 pub use copysign::CopySign;

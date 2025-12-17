@@ -44,24 +44,31 @@ fn channel_from_linear(channel: f32) -> f32 {
 
 impl<T: Sized + FromF32 + IntoF32> ColorSpace<T> for Srgb {
     fn from_linear(color: Color3<T, Linear>) -> Color3<T, Self> {
-        color.map_channels_and_space(|channel| T::from_f32(channel_from_linear(channel.into_f32())))
+        color.map_channels_and_space(|channel| {
+            T::from_normalized_f32(channel_from_linear(channel.into_normalized_f32()))
+        })
     }
 
     fn into_linear(color: Color3<T, Self>) -> Color3<T, Linear> {
-        color.map_channels_and_space(|channel| T::from_f32(channel_into_linear(channel.into_f32())))
+        color.map_channels_and_space(|channel| {
+            T::from_normalized_f32(channel_into_linear(channel.into_normalized_f32()))
+        })
     }
 }
 
 macro_rules! conversion_tests {
-    [$(
-        $test_name: ident: ($lr: literal, $lg: literal, $lb: literal) -> ($sr: literal, $sg: literal, $sb: literal),
-    )*] => {$(
+    [
+        $type: ty = $epsilon: literal:
+        $(
+            $test_name: ident: ($lr: literal, $lg: literal, $lb: literal) -> ($sr: literal, $sg: literal, $sb: literal),
+        )*
+    ] => {$(
         #[test]
         fn $test_name() {
-            const EPSILON: f32 = 1e-6;
+            const EPSILON: $type = $epsilon;
 
-            const LINEAR: Color3<f32, Linear> = Color3::new($lr, $lg, $lb);
-            const SRGB: Color3<f32, Srgb> = Color3::new($sr, $sg, $sb);
+            const LINEAR: Color3<$type, Linear> = Color3::new($lr, $lg, $lb);
+            const SRGB: Color3<$type, Srgb> = Color3::new($sr, $sg, $sb);
 
             let srgb = Srgb::from_linear(LINEAR);
             let linear = Srgb::into_linear(SRGB);
@@ -73,6 +80,7 @@ macro_rules! conversion_tests {
 }
 
 conversion_tests![
+    f32 = 1e-6:
     srgb_conversion_linear_black: (0.0, 0.0, 0.0) -> (0.0, 0.0, 0.0),
     srgb_conversion_linear_white: (1.0, 1.0, 1.0) -> (1.0, 1.0, 1.0),
     srgb_conversion_linear_middle_gray_18: (0.18, 0.18, 0.18) -> (0.46135613, 0.46135613, 0.46135613),
@@ -106,4 +114,14 @@ conversion_tests![
     srgb_conversion_srgb_triplet_25_33_66: (0.05087609, 0.08898153, 0.39312313) -> (0.25, 0.33, 0.66),
     srgb_conversion_srgb_triplet_02_75_80: (0.00154799, 0.52252155, 0.60382734) -> (0.02, 0.75, 0.8),
     srgb_conversion_srgb_triplet_mid_srgb_50: (0.21404114, 0.21404114, 0.21404114) -> (0.5, 0.5, 0.5),
+];
+
+conversion_tests![
+    u8 = 1:
+    srgb_conversion_linear_black_u8: (0, 0, 0) -> (0, 0, 0),
+    srgb_conversion_linear_white_u8: (255, 255, 255) -> (255, 255, 255),
+    srgb_conversion_linear_half_u8: (128, 128, 128) -> (188, 188, 188),
+    srgb_conversion_linear_toe_threshold_u8: (1, 1, 1) -> (12, 12, 12),
+    srgb_conversion_linear_low_01_u8: (3, 3, 3) -> (28, 28, 28),
+    srgb_conversion_linear_mixed_18_50_01_u8: (45, 126, 2) -> (116, 186, 21),
 ];
