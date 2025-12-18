@@ -37,7 +37,9 @@ semantics clear and avoiding ambiguous APIs.
 
 ### Formatting & Debug
 - `Debug`, `Display` (optional)
-- `from_str` / parsing is optional and usually not needed in core math
+
+### (De)serialization
+ - Feature gate
 
 ---
 
@@ -125,8 +127,7 @@ semantics clear and avoiding ambiguous APIs.
 ## `Vector4<T>`-Specific Operations
 
 ### Homogeneous / Packing Helpers *(optional, engine-dependent)*
-- `xyz()` (drop `w`) -> `Vector3<T>`
-- `extend(v3, w)` / `truncate()` naming varies
+- `extend(v3, w)` naming varies
 
 > Avoid hard-coding “position vs direction” meaning into `w` in the core math type.
 > Provide helpers, but keep semantics in higher-level wrappers.
@@ -142,26 +143,3 @@ semantics clear and avoiding ambiguous APIs.
 ### Dimension conversions
 - `Vector2 -> Vector3` (`extend(z)`)
 - `Vector3 -> Vector4` (`extend(w)`)
-- `Vector4 -> Vector3` (`truncate()`)
-
----
-
-## Trait Gating Strategy (Rust)
-
-Suggested bounds (illustrative):
-
-- For basic arithmetic: `T: Copy + Add + Sub + Mul + Div`
-- For normalization/length: `T: Float` (your own float trait or `num_traits::Float`)
-- For cross product (3D): `T: Copy + Sub + Mul`
-
-Example:
-```rust
-impl<T: Float> Vector3<T> {
-    fn length(self) -> T;
-    fn normalize(self) -> Self;
-    fn dot(self, other: Self) -> T;
-}
-
-impl<T: Copy + Sub<Output=T> + Mul<Output=T>> Vector3<T> {
-    fn cross(self, other: Self) -> Self;
-}
