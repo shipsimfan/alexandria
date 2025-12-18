@@ -24,22 +24,30 @@ semantics clear and avoiding ambiguous APIs.
 - `new(x, y[, z[, w]])`
 - `from_array([T; N])`
 - `to_array()`
+- `from_slice(&[T])`
+- `from_tuple`
+- `to_tuple`
 - `splat(v)` (all components = `v`)
-- Component accessors: `x()`, `y()`, `z()`, `w()`
-- `set_x(v)`, etc. (or public fields, depending on style)
 - `map(f)` / `map2(other, f)` (component-wise mapping)
+- `zip(f)`
+- `approx_eq(eps)`
 
 ### Constants
 - `ZERO`
 - `ONE`
-- Unit axes: `X`, `Y` (and `Z`, `W` where applicable)
-- (float-only) `NAN`, `INFINITY` constants are usually not worth adding; prefer `is_finite`
+- Unit axes: `X`, `Y` (and `Z`, `W` where applicable) (alternatively `UP`/`DOWN`, `RIGHT`/`LEFT`, `FORWARD`/`BACKWARD`, `ANA`/`KATA`)
+- (float-only) `NAN`, `INFINITY`, `NEG_INFINITY`
 
 ### Formatting & Debug
 - `Debug`, `Display` (optional)
 
 ### (De)serialization
  - Feature gate
+
+### Other
+ - Indexing
+ - Iterating
+ - Swizzling
 
 ---
 
@@ -49,15 +57,15 @@ semantics clear and avoiding ambiguous APIs.
 - `v + u`
 - `v - u`
 - `v * u` (Hadamard / component-wise)
-- `v / u` (component-wise) *(be cautious for ints / division by zero)*
+- `v / u` / `v % u` (component-wise)
 
 > Consider naming Hadamard explicitly (`hadamard_mul`) if you want to avoid confusion
 > with dot/cross.
 
 ### Vector-Scalar
 - `v * s`
-- `v / s`
-- `v + s` / `v - s` *(optional; can be convenient but sometimes surprising)*
+- `v / s` / `v % s`
+- `v + s` / `v - s`
 
 ### Unary
 - `-v` (signed numeric only)
@@ -69,7 +77,7 @@ semantics clear and avoiding ambiguous APIs.
 
 ## Common Utilities
 
-### Length & Normalization *(float only)*
+### Length & Normalization
 - `length()`
 - `length_squared()`
 - `distance(a, b)` / `distance_squared(a, b)`
@@ -77,35 +85,73 @@ semantics clear and avoiding ambiguous APIs.
 - `try_normalize()` / `normalize_or_zero(eps)` (avoid NaNs)
 - `is_normalized(eps)`
 
+### Angles
+ - `angle_between`
+ - `signed_angle`
+
 ### Dot Product
-- `dot(v, u)` *(works for ints too, but overflow concerns; float is the primary use)*
+- `dot(v, u)`
+
+### Roots
+- `sqrt`
+- `cbrt`
 
 ### Min/Max & Clamp
-- `min(v, u)` (component-wise)
-- `max(v, u)` (component-wise)
-- `clamp(v, min, max)` (component-wise)
+- `max_v(v, u)` (component-wise w/ vector)
+- `min_v(v, u)` (component-wise w/ vector)
+- `max(v, s)` (component-wise w/ scalar)
+- `min(v, s)` (component-wise w/ scalar)
+- `clamp_v(v, min, max)` (component-wise w/ vector)
+- `clamp(v, min, max)` (component-wise w/ scalar)
 - `abs()` (signed only)
 
-### Interpolation *(float only)*
+### Interpolation
 - `lerp(a, b, t)`
-- `smoothstep(a, b, t)` *(optional)*
-- `nlerp(a, b, t)` (normalized lerp, useful for directions)
+- `smoothstep(a, b, t)`
+- `nlerp(a, b, t)`
+- `slerp(a, b, t)`
 
-### Rounding *(float only)*
+### Rounding
 - `floor()`, `ceil()`, `round()`, `trunc()`, `fract()`
 
-### Validation *(float only)*
+### Validation
 - `is_finite()`
-- `is_nan()` *(usually less useful than `is_finite`)*
+- `is_nan()`
+
+### Trig
+- `acos()`
+- `acosh()`
+- `asin()`
+- `asinh()`
+- `atan()`
+- `atan2()`
+- `atanh()`
+- `cos()`
+- `cosh()`
+- `sin()`
+- `sinh()`
+- `tan()`
+- `tanh()`
+
+### Other
+- `copysign()`
+- `exp()`
+- `exp2()`
+- `ln()`
+- `log2()`
+- `log10()`
+- `powf()`
+- `powi()`
+- `signum()`
 
 ---
 
 ## `Vector2<T>`-Specific Operations
 
-### 2D Geometry *(float preferred)*
-- `perp()` (e.g. `(−y, x)`)
-- `angle()` (angle from x-axis) *(optional)*
-- `rotate(angle)` *(optional, but handy in gameplay code)*
+### 2D Geometry
+- `perp_cw()`, `perp_ccw()`
+- `angle()` (angle from x-axis)
+- `rotate(angle)`
 
 ### Cross-like Scalar
 - `cross(v, u) -> T` (2D “signed area” / z-component of 3D cross)
@@ -117,20 +163,10 @@ semantics clear and avoiding ambiguous APIs.
 ### Cross Product
 - `cross(v, u) -> Vector3<T>`
 
-### 3D Geometry *(float only)*
+### 3D Geometry
 - `reflect(v, normal_unit)` (requires unit normal)
-- `refract(v, normal_unit, eta)` *(optional)*
-- `project_onto(v, onto)` / `reject_from(v, onto)` *(optional but useful)*
-
----
-
-## `Vector4<T>`-Specific Operations
-
-### Homogeneous / Packing Helpers *(optional, engine-dependent)*
-- `extend(v3, w)` naming varies
-
-> Avoid hard-coding “position vs direction” meaning into `w` in the core math type.
-> Provide helpers, but keep semantics in higher-level wrappers.
+- `refract(v, normal_unit, eta)` 
+- `project_onto(v, onto)` / `reject_from(v, onto)`
 
 ---
 

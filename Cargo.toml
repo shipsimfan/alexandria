@@ -3,7 +3,7 @@
 [workspace.package]
 version = "0.0.0"
 authors = ["Lance Hart <me@lancehart.ca>"]
-edition = "2021"
+edition = "2024"
 repository = "https://github.com/shipsimfan/alexandria"
 license = "GPL-3.0-or-later"
 publish = false
@@ -19,8 +19,13 @@ repository.workspace = true
 license.workspace = true
 publish.workspace = true
 
+[features]
+data-format = ["dep:data-format"]
+
 [dependencies]
 vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
+
+data-format = { git = "https://github.com/shipsimfan/lib-data-format", optional = true }
 
 [target.'cfg(windows)'.dependencies]
 win32.git = "https://github.com/shipsimfan/lib-win32"

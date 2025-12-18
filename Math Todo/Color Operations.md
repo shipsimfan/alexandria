@@ -1,17 +1,3 @@
-
-### Constants
-- `WHITE`
-- `BLACK`
-- Primary colors: `RED`, `GREEN`, and `BLUE`
-
-### (De)serialization
- - Feature gate
-
-### With functions
- - `with_r`, `with_g`, `with_b`
-
----
-
 ## Color-Space-Sensitive Operations
 
 ### Color Space Conversion

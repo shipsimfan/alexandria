@@ -15,7 +15,7 @@ use crate::graphics::color::{Color3, ColorSpace};
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Linear;
 
-impl<T: Sized> ColorSpace<T> for Linear {
+impl<T: Sized> const ColorSpace<T> for Linear {
     fn from_linear(color: Color3<T, Linear>) -> Color3<T, Self> {
         color
     }

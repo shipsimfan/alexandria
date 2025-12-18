@@ -1,13 +1,17 @@
 use crate::graphics::color::{Color3, ColorSpace};
+use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     /// Convert this [`Color3`] into a tuple
-    pub fn into_tuple(self) -> (T, T, T) {
+    pub const fn into_tuple(self) -> (T, T, T)
+    where
+        T: [const] Destruct,
+    {
         (self.r, self.g, self.b)
     }
 }
 
-impl<T: Clone, Space: ColorSpace<T>> Into<(T, T, T)> for Color3<T, Space> {
+impl<T: [const] Destruct, Space: ColorSpace<T>> const Into<(T, T, T)> for Color3<T, Space> {
     fn into(self) -> (T, T, T) {
         self.into_tuple()
     }

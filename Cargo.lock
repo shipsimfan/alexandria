@@ -6,8 +6,47 @@ version = 4
 name = "alexandria"
 version = "0.0.0"
 dependencies = [
+ "data-format",
  "vulkan",
  "win32",
+]
+
+[[package]]
+name = "data-format"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-data-format#ef7e588b8b437f1b93668400e562862c1c2daa41"
+dependencies = [
+ "macros",
+]
+
+[[package]]
+name = "macros"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-data-format#ef7e588b8b437f1b93668400e562862c1c2daa41"
+dependencies = [
+ "proc-macro-util",
+]
+
+[[package]]
+name = "proc-macro-util"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-proc-macro-util#c1a5999df72a7ed1e3f390e77ebdaa970977bf05"
+dependencies = [
+ "proc-macro-util-base",
+ "proc-macro-util-macros",
+]
+
+[[package]]
+name = "proc-macro-util-base"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-proc-macro-util#c1a5999df72a7ed1e3f390e77ebdaa970977bf05"
+
+[[package]]
+name = "proc-macro-util-macros"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-proc-macro-util#c1a5999df72a7ed1e3f390e77ebdaa970977bf05"
+dependencies = [
+ "proc-macro-util-base",
 ]
 
 [[package]]

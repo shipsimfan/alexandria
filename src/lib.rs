@@ -10,6 +10,9 @@
 #![feature(const_trait_impl)]
 #![feature(const_cmp)]
 #![feature(const_clone)]
+#![feature(const_convert)]
+#![feature(const_destruct)]
+#![feature(const_ops)]
 
 pub mod graphics;
 pub mod math;
