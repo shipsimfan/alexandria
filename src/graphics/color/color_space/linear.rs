@@ -12,7 +12,7 @@ use crate::graphics::color::{Color3, ColorSpace};
 /// # Interop
 /// Textures and UI colors are often authored/stored as [`Srgb`](crate::graphics::color::Srgb)
 /// bytes. Convert to [`Linear`] before doing math like lerp, filtering, or blending.
-#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Linear;
 
 impl<T: Sized> ColorSpace<T> for Linear {

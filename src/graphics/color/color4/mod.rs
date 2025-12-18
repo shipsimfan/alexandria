@@ -1,15 +1,16 @@
 use crate::graphics::color::ColorSpace;
 use std::marker::PhantomData;
 
-mod approx_eq;
-mod clamp;
+mod arith;
+mod cmp;
 mod creation;
-mod display;
 mod into;
+
+mod approx_eq;
+mod display;
 mod is_finite;
 mod lerp;
 mod map_channels;
-mod saturate;
 
 /// An RGB color with an alpha channel tagged with a compile-time color space marker
 #[repr(C)]

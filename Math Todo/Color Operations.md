@@ -1,17 +1,18 @@
-## Arithmetic Operations
+## Color-Space-Sensitive Operations
 
-### Safe / Component-wise
-- `color + color`
-- `color - color`
-- `color * scalar`
-- `color / scalar`
+### Color Space Conversion
+- `to_linear()`
+- `to_srgb()`
+- `convert::<OtherSpace>()`
+- `convert_unchanged::<OtherSpace>()`
 
-> Recommended: gate `Add`/`Sub` to linear-light spaces or expose as
-> `add_components`, `mul_components`.
+### Luminance
+- `luminance_rec709()` (linear only)
+- `luminance(coeffs)`
 
-### Color Modulation
-- `color * color` (component-wise tinting)
-- Prefer named method: `modulate(other)`
+### Perceptual / Artistic Adjustments
+- `exposure(ev)`            (`v' = v * (2 ^ ev)` for Linear)
+- `tone_map_reinhard()`     (Linear)
 
 ---
 
@@ -19,7 +20,6 @@
 
 ### Alpha Manipulation
 - `with_alpha(a)`
-- `set_alpha(a)`
 - `mul_alpha(k)`
 
 ### Premultiplied Alpha  
@@ -32,27 +32,8 @@
 - `over(background)`
 - `under(foreground)`
 
----
+### Conversion
+ - `rgb() -> Color3`
 
-## Color-Space-Sensitive Operations
-
-### Color Space Conversion
-- `to_linear()`
-- `to_srgb()`
-- `convert::<OtherSpace>()`
-
-### Luminance
-- `luminance_rec709()` (linear only)
-- `luminance(coeffs)`
-
-### Perceptual / Artistic Adjustments
-- `exposure(ev)`
-- `tone_map_*()`
-- `lighten()`, `darken()` (space-specific, explicit naming)
-
----
-
-## Integer (`u8`) and Packed Formats
-
-- `from_argb32(u32)`
-- `to_argb32()`
+## `Color3`-Specific Operation
+ - `with_alpha(a) -> Color4`
