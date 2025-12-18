@@ -1,2 +1,2 @@
 # Alexandria
-A Graphics Library abstracting DirectX 11 and Win32.
+A platform wrapper library focused on games. This wrapper is designed to use Vulkan on both Linux and Windows.
