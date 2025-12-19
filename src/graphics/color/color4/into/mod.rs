@@ -1,4 +1,5 @@
 mod array;
+mod color3;
 mod tuple;
 
 mod f32;

@@ -1,13 +1,16 @@
-use crate::graphics::color::{Color4, ColorSpace};
+use crate::{
+    graphics::color::{Color4, ColorSpace},
+    math::number::IntoF32,
+};
+use std::marker::Destruct;
 
-impl<Space: ColorSpace<u8> + ColorSpace<f32>> Color4<u8, Space> {
+impl<T, Space: ColorSpace<T> + ColorSpace<f32>> Color4<T, Space> {
     /// Convert this [`Color4`] from [`u8`] to [`f32`]
-    pub const fn into_f32(self) -> Color4<f32, Space> {
-        const fn convert_channel(channel: u8) -> f32 {
-            channel as f32 / 255.0
-        }
-
-        self.map_channels(convert_channel)
+    pub const fn into_f32(self) -> Color4<f32, Space>
+    where
+        T: [const] Destruct + [const] IntoF32,
+    {
+        self.map_channels(T::into_normalized_f32)
     }
 }
 

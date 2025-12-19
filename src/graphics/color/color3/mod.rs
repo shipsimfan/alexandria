@@ -3,21 +3,22 @@ use std::marker::PhantomData;
 
 mod arith;
 mod cmp;
+mod color_space;
 mod constants;
 mod creation;
 mod into;
 mod map;
+mod math;
 
-mod approx_eq;
+mod debug;
 mod display;
+mod hash;
 mod index;
 mod is_finite;
 mod iter;
-mod lerp;
 
 /// An RGB color tagged with a compile-time color space marker
 #[repr(C)]
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "data-format", derive(data_format::Serialize))]
 pub struct Color3<T, Space: ColorSpace<T>> {
     /// The red channel value

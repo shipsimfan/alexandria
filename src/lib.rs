@@ -13,6 +13,7 @@
 #![feature(const_convert)]
 #![feature(const_destruct)]
 #![feature(const_ops)]
+#![feature(const_default)]
 
 pub mod graphics;
 pub mod math;
