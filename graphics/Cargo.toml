@@ -1,0 +1,16 @@
+[package]
+name = "alexandria-graphics"
+description = "Graphics API wrappers"
+
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[features]
+data-format = ["alexandria-color/data-format"]
+
+[dependencies]
+alexandria-color.workspace = true

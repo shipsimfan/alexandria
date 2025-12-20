@@ -1,4 +1,4 @@
-//! Platform wrapper for various game APIs
+//! Graphics API wrappers
 
 #![deny(missing_docs)]
 #![deny(rustdoc::private_intra_doc_links)]
@@ -6,5 +6,4 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 
-pub use alexandria_graphics as graphics;
-pub use alexandria_math as math;
+pub use alexandria_color as color;

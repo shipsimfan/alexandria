@@ -6,9 +6,30 @@ version = 4
 name = "alexandria"
 version = "0.0.0"
 dependencies = [
+ "alexandria-graphics",
+ "alexandria-math",
+]
+
+[[package]]
+name = "alexandria-color"
+version = "0.0.0"
+dependencies = [
+ "alexandria-math",
  "data-format",
- "vulkan",
- "win32",
+]
+
+[[package]]
+name = "alexandria-graphics"
+version = "0.0.0"
+dependencies = [
+ "alexandria-color",
+]
+
+[[package]]
+name = "alexandria-math"
+version = "0.0.0"
+dependencies = [
+ "data-format",
 ]
 
 [[package]]
@@ -48,13 +69,3 @@ source = "git+https://github.com/shipsimfan/lib-proc-macro-util#c1a5999df72a7ed1
 dependencies = [
  "proc-macro-util-base",
 ]
-
-[[package]]
-name = "vulkan"
-version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-vulkan#cd22088be960dfc062cd7c7531b6f8f8ca56ac50"
-
-[[package]]
-name = "win32"
-version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-win32#84d6017159f78b0e69c64df9e1ea551a3b1fbb75"

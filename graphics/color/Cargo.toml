@@ -1,0 +1,18 @@
+[package]
+name = "alexandria-color"
+description = "Color related items"
+
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[features]
+data-format = ["dep:data-format", "alexandria-math/data-format"]
+
+[dependencies]
+alexandria-math.workspace = true
+
+data-format = { workspace = true, optional = true }
