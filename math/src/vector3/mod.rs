@@ -3,7 +3,10 @@ mod creation;
 /// A 3-dimensional vector
 #[repr(C)]
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "data-format", derive(data_format::Serialize))]
+#[cfg_attr(
+    feature = "data-format",
+    derive(data_format::Serialize, data_format::Deserialize)
+)]
 pub struct Vector3<T> {
     /// The x-axis value
     pub x: T,

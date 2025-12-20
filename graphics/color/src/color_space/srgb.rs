@@ -41,6 +41,8 @@ fn channel_from_linear(channel: f32) -> f32 {
 }
 
 impl<T: Sized + FromF32 + IntoF32> ColorSpace<T> for Srgb {
+    const NAME: &'static str = "sRGB";
+
     fn from_linear(color: Color3<T, Linear>) -> Color3<T, Self> {
         unsafe {
             color.map_channels_and_space(|channel| {

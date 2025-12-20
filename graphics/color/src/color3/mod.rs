@@ -11,15 +11,16 @@ mod map;
 mod math;
 
 mod debug;
+mod deserialize;
 mod display;
 mod hash;
 mod index;
 mod is_finite;
 mod iter;
+mod serialize;
 
 /// An RGB color tagged with a compile-time color space marker
 #[repr(C)]
-#[cfg_attr(feature = "data-format", derive(data_format::Serialize))]
 pub struct Color3<T, Space: ColorSpace<T>> {
     /// The red channel value
     pub r: T,

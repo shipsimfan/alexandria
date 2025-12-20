@@ -16,6 +16,8 @@ use crate::{Color3, ColorSpace};
 pub struct Linear;
 
 impl<T: Sized> const ColorSpace<T> for Linear {
+    const NAME: &'static str = "Linear";
+
     fn from_linear(color: Color3<T, Linear>) -> Color3<T, Self> {
         color
     }

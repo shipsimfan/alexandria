@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "alexandria"
-version = "0.0.0"
+version = "0.2.0"
 dependencies = [
  "alexandria-graphics",
  "alexandria-math",
@@ -12,7 +12,7 @@ dependencies = [
 
 [[package]]
 name = "alexandria-color"
-version = "0.0.0"
+version = "0.2.0"
 dependencies = [
  "alexandria-math",
  "data-format",
@@ -20,30 +20,30 @@ dependencies = [
 
 [[package]]
 name = "alexandria-graphics"
-version = "0.0.0"
+version = "0.2.0"
 dependencies = [
  "alexandria-color",
 ]
 
 [[package]]
 name = "alexandria-math"
-version = "0.0.0"
+version = "0.2.0"
 dependencies = [
  "data-format",
 ]
 
 [[package]]
 name = "data-format"
-version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-data-format#ef7e588b8b437f1b93668400e562862c1c2daa41"
+version = "1.0.1"
+source = "git+https://github.com/shipsimfan/lib-data-format#4369c0b0a4317c41baeae8f9eacff16afbf8da45"
 dependencies = [
  "macros",
 ]
 
 [[package]]
 name = "macros"
-version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-data-format#ef7e588b8b437f1b93668400e562862c1c2daa41"
+version = "1.0.1"
+source = "git+https://github.com/shipsimfan/lib-data-format#4369c0b0a4317c41baeae8f9eacff16afbf8da45"
 dependencies = [
  "proc-macro-util",
 ]
