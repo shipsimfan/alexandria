@@ -44,15 +44,19 @@ fn channel_from_linear(channel: f32) -> f32 {
 
 impl<T: Sized + FromF32 + IntoF32> ColorSpace<T> for Srgb {
     fn from_linear(color: Color3<T, Linear>) -> Color3<T, Self> {
-        color.map_channels_and_space(|channel| {
-            T::from_normalized_f32(channel_from_linear(channel.into_normalized_f32()))
-        })
+        unsafe {
+            color.map_channels_and_space(|channel| {
+                T::from_normalized_f32(channel_from_linear(channel.into_normalized_f32()))
+            })
+        }
     }
 
     fn into_linear(color: Color3<T, Self>) -> Color3<T, Linear> {
-        color.map_channels_and_space(|channel| {
-            T::from_normalized_f32(channel_into_linear(channel.into_normalized_f32()))
-        })
+        unsafe {
+            color.map_channels_and_space(|channel| {
+                T::from_normalized_f32(channel_into_linear(channel.into_normalized_f32()))
+            })
+        }
     }
 }
 
@@ -121,12 +125,12 @@ mod tests {
     ];
 
     conversion_tests![
-        u8 = 1:
+        u8 = 0:
         srgb_conversion_linear_black_u8: (0, 0, 0) -> (0, 0, 0),
         srgb_conversion_linear_white_u8: (255, 255, 255) -> (255, 255, 255),
         srgb_conversion_linear_half_u8: (128, 128, 128) -> (188, 188, 188),
-        srgb_conversion_linear_toe_threshold_u8: (1, 1, 1) -> (12, 12, 12),
+        srgb_conversion_linear_toe_threshold_u8: (1, 1, 1) -> (13, 13, 13),
         srgb_conversion_linear_low_01_u8: (3, 3, 3) -> (28, 28, 28),
-        srgb_conversion_linear_mixed_18_50_01_u8: (45, 126, 2) -> (116, 186, 21),
+        srgb_conversion_linear_mixed_18_50_01_u8: (45, 127, 2) -> (117, 187, 22),
     ];
 }

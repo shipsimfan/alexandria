@@ -15,7 +15,7 @@ impl const FromF32 for u8 {
     }
 
     fn from_normalized_f32(value: f32) -> Self {
-        (value * u8::MAX as f32) as u8
+        (value * u8::MAX as f32).round() as u8
     }
 }
 
@@ -25,7 +25,7 @@ impl const FromF32 for u16 {
     }
 
     fn from_normalized_f32(value: f32) -> Self {
-        (value * u16::MAX as f32) as u16
+        (value * u16::MAX as f32).round() as u16
     }
 }
 
@@ -35,7 +35,7 @@ impl const FromF32 for u32 {
     }
 
     fn from_normalized_f32(value: f32) -> Self {
-        (value * u32::MAX as f32) as u32
+        (value * u32::MAX as f32).round() as u32
     }
 }
 
@@ -45,7 +45,7 @@ impl const FromF32 for u64 {
     }
 
     fn from_normalized_f32(value: f32) -> Self {
-        (value * u64::MAX as f32) as u64
+        (value * u64::MAX as f32).round() as u64
     }
 }
 
@@ -55,7 +55,7 @@ impl const FromF32 for u128 {
     }
 
     fn from_normalized_f32(value: f32) -> Self {
-        (value * u128::MAX as f32) as u128
+        (value * u128::MAX as f32).round() as u128
     }
 }
 
@@ -65,7 +65,7 @@ impl const FromF32 for usize {
     }
 
     fn from_normalized_f32(value: f32) -> Self {
-        (value * usize::MAX as f32) as usize
+        (value * usize::MAX as f32).round() as usize
     }
 }
 
@@ -80,7 +80,7 @@ impl const FromF32 for i8 {
         if value == -1.0 {
             i8::MIN
         } else {
-            (value * i8::MAX as f32) as i8
+            (value * i8::MAX as f32).round() as i8
         }
     }
 }
@@ -94,7 +94,7 @@ impl const FromF32 for i16 {
         if value == -1.0 {
             i16::MIN
         } else {
-            (value * i16::MAX as f32) as i16
+            (value * i16::MAX as f32).round() as i16
         }
     }
 }
@@ -108,7 +108,7 @@ impl const FromF32 for i32 {
         if value == -1.0 {
             i32::MIN
         } else {
-            (value * i32::MAX as f32) as i32
+            (value * i32::MAX as f32).round() as i32
         }
     }
 }
@@ -122,7 +122,7 @@ impl const FromF32 for i64 {
         if value == -1.0 {
             i64::MIN
         } else {
-            (value * i64::MAX as f32) as i64
+            (value * i64::MAX as f32).round() as i64
         }
     }
 }
@@ -136,7 +136,7 @@ impl const FromF32 for i128 {
         if value == -1.0 {
             i128::MIN
         } else {
-            (value * i128::MAX as f32) as i128
+            (value * i128::MAX as f32).round() as i128
         }
     }
 }
@@ -150,7 +150,7 @@ impl const FromF32 for isize {
         if value == -1.0 {
             isize::MIN
         } else {
-            (value * isize::MAX as f32) as isize
+            (value * isize::MAX as f32).round() as isize
         }
     }
 }

@@ -21,7 +21,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Map the blue channel to a new value
-    pub const fn map_b<F: const FnOnce(T) -> T>(mut self, f: F) -> Self
+    pub const fn map_b<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Self
     where
         T: [const] Destruct,
     {
@@ -30,7 +30,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Map the alpha channel to a new value
-    pub const fn map_a<F: const FnOnce(T) -> T>(mut self, f: F) -> Self
+    pub const fn map_a<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Self
     where
         T: [const] Destruct,
     {
@@ -50,7 +50,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Convert only the RGB channels of a color and change its space
-    pub const fn map_rgb_and_space<F: [const] FnMut(T) -> T + [const] Destruct>(
+    pub const unsafe fn map_rgb_and_space<F: [const] FnMut(T) -> T + [const] Destruct>(
         self,
         mut f: F,
     ) -> Color4<T, Space>
@@ -79,7 +79,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
 
     /// Convert the RGB channels and alpha channels of a color using different functions and change
     /// its space
-    pub const fn map_rgb_a_and_space<
+    pub const unsafe fn map_rgb_a_and_space<
         U,
         Space2: ColorSpace<U>,
         FColor: [const] FnMut(T) -> U + [const] Destruct,
@@ -108,7 +108,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Convert the channels of a color and change its space
-    pub const fn map_channels_and_space<
+    pub const unsafe fn map_channels_and_space<
         U,
         Space2: ColorSpace<U>,
         F: [const] FnMut(T) -> U + [const] Destruct,

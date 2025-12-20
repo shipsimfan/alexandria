@@ -16,7 +16,6 @@ mod hash;
 mod index;
 mod is_finite;
 mod iter;
-mod lerp;
 
 /// An RGB color with an alpha channel tagged with a compile-time color space marker
 #[repr(C)]

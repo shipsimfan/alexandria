@@ -61,7 +61,7 @@ mod tests {
     ];
 
     tone_map_reinhard_tests![
-        u8 = 1:
+        u8 = 0:
         tone_map_reinhard_u8_black_ev0: (0, 0, 0, 255), 0.0 -> (0, 0, 0, 255),
         tone_map_reinhard_u8_midgray46_ev0: (46, 46, 46, 255), 0.0 -> (39, 39, 39, 255),
 

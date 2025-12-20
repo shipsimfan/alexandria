@@ -1,10 +1,10 @@
 use crate::{
-    graphics::color::{Color4, ColorSpace},
+    graphics::color::{Color4, Linear},
     math::{Vector3, number::IntoF32},
 };
 use std::marker::Destruct;
 
-impl<T, Space: ColorSpace<T>> Color4<T, Space> {
+impl<T> Color4<T, Linear> {
     /// Calculate the luminance of a [`Color4`] using coefficients `c`
     pub const fn luminance(self, c: Vector3<f32>) -> f32
     where

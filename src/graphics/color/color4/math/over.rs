@@ -15,7 +15,7 @@ impl<T> Color4<T, Linear> {
 
         let ao = aa + ab * (1.0 - aa);
         if ao == 0.0 {
-            return Color4::from_f32(Color4::new(0.0, 0.0, 0.0, 0.0));
+            return Color4::from_f32(Color4::CLEAR);
         }
 
         Color4::from_f32(((ca * aa + cb * ab * (1.0 - aa)) / ao).with_alpha(ao))
@@ -34,7 +34,7 @@ impl<T> Color4<T, Linear> {
 mod tests {
     use crate::graphics::color::{Color4, Linear};
 
-    macro_rules! exposure_tests {
+    macro_rules! over_under_tests {
         [
             $type: ty = $epsilon: literal:
             $(
@@ -59,7 +59,7 @@ mod tests {
         )*};
     }
 
-    exposure_tests![
+    over_under_tests![
         f32 = 1e-6:
         over_under_opaque_over_opaque_keeps_top: (0.2, 0.4, 0.6, 1.0), (0.9, 0.1, 0.3, 1.0) -> (0.2, 0.4, 0.6, 1.0),
         over_under_opaque_over_translucent_keeps_top: (0.2, 0.4, 0.6, 1.0), (0.9, 0.1, 0.3, 0.2) -> (0.2, 0.4, 0.6, 1.0),
@@ -82,18 +82,18 @@ mod tests {
         over_under_same_color_half_over_half: (0.25, 0.5, 0.75, 0.5), (0.25, 0.5, 0.75, 0.5) -> (0.25, 0.5, 0.75, 0.75),
     ];
 
-    exposure_tests![
-        u8 = 1:
+    over_under_tests![
+        u8 = 0:
         over_under_u8_opaque_over_opaque_keeps_top: (51, 102, 153, 255), (230, 26, 76, 255) -> (51, 102, 153, 255),
-        over_under_u8_transparent_over_keeps_under: (51, 102, 153, 0), (230, 26, 76, 178) -> (230, 25, 76, 178),
+        over_under_u8_transparent_over_keeps_under: (51, 102, 153, 0), (230, 25, 76, 178) -> (230, 25, 76, 178),
 
-        over_under_u8_half_red_over_half_blue: (255, 0, 0, 128), (0, 0, 255, 128) -> (170, 0, 85, 191),
-        over_under_u8_black_half_over_white_half: (0, 0, 0, 128), (255, 255, 255, 128) -> (85, 85, 85, 191),
+        over_under_u8_half_red_over_half_blue: (255, 0, 0, 128), (0, 0, 255, 128) -> (170, 0, 85, 192),
+        over_under_u8_black_half_over_white_half: (0, 0, 0, 128), (255, 255, 255, 128) -> (85, 85, 85, 192),
 
         over_under_u8_thirty_pct_over_opaque_under: (26, 51, 76, 76), (102, 128, 153, 255) -> (79, 105, 130, 255),
-        over_under_u8_one_pct_over_ninety_nine_pct_under: (13, 242, 128, 3), (230, 26, 51, 252) -> (227, 28, 52, 252),
+        over_under_u8_one_pct_over_ninety_nine_pct_under: (13, 242, 128, 3), (230, 26, 51, 252) -> (227, 29, 52, 252),
 
-        over_under_u8_mostly_opaque_over_translucent_mix: (26, 51, 76, 204), (178, 153, 128, 102) -> (39, 60, 81, 224),
-        over_under_u8_same_color_half_over_half: (64, 128, 191, 128), (64, 128, 191, 128) -> (64, 128, 191, 191),
+        over_under_u8_mostly_opaque_over_translucent_mix: (26, 51, 76, 204), (178, 153, 128, 102) -> (40, 60, 81, 224),
+        over_under_u8_same_color_half_over_half: (64, 128, 191, 128), (64, 128, 191, 128) -> (64, 128, 191, 192),
     ];
 }

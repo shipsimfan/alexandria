@@ -65,13 +65,13 @@ mod tests {
     ];
 
     exposure_tests![
-        u8 = 1:
+        u8 = 0:
         exposure_u8_identity_0ev: (64, 128, 191), 0.0 -> (64, 128, 191),
         exposure_u8_black_any_ev_pos: (0, 0, 0), 5.0 -> (0, 0, 0),
         exposure_u8_black_any_ev_neg: (0, 0, 0), -5.0 -> (0, 0, 0),
 
-        exposure_u8_plus1ev_doubles: (26, 51, 77), 1.0 -> (51, 102, 154),
-        exposure_u8_minus1ev_halves: (26, 51, 77), -1.0 -> (13, 26, 38),
+        exposure_u8_plus1ev_doubles: (26, 51, 77), 1.0 -> (52, 102, 154),
+        exposure_u8_minus1ev_halves: (26, 51, 77), -1.0 -> (13, 26, 39),
 
         exposure_u8_nonuniform_input_uniform_gain_ev2: (0, 64, 255), 2.0 -> (0, 255, 255),
 

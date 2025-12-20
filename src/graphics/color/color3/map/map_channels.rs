@@ -21,7 +21,7 @@ impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     }
 
     /// Map the blue channel to a new value
-    pub const fn map_b<F: const FnOnce(T) -> T>(mut self, f: F) -> Self
+    pub const fn map_b<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Self
     where
         T: [const] Destruct,
     {
@@ -42,7 +42,7 @@ impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     }
 
     /// Convert the channels of a color and change its space
-    pub const fn map_channels_and_space<
+    pub const unsafe fn map_channels_and_space<
         U,
         Space2: ColorSpace<U>,
         F: [const] FnMut(T) -> U + [const] Destruct,

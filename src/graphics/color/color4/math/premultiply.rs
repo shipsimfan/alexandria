@@ -20,6 +20,9 @@ impl<T> Color4<T, Linear> {
         T: [const] Destruct + [const] IntoF32 + [const] FromF32,
     {
         let (color, a) = self.into_f32().rgb_a();
+        if a == 0.0 {
+            return Color4::from_f32(Color4::CLEAR);
+        }
         Color4::from_f32((color / a).with_alpha(a))
     }
 }
@@ -31,7 +34,7 @@ mod tests {
         math::number::Zero,
     };
 
-    macro_rules! exposure_tests {
+    macro_rules! premultiply_tests {
         [
             $type: ty = $epsilon: literal:
             $(
@@ -57,7 +60,7 @@ mod tests {
         )*};
     }
 
-    exposure_tests![
+    premultiply_tests![
         f32 = 1e-6:
         premultiply_identity_alpha1: (0.2, 0.4, 0.6, 1.0) -> (0.2, 0.4, 0.6, 1.0),
         premultiply_zero_alpha: (0.2, 0.4, 0.6, 0.0) -> (0.0, 0.0, 0.0, 0.0),
@@ -91,16 +94,16 @@ mod tests {
         premultiply_small_values: (1.0e-6, 2.0e-6, -4.0e-6, 0.5) -> (5.0e-7, 1.0e-6, -2.0e-6, 0.5),
     ];
 
-    exposure_tests![
-        u8 = 1:
+    premultiply_tests![
+        u8 = 0:
         premultiply_u8_identity_alpha255: (51, 102, 153, 255) -> (51, 102, 153, 255),
         premultiply_u8_zero_alpha0: (51, 102, 153, 0) -> (0, 0, 0, 0),
         premultiply_u8_zero_rgb_alpha255: (0, 0, 0, 255) -> (0, 0, 0, 255),
         premultiply_u8_zero_all: (0, 0, 0, 0) -> (0, 0, 0, 0),
 
-        premultiply_u8_half_alpha128_powers_of_two: (64, 128, 192, 128) -> (32, 64, 96, 128),
-        premultiply_u8_quarter_alpha64_powers_of_two: (64, 128, 192, 64) -> (16, 32, 48, 64),
-        premultiply_u8_three_quarters_alpha192_powers_of_two: (64, 128, 192, 192) -> (48, 96, 144, 192),
+        premultiply_u8_half_alpha128_powers_of_two: (64, 128, 191, 128) -> (32, 64, 96, 128),
+        premultiply_u8_quarter_alpha64_powers_of_two: (64, 128, 191, 64) -> (16, 32, 48, 64),
+        premultiply_u8_three_quarters_alpha192_powers_of_two: (64, 128, 193, 192) -> (48, 96, 145, 192),
 
         premultiply_u8_full_red_half_alpha128: (255, 0, 0, 128) -> (128, 0, 0, 128),
         premultiply_u8_full_green_quarter_alpha64: (0, 255, 0, 64) -> (0, 64, 0, 64),
@@ -111,7 +114,7 @@ mod tests {
         premultiply_u8_white_alpha255: (255, 255, 255, 255) -> (255, 255, 255, 255),
 
         premultiply_u8_midgray_half_alpha128: (128, 128, 128, 128) -> (64, 64, 64, 128),
-        premultiply_u8_varied_half_alpha128: (200, 100, 50, 128) -> (100, 50, 25, 128),
-        premultiply_u8_varied_quarter_alpha64: (200, 100, 50, 64) -> (50, 25, 13, 64),
+        premultiply_u8_varied_half_alpha128: (199, 100, 50, 128) -> (100, 50, 25, 128),
+        premultiply_u8_varied_quarter_alpha64: (199, 100, 52, 64) -> (50, 25, 13, 64),
     ];
 }

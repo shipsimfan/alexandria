@@ -18,6 +18,6 @@ impl<T: [const] Destruct + One, Space: ColorSpace<T>> const Into<Color4<T, Space
     for Color3<T, Space>
 {
     fn into(self) -> Color4<T, Space> {
-        self.with_alpha(T::ONE)
+        self.with_alpha(T::NORMALIZED_ONE)
     }
 }

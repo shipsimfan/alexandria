@@ -22,7 +22,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Combine two colors channel-wise and change its space
-    pub const fn zip_channels_and_space<
+    pub const unsafe fn zip_channels_and_space<
         U,
         Space2: ColorSpace<U>,
         V,

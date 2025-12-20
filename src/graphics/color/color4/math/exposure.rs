@@ -56,11 +56,11 @@ mod tests {
     ];
 
     exposure_tests![
-        u8 = 1:
+        u8 = 0:
         exposure_u8_identity: (26, 51, 77, 102), 0.0 -> (26, 51, 77, 102),
 
         exposure_u8_plus1: (26, 51, 77, 102), 1.0 -> (52, 102, 154, 102),
-        exposure_u8_minus1: (26, 51, 77, 102), -1.0 -> (13, 26, 38, 102),
+        exposure_u8_minus1: (26, 51, 77, 102), -1.0 -> (13, 26, 39, 102),
 
         exposure_u8_plus2_with_saturation: (64, 128, 0, 255), 2.0 -> (255, 255, 0, 255),
 
