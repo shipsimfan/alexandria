@@ -15,7 +15,7 @@ is typically `f32` (or `f64`).
 - `Matrix3x3<T>`: 3×3 matrix
 
 ### Layout & Convention (must document)
-- Storage: row-major or column-major
+- Storage: column-major
 - Multiplication convention:
   - Column vectors: `v' = M * v`
   - Row vectors: `v' = v * M`
@@ -27,16 +27,22 @@ is typically `f32` (or `f64`).
 
 ### Basic Construction
 - `identity()` / `IDENTITY`
-- `zero()` / `ZERO` *(optional)*
-- `from_rows([Vector3<T>; 3])` or `from_cols([Vector3<T>; 3])`
-- `from_array([[T; 3]; 3])` / `to_array()`
-- `from_flat_array([T; 9])` / `to_flat_array()` *(layout-dependent)*
+- `zero()` / `ZERO`
+- `from_rows([Vector3<T>; 3])`, `from_cols([Vector3<T>; 3])`
+- `from_array_rows/cols([[T; 3]; 3])` / `to_array_rows/cols()`
+- `from_slice_rows/cols(&[&[T]])` / `to_slice_rows/cols()`
+- `from_flat_array_rows/cols([T; 9])` / `to_flat_array_rows/cols()`
+- `from_flat_slice_rows/cols(&[T])` / `to_flat_slice_rows/cols()`
 
 ### Accessors
 - `row(i) -> Vector3<T>` / `set_row(i, v)`
 - `col(i) -> Vector3<T>` / `set_col(i, v)`
+- `col_ref(i) -> &Vector3<T>`
 - `get(r, c) -> T` / `set(r, c, v)`
 - `transpose()`
+- `as_slice()`
+- Indexing (2-d)
+- Iterating
 
 ---
 
@@ -44,36 +50,36 @@ is typically `f32` (or `f64`).
 
 ### Matrix–Matrix
 - `M * N` (composition)
-- `M + N`, `M - N` *(optional but common)*
+- `M + s`, `M - s`, `M + N`, `M - N`
 - Assignment forms: `*=`, `+=`, `-=`
 
-### Matrix–Scalar *(optional)*
+### Matrix–Scalar
 - `M * s`, `M / s`
 
 ### Matrix–Vector
-- `Matrix3x3 * Vector3` (or `Vector3 * Matrix3x3` depending on convention)
-- `transform_vector(v: Vector3<T>) -> Vector3<T>` *(explicit helper)*
+- `Matrix3x3 * Vector3` (and `Vector3 * Matrix3x3`)
+- `transform_vector(v: Vector3<T>) -> Vector3<T>` *(explicit helper)* (`M * v`)
 
 ---
 
-## Determinant & Inversion *(float primary)*
+## Determinant & Inversion
 
 - `determinant() -> T`
-- `inverse() -> Matrix3x3<T>` *(may return Option/Result if non-invertible)*
+- `inverse() -> Matrix3x3<T>`
 - `try_inverse() -> Option<Matrix3x3<T>>`
-- `is_invertible(eps)` *(optional)*
+- `is_invertible(eps)`
 
 ---
 
-## Common Uses & Constructors *(float only)*
+## Common Uses & Constructors
 
 ### 3D Rotation / Scale
 - `from_rotation(q: Quaternion<T>)`
 - `from_axis_angle(axis_unit, angle)`
 - `from_scale(s: Vector3<T>)` / `from_uniform_scale(s: T)`
-- `from_rotation_scale(rotation, scale)` *(optional convenience)*
+- `from_rotation_scale(rotation, scale)`
 
-### 2D Affine (Homogeneous 2D) *(optional but very useful)*
+### 2D Affine (Homogeneous 2D)
 If you support 2D transforms via 3×3 homogeneous matrices:
 - `from_translation_2d(t: Vector2<T>)`
 - `from_rotation_2d(angle)`
@@ -97,22 +103,22 @@ If you support 2D transforms via 3×3 homogeneous matrices:
 
 ---
 
-## Decomposition & Queries *(optional)*
+## Decomposition & Queries
 
 ### Extract Components (when valid)
-- `basis_x/y/z() -> Vector3<T>` *(axes; depends on convention)*
+- `basis_x/y/z() -> Vector3<T>`
 - `scale() -> Vector3<T>` *(assumes no shear; approximate)*
 - `rotation() -> Quaternion<T>` *(assumes orthonormal basis)*
 
 ### Classification
 - `is_orthonormal(eps)`
-- `is_symmetric(eps)` *(optional; niche)*
+- `is_symmetric(eps)`
 
 ---
 
 ## Utilities
 
-### Rounding & Validation *(float only)*
+### Rounding & Validation
 - `is_finite()`
 - `approx_eq(other, eps)`
 
@@ -124,27 +130,3 @@ If you support 2D transforms via 3×3 homogeneous matrices:
 - `to_mat4()` (embed into a 4×4 with last row/col as identity)
 - `from_mat4_linear_part(m4)` (extract the upper-left 3×3)
 
-### Packing / Interop
-- `to_column_major_f32_array()` / `to_row_major_f32_array()`
-- `to_rows()` / `to_cols()`
-
-> Provide explicit packing helpers for GPU APIs / shader constants rather than
-> relying on internal layout.
-
----
-
-## Trait Gating Strategy (Rust)
-
-Suggested bounds:
-
-- Basic ops: `T: Copy + Add + Sub + Mul`
-- Determinant/inversion/rotation constructors: `T: Float`
-
-Example:
-```rust
-impl<T: Float> Matrix3x3<T> {
-    fn determinant(self) -> T;
-    fn try_inverse(self) -> Option<Self>;
-    fn from_rotation(q: Quaternion<T>) -> Self;
-    fn transform_vector3(self, v: Vector3<T>) -> Vector3<T>;
-}

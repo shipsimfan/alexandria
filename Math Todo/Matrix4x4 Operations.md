@@ -15,7 +15,7 @@ This document outlines recommended operations for a `Matrix4x4<T>` type used for
 - `Matrix4x4<T>`: 4×4 matrix
 
 ### Layout & Convention (must document)
-- Storage: row-major or column-major
+- Storage: column-major
 - Multiplication convention:
   - Column vectors: `v' = M * v`
   - Row vectors: `v' = v * M`
@@ -27,16 +27,22 @@ This document outlines recommended operations for a `Matrix4x4<T>` type used for
 
 ### Basic Construction
 - `identity()` / `IDENTITY`
-- `zero()` / `ZERO` *(optional)*
-- `from_rows([Vector4<T>; 4])` or `from_cols([Vector4<T>; 4])`
-- `from_array([[T; 4]; 4])` / `to_array()`
-- `from_flat_array([T; 16])` / `to_flat_array()` *(layout-dependent)*
+- `zero()` / `ZERO`
+- `from_rows([Vector3<T>; 4])`, `from_cols([Vector3<T>; 4])`
+- `from_array_rows/cols([[T; 4]; 4])` / `to_array_rows/cols()`
+- `from_slice_rows/cols(&[&[T]])` / `to_slice_rows/cols()`
+- `from_flat_array_rows/cols([T; 16])` / `to_flat_array_rows/cols()`
+- `from_flat_slice_rows/cols(&[T])` / `to_flat_slice_rows/cols()`
 
 ### Accessors
 - `row(i) -> Vector4<T>` / `set_row(i, v)`
 - `col(i) -> Vector4<T>` / `set_col(i, v)`
+- `col_ref(i) -> &Vector4<T>`
 - `get(r, c) -> T` / `set(r, c, v)`
 - `transpose()`
+- `as_slice()`
+- Indexing (2-d)
+- Iterating
 
 ---
 
@@ -44,11 +50,11 @@ This document outlines recommended operations for a `Matrix4x4<T>` type used for
 
 ### Matrix–Matrix
 - `M * N` (composition)
-- `M + N`, `M - N` *(optional but common)*
+- `M + N`, `M - N`
 - Assignment forms: `*=`, `+=`, `-=`
 
-### Matrix–Scalar *(optional)*
-- `M * s`, `M / s`
+### Matrix–Scalar 
+- `M + s`, `M - s`, `M * s`, `M / s`
 
 ### Matrix–Vector
 - `Matrix4x4 * Vector4` (or `Vector4 * Matrix4x4` depending on convention)
@@ -61,34 +67,33 @@ This document outlines recommended operations for a `Matrix4x4<T>` type used for
 
 ---
 
-## Determinant & Inversion *(float primary)*
+## Determinant & Inversion
 
 - `determinant() -> T`
-- `inverse() -> Matrix4x4<T>` *(may return Option/Result if non-invertible)*
+- `inverse() -> Matrix4x4<T>`
 - `try_inverse() -> Option<Matrix4x4<T>>`
-- `is_invertible(eps)` *(optional)*
-- `inverse_transpose_3x3()` *(useful for normal transforms)*
+- `is_invertible(eps)`
+- `inverse_transpose_3x3()`
 
 ---
 
-## Common Transform Matrices *(float only)*
+## Common Transform Matrices
 
 ### Translation / Rotation / Scale
 - `from_translation(t: Vector3<T>)`
 - `from_scale(s: Vector3<T>)` / `from_uniform_scale(s: T)`
 - `from_rotation(q: Quaternion<T>)`
-- `from_trs(translation, rotation, scale)` *(very common)*
-- `to_trs()` *(optional; decomposition is tricky with shear/non-uniform scale)*
+- `from_trs(translation, rotation, scale)` 
+- `to_trs()`
 
 ### View (Camera)
-- `look_at(eye, target, up)` *(right-handed or left-handed; be explicit)*
-- `look_to(eye, forward, up)` *(optional)*
+- `look_at(eye, target, up)`
 
 ### Projection
 - `perspective(fovy, aspect, z_near, z_far)`
-- `perspective_infinite(fovy, aspect, z_near)` *(optional)*
+- `perspective_infinite(fovy, aspect, z_near)`
 - `orthographic(left, right, bottom, top, z_near, z_far)`
-- `frustum(left, right, bottom, top, z_near, z_far)` *(optional)*
+- `frustum(left, right, bottom, top, z_near, z_far)`
 
 > Also document depth range conventions if relevant:
 > - OpenGL-style NDC z ∈ [-1, 1]
@@ -96,11 +101,11 @@ This document outlines recommended operations for a `Matrix4x4<T>` type used for
 
 ---
 
-## Decomposition & Queries *(optional)*
+## Decomposition & Queries
 
 ### Extract Components (when valid)
 - `translation() -> Vector3<T>`
-- `basis_x/y/z() -> Vector3<T>` *(axes; depends on convention)*
+- `basis_x/y/z() -> Vector3<T>`
 - `scale() -> Vector3<T>` *(approx; assumes no shear)*
 - `rotation() -> Quaternion<T>` *(assumes orthonormal basis)*
 
@@ -112,14 +117,10 @@ This document outlines recommended operations for a `Matrix4x4<T>` type used for
 
 ## Utilities
 
-### Rounding & Validation *(float only)*
+### Rounding & Validation
 - `is_finite()`
-- `abs()` *(optional; component-wise)*
+- `abs()`
 - `approx_eq(other, eps)`
-
-### Interpolation *(rare; optional)*
-- Avoid lerping matrices directly for animation transforms.
-- Prefer TRS interpolation (lerp translation/scale + slerp rotation).
 
 ---
 
@@ -127,27 +128,3 @@ This document outlines recommended operations for a `Matrix4x4<T>` type used for
 
 ### To/From Related Types
 - `to_mat3()` / `from_mat3()` *(embedding/extracting 3×3)*
-- `to_columns()` / `to_rows()`
-- Interop packing:
-  - `to_column_major_f32_array()` / `to_row_major_f32_array()` for GPU APIs
-
-> Provide explicit named packing methods; don’t rely on “whatever the internal
-> layout is” when talking to graphics APIs.
-
----
-
-## Trait Gating Strategy (Rust)
-
-Suggested bounds:
-
-- Basic ops: `T: Copy + Add + Sub + Mul`
-- Inversion/determinant/projection: `T: Float`
-
-Example:
-```rust
-impl<T: Float> Matrix4x4<T> {
-    fn determinant(self) -> T;
-    fn try_inverse(self) -> Option<Self>;
-    fn transform_point3(self, p: Vector3<T>) -> Vector3<T>;
-    fn perspective(fovy: T, aspect: T, z_near: T, z_far: T) -> Self;
-}

@@ -1,8 +1,11 @@
+mod arith;
 mod cmp;
 mod creation;
 mod fmt;
+mod get;
 mod into;
 mod map;
+mod swizzle;
 
 #[cfg(feature = "data-format")]
 mod data_format;

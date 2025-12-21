@@ -1,18 +1,5 @@
 # Vector Operations for Game-Oriented Libraries
 
-## Operations for `Vector2`, `Vector3`, and `Vector4`
-
-### Constants
-- `ZERO`
-- `ONE`
-- Unit axes: `X`, `Y` (and `Z`, `W` where applicable) (alternatively `UP`/`DOWN`, `RIGHT`/`LEFT`, `FORWARD`/`BACKWARD`, `ANA`/`KATA`)
-- (float-only) `NAN`, `INFINITY`, `NEG_INFINITY`
-
-### Other
- - Indexing
- - Iterating
- - Swizzling
-
 ---
 
 ## Arithmetic (Component-wise)
@@ -31,9 +18,6 @@
 - `v / s` / `v % s`
 - `v + s` / `v - s`
 
-### Unary
-- `-v` (signed numeric only)
-
 ### Assignment forms
 - `+=`, `-=`, `*=`, `/=`
 
@@ -41,20 +25,19 @@
 
 ## Common Utilities
 
+### Dot Product
+- `dot(v, u)`
+
 ### Length & Normalization
 - `length()`
 - `length_squared()`
 - `distance(a, b)` / `distance_squared(a, b)`
 - `normalize()` (returns unit vector)
-- `try_normalize()` / `normalize_or_zero(eps)` (avoid NaNs)
 - `is_normalized(eps)`
 
 ### Angles
  - `angle_between`
  - `signed_angle`
-
-### Dot Product
-- `dot(v, u)`
 
 ### Roots
 - `sqrt`

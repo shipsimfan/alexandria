@@ -1,18 +1,18 @@
-use crate::{Color4, ColorSpace};
+use crate::Vector4;
 
-impl<T, Space: ColorSpace<T>> Color4<T, Space> {
-    /// Get an iterator over the channels of this color
+impl<T> Vector4<T> {
+    /// Get an iterator over the elements of this vector
     pub fn iter<'a>(&'a self) -> std::slice::Iter<'a, T> {
         self.as_slice().iter()
     }
 
-    /// Get a mutable iterator over the channels of this color
+    /// Get a mutable iterator over the elements of this vector
     pub fn iter_mut<'a>(&'a mut self) -> std::slice::IterMut<'a, T> {
         self.as_mut_slice().iter_mut()
     }
 }
 
-impl<T, Space: ColorSpace<T>> IntoIterator for Color4<T, Space> {
+impl<T> IntoIterator for Vector4<T> {
     type Item = T;
     type IntoIter = std::array::IntoIter<T, 4>;
 
@@ -21,7 +21,7 @@ impl<T, Space: ColorSpace<T>> IntoIterator for Color4<T, Space> {
     }
 }
 
-impl<'a, T, Space: ColorSpace<T>> IntoIterator for &'a Color4<T, Space> {
+impl<'a, T> IntoIterator for &'a Vector4<T> {
     type Item = &'a T;
     type IntoIter = std::slice::Iter<'a, T>;
 
@@ -30,7 +30,7 @@ impl<'a, T, Space: ColorSpace<T>> IntoIterator for &'a Color4<T, Space> {
     }
 }
 
-impl<'a, T, Space: ColorSpace<T>> IntoIterator for &'a mut Color4<T, Space> {
+impl<'a, T> IntoIterator for &'a mut Vector4<T> {
     type Item = &'a mut T;
     type IntoIter = std::slice::IterMut<'a, T>;
 

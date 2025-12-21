@@ -25,18 +25,22 @@ otherwise.
 - `identity()` / `IDENTITY`
 - `from_array([T; 4])`
 - `to_array()`
+- `from_tuple((T, T, T, T))`
+- `to_tuple()`
+- `from_slice(&[T])`
+- `as_slice()`
 
-### From Rotation Representations *(float only)*
+### From Rotation Representations
 - `from_axis_angle(axis_unit, angle)`
-- `from_euler_xyz(x, y, z)` *(explicit order!)*
-- `from_euler_zyx(z, y, x)` *(provide named variants only)*
+- `from_euler(x, y, z)` 
 - `from_rotation_matrix(mat3 | mat4)`
 - `from_two_vectors(from_unit, to_unit)` *(shortest arc)*
 
 ### Accessors
 - `vector()` → `Vector3<T>`
 - `scalar()` → `T`
-- `x()`, `y()`, `z()`, `w()`
+- Iterator
+- Indexing
 
 ---
 
@@ -44,10 +48,10 @@ otherwise.
 
 ### Identity & Inversion
 - `conjugate()`
-- `inverse()` *(unit quaternion: same as conjugate)*
+- `inverse()`
 - `is_identity(eps)`
 
-### Normalization *(float only)*
+### Normalization 
 - `length()`
 - `length_squared()`
 - `normalize()`
@@ -67,7 +71,6 @@ otherwise.
 ### Quaternion–Scalar *(optional)*
 - `q * s`
 - `q / s`
-- Mostly useful for normalization internals; not common in public APIs.
 
 ### Unary
 - `-q` (represents the same rotation as `q`)
@@ -76,19 +79,19 @@ otherwise.
 
 ## Applying Rotations
 
-### Rotate Vectors *(float only)*
+### Rotate Vectors
 - `rotate_vector(v: Vector3<T>) -> Vector3<T>`
-- Optionally: `impl Mul<Vector3<T>> for Quaternion<T>`
+- `impl Mul<Vector3<T>> for Quaternion<T>`
 
 ### Basis / Axes
-- `forward()`, `right()`, `up()` *(engine-convention-dependent)*
-- Or: `basis_x()`, `basis_y()`, `basis_z()`
+- `forward()`, `right()`, `up()` 
+- and `basis_x()`, `basis_y()`, `basis_z()`
 
 ---
 
 ## Interpolation
 
-### Linear & Spherical *(unit quaternions only)*
+### Linear & Spherical *(unit quaternions assumed)*
 - `lerp(q0, q1, t)` *(fast, not constant-speed; renormalize)*
 - `nlerp(q0, q1, t)` *(normalized lerp; common in games)*
 - `slerp(q0, q1, t)` *(constant angular velocity)*
@@ -103,9 +106,8 @@ otherwise.
 - `to_axis_angle() -> (axis_unit, angle)`
 - `angle()` *(magnitude of rotation)*
 
-### Euler Angles *(float only)*
-- `to_euler_xyz()`
-- `to_euler_zyx()`
+### Euler Angles
+- `to_euler()`
 
 > Euler conversions are inherently ambiguous; document conventions loudly.
 
@@ -115,7 +117,7 @@ otherwise.
 
 ---
 
-## Advanced Operations *(Optional but Useful)*
+## Advanced Operations
 
 ### Relative Rotations
 - `between(a, b)` *(equivalent to `b * a.inverse()`)*
@@ -123,11 +125,6 @@ otherwise.
 ### Integration *(physics / animation)*
 - `integrate_angular_velocity(omega, dt)`
 - `from_angular_velocity(omega, dt)`
-
-### Exponentials *(advanced)*
-- `log()`
-- `exp()`
-- Useful for spline interpolation (squad), but can be omitted initially.
 
 ---
 
@@ -138,21 +135,3 @@ otherwise.
 - `to_mat4()`
 - `from_mat3()`
 - `from_mat4()`
-
----
-
-## Trait Gating Strategy (Rust)
-
-Suggested bounds:
-
-- Most public APIs: `T: Float`
-- Low-level arithmetic: `T: Copy + Add + Sub + Mul`
-
-Example:
-```rust
-impl<T: Float> Quaternion<T> {
-    fn normalize(self) -> Self;
-    fn inverse(self) -> Self;
-    fn rotate_vector(self, v: Vector3<T>) -> Vector3<T>;
-    fn slerp(a: Self, b: Self, t: T) -> Self;
-}
