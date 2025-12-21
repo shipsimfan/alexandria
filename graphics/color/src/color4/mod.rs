@@ -4,20 +4,15 @@ use std::marker::PhantomData;
 mod arith;
 mod cmp;
 mod color_space;
-mod constants;
 mod creation;
+mod fmt;
+mod get;
 mod into;
 mod map;
 mod math;
 
-mod debug;
-mod deserialize;
-mod display;
-mod hash;
-mod index;
-mod is_finite;
-mod iter;
-mod serialize;
+#[cfg(feature = "data-format")]
+mod data_format;
 
 /// An RGB color with an alpha channel tagged with a compile-time color space marker
 #[repr(C)]

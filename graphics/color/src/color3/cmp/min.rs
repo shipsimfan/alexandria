@@ -7,15 +7,11 @@ impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     where
         T: [const] Ord + [const] Clone + [const] Destruct,
     {
-        Color3::new(
-            std::cmp::min(self.r, min.clone()),
-            std::cmp::min(self.g, min.clone()),
-            std::cmp::min(self.b, min),
-        )
+        self.min_c(Color3::new(min.clone(), min.clone(), min))
     }
 
     /// Set all channels to be at most `min` channel-wise
-    pub const fn min_v(self, min: Self) -> Self
+    pub const fn min_c(self, min: Self) -> Self
     where
         T: [const] Ord + [const] Destruct,
     {

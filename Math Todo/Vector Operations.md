@@ -1,48 +1,12 @@
 # Vector Operations for Game-Oriented Libraries
 
-This document outlines recommended operations for `Vector2`, `Vector3`, and `Vector4`
-types, parameterized over an **underlying scalar type** `T` (e.g. `i32`, `u32`, `f32`, `f64`).
-The goal is to provide a complete, ergonomic set of math operations while keeping
-semantics clear and avoiding ambiguous APIs.
-
----
-
-## Core Types
-
-- `Vector2<T>`: `(x, y)`
-- `Vector3<T>`: `(x, y, z)`
-- `Vector4<T>`: `(x, y, z, w)`
-
-> Recommendation: keep `VectorN<T>` “pure math” types. Put engine-specific meaning
-> (positions vs directions vs normals, SIMD packing, coordinate spaces) in wrappers.
-
----
-
 ## Operations for `Vector2`, `Vector3`, and `Vector4`
-
-### Construction & Access
-- `new(x, y[, z[, w]])`
-- `from_array([T; N])`
-- `to_array()`
-- `from_slice(&[T])`
-- `from_tuple`
-- `to_tuple`
-- `splat(v)` (all components = `v`)
-- `map(f)` / `map2(other, f)` (component-wise mapping)
-- `zip(f)`
-- `approx_eq(eps)`
 
 ### Constants
 - `ZERO`
 - `ONE`
 - Unit axes: `X`, `Y` (and `Z`, `W` where applicable) (alternatively `UP`/`DOWN`, `RIGHT`/`LEFT`, `FORWARD`/`BACKWARD`, `ANA`/`KATA`)
 - (float-only) `NAN`, `INFINITY`, `NEG_INFINITY`
-
-### Formatting & Debug
-- `Debug`, `Display` (optional)
-
-### (De)serialization
- - Feature gate
 
 ### Other
  - Indexing
@@ -169,12 +133,6 @@ semantics clear and avoiding ambiguous APIs.
 - `project_onto(v, onto)` / `reject_from(v, onto)`
 
 ---
-
-## Conversions & Casting
-
-### Numeric casts
-- `cast<U>()` / `as_*()` conversions (explicit, never implicit)
-- `to_f32()`, `to_i32()` convenience methods if you like
 
 ### Dimension conversions
 - `Vector2 -> Vector3` (`extend(z)`)

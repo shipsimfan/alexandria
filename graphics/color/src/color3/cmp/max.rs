@@ -7,15 +7,11 @@ impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     where
         T: [const] Ord + [const] Clone + [const] Destruct,
     {
-        Color3::new(
-            std::cmp::max(self.r, max.clone()),
-            std::cmp::max(self.g, max.clone()),
-            std::cmp::max(self.b, max),
-        )
+        self.max_c(Color3::new(max.clone(), max.clone(), max))
     }
 
     /// Set all channels to be at least `max` channel-wise
-    pub const fn max_v(self, max: Self) -> Self
+    pub const fn max_c(self, max: Self) -> Self
     where
         T: [const] Ord + [const] Destruct,
     {

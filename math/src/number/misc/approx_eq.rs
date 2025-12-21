@@ -1,7 +1,10 @@
 /// A value which can be checked for approximate equality
-pub const trait ApproxEq {
+pub const trait ApproxEq: Sized {
+    /// The type to use for `epsilon`
+    type Epsilon = Self;
+
     /// Is this value approximately equal to `other` (with-in `epsilon`)
-    fn approx_eq(self, other: Self, epsilon: Self) -> bool;
+    fn approx_eq(self, other: Self, epsilon: Self::Epsilon) -> bool;
 }
 
 // Unsigned integers

@@ -14,6 +14,9 @@
 #![feature(const_destruct)]
 #![feature(const_ops)]
 #![feature(const_trait_impl)]
+//
+// Other features
+#![feature(formatting_options)]
 
 mod color3;
 mod color4;

@@ -5,3 +5,5 @@ impl<T: [const] PartialEq, Space: ColorSpace<T>> const PartialEq for Color3<T, S
         self.r.eq(&other.r) && self.g.eq(&other.g) && self.b.eq(&other.b)
     }
 }
+
+impl<T: Eq, Space: ColorSpace<T>> Eq for Color3<T, Space> {}

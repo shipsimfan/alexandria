@@ -10,3 +10,9 @@ impl<T, Space: ColorSpace<T>> Color3<T, Space> {
         self.r.is_finite() && self.g.is_finite() && self.b.is_finite()
     }
 }
+
+impl<T: [const] IsFinite, Space: ColorSpace<T>> const IsFinite for Color3<T, Space> {
+    fn is_finite(&self) -> bool {
+        self.is_finite()
+    }
+}

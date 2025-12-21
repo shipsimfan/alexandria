@@ -1,7 +1,10 @@
 /// Restrict a value to a certain interval
-pub const trait Clamp {
+pub const trait Clamp: Sized {
+    /// The bound to use for `min` and `max`
+    type Bound = Self;
+
     /// Restrict a value to a certain interval
-    fn clamp(self, min: Self, max: Self) -> Self;
+    fn clamp(self, min: Self::Bound, max: Self::Bound) -> Self;
 }
 
 // Unsigned integers

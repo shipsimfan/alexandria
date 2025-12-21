@@ -19,7 +19,6 @@ use alexandria_math::number::{FromF32, IntoF32};
 /// # Alpha
 /// Alpha is commonly stored alongside sRGB RGB in asset formats, but alpha itself is not
 /// “sRGB-encoded”; it’s still a linear coverage value.
-#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Srgb;
 
 /// Convert an individual color `channel` from sRGB to linear
