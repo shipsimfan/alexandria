@@ -5,6 +5,7 @@ mod fmt;
 mod get;
 mod into;
 mod map;
+mod math;
 mod swizzle;
 
 #[cfg(feature = "data-format")]

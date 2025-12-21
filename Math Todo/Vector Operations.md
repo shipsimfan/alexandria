@@ -1,32 +1,6 @@
 # Vector Operations for Game-Oriented Libraries
 
----
-
-## Arithmetic (Component-wise)
-
-### Vector-Vector
-- `v + u`
-- `v - u`
-- `v * u` (Hadamard / component-wise)
-- `v / u` / `v % u` (component-wise)
-
-> Consider naming Hadamard explicitly (`hadamard_mul`) if you want to avoid confusion
-> with dot/cross.
-
-### Vector-Scalar
-- `v * s`
-- `v / s` / `v % s`
-- `v + s` / `v - s`
-
-### Assignment forms
-- `+=`, `-=`, `*=`, `/=`
-
----
-
 ## Common Utilities
-
-### Dot Product
-- `dot(v, u)`
 
 ### Length & Normalization
 - `length()`
@@ -90,6 +64,7 @@
 - `powf()`
 - `powi()`
 - `signum()`
+- `recip()`
 
 ---
 
