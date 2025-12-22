@@ -1,0 +1,13 @@
+mod acos;
+mod acosh;
+mod asin;
+mod asinh;
+mod atan;
+mod atan2;
+mod atanh;
+mod cos;
+mod cosh;
+mod sin;
+mod sinh;
+mod tan;
+mod tanh;
