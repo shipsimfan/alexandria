@@ -1,7 +1,10 @@
 /// Computes the logarithm of a value with respect to an arbitrary base
-pub const trait Log {
+pub const trait Log: Sized {
+    /// The type a base can be
+    type Base = Self;
+
     /// Computes the logarithm of a value with respect to an arbitrary base
-    fn log(self, base: Self) -> Self;
+    fn log(self, base: Self::Base) -> Self;
 }
 
 // Unsigned integers

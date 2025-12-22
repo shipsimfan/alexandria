@@ -1,7 +1,10 @@
 /// Raises a value to another value
-pub const trait PowF {
+pub const trait PowF: Sized {
+    /// The type this a value can be raised by
+    type Pow = Self;
+
     /// Raises a value to another value
-    fn powf(self, n: Self) -> Self;
+    fn powf(self, n: Self::Pow) -> Self;
 }
 
 impl PowF for f32 {

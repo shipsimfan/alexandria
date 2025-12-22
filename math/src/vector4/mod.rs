@@ -7,7 +7,9 @@ mod interpolation;
 mod into;
 mod map;
 mod math;
+mod rounding;
 mod swizzle;
+mod trig;
 
 #[cfg(feature = "data-format")]
 mod data_format;

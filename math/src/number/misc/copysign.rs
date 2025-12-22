@@ -1,6 +1,6 @@
-/// Returns a number that represents the sign of `self`
+/// Copies the sign from a different value
 pub const trait CopySign {
-    /// Returns a number that represents the sign of `self`
+    /// Copies the sign from `sign`
     fn copysign(self, sign: Self) -> Self;
 }
 
@@ -46,61 +46,37 @@ impl const CopySign for usize {
 
 impl const CopySign for i8 {
     fn copysign(self, sign: Self) -> Self {
-        if sign < 0 {
-            -self.abs()
-        } else {
-            self.abs()
-        }
+        if sign < 0 { -self.abs() } else { self.abs() }
     }
 }
 
 impl const CopySign for i16 {
     fn copysign(self, sign: Self) -> Self {
-        if sign < 0 {
-            -self.abs()
-        } else {
-            self.abs()
-        }
+        if sign < 0 { -self.abs() } else { self.abs() }
     }
 }
 
 impl const CopySign for i32 {
     fn copysign(self, sign: Self) -> Self {
-        if sign < 0 {
-            -self.abs()
-        } else {
-            self.abs()
-        }
+        if sign < 0 { -self.abs() } else { self.abs() }
     }
 }
 
 impl const CopySign for i64 {
     fn copysign(self, sign: Self) -> Self {
-        if sign < 0 {
-            -self.abs()
-        } else {
-            self.abs()
-        }
+        if sign < 0 { -self.abs() } else { self.abs() }
     }
 }
 
 impl const CopySign for i128 {
     fn copysign(self, sign: Self) -> Self {
-        if sign < 0 {
-            -self.abs()
-        } else {
-            self.abs()
-        }
+        if sign < 0 { -self.abs() } else { self.abs() }
     }
 }
 
 impl const CopySign for isize {
     fn copysign(self, sign: Self) -> Self {
-        if sign < 0 {
-            -self.abs()
-        } else {
-            self.abs()
-        }
+        if sign < 0 { -self.abs() } else { self.abs() }
     }
 }
 

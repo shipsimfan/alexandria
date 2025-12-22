@@ -1,43 +1,5 @@
 # Vector Operations for Game-Oriented Libraries
 
-## Common Utilities
-
-### Rounding
-- `floor()`, `ceil()`, `round()`, `trunc()`, `fract()`
-
-### Validation
-- `is_finite()`
-- `is_nan()`
-
-### Trig
-- `acos()`
-- `acosh()`
-- `asin()`
-- `asinh()`
-- `atan()`
-- `atan2()`
-- `atanh()`
-- `cos()`
-- `cosh()`
-- `sin()`
-- `sinh()`
-- `tan()`
-- `tanh()`
-
-### Other
-- `copysign()`
-- `exp()`
-- `exp2()`
-- `ln()`
-- `log2()`
-- `log10()`
-- `powf()`
-- `powi()`
-- `signum()`
-- `recip()`
-
----
-
 ## `Vector2<T>`-Specific Operations
 
 ### 2D Geometry
