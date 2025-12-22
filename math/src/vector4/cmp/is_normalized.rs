@@ -28,7 +28,7 @@ impl<T> Vector4<T> {
 mod tests {
     use crate::Vector4f;
 
-    macro_rules! length_squared_tests {
+    macro_rules! is_normalized_tests {
         [$(
             $test_name: ident: ($ix: literal, $iy: literal, $iz: literal, $iw: literal) -> $o: literal,
         )*] => {$(
@@ -36,14 +36,12 @@ mod tests {
             fn $test_name() {
                 const INPUT: Vector4f = Vector4f::new($ix, $iy, $iz, $iw);
 
-                println!("TESTING: {}", INPUT.length_squared());
-
                 assert_eq!(INPUT.is_normalized(0.001), $o);
             }
         )*};
     }
 
-    length_squared_tests![
+    is_normalized_tests![
         is_normalized_unit_x: (1.0, 0.0, 0.0, 0.0) -> true,
         is_normalized_unit_y: (0.0, 1.0, 0.0, 0.0) -> true,
         is_normalized_unit_z: (0.0, 0.0, 1.0, 0.0) -> true,
