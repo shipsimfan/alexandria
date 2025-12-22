@@ -3,6 +3,7 @@ mod cmp;
 mod creation;
 mod fmt;
 mod get;
+mod interpolation;
 mod into;
 mod map;
 mod math;

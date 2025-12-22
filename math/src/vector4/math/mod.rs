@@ -1,1 +1,11 @@
+mod abs;
+mod angle_between;
+mod cbrt;
+mod distance;
+mod distance_squared;
 mod dot;
+mod length;
+mod length_squared;
+mod normalize;
+mod normalized;
+mod sqrt;

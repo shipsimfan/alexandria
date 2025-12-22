@@ -2,36 +2,6 @@
 
 ## Common Utilities
 
-### Length & Normalization
-- `length()`
-- `length_squared()`
-- `distance(a, b)` / `distance_squared(a, b)`
-- `normalize()` (returns unit vector)
-- `is_normalized(eps)`
-
-### Angles
- - `angle_between`
- - `signed_angle`
-
-### Roots
-- `sqrt`
-- `cbrt`
-
-### Min/Max & Clamp
-- `max_v(v, u)` (component-wise w/ vector)
-- `min_v(v, u)` (component-wise w/ vector)
-- `max(v, s)` (component-wise w/ scalar)
-- `min(v, s)` (component-wise w/ scalar)
-- `clamp_v(v, min, max)` (component-wise w/ vector)
-- `clamp(v, min, max)` (component-wise w/ scalar)
-- `abs()` (signed only)
-
-### Interpolation
-- `lerp(a, b, t)`
-- `smoothstep(a, b, t)`
-- `nlerp(a, b, t)`
-- `slerp(a, b, t)`
-
 ### Rounding
 - `floor()`, `ceil()`, `round()`, `trunc()`, `fract()`
 
@@ -92,6 +62,11 @@
 
 ---
 
+## `Vector2<T>` and `Vector3<T>` Operations
+
 ### Dimension conversions
 - `Vector2 -> Vector3` (`extend(z)`)
 - `Vector3 -> Vector4` (`extend(w)`)
+
+### Angles
+ - `signed_angle`
