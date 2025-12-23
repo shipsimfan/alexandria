@@ -1,48 +1,15 @@
 # Matrix4x4 Operations for Game-Oriented Libraries
 
-This document outlines recommended operations for a `Matrix4x4<T>` type used for
-3D transforms and projection in games. The scalar type `T` is typically `f32`
-(or `f64`).
-
-> Recommendation: be explicit about **storage** (row-major vs column-major) and
-> **conventions** (row-vector vs column-vector multiplication). Many bugs come
-> from mismatched conventions, not math mistakes.
-
----
-
-## Core Type
-
-- `Matrix4x4<T>`: 4×4 matrix
-
-### Layout & Convention (must document)
-- Storage: column-major
-- Multiplication convention:
-  - Column vectors: `v' = M * v`
-  - Row vectors: `v' = v * M`
-- Transform composition order (what `A * B` means)
-
----
-
 ## Construction & Access
-
-### Basic Construction
-- `identity()` / `IDENTITY`
-- `zero()` / `ZERO`
-- `from_rows([Vector3<T>; 4])`, `from_cols([Vector3<T>; 4])`
-- `from_array_rows/cols([[T; 4]; 4])` / `to_array_rows/cols()`
-- `from_slice_rows/cols(&[&[T]])` / `to_slice_rows/cols()`
-- `from_flat_array_rows/cols([T; 16])` / `to_flat_array_rows/cols()`
-- `from_flat_slice_rows/cols(&[T])` / `to_flat_slice_rows/cols()`
 
 ### Accessors
 - `row(i) -> Vector4<T>` / `set_row(i, v)`
 - `col(i) -> Vector4<T>` / `set_col(i, v)`
-- `col_ref(i) -> &Vector4<T>`
 - `get(r, c) -> T` / `set(r, c, v)`
 - `transpose()`
 - `as_slice()`
-- Indexing (2-d)
-- Iterating
+- Indexing ([row][column])
+- Iterating (rows, columns, values row-major, values column-major)
 
 ---
 
@@ -54,7 +21,7 @@ This document outlines recommended operations for a `Matrix4x4<T>` type used for
 - Assignment forms: `*=`, `+=`, `-=`
 
 ### Matrix–Scalar 
-- `M + s`, `M - s`, `M * s`, `M / s`
+- `M + s`, `M - s`, `M * s`, `M / s`, `M % s`
 
 ### Matrix–Vector
 - `Matrix4x4 * Vector4` (or `Vector4 * Matrix4x4` depending on convention)

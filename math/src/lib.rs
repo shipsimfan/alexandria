@@ -12,6 +12,7 @@
 #![feature(const_convert)]
 #![feature(const_default)]
 #![feature(const_destruct)]
+#![feature(const_index)]
 #![feature(const_ops)]
 #![feature(const_trait_impl)]
 #![feature(const_try)]
@@ -20,12 +21,14 @@
 #![feature(associated_type_defaults)]
 #![feature(formatting_options)]
 
+mod matrix4x4;
 mod vector2;
 mod vector3;
 mod vector4;
 
 pub mod number;
 
+pub use matrix4x4::*;
 pub use vector2::*;
 pub use vector3::*;
 pub use vector4::*;
