@@ -3,13 +3,13 @@
 ## Construction & Access
 
 ### Accessors
-- `row(i) -> Vector4<T>` / `set_row(i, v)`
-- `col(i) -> Vector4<T>` / `set_col(i, v)`
-- `get(r, c) -> T` / `set(r, c, v)`
-- `transpose()`
-- `as_slice()`
-- Indexing ([row][column])
+- `get_ref`
+- `get(r, c) -> T`
 - Iterating (rows, columns, values row-major, values column-major)
+- `set_row(i, v)`
+- `set_col(i, v)`
+- `set(r, c, v)`
+- `transpose()`
 
 ---
 

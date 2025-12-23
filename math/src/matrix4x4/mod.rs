@@ -1,6 +1,7 @@
 use crate::Vector4;
 
 mod creation;
+mod get;
 
 /// A matrix with 4 rows and 4 columns used for 3D affine transformations
 #[repr(C)]
