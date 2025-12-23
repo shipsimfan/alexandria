@@ -2,8 +2,8 @@ use crate::{Vector4, number::ApproxEq};
 use std::marker::Destruct;
 
 impl<T> Vector4<T> {
-    /// Is this color approximately equal to `other`?
-    pub const fn approx_eq(self, other: Self, epsilon: T::Epsilon) -> bool
+    /// Is this vector approximately equal to `other`?
+    pub const fn approx_eq(self, other: Vector4<T>, epsilon: T::Epsilon) -> bool
     where
         T: [const] ApproxEq + [const] Destruct,
         T::Epsilon: [const] Clone + [const] Destruct,

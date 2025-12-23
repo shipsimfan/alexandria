@@ -3,7 +3,7 @@ use crate::{Vector2, number::Log};
 impl<T: Log> Vector2<T> {
     /// Computes the logarithm of the contained values with respect to an arbitrary base,
     /// component-wise
-    pub fn log(self, base: T::Base) -> Self
+    pub fn log(self, base: T::Base) -> Vector2<T>
     where
         T::Base: Clone,
     {

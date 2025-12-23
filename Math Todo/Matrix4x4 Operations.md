@@ -2,23 +2,29 @@
 
 ## Construction & Access
 
+### Creation
+- `default`
+- `splat`
+
 ### Accessors
-- `get_ref`
-- `get(r, c) -> T`
-- Iterating (rows, columns, values row-major, values column-major)
 - `set_row(i, v)`
 - `set_col(i, v)`
 - `set(r, c, v)`
-- `transpose()`
+
+### Comparison
+- `eq`
+- `clamp`
+- `hash`
+- `is_finite`
+- `is_nan`
+- `max`
+- `min`
+
+### Serialize/Deserialization
 
 ---
 
 ## Arithmetic
-
-### Matrix–Matrix
-- `M * N` (composition)
-- `M + N`, `M - N`
-- Assignment forms: `*=`, `+=`, `-=`
 
 ### Matrix–Scalar 
 - `M + s`, `M - s`, `M * s`, `M / s`, `M % s`
@@ -29,8 +35,10 @@
 - `transform_vector(v: Vector3<T>) -> Vector3<T>` *(uses w=0)*
 - `transform_normal(n: Vector3<T>) -> Vector3<T>` *(see below; usually needs inverse-transpose)*
 
-> Prefer explicit `transform_point/vector/normal` helpers over raw `mul` to avoid
-> w-component mistakes.
+### Matrix–Matrix
+- `M * N` (composition)
+- `M + N`, `M - N`
+- Assignment forms: `*=`, `+=`, `-=`
 
 ---
 
@@ -63,8 +71,7 @@
 - `frustum(left, right, bottom, top, z_near, z_far)`
 
 > Also document depth range conventions if relevant:
-> - OpenGL-style NDC z ∈ [-1, 1]
-> - D3D/Vulkan-style NDC z ∈ [0, 1]
+> - Vulkan-style NDC z ∈ [0, 1]
 
 ---
 

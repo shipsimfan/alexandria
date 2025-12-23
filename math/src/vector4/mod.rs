@@ -8,6 +8,7 @@ mod into;
 mod map;
 mod math;
 mod rounding;
+mod set;
 mod swizzle;
 mod trig;
 

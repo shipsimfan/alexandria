@@ -16,6 +16,6 @@ impl<T> Matrix4x4<T> {
     where
         T: [const] Clone,
     {
-        self.try_row_ref(row).map(Clone::clone)
+        self.row_ref(row).map(Clone::clone)
     }
 }

@@ -1,23 +1,25 @@
 use crate::Matrix4x4;
 
 impl<T> Matrix4x4<T> {
-    /// Get the value at `row` and `col`
-    pub fn get_ref(&self, row: usize, col: usize) -> &T {
-        todo!()
+    /// Get a reference to the value at `row` and `col`
+    pub const fn get_ref(&self, row: usize, col: usize) -> Option<&T> {
+        match row {
+            0 => self.r0.get_ref(col),
+            1 => self.r1.get_ref(col),
+            2 => self.r2.get_ref(col),
+            3 => self.r3.get_ref(col),
+            _ => None,
+        }
     }
 
-    /// Get the value at `row` and `col`
-    pub const fn try_get_ref(&self, row: usize, col: usize) -> Option<&T> {
-        todo!()
-    }
-
-    /// Get the value at `row` and `col`
-    pub fn get_mut_ref(&mut self, row: usize, col: usize) -> &mut T {
-        todo!()
-    }
-
-    /// Get the value at `row` and `col`
-    pub const fn try_get_mut_ref(&mut self, row: usize, col: usize) -> Option<&mut T> {
-        todo!()
+    /// Get a mutable reference to the value at `row` and `col`
+    pub const fn get_ref_mut(&mut self, row: usize, col: usize) -> Option<&mut T> {
+        match row {
+            0 => self.r0.get_ref_mut(col),
+            1 => self.r1.get_ref_mut(col),
+            2 => self.r2.get_ref_mut(col),
+            3 => self.r3.get_ref_mut(col),
+            _ => None,
+        }
     }
 }

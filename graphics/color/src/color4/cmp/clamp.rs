@@ -4,7 +4,7 @@ use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     /// Clamp this color channel wise between `min` and `max`
-    pub const fn clamp(self, min: T::Bound, max: T::Bound) -> Self
+    pub const fn clamp(self, min: T::Bound, max: T::Bound) -> Color4<T, Space>
     where
         T: [const] Clamp + [const] Destruct,
         T::Bound: [const] Clone + [const] Destruct,
@@ -14,7 +14,11 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Clamp this color channel-wise between `min` and `max`
-    pub const fn clamp_c(self, min: Color4<T::Bound, Space>, max: Color4<T::Bound, Space>) -> Self
+    pub const fn clamp_c(
+        self,
+        min: Color4<T::Bound, Space>,
+        max: Color4<T::Bound, Space>,
+    ) -> Color4<T, Space>
     where
         T: [const] Clamp + [const] Destruct,
         T::Bound: [const] Destruct,

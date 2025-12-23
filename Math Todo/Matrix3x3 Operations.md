@@ -28,11 +28,22 @@ is typically `f32` (or `f64`).
 ### Basic Construction
 - `identity()` / `IDENTITY`
 - `zero()` / `ZERO`
-- `from_rows([Vector3<T>; 3])`, `from_cols([Vector3<T>; 3])`
-- `from_array_rows/cols([[T; 3]; 3])` / `to_array_rows/cols()`
-- `from_slice_rows/cols(&[&[T]])` / `to_slice_rows/cols()`
-- `from_flat_array_rows/cols([T; 9])` / `to_flat_array_rows/cols()`
-- `from_flat_slice_rows/cols(&[T])` / `to_flat_slice_rows/cols()`
+- `from_rows([Vector3<T>; 3])`, 
+- `from_cols([Vector3<T>; 3])`
+- `from_array_rows/cols([[T; 3]; 3])` 
+- `from_slice_rows/cols(&[&[T]])` 
+- `from_flat_array_rows/cols([T; 9])` `
+- `from_flat_slice_rows/cols(&[T])` 
+- `from_tuple_rows/cols()` 
+- `clone`
+- `default`
+- `splat`
+
+### Into
+- `array`
+- `flat_array`
+- `tuple`
+- `vector4s`
 
 ### Accessors
 - `row(i) -> Vector3<T>` / `set_row(i, v)`
@@ -44,21 +55,40 @@ is typically `f32` (or `f64`).
 - Indexing (2-d)
 - Iterating
 
+### Mapping
+- `map`
+- `zip`
+
+### Comparison
+- `eq`
+- `clamp`
+- `hash`
+- `is_finite`
+- `is_nan`
+- `max`
+- `min`
+
+### Serialize/Deserialization
+
+### Fmt
+- `Debug`
+- `Display`
+
 ---
 
 ## Arithmetic
 
-### Matrix–Matrix
-- `M * N` (composition)
-- `M + s`, `M - s`, `M + N`, `M - N`
-- Assignment forms: `*=`, `+=`, `-=`
-
-### Matrix–Scalar
-- `M * s`, `M / s`
+### Matrix–Scalar 
+- `M + s`, `M - s`, `M * s`, `M / s`, `M % s`
 
 ### Matrix–Vector
 - `Matrix3x3 * Vector3` (and `Vector3 * Matrix3x3`)
 - `transform_vector(v: Vector3<T>) -> Vector3<T>` *(explicit helper)* (`M * v`)
+
+### Matrix–Matrix
+- `M * N` (composition)
+- `M + N`, `M - N`
+- Assignment forms: `*=`, `+=`, `-=`
 
 ---
 

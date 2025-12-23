@@ -3,7 +3,7 @@ use alexandria_math::number::FromF32;
 
 impl<T, Space: ColorSpace<T> + ColorSpace<f32>> Color3<T, Space> {
     /// Convert a color in [`f32`] into a specific typed color
-    pub const fn from_f32(color: Color3<f32, Space>) -> Self
+    pub const fn from_f32(color: Color3<f32, Space>) -> Color3<T, Space>
     where
         T: [const] FromF32,
     {

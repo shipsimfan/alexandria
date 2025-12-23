@@ -10,7 +10,7 @@ impl<T: Zero> Vector2<T> {
 }
 
 impl<T: Zero> Zero for Vector2<T> {
-    const ZERO: Self = Self::ZERO;
+    const ZERO: Vector2<T> = Vector2::ZERO;
 }
 
 impl<T: One> Vector2<T> {
@@ -22,9 +22,9 @@ impl<T: One> Vector2<T> {
 }
 
 impl<T: One> One for Vector2<T> {
-    const ONE: Self = Self::ONE;
+    const ONE: Vector2<T> = Vector2::ONE;
 
-    const NORMALIZED_ONE: Self = Self::NORMALIZED_ONE;
+    const NORMALIZED_ONE: Vector2<T> = Vector2::NORMALIZED_ONE;
 }
 
 impl<T: Zero + One> Vector2<T> {
@@ -35,18 +35,18 @@ impl<T: Zero + One> Vector2<T> {
     pub const Y: Vector2<T> = Vector2::new(T::ZERO, T::ONE);
 
     /// A [`Vector2`] which points to the right
-    pub const RIGHT: Vector2<T> = Self::X;
+    pub const RIGHT: Vector2<T> = Vector2::X;
 
     /// A [`Vector2`] which points up
-    pub const UP: Vector2<T> = Self::Y;
+    pub const UP: Vector2<T> = Vector2::Y;
 }
 
 impl<T: const Neg<Output = T> + const Destruct + Zero + One> Vector2<T> {
     /// A [`Vector2`] which points to the left
-    pub const LEFT: Vector2<T> = -Self::RIGHT;
+    pub const LEFT: Vector2<T> = -Vector2::RIGHT;
 
     /// A [`Vector2`] which points down
-    pub const DOWN: Vector2<T> = -Self::UP;
+    pub const DOWN: Vector2<T> = -Vector2::UP;
 }
 
 impl<T: NaN> Vector2<T> {
@@ -55,7 +55,7 @@ impl<T: NaN> Vector2<T> {
 }
 
 impl<T: NaN> NaN for Vector2<T> {
-    const NAN: Self = Self::NAN;
+    const NAN: Vector2<T> = Vector2::NAN;
 }
 
 impl<T: Infinity> Vector2<T> {
@@ -64,7 +64,7 @@ impl<T: Infinity> Vector2<T> {
 }
 
 impl<T: Infinity> Infinity for Vector2<T> {
-    const INFINITY: Self = Self::INFINITY;
+    const INFINITY: Vector2<T> = Vector2::INFINITY;
 }
 
 impl<T: NegInfinity> Vector2<T> {
@@ -73,5 +73,5 @@ impl<T: NegInfinity> Vector2<T> {
 }
 
 impl<T: NegInfinity> NegInfinity for Vector2<T> {
-    const NEG_INFINITY: Self = Self::NEG_INFINITY;
+    const NEG_INFINITY: Vector2<T> = Vector2::NEG_INFINITY;
 }

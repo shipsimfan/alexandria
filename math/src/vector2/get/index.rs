@@ -5,10 +5,9 @@ impl<T> Index<usize> for Vector2<T> {
     type Output = T;
 
     fn index(&self, index: usize) -> &Self::Output {
-        match index {
-            0 => &self.x,
-            1 => &self.y,
-            _ => panic!(
+        match self.get_ref(index) {
+            Some(value) => value,
+            None => panic!(
                 "index out of bounds: the len is 2 but the index is {}",
                 index
             ),
@@ -18,10 +17,9 @@ impl<T> Index<usize> for Vector2<T> {
 
 impl<T> IndexMut<usize> for Vector2<T> {
     fn index_mut(&mut self, index: usize) -> &mut Self::Output {
-        match index {
-            0 => &mut self.x,
-            1 => &mut self.y,
-            _ => panic!(
+        match self.get_ref_mut(index) {
+            Some(value) => value,
+            None => panic!(
                 "index out of bounds: the len is 2 but the index is {}",
                 index
             ),

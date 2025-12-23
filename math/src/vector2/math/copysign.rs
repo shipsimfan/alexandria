@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T> Vector2<T> {
     /// Copies the sign from `sign`, component-wise
-    pub const fn copysign(self, sign: Self) -> Self
+    pub const fn copysign(self, sign: Vector2<T>) -> Vector2<T>
     where
         T: [const] CopySign + [const] Destruct,
     {

@@ -3,7 +3,7 @@ use alexandria_math::number::{FromF32, IntoF32};
 
 impl<T: FromF32 + IntoF32> Color4<T, Linear> {
     /// Tone map this color using the Reinhard algorithm
-    pub fn tone_map_reinhard(self, ev: f32) -> Self {
+    pub fn tone_map_reinhard(self, ev: f32) -> Color4<T, Linear> {
         let (color, a) = self.rgb_a();
         color.tone_map_reinhard(ev).with_alpha(a)
     }

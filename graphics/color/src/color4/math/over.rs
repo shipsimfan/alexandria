@@ -4,7 +4,7 @@ use std::marker::Destruct;
 
 impl<T> Color4<T, Linear> {
     /// Composite `self` over `b`
-    pub const fn over(self, b: Self) -> Self
+    pub const fn over(self, b: Color4<T, Linear>) -> Color4<T, Linear>
     where
         T: [const] Destruct + [const] IntoF32 + [const] FromF32,
     {
@@ -20,7 +20,7 @@ impl<T> Color4<T, Linear> {
     }
 
     /// Composite `self` under `b`
-    pub const fn under(self, b: Self) -> Self
+    pub const fn under(self, b: Color4<T, Linear>) -> Color4<T, Linear>
     where
         T: [const] Destruct + [const] IntoF32 + [const] FromF32,
     {

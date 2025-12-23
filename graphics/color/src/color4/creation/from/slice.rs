@@ -2,7 +2,7 @@ use crate::{Color4, ColorSpace};
 
 impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     /// Create a new [`Color4`] from a slice
-    pub const fn from_slice(slice: &[T]) -> Self
+    pub const fn from_slice(slice: &[T]) -> Color4<T, Space>
     where
         T: [const] Clone,
     {

@@ -2,7 +2,7 @@ use crate::Vector2;
 
 impl<T> Vector2<T> {
     /// Create a new [`Vector2`] from a slice
-    pub const fn from_slice(s: &[T]) -> Self
+    pub const fn from_slice(s: &[T]) -> Vector2<T>
     where
         T: [const] Clone,
     {

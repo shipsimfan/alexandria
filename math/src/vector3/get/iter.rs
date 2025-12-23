@@ -2,12 +2,12 @@ use crate::Vector3;
 
 impl<T> Vector3<T> {
     /// Get an iterator over the elements of this vector
-    pub fn iter<'a>(&'a self) -> std::slice::Iter<'a, T> {
+    pub const fn iter<'a>(&'a self) -> std::slice::Iter<'a, T> {
         self.as_slice().iter()
     }
 
     /// Get a mutable iterator over the elements of this vector
-    pub fn iter_mut<'a>(&'a mut self) -> std::slice::IterMut<'a, T> {
+    pub const fn iter_mut<'a>(&'a mut self) -> std::slice::IterMut<'a, T> {
         self.as_mut_slice().iter_mut()
     }
 }

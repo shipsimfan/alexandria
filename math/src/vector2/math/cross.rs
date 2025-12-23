@@ -6,7 +6,7 @@ use std::{
 
 impl<T> Vector2<T> {
     /// Get the cross product of two [`Vector2`]s
-    pub const fn cross(self, other: Self) -> T
+    pub const fn cross(self, other: Vector2<T>) -> T
     where
         T: [const] Sub<Output = T> + [const] Mul<Output = T> + [const] Destruct,
     {

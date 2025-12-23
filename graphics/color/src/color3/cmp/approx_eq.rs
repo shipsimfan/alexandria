@@ -4,7 +4,7 @@ use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     /// Is this color approximately equal to `other`?
-    pub const fn approx_eq(self, other: Self, epsilon: T::Epsilon) -> bool
+    pub const fn approx_eq(self, other: Color3<T, Space>, epsilon: T::Epsilon) -> bool
     where
         T: [const] ApproxEq + [const] Destruct,
         T::Epsilon: [const] Clone + [const] Destruct,

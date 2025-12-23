@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     /// Create a new [`Color3`] from an array
-    pub const fn from_array([r, g, b]: [T; 3]) -> Self
+    pub const fn from_array([r, g, b]: [T; 3]) -> Color3<T, Space>
     where
         T: [const] Destruct,
     {

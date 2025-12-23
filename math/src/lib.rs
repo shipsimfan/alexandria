@@ -15,6 +15,7 @@
 #![feature(const_index)]
 #![feature(const_ops)]
 #![feature(const_option_ops)]
+#![feature(const_slice_make_iter)]
 #![feature(const_trait_impl)]
 #![feature(const_try)]
 //

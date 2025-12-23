@@ -16,7 +16,7 @@ impl<
 > Vector2<T>
 {
     /// Calculates the left-handed unsigned angle (`0..2π`) between two vectors
-    pub fn angle_between(self, other: Self) -> T {
+    pub fn angle_between(self, other: Vector2<T>) -> T {
         let pi2 = T::from_f32(6.2831853071);
         ((-self.clone().cross(other.clone())).atan2(self.dot(other)) + pi2.clone()) % pi2
     }

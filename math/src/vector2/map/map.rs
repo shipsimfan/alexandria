@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T> Vector2<T> {
     /// Map the x-axis value of this vector using `f`
-    pub const fn map_x<F: [const] FnOnce(T) -> T>(self, f: F) -> Self
+    pub const fn map_x<F: [const] FnOnce(T) -> T>(self, f: F) -> Vector2<T>
     where
         T: [const] Destruct,
     {
@@ -11,7 +11,7 @@ impl<T> Vector2<T> {
     }
 
     /// Map the y-axis value of this vector using `f`
-    pub const fn map_y<F: [const] FnOnce(T) -> T>(self, f: F) -> Self
+    pub const fn map_y<F: [const] FnOnce(T) -> T>(self, f: F) -> Vector2<T>
     where
         T: [const] Destruct,
     {

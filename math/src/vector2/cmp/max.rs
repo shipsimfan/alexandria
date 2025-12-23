@@ -7,7 +7,7 @@ const fn component_max<T: [const] PartialOrd + [const] Destruct>(a: T, b: T) -> 
 
 impl<T> Vector2<T> {
     /// Get the component-wise maximum between this and `max`
-    pub const fn max_v(self, max: Self) -> Self
+    pub const fn max_v(self, max: Vector2<T>) -> Vector2<T>
     where
         T: [const] PartialOrd + [const] Destruct,
     {
@@ -15,7 +15,7 @@ impl<T> Vector2<T> {
     }
 
     /// Get the component-wise maximum between this and `max`
-    pub const fn max(self, max: T) -> Self
+    pub const fn max(self, max: T) -> Vector2<T>
     where
         T: [const] Clone + [const] PartialOrd + [const] Destruct,
     {

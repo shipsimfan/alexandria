@@ -1,10 +1,8 @@
 # ToDo
  1. Finish math library:
-   1. Add `get`, `get(_mut)_ref`, and `set` functions to `Vector2/3/4` (replace index impl with them)
-   2. Add `get(_mut)_ref` to `Matrix4x4`
-   3. Complete `Matrix4x4` operations w/ tests
-   4. Complete `Matrix3x3` operations w/ tests
-   5. Complete `Quaternion` operations w/ tests
+   1. Complete `Matrix4x4` operations w/ tests
+   2. Complete `Matrix3x3` operations w/ tests
+   3. Complete `Quaternion` operations w/ tests
  2. Add adapter enumeration
    1. Windows
    2. Linux

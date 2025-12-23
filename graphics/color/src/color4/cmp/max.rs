@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     /// Set all channels to be at least `max`
-    pub const fn max(self, max: T) -> Self
+    pub const fn max(self, max: T) -> Color4<T, Space>
     where
         T: [const] Ord + [const] Clone + [const] Destruct,
     {
@@ -11,7 +11,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Set all channels to be at least `max` channel-wise
-    pub const fn max_c(self, max: Self) -> Self
+    pub const fn max_c(self, max: Color4<T, Space>) -> Color4<T, Space>
     where
         T: [const] Ord + [const] Destruct,
     {

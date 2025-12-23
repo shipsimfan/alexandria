@@ -6,7 +6,7 @@ use std::{
 
 impl<T> Vector2<T> {
     /// Calculate the dot product between this [`Vector2`] and `rhs`
-    pub const fn dot(self, rhs: Self) -> T
+    pub const fn dot(self, rhs: Vector2<T>) -> T
     where
         T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] Destruct,
     {

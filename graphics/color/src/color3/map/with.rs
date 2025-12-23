@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     /// Change the contained red channel value
-    pub const fn with_r(self, r: T) -> Self
+    pub const fn with_r(self, r: T) -> Color3<T, Space>
     where
         T: [const] Destruct,
     {
@@ -11,7 +11,7 @@ impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     }
 
     /// Change the contained green channel value
-    pub const fn with_g(self, g: T) -> Self
+    pub const fn with_g(self, g: T) -> Color3<T, Space>
     where
         T: [const] Destruct,
     {
@@ -19,7 +19,7 @@ impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     }
 
     /// Change the contained blue channel value
-    pub const fn with_b(self, b: T) -> Self
+    pub const fn with_b(self, b: T) -> Color3<T, Space>
     where
         T: [const] Destruct,
     {

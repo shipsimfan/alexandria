@@ -3,7 +3,7 @@ use std::ops::{Add, Mul, Sub};
 
 impl<T: Add<Output = T> + Sub<Output = T> + Mul<Output = T> + Sqrt + Clone> Vector2<T> {
     /// Calculate the distance between this vector and `rhs`
-    pub fn distance(self, rhs: Self) -> T {
+    pub fn distance(self, rhs: Vector2<T>) -> T {
         self.distance_squared(rhs).sqrt()
     }
 }

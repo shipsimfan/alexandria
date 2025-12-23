@@ -4,7 +4,7 @@ use std::marker::Destruct;
 
 impl<T: Destruct + FromF32 + IntoF32> Color4<T, Linear> {
     /// Adjust the exposure of this color by `ev`
-    pub fn exposure(self, ev: f32) -> Self {
+    pub fn exposure(self, ev: f32) -> Color4<T, Linear> {
         let (color, a) = self.rgb_a();
         color.exposure(ev).with_alpha(a)
     }

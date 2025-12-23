@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     /// Map the red channel to a new value
-    pub const fn map_r<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Self
+    pub const fn map_r<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Color4<T, Space>
     where
         T: [const] Destruct,
     {
@@ -12,7 +12,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Map the green channel to a new value
-    pub const fn map_g<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Self
+    pub const fn map_g<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Color4<T, Space>
     where
         T: [const] Destruct,
     {
@@ -21,7 +21,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Map the blue channel to a new value
-    pub const fn map_b<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Self
+    pub const fn map_b<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Color4<T, Space>
     where
         T: [const] Destruct,
     {
@@ -30,7 +30,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 
     /// Map the alpha channel to a new value
-    pub const fn map_a<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Self
+    pub const fn map_a<F: [const] FnOnce(T) -> T>(mut self, f: F) -> Color4<T, Space>
     where
         T: [const] Destruct,
     {

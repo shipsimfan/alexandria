@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T> Matrix4x4<T> {
     /// Create a [`Matrix4x4`] from a slice of row slices
-    pub const fn from_slice_rows(rows: &[&[T]]) -> Self
+    pub const fn from_row_slice(rows: &[&[T]]) -> Matrix4x4<T>
     where
         T: [const] Clone + [const] Destruct,
     {
@@ -13,7 +13,7 @@ impl<T> Matrix4x4<T> {
         assert!(rows[2].len() >= 4);
         assert!(rows[3].len() >= 4);
 
-        Matrix4x4::from_array_rows([
+        Matrix4x4::from_row_array([
             [
                 rows[0][0].clone(),
                 rows[0][1].clone(),
@@ -42,7 +42,7 @@ impl<T> Matrix4x4<T> {
     }
 
     /// Create a [`Matrix4x4`] from a slice of column slices
-    pub const fn from_slice_cols(cols: &[&[T]]) -> Self
+    pub const fn from_col_slice(cols: &[&[T]]) -> Matrix4x4<T>
     where
         T: [const] Clone + [const] Destruct,
     {
@@ -52,7 +52,7 @@ impl<T> Matrix4x4<T> {
         assert!(cols[2].len() >= 4);
         assert!(cols[3].len() >= 4);
 
-        Matrix4x4::from_array_cols([
+        Matrix4x4::from_col_array([
             [
                 cols[0][0].clone(),
                 cols[0][1].clone(),
@@ -83,6 +83,6 @@ impl<T> Matrix4x4<T> {
 
 impl<T: [const] Clone + [const] Destruct> const From<&[&[T]]> for Matrix4x4<T> {
     fn from(rows: &[&[T]]) -> Self {
-        Matrix4x4::from_slice_rows(rows)
+        Matrix4x4::from_row_slice(rows)
     }
 }

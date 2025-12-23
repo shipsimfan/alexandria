@@ -7,7 +7,7 @@ const fn component_min<T: [const] PartialOrd + [const] Destruct>(a: T, b: T) -> 
 
 impl<T> Vector2<T> {
     /// Get the component-wise minimum between this and `min`
-    pub const fn min_v(self, min: Self) -> Self
+    pub const fn min_v(self, min: Vector2<T>) -> Vector2<T>
     where
         T: [const] PartialOrd + [const] Destruct,
     {
@@ -15,7 +15,7 @@ impl<T> Vector2<T> {
     }
 
     /// Get the component-wise minimum between this and `min`
-    pub const fn min(self, min: T) -> Self
+    pub const fn min(self, min: T) -> Vector2<T>
     where
         T: [const] Clone + [const] PartialOrd + [const] Destruct,
     {

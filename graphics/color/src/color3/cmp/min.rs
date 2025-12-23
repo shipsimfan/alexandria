@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     /// Set all channels to be at most `min`
-    pub const fn min(self, min: T) -> Self
+    pub const fn min(self, min: T) -> Color3<T, Space>
     where
         T: [const] Ord + [const] Clone + [const] Destruct,
     {
@@ -11,7 +11,7 @@ impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     }
 
     /// Set all channels to be at most `min` channel-wise
-    pub const fn min_c(self, min: Self) -> Self
+    pub const fn min_c(self, min: Color3<T, Space>) -> Color3<T, Space>
     where
         T: [const] Ord + [const] Destruct,
     {

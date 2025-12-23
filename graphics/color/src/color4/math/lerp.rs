@@ -4,7 +4,7 @@ use std::marker::Destruct;
 
 impl<T> Color4<T, Linear> {
     /// Linear interpolate between this color and another color, using a parameter
-    pub const fn lerp(self, b: Self, t: f32) -> Self
+    pub const fn lerp(self, b: Color4<T, Linear>, t: f32) -> Color4<T, Linear>
     where
         T: [const] FromF32 + [const] IntoF32 + [const] Destruct,
     {

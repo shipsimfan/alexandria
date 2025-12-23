@@ -19,7 +19,7 @@ const fn lerp_unclamped<
 
 impl<T> Vector2<T> {
     /// Interpolates linearly between two vectors, clamping `t` between 0 and 1
-    pub const fn lerp(self, other: Self, t: T) -> Self
+    pub const fn lerp(self, other: Vector2<T>, t: T) -> Vector2<T>
     where
         T: [const] Add<Output = T>
             + [const] Sub<Output = T>
@@ -43,7 +43,7 @@ impl<T> Vector2<T> {
     }
 
     /// Interpolates linearly between two vectors, without clamping `t` between 0 and 1
-    pub const fn lerp_unclamped(self, other: Self, t: T) -> Self
+    pub const fn lerp_unclamped(self, other: Vector2<T>, t: T) -> Vector2<T>
     where
         T: [const] Add<Output = T>
             + [const] Sub<Output = T>

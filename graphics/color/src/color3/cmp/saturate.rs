@@ -4,7 +4,7 @@ use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color3<T, Space> {
     /// Clamp this color channel wise between normalized 0.0 and 1.0
-    pub const fn saturate(self) -> Self
+    pub const fn saturate(self) -> Color3<T, Space>
     where
         T: [const] Clamp + [const] Destruct,
         T::Bound: [const] Clone + [const] Destruct + Zero + One,

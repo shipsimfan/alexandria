@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T> Vector2<T> {
     /// Create a new [`Vector2`] from a tuple
-    pub const fn from_tuple((x, y): (T, T)) -> Self
+    pub const fn from_tuple((x, y): (T, T)) -> Vector2<T>
     where
         T: [const] Destruct,
     {

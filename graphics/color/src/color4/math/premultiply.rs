@@ -4,7 +4,7 @@ use std::marker::Destruct;
 
 impl<T> Color4<T, Linear> {
     /// Premultiply the color channels by the alpha channel
-    pub const fn premultiply(self) -> Self
+    pub const fn premultiply(self) -> Color4<T, Linear>
     where
         T: [const] Destruct + [const] IntoF32 + [const] FromF32,
     {
@@ -13,7 +13,7 @@ impl<T> Color4<T, Linear> {
     }
 
     /// Unpremulitply the color channels by the alpha channel
-    pub const fn unpremultiply(self) -> Self
+    pub const fn unpremultiply(self) -> Color4<T, Linear>
     where
         T: [const] Destruct + [const] IntoF32 + [const] FromF32,
     {

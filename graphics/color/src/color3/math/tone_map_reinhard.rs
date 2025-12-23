@@ -3,7 +3,7 @@ use alexandria_math::number::{FromF32, IntoF32};
 
 impl<T: FromF32 + IntoF32> Color3<T, Linear> {
     /// Tone map this color using the Reinhard algorithm
-    pub fn tone_map_reinhard(self, exposure: f32) -> Self {
+    pub fn tone_map_reinhard(self, exposure: f32) -> Color3<T, Linear> {
         let color = self.into_f32() * 2f32.powf(exposure);
         let luminance = color.luminance_rec709();
         Color3::from_f32(color.into_f32() / (1.0 + luminance))

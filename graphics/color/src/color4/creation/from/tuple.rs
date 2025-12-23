@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     /// Create a new [`Color4`] from a tuple
-    pub const fn from_tuple((r, g, b, a): (T, T, T, T)) -> Self
+    pub const fn from_tuple((r, g, b, a): (T, T, T, T)) -> Color4<T, Space>
     where
         T: [const] Destruct,
     {

@@ -20,14 +20,14 @@ impl<
     /// Interpolates linearly between two vectors, normalizing the result
     ///
     /// `t` will be clamped between 0 and 1
-    pub fn nlerp(self, other: Self, t: T) -> Self {
+    pub fn nlerp(self, other: Vector2<T>, t: T) -> Vector2<T> {
         self.lerp(other, t).normalized()
     }
 
     /// Interpolates linearly between two vectors, normalizing the result
     ///
     /// `t` will not be clamped between 0 and 1
-    pub fn nlerp_unclamped(self, other: Self, t: T) -> Self {
+    pub fn nlerp_unclamped(self, other: Vector2<T>, t: T) -> Vector2<T> {
         self.lerp_unclamped(other, t).normalized()
     }
 }

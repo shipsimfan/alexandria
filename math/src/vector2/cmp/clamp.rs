@@ -3,7 +3,7 @@ use std::marker::Destruct;
 
 impl<T> Vector2<T> {
     /// Clamp this vector component-wise between `min` and `max`
-    pub const fn clamp_v(self, min: Vector2<T::Bound>, max: Vector2<T::Bound>) -> Self
+    pub const fn clamp_v(self, min: Vector2<T::Bound>, max: Vector2<T::Bound>) -> Vector2<T>
     where
         T: [const] Clamp + [const] Destruct,
         T::Bound: [const] Destruct,
@@ -12,7 +12,7 @@ impl<T> Vector2<T> {
     }
 
     /// Clamp this vector component-wise between `min` and `max`
-    pub const fn clamp(self, min: T::Bound, max: T::Bound) -> Self
+    pub const fn clamp(self, min: T::Bound, max: T::Bound) -> Vector2<T>
     where
         T: [const] Clamp + [const] Destruct,
         T::Bound: [const] Clone + [const] Destruct,

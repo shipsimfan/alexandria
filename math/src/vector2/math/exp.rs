@@ -2,7 +2,7 @@ use crate::{Vector2, number::Exp};
 
 impl<T: Exp> Vector2<T> {
     /// Computes `e^(self)`, component-wise
-    pub fn exp(self) -> Self {
+    pub fn exp(self) -> Vector2<T> {
         self.map(Exp::exp)
     }
 }

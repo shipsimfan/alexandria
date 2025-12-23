@@ -6,7 +6,7 @@ use std::{
 
 impl<T> Vector2<T> {
     /// Calculate the squared distance between this vector and `rhs`
-    pub const fn distance_squared(self, rhs: Self) -> T
+    pub const fn distance_squared(self, rhs: Vector2<T>) -> T
     where
         T: [const] Add<Output = T>
             + [const] Sub<Output = T>

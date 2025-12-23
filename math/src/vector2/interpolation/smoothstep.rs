@@ -9,7 +9,7 @@ use std::{
 
 impl<T> Vector2<T> {
     /// Interpolates using the smoothstep algorithm between two vectors
-    pub const fn smoothstep(self, other: Self, t: T) -> Self
+    pub const fn smoothstep(self, other: Vector2<T>, t: T) -> Vector2<T>
     where
         T: [const] Add<Output = T>
             + [const] Sub<Output = T>

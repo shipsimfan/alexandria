@@ -34,7 +34,7 @@ impl<
 > Vector2<T>
 {
     /// Interpolates spherically between two vectors
-    pub fn slerp_unclamped(self, other: Self, t: T) -> Self {
+    pub fn slerp_unclamped(self, other: Vector2<T>, t: T) -> Vector2<T> {
         let dot = self.clone().dot(other.clone());
         if dot < T::from_f32(-1.0 + 1e-5) {
             let perp = self.clone().perp_cw();
@@ -53,28 +53,28 @@ impl<
     }
 }
 
-impl<T> Vector2<T> {
+impl<
+    T: Mul<Output = T>
+        + Sub<Output = T>
+        + Add<Output = T>
+        + Div<Output = T>
+        + Neg<Output = T>
+        + Rem<Output = T>
+        + DivAssign
+        + Atan2
+        + Sin
+        + Cos
+        + Sqrt
+        + Abs
+        + Clone
+        + PartialOrd
+        + Zero
+        + One
+        + FromF32,
+> Vector2<T>
+{
     /// Interpolates spherically between two vectors, clamping `t` between 0 and 1
-    pub fn slerp(self, other: Self, t: T) -> Self
-    where
-        T: Mul<Output = T>
-            + Sub<Output = T>
-            + Add<Output = T>
-            + Div<Output = T>
-            + Neg<Output = T>
-            + Rem<Output = T>
-            + DivAssign
-            + Atan2
-            + Sin
-            + Cos
-            + Sqrt
-            + Abs
-            + Clone
-            + PartialOrd
-            + Zero
-            + One
-            + FromF32,
-    {
+    pub fn slerp(self, other: Vector2<T>, t: T) -> Vector2<T> {
         self.slerp_unclamped(
             other,
             if t < T::ZERO {
