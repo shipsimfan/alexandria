@@ -1,17 +1,13 @@
 # Matrix4x4 Operations for Game-Oriented Libraries
 
-## Arithmetic
+---
 
-### Matrix–Vector
-- `Matrix4x4 * Vector4` (or `Vector4 * Matrix4x4` depending on convention)
-- `transform_point(p: Vector3<T>) -> Vector3<T>` *(uses w=1)*
-- `transform_vector(v: Vector3<T>) -> Vector3<T>` *(uses w=0)*
-- `transform_normal(n: Vector3<T>) -> Vector3<T>` *(see below; usually needs inverse-transpose)*
+## Determinant & Inversion
 
-### Matrix–Matrix
-- `M * N` (composition)
-- `M + N`, `M - N`
-- Assignment forms: `*=`, `+=`, `-=`
+- `determinant() -> T`
+- `inverse() -> Matrix4x4<T>`
+- `try_inverse() -> Option<Matrix4x4<T>>`
+- `is_invertible(eps)`
 
 ---
 
@@ -35,16 +31,6 @@
 
 > - Vulkan-style NDC z ∈ [0, 1]
 > - Left-handed
-
----
-
-## Determinant & Inversion
-
-- `determinant() -> T`
-- `inverse() -> Matrix4x4<T>`
-- `try_inverse() -> Option<Matrix4x4<T>>`
-- `is_invertible(eps)`
-- `inverse_transpose_3x3()`
 
 ---
 
@@ -72,7 +58,14 @@
 
 ---
 
-## Conversions
+## Matrix3x3 interactions
 
-### To/From Related Types
-- `to_mat3()` / `from_mat3()` *(embedding/extracting 3×3)*
+### To/From
+- `to_mat3()`
+- `from_mat3()`
+
+### Other
+- `inverse_transpose_3x3()`
+
+### Transformations
+- `transform_normal(n: Vector3<T>) -> Vector3<T>` *(see below; usually needs inverse-transpose)*

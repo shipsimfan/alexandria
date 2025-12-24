@@ -1,6 +1,7 @@
 mod as_row_slices;
 mod as_slice;
 mod col;
+mod col_ref;
 mod get;
 mod get_ref;
 mod index;
