@@ -1,5 +1,6 @@
 use crate::Vector4;
 
+mod arith;
 mod cmp;
 mod creation;
 mod fmt;

@@ -2,9 +2,6 @@
 
 ## Arithmetic
 
-### Matrix–Scalar 
-- `M + s`, `M - s`, `M * s`, `M / s`, `M % s`
-
 ### Matrix–Vector
 - `Matrix4x4 * Vector4` (or `Vector4 * Matrix4x4` depending on convention)
 - `transform_point(p: Vector3<T>) -> Vector3<T>` *(uses w=1)*
