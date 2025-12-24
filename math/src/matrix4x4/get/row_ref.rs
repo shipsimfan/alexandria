@@ -13,7 +13,7 @@ impl<T> Matrix4x4<T> {
     }
 
     /// Get a mutable reference to `row`
-    pub const fn row_mut_ref(&mut self, row: usize) -> Option<&mut Vector4<T>> {
+    pub const fn row_ref_mut(&mut self, row: usize) -> Option<&mut Vector4<T>> {
         match row {
             0 => Some(&mut self.r0),
             1 => Some(&mut self.r1),

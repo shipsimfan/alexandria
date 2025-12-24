@@ -1,29 +1,5 @@
 # Matrix4x4 Operations for Game-Oriented Libraries
 
-## Construction & Access
-
-### Creation
-- `default`
-- `splat`
-
-### Accessors
-- `set_row(i, v)`
-- `set_col(i, v)`
-- `set(r, c, v)`
-
-### Comparison
-- `eq`
-- `clamp`
-- `hash`
-- `is_finite`
-- `is_nan`
-- `max`
-- `min`
-
-### Serialize/Deserialization
-
----
-
 ## Arithmetic
 
 ### Matrix–Scalar 
