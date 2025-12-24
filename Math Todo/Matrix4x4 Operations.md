@@ -4,7 +4,7 @@
 
 ## Determinant & Inversion
 
-- `determinant() -> T`
+- `lu_decompose()`
 - `inverse() -> Matrix4x4<T>`
 - `try_inverse() -> Option<Matrix4x4<T>>`
 - `is_invertible(eps)`
