@@ -15,6 +15,29 @@
 
 ---
 
+## Common Transform Matrices
+
+### Translation / Rotation / Scale
+- `translation(t: Vector3<T>)`
+- `scale(s: Vector3<T>)` / `uniform_scale(s: T)`
+- `euler_rotation(r: Vector3<T>)`
+- `rotation(q: Quaternion<T>)`
+- `trs(translation, rotation, scale)` 
+
+### Projection
+- `perspective(fovy, aspect, z_near, z_far)`
+- `perspective_infinite(fovy, aspect, z_near)`
+- `orthographic(left, right, bottom, top, z_near, z_far)`
+- `frustum(left, right, bottom, top, z_near, z_far)`
+
+### View (Camera)
+- `look_at(eye, target, up)`
+
+> - Vulkan-style NDC z ∈ [0, 1]
+> - Left-handed
+
+---
+
 ## Determinant & Inversion
 
 - `determinant() -> T`
@@ -25,29 +48,6 @@
 
 ---
 
-## Common Transform Matrices
-
-### Translation / Rotation / Scale
-- `from_translation(t: Vector3<T>)`
-- `from_scale(s: Vector3<T>)` / `from_uniform_scale(s: T)`
-- `from_rotation(q: Quaternion<T>)`
-- `from_trs(translation, rotation, scale)` 
-- `to_trs()`
-
-### View (Camera)
-- `look_at(eye, target, up)`
-
-### Projection
-- `perspective(fovy, aspect, z_near, z_far)`
-- `perspective_infinite(fovy, aspect, z_near)`
-- `orthographic(left, right, bottom, top, z_near, z_far)`
-- `frustum(left, right, bottom, top, z_near, z_far)`
-
-> Also document depth range conventions if relevant:
-> - Vulkan-style NDC z ∈ [0, 1]
-
----
-
 ## Decomposition & Queries
 
 ### Extract Components (when valid)
@@ -55,6 +55,7 @@
 - `basis_x/y/z() -> Vector3<T>`
 - `scale() -> Vector3<T>` *(approx; assumes no shear)*
 - `rotation() -> Quaternion<T>` *(assumes orthonormal basis)*
+- `into_trs()`
 
 ### Classification
 - `is_affine(eps)` (bottom row/col matches affine form)
