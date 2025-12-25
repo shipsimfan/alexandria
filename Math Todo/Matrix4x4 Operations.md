@@ -5,11 +5,8 @@
 ## Common Transform Matrices
 
 ### Translation / Rotation / Scale
-- `translation(t: Vector3<T>)`
-- `scale(s: Vector3<T>)` / `uniform_scale(s: T)`
-- `euler_rotation(r: Vector3<T>)`
-- `rotation(q: Quaternion<T>)`
-- `trs(translation, rotation, scale)` 
+- `from_rotation(q: Quaternion<T>)`
+- `from_trs(translation, rotation, scale)` 
 
 ### Projection
 - `perspective(fovy, aspect, z_near, z_far)`
@@ -31,21 +28,13 @@
 - `translation() -> Vector3<T>`
 - `basis_x/y/z() -> Vector3<T>`
 - `scale() -> Vector3<T>` *(approx; assumes no shear)*
+- `euler_rotation() -> Vector3<T>` *(assumes orthonormal basis)*
 - `rotation() -> Quaternion<T>` *(assumes orthonormal basis)*
 - `into_trs()`
 
 ### Classification
 - `is_affine(eps)` (bottom row/col matches affine form)
 - `is_orthonormal(eps)` *(3×3 rotation part)*
-
----
-
-## Utilities
-
-### Rounding & Validation
-- `is_finite()`
-- `abs()`
-- `approx_eq(other, eps)`
 
 ---
 

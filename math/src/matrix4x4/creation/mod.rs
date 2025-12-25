@@ -4,4 +4,8 @@ mod default;
 mod diagonal;
 mod from;
 mod new;
+mod rotations;
+mod scale;
 mod splat;
+mod translation;
+mod uniform_scale;
