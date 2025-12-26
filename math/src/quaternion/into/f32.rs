@@ -1,9 +1,9 @@
-use crate::{Vector4, number::IntoF32};
+use crate::{Quaternion, number::IntoF32};
 use std::marker::Destruct;
 
-impl<T> Vector4<T> {
+impl<T> Quaternion<T> {
     /// Convert this vector's elements into [`f32`]s
-    pub const fn into_f32(self) -> Vector4<f32>
+    pub const fn into_f32(self) -> Quaternion<f32>
     where
         T: [const] IntoF32 + [const] Destruct,
     {

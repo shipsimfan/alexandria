@@ -24,6 +24,7 @@
 #![feature(formatting_options)]
 
 mod matrix4x4;
+mod quaternion;
 mod vector2;
 mod vector3;
 mod vector4;
@@ -31,6 +32,7 @@ mod vector4;
 pub mod number;
 
 pub use matrix4x4::*;
+pub use quaternion::*;
 pub use vector2::*;
 pub use vector3::*;
 pub use vector4::*;

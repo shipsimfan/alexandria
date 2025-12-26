@@ -1,7 +1,7 @@
 use crate::Matrix4x4;
 use std::{
     marker::Destruct,
-    ops::{Add, Mul},
+    ops::{Add, Mul, MulAssign},
 };
 
 impl<T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] Clone + [const] Destruct> const
@@ -16,6 +16,14 @@ impl<T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] Clone + [con
             self.r2 * rhs.clone(),
             self.r3 * rhs,
         )
+    }
+}
+
+impl<T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] Clone + [const] Destruct> const
+    MulAssign for Matrix4x4<T>
+{
+    fn mul_assign(&mut self, rhs: Self) {
+        *self = self.clone() * rhs;
     }
 }
 
