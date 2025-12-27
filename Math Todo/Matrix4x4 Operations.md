@@ -9,7 +9,6 @@
 - `into_trs() -> (Vector3<T>, Quaternion<T>, Vector3<T>)` *(assumes orthonormal basis and no shear)*
 
 ### Translation / Rotation / Scale
-- `from_rotation(q: Quaternion<T>)`
 - `from_trs(translation, rotation, scale)` 
 
 ---

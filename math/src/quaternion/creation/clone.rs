@@ -10,3 +10,5 @@ impl<T: [const] Clone> const Clone for Quaternion<T> {
         )
     }
 }
+
+impl<T: Copy> Copy for Quaternion<T> {}
