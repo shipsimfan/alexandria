@@ -2,17 +2,6 @@
 
 ---
 
-## Quaternion interactions
-
-### Extract Components (when valid)
-- `rotation() -> Quaternion<T>` *(assumes orthonormal basis)*
-- `into_trs() -> (Vector3<T>, Quaternion<T>, Vector3<T>)` *(assumes orthonormal basis and no shear)*
-
-### Translation / Rotation / Scale
-- `from_trs(translation, rotation, scale)` 
-
----
-
 ## Matrix3x3 interactions
 
 ### To/From

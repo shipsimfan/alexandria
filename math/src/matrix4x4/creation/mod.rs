@@ -12,4 +12,6 @@ mod rotations;
 mod scale;
 mod splat;
 mod translation;
+mod trs;
+mod two_vectors;
 mod uniform_scale;

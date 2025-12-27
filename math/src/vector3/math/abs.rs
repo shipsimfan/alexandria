@@ -1,13 +1,17 @@
 use crate::{Vector3, number::Abs};
+use std::marker::Destruct;
 
-impl<T: Abs> Vector3<T> {
+impl<T> Vector3<T> {
     /// Calculate the component-wise aboslute value
-    pub fn abs(self) -> Self {
+    pub const fn abs(self) -> Self
+    where
+        T: [const] Abs + [const] Destruct,
+    {
         self.map(Abs::abs)
     }
 }
 
-impl<T: Abs> Abs for Vector3<T> {
+impl<T: [const] Abs + [const] Destruct> const Abs for Vector3<T> {
     fn abs(self) -> Self {
         self.abs()
     }

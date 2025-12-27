@@ -1,4 +1,9 @@
+mod angle;
 mod as_slice;
+mod axis_angle;
+mod basis_x;
+mod basis_y;
+mod basis_z;
 mod get;
 mod get_ref;
 mod index;
