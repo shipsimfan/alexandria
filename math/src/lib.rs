@@ -23,6 +23,7 @@
 #![feature(associated_type_defaults)]
 #![feature(formatting_options)]
 
+mod matrix3x3;
 mod matrix4x4;
 mod quaternion;
 mod vector2;
@@ -31,6 +32,7 @@ mod vector4;
 
 pub mod number;
 
+pub use matrix3x3::*;
 pub use matrix4x4::*;
 pub use quaternion::*;
 pub use vector2::*;

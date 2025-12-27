@@ -9,7 +9,7 @@ impl<T> const Index<usize> for Vector3<T> {
     }
 }
 
-impl<T> IndexMut<usize> for Vector3<T> {
+impl<T> const IndexMut<usize> for Vector3<T> {
     fn index_mut(&mut self, index: usize) -> &mut Self::Output {
         &mut self.as_mut_slice()[index]
     }
