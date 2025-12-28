@@ -5,6 +5,7 @@ mod constants;
 mod default;
 mod euler;
 mod from;
+mod look_at;
 mod new;
 mod splat;
 mod two_vectors;

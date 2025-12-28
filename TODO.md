@@ -2,7 +2,6 @@
  1. Finish math library:
    1. Complete `Matrix4x4` operations w/ tests
    2. Complete `Matrix3x3` operations w/ tests
-   3. Complete `Quaternion` operations w/ tests
  2. Add adapter enumeration
    1. Windows
    2. Linux
@@ -73,3 +72,4 @@
  8. Add texture loading/parsing
  9. Add audio wrappers
  10. Add more input types
+ 11. Add 2-d support to `Matrix3x3`

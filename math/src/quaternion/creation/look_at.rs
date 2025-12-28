@@ -1,6 +1,6 @@
 use crate::{
-    Matrix3x3, Vector3,
-    number::{One, Sqrt, Zero},
+    Matrix3x3, Quaternion, Vector3,
+    number::{FromF32, One, Sqrt, Zero},
 };
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
@@ -11,25 +11,23 @@ impl<
         + Neg<Output = T>
         + Div<Output = T>
         + Sqrt
+        + FromF32
         + Clone
         + PartialEq
+        + PartialOrd
         + Zero
         + One,
-> Matrix3x3<T>
+> Quaternion<T>
 {
-    /// Create a new [`Matrix3x3`] pointing from `position` to `target`
-    pub fn new_look_at(position: Vector3<T>, target: Vector3<T>, up: Vector3<T>) -> Matrix3x3<T> {
-        let forward = (target - position.clone()).normalized();
-        let right = up.cross(forward.clone()).normalized();
-        let up = forward.clone().cross(right.clone()).normalized();
-
-        Matrix3x3::new_cols(right, up, forward)
+    /// Create a new [`Quaternion`] pointing from `position` to `target`
+    pub fn new_look_at(position: Vector3<T>, target: Vector3<T>, up: Vector3<T>) -> Quaternion<T> {
+        Matrix3x3::new_look_at(position, target, up).rotation()
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::{Matrix3x3f, Vector3f};
+    use crate::{Quaternionf, Vector3f};
 
     macro_rules! look_at_tests {
         [$(
@@ -48,9 +46,9 @@ mod tests {
                 const UP: Vector3f = Vector3f::new($ux, $uy, $uz);
                 const OUTPUT: Vector3f = Vector3f::new($ox, $oy, $oz);
 
-                let projection = Matrix3x3f::new_look_at(POSITION, TARGET, UP);
+                let quaternion = Quaternionf::new_look_at(POSITION, TARGET, UP);
 
-                let output = projection.transform_point(INPUT);
+                let output = quaternion.rotate(INPUT);
 
                 assert!(output.approx_eq(OUTPUT, 1e-6), "look at failed: {} vs. {}", output, OUTPUT);
             }
