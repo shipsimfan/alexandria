@@ -26,7 +26,7 @@ impl<T> Matrix3x3<T> {
         self.basis_vectors().2
     }
 
-    /// Get the transformed basis vectors for the x, y, z, and w axes
+    /// Get the transformed basis vectors for the x, y, and z axes
     pub const fn basis_vectors(self) -> (Vector3<T>, Vector3<T>, Vector3<T>)
     where
         T: [const] Destruct,

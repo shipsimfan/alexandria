@@ -1,5 +1,5 @@
 use crate::{
-    Matrix4x4, Vector4,
+    Matrix3x3, Matrix4x4,
     number::{Cos, One, Sin, Zero},
 };
 use std::ops::Neg;
@@ -7,15 +7,7 @@ use std::ops::Neg;
 impl<T: Neg<Output = T> + Sin + Cos + Zero + One + Clone> Matrix4x4<T> {
     /// Create a matrix representing an `r` radian rotation about the x-axis clockwise
     pub fn from_pitch(pitch: T) -> Matrix4x4<T> {
-        let sin = pitch.clone().sin();
-        let cos = pitch.cos();
-
-        Matrix4x4::new_rows(
-            Vector4::X,
-            Vector4::new(T::ZERO, cos.clone(), -sin.clone(), T::ZERO),
-            Vector4::new(T::ZERO, sin, cos, T::ZERO),
-            Vector4::W,
-        )
+        Matrix3x3::from_pitch(pitch).into()
     }
 }
 

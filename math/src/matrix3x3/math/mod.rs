@@ -1,6 +1,7 @@
 mod abs;
 mod determinant;
 mod inverse;
+mod inverse_transpose;
 mod is_invertible;
 mod lu_decompose;
 mod transform;

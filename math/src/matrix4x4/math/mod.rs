@@ -1,8 +1,10 @@
 mod abs;
 mod determinant;
 mod inverse;
+mod inverse_transpose_3x3;
 mod is_invertible;
 mod lu_decompose;
+mod transform_normal;
 mod transform_point;
 mod transform_vector;
 mod transpose;

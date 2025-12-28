@@ -1,5 +1,5 @@
 use crate::{
-    Matrix4x4, Quaternion, Vector4,
+    Matrix3x3, Matrix4x4, Quaternion,
     number::{FromF32, One, Zero},
 };
 use std::{
@@ -20,39 +20,7 @@ impl<T> Matrix4x4<T> {
             + Zero
             + One,
     {
-        let two = T::from_f32(2.0);
-
-        let xx = q.x.clone() * q.x.clone();
-        let xy = q.x.clone() * q.y.clone();
-        let xz = q.x.clone() * q.z.clone();
-        let xw = q.x * q.w.clone();
-        let yy = q.y.clone() * q.y.clone();
-        let yz = q.y.clone() * q.z.clone();
-        let yw = q.y * q.w.clone();
-        let zz = q.z.clone() * q.z.clone();
-        let zw = q.z * q.w;
-
-        Matrix4x4::new_rows(
-            Vector4::new(
-                T::ONE - two.clone() * (yy.clone() + zz.clone()),
-                two.clone() * (xy.clone() - zw.clone()),
-                two.clone() * (xz.clone() + yw.clone()),
-                T::ZERO,
-            ),
-            Vector4::new(
-                two.clone() * (xy + zw),
-                T::ONE - two.clone() * (xx.clone() + zz),
-                two.clone() * (yz.clone() - xw.clone()),
-                T::ZERO,
-            ),
-            Vector4::new(
-                two.clone() * (xz - yw),
-                two.clone() * (yz + xw),
-                T::ONE - two * (xx + yy),
-                T::ZERO,
-            ),
-            Vector4::W,
-        )
+        Matrix3x3::from_rotation(q).into()
     }
 }
 

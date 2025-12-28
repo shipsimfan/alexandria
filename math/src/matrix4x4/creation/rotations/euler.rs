@@ -1,5 +1,5 @@
 use crate::{
-    Matrix4x4, Vector3, Vector4,
+    Matrix3x3, Matrix4x4, Vector3,
     number::{Cos, One, Sin, Zero},
 };
 use std::ops::{Add, Mul, Neg, Sub};
@@ -19,30 +19,7 @@ impl<
     /// Create a matrix representing an `euler` rotations in yaw-pitch-roll order with left-handed
     /// rotations in radians
     pub fn from_euler_rotation(euler: Vector3<T>) -> Matrix4x4<T> {
-        let c_x = euler.x.clone().cos();
-        let c_y = euler.y.clone().cos();
-        let c_z = euler.z.clone().cos();
-
-        let s_x = euler.x.sin();
-        let s_y = euler.y.sin();
-        let s_z = euler.z.sin();
-
-        Matrix4x4::new_rows(
-            Vector4::new(
-                c_z.clone() * c_y.clone() - s_z.clone() * s_x.clone() * s_y.clone(),
-                -s_z.clone() * c_x.clone(),
-                s_z.clone() * s_x.clone() * c_y.clone() + c_z.clone() * s_y.clone(),
-                T::ZERO,
-            ),
-            Vector4::new(
-                s_z.clone() * c_y.clone() + c_z.clone() * s_x.clone() * s_y.clone(),
-                c_z.clone() * c_x.clone(),
-                s_z * s_y.clone() - c_z * s_x.clone() * c_y.clone(),
-                T::ZERO,
-            ),
-            Vector4::new(-c_x.clone() * s_y, s_x, c_x * c_y, T::ZERO),
-            Vector4::W,
-        )
+        Matrix3x3::from_euler_rotation(euler).into()
     }
 }
 

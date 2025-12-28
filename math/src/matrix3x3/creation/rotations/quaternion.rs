@@ -7,7 +7,7 @@ use std::{
     ops::{Add, Mul, Sub},
 };
 
-impl<T> Matrix3x3<T> {
+impl<T: Zero + One> Matrix3x3<T> {
     /// Produces a matrix equivalent to `q`
     pub const fn from_rotation(q: Quaternion<T>) -> Matrix3x3<T>
     where
@@ -16,9 +16,7 @@ impl<T> Matrix3x3<T> {
             + [const] Mul<Output = T>
             + [const] FromF32
             + [const] Clone
-            + [const] Destruct
-            + Zero
-            + One,
+            + [const] Destruct,
     {
         let two = T::from_f32(2.0);
 

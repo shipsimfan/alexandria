@@ -5,6 +5,7 @@ mod diagonal;
 mod from;
 mod look_at;
 mod new;
+mod rotation_scale;
 mod rotations;
 mod scale;
 mod splat;

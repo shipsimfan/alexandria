@@ -5,5 +5,7 @@ mod hash;
 mod is_affine;
 mod is_finite;
 mod is_nan;
+mod is_orthonormal;
+mod is_symmetric;
 mod max;
 mod min;

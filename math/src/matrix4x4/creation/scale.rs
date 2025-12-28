@@ -1,5 +1,5 @@
 use crate::{
-    Matrix4x4, Vector3,
+    Matrix3x3, Matrix4x4, Vector3,
     number::{One, Zero},
 };
 use std::marker::Destruct;
@@ -10,7 +10,7 @@ impl<T: Zero + One> Matrix4x4<T> {
     where
         T: [const] Destruct,
     {
-        Matrix4x4::diagonal(scale.x, scale.y, scale.z, T::ONE)
+        Matrix3x3::from_scale(scale).into()
     }
 }
 
