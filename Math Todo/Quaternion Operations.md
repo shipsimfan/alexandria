@@ -1,9 +1,6 @@
 # Quaternion Operations for Game-Oriented Libraries
 
----
+- `look_at()`
 
-## Conversions
-
-### To/From Matrices
 - `to_mat3()`
 - `from_mat3()`

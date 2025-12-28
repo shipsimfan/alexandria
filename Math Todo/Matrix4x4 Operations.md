@@ -1,9 +1,5 @@
 # Matrix4x4 Operations for Game-Oriented Libraries
 
----
-
-## Matrix3x3 interactions
-
 ### To/From
 - `to_mat3()`
 - `from_mat3()`
@@ -17,3 +13,6 @@
 
 ### Transformations
 - `transform_normal(n: Vector3<T>) -> Vector3<T>` *(needs inverse-transpose)*
+
+### Tests
+- `from_trs()`

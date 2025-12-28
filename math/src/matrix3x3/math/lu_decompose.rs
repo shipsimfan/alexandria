@@ -82,13 +82,13 @@ mod tests {
 
     macro_rules! lu_decompose_tests {
         [$(
-            $test_name: ident: ($i: expr) -> ($om: expr, [$ovx: literal, $ovy: literal, $ovz: literal, $ovw: literal]),
+            $test_name: ident: ($i: expr) -> ($om: expr, [$ovx: literal, $ovy: literal, $ovz: literal]),
         )*] => {$(
             #[test]
             fn $test_name() {
                 const INPUT: Matrix3x3f = Matrix3x3f::from_row_array($i);
                 const OUTPUT: Matrix3x3f = Matrix3x3f::from_row_array($om);
-                const PERMUTATIONS: Vector3<usize> = Vector3::new($ovx, $ovy, $ovz, $ovw);
+                const PERMUTATIONS: Vector3<usize> = Vector3::new($ovx, $ovy, $ovz);
 
                 let (output, permutations) = INPUT.lu_decompose().unwrap();
 
@@ -104,5 +104,60 @@ mod tests {
         )*};
     }
 
-    lu_decompose_tests![];
+    lu_decompose_tests![
+        lu_decompose_identity: (
+          [[1.0, 0.0, 0.0],
+           [0.0, 1.0, 0.0],
+           [0.0, 0.0, 1.0]]
+        ) -> (
+          [[1.0, 0.0, 0.0],
+           [0.0, 1.0, 0.0],
+           [0.0, 0.0, 1.0]],
+          [0, 1, 2]
+        ),
+
+        lu_decompose_upper_triangular_no_pivot: (
+          [[2.0, -1.0,  3.0],
+           [0.0,  4.0,  5.0],
+           [0.0,  0.0, -6.0]]
+        ) -> (
+          [[2.0, -1.0,  3.0],
+           [0.0,  4.0,  5.0],
+           [0.0,  0.0, -6.0]],
+          [0, 1, 2]
+        ),
+
+        lu_decompose_spd_tridiagonal_no_pivot: (
+          [[4.0, 2.0, 0.0],
+           [2.0, 4.0, 2.0],
+           [0.0, 2.0, 4.0]]
+        ) -> (
+          [[4.0,       2.0,       0.0],
+           [0.5,       3.0,       2.0],
+           [0.0,       0.6666667, 2.6666667]],
+          [0, 1, 2]
+        ),
+
+        lu_decompose_pivot_first_step_classic: (
+          [[ 2.0,  1.0, 1.0],
+           [ 4.0, -6.0, 0.0],
+           [-2.0,  7.0, 2.0]]
+        ) -> (
+          [[ 4.0, -6.0, 0.0],
+           [ 0.5,  4.0, 1.0],
+           [-0.5,  1.0, 1.0]],
+          [1, 0, 2]
+        ),
+
+        lu_decompose_pivot_second_step_only: (
+          [[1.0, 5.0, 5.0],
+           [1.0, 5.0, 3.0],
+           [0.0, 3.0, 2.0]]
+        ) -> (
+          [[1.0, 5.0,  5.0],
+           [0.0, 3.0,  2.0],
+           [1.0, 0.0, -2.0]],
+          [0, 2, 1]
+        ),
+    ];
 }

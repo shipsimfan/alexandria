@@ -23,38 +23,43 @@ impl<
         let right = up.cross(forward.clone()).normalized();
         let up = forward.clone().cross(right.clone()).normalized();
 
-        let x = -position.clone().dot(right.clone());
-        let y = -position.clone().dot(up.clone());
-        let z = -position.dot(forward.clone());
+        let x = position.clone().dot(right.clone());
+        let y = position.clone().dot(up.clone());
+        let z = position.dot(forward.clone());
 
-        Matrix4x4::new_rows(right.extend(x), up.extend(y), forward.extend(z), Vector4::W)
+        Matrix4x4::new_cols(
+            right.extend(T::ZERO),
+            up.extend(T::ZERO),
+            forward.extend(T::ZERO),
+            Vector4::new(x, y, z, T::ONE),
+        )
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::{Matrix4x4f, Vector3f};
+    use crate::{Matrix4x4f, Vector3f, Vector4f};
 
     macro_rules! look_at_tests {
         [$(
             $test_name: ident:
-                ([$ix: literal, $iy: literal, $iz: literal],
+                ([$ix: literal, $iy: literal, $iz: literal, $iw: literal],
                  [$px: literal, $py: literal, $pz: literal],
                  [$tx: literal, $ty: literal, $tz: literal],
                  [$ux: literal, $uy: literal, $uz: literal])
-                -> [$ox: literal, $oy: literal, $oz: literal],
+                -> [$ox: literal, $oy: literal, $oz: literal, $ow: literal],
         )*] => {$(
             #[test]
             fn $test_name() {
-                const INPUT: Vector3f = Vector3f::new($ix, $iy, $iz);
+                const INPUT: Vector4f = Vector4f::new($ix, $iy, $iz, $iw);
                 const POSITION: Vector3f = Vector3f::new($px, $py, $pz);
                 const TARGET: Vector3f = Vector3f::new($tx, $ty, $tz);
                 const UP: Vector3f = Vector3f::new($ux, $uy, $uz);
-                const OUTPUT: Vector3f = Vector3f::new($ox, $oy, $oz);
+                const OUTPUT: Vector4f = Vector4f::new($ox, $oy, $oz, $ow);
 
                 let projection = Matrix4x4f::new_look_at(POSITION, TARGET, UP);
 
-                let output = projection.transform_point(INPUT);
+                let output = projection * INPUT;
 
                 assert!(output.approx_eq(OUTPUT, 1e-6), "look at failed: {} vs. {}", output, OUTPUT);
             }
@@ -62,24 +67,81 @@ mod tests {
     }
 
     look_at_tests![
-        look_at_identity_forward_z: ([1.0, 2.0, 3.0], [0.0, 0.0, 0.0], [0.0, 0.0, 1.0], [0.0, 1.0, 0.0]) -> [1.0, 2.0, 3.0],
+        look_at_identity_point_unchanged: (
+            [ 1.0,  2.0,  3.0, 1.0],
+            [ 0.0,  0.0,  0.0],
+            [ 0.0,  0.0,  1.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 1.0,  2.0,  3.0, 1.0],
 
-        look_at_identity_non_normalized_up: ([-4.0, 0.5, 2.0], [0.0, 0.0, 0.0], [0.0, 0.0, 1.0], [0.0, 10.0, 0.0]) -> [-4.0, 0.5, 2.0],
+        look_at_identity_forward_dir_unchanged: (
+            [ 0.0,  0.0,  1.0, 0.0],
+            [ 0.0,  0.0,  0.0],
+            [ 0.0,  0.0,  1.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 0.0,  0.0,  1.0, 0.0],
 
-        look_at_translate_only_camera_back_5_target_origin: ([0.0, 0.0, 0.0], [0.0, 0.0, -5.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0]) -> [0.0, 0.0, 5.0],
+        look_at_translate_only_local_origin_to_eye: (
+            [ 0.0,  0.0,  0.0, 1.0],
+            [ 0.0,  0.0, -5.0],
+            [ 0.0,  0.0,  0.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 0.0,  0.0, -5.0, 1.0],
 
-        look_at_translate_only_camera_back_5_arbitrary_point: ([0.0, 2.0, 0.0], [0.0, 0.0, -5.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0]) -> [0.0, 2.0, 5.0],
+        look_at_translate_only_local_forward_point_to_world_minus4z: (
+            [ 0.0,  0.0,  1.0, 1.0],
+            [ 0.0,  0.0, -5.0],
+            [ 0.0,  0.0,  0.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 0.0,  0.0, -4.0, 1.0],
 
-        look_at_translate_only_camera_right_5: ([6.0, 0.0, 0.0], [5.0, 0.0, 0.0], [5.0, 0.0, 1.0], [0.0, 1.0, 0.0]) -> [1.0, 0.0, 0.0],
+        look_at_yaw90_local_forward_to_world_right: (
+            [ 0.0,  0.0,  1.0, 0.0],
+            [ 0.0,  0.0,  0.0],
+            [ 1.0,  0.0,  0.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 1.0,  0.0,  0.0, 0.0],
 
-        look_at_rotate_yaw_plus_90_looking_plus_x_forward_point: ([1.0, 0.0, 0.0], [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0]) -> [0.0, 0.0, 1.0],
+        look_at_yaw90_local_right_to_world_minus_forward: (
+            [ 1.0,  0.0,  0.0, 0.0],
+            [ 0.0,  0.0,  0.0],
+            [ 1.0,  0.0,  0.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 0.0,  0.0, -1.0, 0.0],
 
-        look_at_rotate_yaw_plus_90_world_plus_z_becomes_view_minus_x: ([0.0, 0.0, 1.0], [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0]) -> [-1.0, 0.0, 0.0],
+        look_at_yaw90_local_up_to_world_up: (
+            [ 0.0,  1.0,  0.0, 0.0],
+            [ 0.0,  0.0,  0.0],
+            [ 1.0,  0.0,  0.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 0.0,  1.0,  0.0, 0.0],
 
-        look_at_rotate_and_translate_yaw_plus_90_camera_at_x2_camera_position_maps_to_origin: ([2.0, 0.0, 0.0], [2.0, 0.0, 0.0], [3.0, 0.0, 0.0], [0.0, 1.0, 0.0]) -> [0.0, 0.0, 0.0],
+        look_at_general_eye_to_world_eye: (
+            [ 0.0,  0.0,  0.0, 1.0],
+            [ 2.0,  3.0,  4.0],
+            [ 2.0,  3.0,  5.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 2.0,  3.0,  4.0, 1.0],
 
-        look_at_rotate_and_translate_yaw_plus_90_camera_at_x2_target_one_unit_forward: ([3.0, 0.0, 0.0], [2.0, 0.0, 0.0], [3.0, 0.0, 0.0], [0.0, 1.0, 0.0]) -> [0.0, 0.0, 1.0],
+        look_at_general_local_forward_point_to_world_target: (
+            [ 0.0,  0.0,  1.0, 1.0],
+            [ 2.0,  3.0,  4.0],
+            [ 2.0,  3.0,  5.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 2.0,  3.0,  5.0, 1.0],
 
-        look_at_pitch_45_target_diagonal_distance_sqrt2: ([0.0, 1.0, 1.0], [0.0, 0.0, 0.0], [0.0, 1.0, 1.0], [0.0, 1.0, 0.0]) -> [0.0, 0.0, 1.4142135],
+        look_at_diag45_local_forward_to_world_diag: (
+            [ 0.0,  0.0,  1.0, 0.0],
+            [ 0.0,  0.0,  0.0],
+            [ 1.0,  0.0,  1.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 0.70710677, 0.0, 0.70710677, 0.0],
+
+        look_at_diag45_local_right_to_world_xpos_zneg: (
+            [ 1.0,  0.0,  0.0, 0.0],
+            [ 0.0,  0.0,  0.0],
+            [ 1.0,  0.0,  1.0],
+            [ 0.0,  1.0,  0.0]
+        ) -> [ 0.70710677, 0.0,-0.70710677, 0.0],
     ];
 }

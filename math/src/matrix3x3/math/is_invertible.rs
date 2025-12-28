@@ -44,5 +44,53 @@ mod tests {
         )*};
     }
 
-    is_invertible_tests![];
+    is_invertible_tests![
+        is_invertible_identity: ([[1.0, 0.0, 0.0],
+                                  [0.0, 1.0, 0.0],
+                                  [0.0, 0.0, 1.0]]) -> true,
+
+        is_invertible_uniform_scale_2: ([[2.0, 0.0, 0.0],
+                                         [0.0, 2.0, 0.0],
+                                         [0.0, 0.0, 2.0]]) -> true,
+
+        is_invertible_upper_triangular_nonzero_diag: ([[3.0, 1.0, -2.0],
+                                                       [0.0, 5.0, 4.0],
+                                                       [0.0, 0.0, -7.0]]) -> true,
+
+        is_invertible_rotation_z_90: ([[0.0, -1.0, 0.0],
+                                       [1.0,  0.0, 0.0],
+                                       [0.0,  0.0, 1.0]]) -> true,
+
+        is_invertible_shear_xy: ([[1.0, 2.0, 0.0],
+                                  [0.0, 1.0, 0.0],
+                                  [0.0, 0.0, 1.0]]) -> true,
+
+        is_invertible_random_int_det_9: ([[4.0, 7.0, 2.0],
+                                          [3.0, 6.0, 1.0],
+                                          [2.0, 5.0, 3.0]]) -> true,
+
+        is_invertible_permutation_cycle: ([[0.0, 0.0, 1.0],
+                                           [1.0, 0.0, 0.0],
+                                           [0.0, 1.0, 0.0]]) -> true,
+
+        is_invertible_near_singular_but_det_minus_3: ([[1.0, 2.0,  3.0],
+                                                       [4.0, 5.0,  6.0],
+                                                       [7.0, 8.0, 10.0]]) -> true,
+
+        is_invertible_singular_duplicate_rows: ([[1.0, 2.0, 3.0],
+                                                 [1.0, 2.0, 3.0],
+                                                 [4.0, 5.0, 6.0]]) -> false,
+
+        is_invertible_singular_zero_row: ([[1.0, 0.0, 2.0],
+                                           [0.0, 0.0, 0.0],
+                                           [3.0, 4.0, 5.0]]) -> false,
+
+        is_invertible_singular_zero_det_not_obvious: ([[ 2.0,  3.0, 1.0],
+                                                       [ 4.0,  6.0, 2.0],
+                                                       [ 1.0, -1.0, 0.0]]) -> false,
+
+        is_invertible_singular_diagonal_has_zero: ([[1.0, 0.0, 0.0],
+                                                    [0.0, 0.0, 0.0],
+                                                    [0.0, 0.0, 1.0]]) -> false,
+    ];
 }

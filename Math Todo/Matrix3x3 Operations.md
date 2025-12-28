@@ -2,32 +2,9 @@
 
 ---
 
-## Arithmetic
-
-### Matrix–Vector
-- `Matrix3x3 * Vector3` (and `Vector3 * Matrix3x3`)
-- `transform(v: Vector3<T>) -> Vector3<T>` *(explicit helper)* (`M * v`)
-
-### Matrix–Matrix
-- `M * N` (composition)
-
----
-
-## Determinant & Inversion
-
-- `determinant() -> T`
-- `try_inverse() -> Option<Matrix3x3<T>>`
-- `is_invertible(eps)`
-
----
-
 ## Common Uses & Constructors
 
 ### 3D Rotation / Scale
-- `from_rotation(q: Quaternion<T>)`
-- `from_euler_rotation(r: Vector3<T>)`
-- `from_scale(s: Vector3<T>)` / 
-- `from_uniform_scale(s: T)`
 - `from_rotation_scale(rotation, scale)`
 
 ### 2D Affine (Homogeneous 2D)
@@ -38,9 +15,6 @@ If you support 2D transforms via 3×3 homogeneous matrices:
 - `from_trs_2d(t, angle, s)`
 - `transform_point_2d(p: Vector2<T>) -> Vector2<T>` *(implicit w=1)*
 - `transform_vector_2d(v: Vector2<T>) -> Vector2<T>` *(implicit w=0)*
-
-> This is one of the best reasons to have a dedicated `Matrix3x3` in a game math
-> library: fast and compact 2D transforms.
 
 ---
 

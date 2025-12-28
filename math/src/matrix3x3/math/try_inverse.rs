@@ -89,7 +89,7 @@ impl<T: Zero + One> Matrix3x3<T> {
         let mut o = Matrix3x3::<T>::ZERO;
 
         let mut j = 0;
-        while j < 4 {
+        while j < 3 {
             let mut ej = Vector3::ZERO;
             ej[j] = T::ONE;
             let b = apply_permutation(ej, p);
@@ -138,5 +138,59 @@ mod tests {
         )*};
     }
 
-    try_inverse_tests![];
+    try_inverse_tests![
+        try_inverse_identity: ([[1.0, 0.0, 0.0],
+                               [0.0, 1.0, 0.0],
+                               [0.0, 0.0, 1.0]]) -> Some([[1.0, 0.0, 0.0],
+                                                          [0.0, 1.0, 0.0],
+                                                          [0.0, 0.0, 1.0]]),
+
+        try_inverse_diagonal_powers_of_two: ([[2.0, 0.0, 0.0],
+                                             [0.0, 4.0, 0.0],
+                                             [0.0, 0.0, 0.5]]) -> Some([[0.5, 0.0, 0.0],
+                                                                        [0.0, 0.25, 0.0],
+                                                                        [0.0, 0.0, 2.0]]),
+
+        try_inverse_swap_xy: ([[0.0, 1.0, 0.0],
+                              [1.0, 0.0, 0.0],
+                              [0.0, 0.0, 1.0]]) -> Some([[0.0, 1.0, 0.0],
+                                                         [1.0, 0.0, 0.0],
+                                                         [0.0, 0.0, 1.0]]),
+
+        try_inverse_negate_x_axis: ([[-1.0, 0.0, 0.0],
+                                    [ 0.0, 1.0, 0.0],
+                                    [ 0.0, 0.0, 1.0]]) -> Some([[-1.0, 0.0, 0.0],
+                                                                 [ 0.0, 1.0, 0.0],
+                                                                 [ 0.0, 0.0, 1.0]]),
+
+        try_inverse_upper_unitriangular: ([[1.0, 2.0, 3.0],
+                                          [0.0, 1.0, 4.0],
+                                          [0.0, 0.0, 1.0]]) -> Some([[1.0, -2.0,  5.0],
+                                                                     [0.0,  1.0, -4.0],
+                                                                     [0.0,  0.0,  1.0]]),
+
+        try_inverse_lower_unitriangular: ([[1.0, 0.0, 0.0],
+                                          [5.0, 1.0, 0.0],
+                                          [6.0, 7.0, 1.0]]) -> Some([[ 1.0,  0.0, 0.0],
+                                                                     [-5.0,  1.0, 0.0],
+                                                                     [29.0, -7.0, 1.0]]),
+
+        try_inverse_unimodular_det_neg_one: ([[1.0, 1.0, 1.0],
+                                             [1.0, 1.0, 0.0],
+                                             [1.0, 0.0, 1.0]]) -> Some([[-1.0,  1.0,  1.0],
+                                                                        [ 1.0,  0.0, -1.0],
+                                                                        [ 1.0, -1.0,  0.0]]),
+
+        try_inverse_singular_all_zeros: ([[0.0, 0.0, 0.0],
+                                         [0.0, 0.0, 0.0],
+                                         [0.0, 0.0, 0.0]]) -> None,
+
+        try_inverse_singular_duplicate_rows: ([[1.0, 2.0, 3.0],
+                                              [1.0, 2.0, 3.0],
+                                              [4.0, 5.0, 6.0]]) -> None,
+
+        try_inverse_singular_zero_row: ([[1.0, 0.0, 0.0],
+                                        [0.0, 0.0, 0.0],
+                                        [0.0, 0.0, 1.0]]) -> None,
+    ];
 }
