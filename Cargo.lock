@@ -74,4 +74,4 @@ dependencies = [
 [[package]]
 name = "vulkan"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-vulkan#caaff1c39c02c932cfc2b381f267dd3f70c536a6"
+source = "git+https://github.com/shipsimfan/lib-vulkan#8f68125e0829ff2fbdb97d3f32f1267fcb3cbd9b"
