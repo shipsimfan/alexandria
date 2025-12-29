@@ -23,6 +23,7 @@ name = "alexandria-graphics"
 version = "0.2.0"
 dependencies = [
  "alexandria-color",
+ "vulkan",
 ]
 
 [[package]]
@@ -69,3 +70,8 @@ source = "git+https://github.com/shipsimfan/lib-proc-macro-util#c1a5999df72a7ed1
 dependencies = [
  "proc-macro-util-base",
 ]
+
+[[package]]
+name = "vulkan"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-vulkan#caaff1c39c02c932cfc2b381f267dd3f70c536a6"

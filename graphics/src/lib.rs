@@ -6,4 +6,10 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 
+mod instance;
+mod misc;
+
+pub use instance::*;
+pub use misc::*;
+
 pub use alexandria_color as color;

@@ -14,3 +14,5 @@ data-format = ["alexandria-color/data-format"]
 
 [dependencies]
 alexandria-color.workspace = true
+
+vulkan.workspace = true
