@@ -1,5 +1,5 @@
 fn main() {
-    let _instance = alexandria_graphics::GraphicsInstance::builder(
+    let instance = alexandria_graphics::GraphicsInstance::builder(
         alexandria_graphics::GraphicsVersion::VERSION_1_4,
     )
     .application(

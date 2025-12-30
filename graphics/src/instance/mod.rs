@@ -1,13 +1,17 @@
+use adapter::GraphicsAdapterFunctions;
 use functions::GraphicsInstanceFunctions;
 use vulkan::VkInstance;
 
+mod adapter;
 mod builder;
 mod functions;
 
 mod drop;
+mod enumerate_adapters;
 mod enumerate_all_extensions;
 mod enumerate_all_layers;
 
+pub use adapter::{GraphicsAdapter, GraphicsAdapterKind};
 pub use builder::GraphicsInstanceBuilder;
 
 /// The context for interacting with Vulkan
