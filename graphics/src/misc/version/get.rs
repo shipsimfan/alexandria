@@ -23,4 +23,9 @@ impl GraphicsVersion {
     pub const fn patch(&self) -> u16 {
         vk_api_version_patch!(self.version) as u16
     }
+
+    /// Get the underlying raw Vulkan version
+    pub(crate) const fn as_vk(&self) -> u32 {
+        self.version
+    }
 }

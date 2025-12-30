@@ -1,8 +1,10 @@
-use crate::{GraphicsError, GraphicsExtension, GraphicsInstance, GraphicsLayer, Result};
+use crate::{
+    GraphicsError, GraphicsExtension, GraphicsInstance, GraphicsLayer, Result,
+    util::load_global_function,
+};
 use std::{ffi::CString, ptr::null_mut};
 use vulkan::{
     VK_ENUMERATE_INSTANCE_EXTENSION_PROPERTIES, VkEnumerateInstanceExtensionProperties, try_vulkan,
-    vkGetInstanceProcAddr,
 };
 
 impl GraphicsInstance {
@@ -14,17 +16,8 @@ impl GraphicsInstance {
         layer: Option<&GraphicsLayer>,
     ) -> Result<Vec<GraphicsExtension>> {
         // Get the "vkEnumerateInstanceExtensionProperties" function
-        let enumerate_instance_extension_properties: VkEnumerateInstanceExtensionProperties = unsafe {
-            std::mem::transmute(
-                vkGetInstanceProcAddr(
-                    null_mut(),
-                    VK_ENUMERATE_INSTANCE_EXTENSION_PROPERTIES.as_ptr(),
-                )
-                .ok_or(GraphicsError::new(
-                    "unable to find \"vkEnumerateInstanceExtensionProperties\"",
-                ))?,
-            )
-        };
+        let enumerate_instance_extension_properties: VkEnumerateInstanceExtensionProperties =
+            load_global_function!(VK_ENUMERATE_INSTANCE_EXTENSION_PROPERTIES)?;
 
         // Extract layer name
         let layer_name = layer.map(|layer| CString::new(layer.name()).unwrap());

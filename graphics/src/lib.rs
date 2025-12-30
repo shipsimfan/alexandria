@@ -5,9 +5,11 @@
 #![deny(rustdoc::unescaped_backticks)]
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
+#![feature(cstr_display)]
 
 mod instance;
 mod misc;
+mod util;
 
 pub use instance::*;
 pub use misc::*;

@@ -1,8 +1,7 @@
-use crate::{GraphicsError, GraphicsInstance, GraphicsLayer, Result};
+use crate::{GraphicsError, GraphicsInstance, GraphicsLayer, Result, util::load_global_function};
 use std::ptr::null_mut;
 use vulkan::{
     VK_ENUMERATE_INSTANCE_LAYER_PROPERTIES, VkEnumerateInstanceLayerProperties, try_vulkan,
-    vkGetInstanceProcAddr,
 };
 
 impl GraphicsInstance {
@@ -10,14 +9,8 @@ impl GraphicsInstance {
     /// them
     pub fn enumerate_all_layers() -> Result<Vec<GraphicsLayer>> {
         // Get the "vkEnumerateInstanceLayerProperties" function
-        let enumerate_instance_layer_properties: VkEnumerateInstanceLayerProperties = unsafe {
-            std::mem::transmute(
-                vkGetInstanceProcAddr(null_mut(), VK_ENUMERATE_INSTANCE_LAYER_PROPERTIES.as_ptr())
-                    .ok_or(GraphicsError::new(
-                        "unable to find \"vkEnumerateInstanceLayerProperties\"",
-                    ))?,
-            )
-        };
+        let enumerate_instance_layer_properties: VkEnumerateInstanceLayerProperties =
+            load_global_function!(VK_ENUMERATE_INSTANCE_LAYER_PROPERTIES)?;
 
         // Get the number of layers supported
         let mut layer_count = 0;
