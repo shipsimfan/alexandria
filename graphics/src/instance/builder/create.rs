@@ -2,13 +2,10 @@ use crate::{
     GraphicsError, GraphicsInstance, GraphicsInstanceBuilder, Result,
     instance::GraphicsInstanceFunctions, util::load_global_function,
 };
-use std::{
-    ffi::CString,
-    ptr::{null, null_mut},
-    str::FromStr,
-};
+use std::{ffi::CString, ptr::null, str::FromStr};
 use vulkan::{
-    VK_CREATE_INSTANCE, VkApplicationInfo, VkCreateInstance, VkInstanceCreateInfo, try_vulkan,
+    VK_CREATE_INSTANCE, VkApplicationInfo, VkCreateInstance, VkInstance, VkInstanceCreateInfo,
+    try_vulkan,
 };
 
 impl<'a> GraphicsInstanceBuilder<'a> {
@@ -54,7 +51,7 @@ impl<'a> GraphicsInstanceBuilder<'a> {
         let create_instance: VkCreateInstance = load_global_function!(VK_CREATE_INSTANCE)?;
 
         // Create the instance
-        let mut instance = null_mut();
+        let mut instance = VkInstance::null();
         try_vulkan!(create_instance(&create_info, null(), &mut instance))
             .map_err(|vk| GraphicsError::new_vk("unable to create graphics instance", vk))?;
 

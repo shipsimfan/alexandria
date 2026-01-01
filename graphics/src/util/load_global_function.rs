@@ -3,7 +3,7 @@ macro_rules! load_global_function {
     ($name: expr) => {{
         let name = $name;
         let function =
-            unsafe { vulkan::vkGetInstanceProcAddr(std::ptr::null_mut(), name.as_ptr()) }
+            unsafe { vulkan::vkGetInstanceProcAddr(vulkan::VkInstance::null(), name.as_ptr()) }
                 .ok_or_else(|| {
                     crate::GraphicsError::new(format!(
                         "unable to find \"{}\" global function",

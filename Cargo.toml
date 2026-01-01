@@ -15,6 +15,8 @@ alexandria-color.path = "graphics/color"
 
 alexandria-math.path = "math"
 
+alexandria-util.path = "util"
+
 # External Dependencies
 data-format.git = "https://github.com/shipsimfan/lib-data-format"
 
@@ -34,8 +36,13 @@ license.workspace = true
 publish.workspace = true
 
 [features]
-data-format = ["alexandria-graphics/data-format", "alexandria-math/data-format"]
+data-format = [
+    "alexandria-graphics/data-format",
+    "alexandria-math/data-format",
+    "alexandria-util/data-format",
+]
 
 [dependencies]
 alexandria-graphics.workspace = true
 alexandria-math.workspace = true
+alexandria-util.workspace = true

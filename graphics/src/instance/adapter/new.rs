@@ -1,6 +1,10 @@
 use crate::{GraphicsAdapter, GraphicsAdapterKind, GraphicsInstance, GraphicsVersion};
+use alexandria_util::UUID;
 use std::{borrow::Cow, ffi::CStr};
-use vulkan::{VkPhysicalDevice, VkPhysicalDeviceProperties};
+use vulkan::{
+    VkMemoryHeapFlag, VkPhysicalDevice, VkPhysicalDeviceMemoryProperties,
+    VkPhysicalDeviceProperties,
+};
 
 impl<'instance> GraphicsAdapter<'instance> {
     /// Create a new [`GraphicsAdapter`]
@@ -24,12 +28,32 @@ impl<'instance> GraphicsAdapter<'instance> {
             Cow::Borrowed(borrowed) => borrowed.to_owned(),
         };
 
+        let uuid = UUID::from_flat(properties.pipeline_cache_uuid);
+
+        // Get memory information
+        let mut memory_information = VkPhysicalDeviceMemoryProperties::default();
+        (instance
+            .functions
+            .adapter
+            .get_physical_device_memory_properties)(adapter, &mut memory_information);
+
+        // Calculate total VRAM
+        let mut vram = 0;
+        for i in 0..memory_information.memory_heap_count as usize {
+            let heap = &memory_information.memory_heaps[i];
+            if heap.flags.contains(VkMemoryHeapFlag::DeviceLocalBit) {
+                vram += heap.size;
+            }
+        }
+
         GraphicsAdapter {
             adapter,
             api_version,
             driver_version,
             kind,
             name,
+            uuid,
+            vram,
             _instance: instance,
         }
     }

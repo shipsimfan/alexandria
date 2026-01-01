@@ -1,8 +1,5 @@
 # ToDo
  1. Add adapter enumeration
-   1. Windows
-      - UUID
-      - Memory
    2. Linux
  2. Add platform informataion
    - CPU architecture
