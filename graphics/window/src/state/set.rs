@@ -1,49 +1,40 @@
 use crate::{DisplayMode, WindowState};
-use alexandria_math::{Vector2i, Vector2u};
+use alexandria_math::Vector2u;
+use std::borrow::Cow;
 
 impl WindowState {
     /// Set the current title of the window
-    pub(crate) fn set_title(&mut self, title: String) {
+    pub(crate) fn set_title(&mut self, title: Cow<'static, str>) {
         self.title = title;
     }
 
-    /// Set the current position of the top-left of the client area of the window
-    pub(crate) const fn set_position(&mut self, position: Vector2i) {
-        self.position = position;
-    }
-
     /// Set the current size of the client area of the window
-    pub(crate) const fn set_size(&mut self, size: Vector2u) {
+    pub(crate) fn set_size(&mut self, size: Vector2u) {
         self.size = size;
     }
 
     /// Set the current mode the windowing is displaying as
-    pub(crate) const fn set_display_mode(&mut self, display_mode: DisplayMode) {
+    pub(crate) fn set_display_mode(&mut self, display_mode: DisplayMode) {
         self.display_mode = display_mode;
     }
 
-    /// Set if the window is currently running
-    pub(crate) const fn set_is_running(&mut self, is_running: bool) {
-        self.is_running = is_running;
+    /// Set if a close has been requested
+    pub(crate) fn set_is_close_requested(&mut self, is_close_requested: bool) {
+        self.is_close_requested = is_close_requested;
     }
 
     /// Set if the window is currently focused
-    pub(crate) const fn set_is_focused(&mut self, is_focused: bool) {
+    pub(crate) fn set_is_focused(&mut self, is_focused: bool) {
         self.is_focused = is_focused;
     }
 
-    /// Set if the window is being actively moved or resized
-    pub(crate) const fn set_is_changing(&mut self, is_changing: bool) {
-        self.is_changing = is_changing;
-    }
-
-    /// Set if the window is minimized
-    pub(crate) const fn set_is_minimized(&mut self, is_minimized: bool) {
-        self.is_minimized = is_minimized;
+    /// Set if the window is being actively  resized
+    pub(crate) fn set_is_resizing(&mut self, is_resizing: bool) {
+        self.is_resizing = is_resizing;
     }
 
     /// Set if the window is maximized
-    pub(crate) const fn set_is_maximized(&mut self, is_maximized: bool) {
+    pub(crate) fn set_is_maximized(&mut self, is_maximized: bool) {
         self.is_maximized = is_maximized;
     }
 }

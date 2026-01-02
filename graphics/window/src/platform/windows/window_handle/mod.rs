@@ -2,9 +2,9 @@ use win32::HWND;
 
 mod deref;
 mod drop;
-mod get_size_and_position;
+mod get_size;
 mod new;
-mod set_display_mode_size_and_position;
+mod set_display_mode;
 mod set_title;
 
 /// A Win32 window

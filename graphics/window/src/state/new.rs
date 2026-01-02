@@ -1,23 +1,21 @@
 use crate::{DisplayMode, WindowState};
-use alexandria_math::{Vector2i, Vector2u};
+use alexandria_math::Vector2u;
+use std::borrow::Cow;
 
 impl WindowState {
     /// Create a new [`WindowState`]
-    pub(crate) const fn new(
-        title: String,
-        position: Vector2i,
+    pub(crate) fn new(
+        title: Cow<'static, str>,
         size: Vector2u,
         display_mode: DisplayMode,
     ) -> WindowState {
         WindowState {
             title,
-            position,
             size,
             display_mode,
-            is_running: true,
+            is_close_requested: false,
             is_focused: false,
-            is_changing: false,
-            is_minimized: false,
+            is_resizing: false,
             is_maximized: false,
         }
     }

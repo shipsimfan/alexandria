@@ -6,7 +6,7 @@ use win32::{
 
 impl DisplayMode {
     /// Gets the style and extended style for this [`DisplayMode`]
-    pub(crate) const fn style(&self) -> (DWORD, DWORD) {
+    pub(crate) fn style(&self) -> (DWORD, DWORD) {
         match self {
             DisplayMode::Resizable => (WS_OVERLAPPEDWINDOW | WS_VISIBLE, 0),
             DisplayMode::Windowed => (

@@ -3,7 +3,7 @@ use alexandria_math::Vector2;
 use win32::{
     DefWindowProc, GWLP_USERDATA, GetWindowLongPtr, HWND, LPARAM, LRESULT, SIZE_MAXIMIZED,
     SIZE_MINIMIZED, SIZE_RESTORED, UINT, WM_ACTIVATEAPP, WM_CLOSE, WM_ENTERSIZEMOVE,
-    WM_EXITSIZEMOVE, WM_MOVE, WM_SIZE, WPARAM,
+    WM_EXITSIZEMOVE, WM_SIZE, WPARAM,
 };
 
 impl Window {
@@ -31,13 +31,13 @@ impl Window {
     ) -> LRESULT {
         match msg {
             // The window is closing or the app is quiting
-            WM_CLOSE => self.state.set_is_running(false),
+            WM_CLOSE => self.state.set_is_close_requested(true),
 
             // The user has begun moving or resizing the window
-            WM_ENTERSIZEMOVE => self.state.set_is_changing(true),
+            WM_ENTERSIZEMOVE => self.state.set_is_resizing(true),
 
             // The user has stopped moving or resizing the window
-            WM_EXITSIZEMOVE => self.state.set_is_changing(false),
+            WM_EXITSIZEMOVE => self.state.set_is_resizing(false),
 
             // The window has changed size
             WM_SIZE => {
@@ -48,21 +48,10 @@ impl Window {
                 }
 
                 match w_param {
-                    SIZE_MINIMIZED => self.state.set_is_minimized(true),
                     SIZE_MAXIMIZED => self.state.set_is_maximized(true),
-                    SIZE_RESTORED => {
-                        self.state.set_is_minimized(false);
-                        self.state.set_is_maximized(false);
-                    }
+                    SIZE_RESTORED | SIZE_MINIMIZED => self.state.set_is_maximized(false),
                     _ => {}
                 }
-            }
-
-            // The window has moved
-            WM_MOVE => {
-                let x = (l_param & 0xFFFF) as i16;
-                let y = ((l_param >> 16) & 0xFFFF) as i16;
-                self.state.set_position(Vector2::new(x as _, y as _));
             }
 
             // The window either gained or lost focus

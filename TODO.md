@@ -1,49 +1,44 @@
 # ToDo
  1. Add window system (Windows)
-   1. Mutli-threaded user wake (PostMessage)
-   2. Window modification
-       - Position
+   1. Window modification
+       - Title
        - Size
        - Display mode
        - Request close
-   3. Cursor lock
+   2. Cursor lock to window
  2. Add Linux Windowing support
    1. Wayland
      1. Window creation
      2. `process_messages` + `wait_for_message` functions
      3. Mutli-threaded user wake (eventfd)
      4. Thread-local window state
-       - Position
        - Size
        - Focus
        - Display mode
        - Close requested
-       - Minimized
        - Maximized
      5. Window modification
-       - Position
+       - Title
        - Size
        - Display mode
        - Request close
-     6. Cursor lock
+     6. Cursor lock to window
    2. X11
      1. Window creation
      2. `process_messages` + `wait_for_message` functions
      3. Mutli-threaded user wake (eventfd)
      4. Thread-local window state
-       - Position
        - Size
        - Focus
        - Display mode
        - Close requested
-       - Minimized
        - Maximized
      5. Window modification
-       - Position
+       - Title
        - Size
        - Display mode
        - Request close
-     6. Cursor lock
+     6. Cursor lock to window
  3. Input system
    1. System
    2. Keyboard
@@ -51,6 +46,10 @@
      2. Wayland
      3. X11
    3. Mouse
+     1. Windows
+     2. Wayland
+     3. X11
+   4. Cursor lock to center
      1. Windows
      2. Wayland
      3. X11

@@ -1,6 +1,6 @@
 use crate::{Result, Window};
 use std::ptr::null_mut;
-use win32::{DispatchMessage, MSG, PM_REMOVE, PeekMessage, TranslateMessage, WM_QUIT};
+use win32::{DispatchMessage, MSG, PM_REMOVE, PeekMessage, TranslateMessage};
 
 impl Window {
     /// Process all messages that have occurred since the last call
@@ -12,7 +12,6 @@ impl Window {
         while max_messages
             .map(|max| messages_processed < max)
             .unwrap_or(true)
-            && self.is_running()
             && unsafe { PeekMessage(&mut msg, null_mut(), 0, 0, PM_REMOVE) } != 0
         {
             self.process_message(&msg)?;
@@ -24,10 +23,6 @@ impl Window {
 
     /// Process a single message from Windows
     pub(in crate::platform::windows) fn process_message(&mut self, msg: &MSG) -> Result<()> {
-        if msg.message == WM_QUIT {
-            self.state.set_is_running(false);
-        }
-
         unsafe { TranslateMessage(msg) };
         unsafe { DispatchMessage(msg) };
 

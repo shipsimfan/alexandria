@@ -11,10 +11,7 @@ impl WindowHandle {
     pub fn new(
         title: &[u16],
         class: &WindowClass,
-        x: Option<i32>,
-        y: Option<i32>,
-        width: Option<u32>,
-        height: Option<u32>,
+        size: Option<Vector2u>,
         display_mode: DisplayMode,
         window_ptr: *mut Window,
     ) -> Result<Self> {
@@ -23,32 +20,12 @@ impl WindowHandle {
 
         let (style, ex_style) = display_mode.style();
 
-        let (x, y, width, height) = match (width, height) {
-            (Some(width), Some(height)) => {
-                let (size, position) = display_mode.client_to_window(
-                    Vector2u::new(width, height),
-                    Vector2i::new(x.unwrap_or(0), y.unwrap_or(0)),
-                )?;
-
-                (
-                    match x {
-                        Some(_) => position.x,
-                        None => CW_USEDEFAULT,
-                    },
-                    match y {
-                        Some(_) => position.y,
-                        None => CW_USEDEFAULT,
-                    },
-                    size.x as _,
-                    size.y as _,
-                )
+        let size = match size {
+            Some(size) => {
+                let size = display_mode.client_to_window(size)?;
+                Vector2i::new(size.x as _, size.y as _)
             }
-            (_, _) => (
-                x.unwrap_or(CW_USEDEFAULT),
-                y.unwrap_or(CW_USEDEFAULT),
-                width.unwrap_or(CW_USEDEFAULT as _) as i32,
-                height.unwrap_or(CW_USEDEFAULT as _) as i32,
-            ),
+            None => Vector2i::new(CW_USEDEFAULT, CW_USEDEFAULT),
         };
 
         let handle = unsafe {
@@ -57,10 +34,10 @@ impl WindowHandle {
                 **class as _,
                 title.as_ptr(),
                 style,
-                x,
-                y,
-                width,
-                height,
+                CW_USEDEFAULT,
+                CW_USEDEFAULT,
+                size.x,
+                size.y,
                 null_mut(),
                 null_mut(),
                 GetModuleHandle(null_mut()),

@@ -1,16 +1,15 @@
 use crate::{
-    DisplayMode, Result, Window, WindowState,
+    DisplayMode, Result, Window, WindowState, WindowWakeHandleInner,
     platform::windows::{WindowClass, WindowHandle},
 };
+use alexandria_math::Vector2u;
+use std::borrow::Cow;
 
 impl Window {
     /// Create a new [`Window`]
-    pub fn new(
-        title: &str,
-        x: Option<i32>,
-        y: Option<i32>,
-        width: Option<u32>,
-        height: Option<u32>,
+    pub(crate) fn new(
+        title: Cow<'static, str>,
+        size: Option<Vector2u>,
         display_mode: DisplayMode,
     ) -> Result<Box<Window>> {
         // Convert the title to UTF-16
@@ -25,25 +24,26 @@ impl Window {
         let handle = WindowHandle::new(
             &title_utf16,
             &class,
-            x,
-            y,
-            width,
-            height,
+            size,
             display_mode,
             window.as_mut_ptr(),
         )?;
 
         // Get position and size
-        let (position, size) = handle.get_size_and_position()?;
+        let size = handle.get_size()?;
 
         // Create state
-        let state = WindowState::new(title.to_owned(), position, size, display_mode);
+        let state = WindowState::new(title.to_owned(), size, display_mode);
+
+        // Create wake handle
+        let wake_handle = WindowWakeHandleInner::new();
 
         Ok(Box::write(
             window,
             Window {
                 wnd_proc_result: Ok(()),
                 handle,
+                wake_handle,
                 class,
                 state,
             },

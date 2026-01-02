@@ -1,21 +1,26 @@
 //! The Windows implementation of the window system
 
 use crate::{Result, WindowState};
+use std::sync::Arc;
 use window_class::WindowClass;
 use window_handle::WindowHandle;
 
 mod error;
+mod wake_handle;
+mod window_class;
+mod window_handle;
+
+mod builder;
+mod deref;
+mod drop;
 mod get;
 mod new;
 mod process_messages;
 mod wait_for_message;
-mod window_class;
-mod window_handle;
 mod window_proc;
 
-mod deref;
-
 pub(crate) use error::OsError;
+pub(crate) use wake_handle::WindowWakeHandleInner;
 
 /// A window displayed for the user
 pub struct Window {
@@ -24,6 +29,9 @@ pub struct Window {
 
     /// The handle to the window itself
     handle: WindowHandle,
+
+    /// The handle used to wake this thread if blocking for messages
+    wake_handle: Arc<WindowWakeHandleInner>,
 
     /// The class the window belongs to
     #[allow(unused)]
