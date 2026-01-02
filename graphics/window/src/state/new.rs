@@ -1,4 +1,4 @@
-use crate::{DisplayMode, WindowState};
+use crate::{CursorLock, DisplayMode, WindowState};
 use alexandria_math::Vector2u;
 use std::borrow::Cow;
 
@@ -13,8 +13,9 @@ impl WindowState {
             title,
             size,
             display_mode,
+            cursor_lock: CursorLock::Unlocked,
             is_close_requested: false,
-            is_focused: false,
+            is_focused: true,
             is_resizing: false,
             is_maximized: false,
         }

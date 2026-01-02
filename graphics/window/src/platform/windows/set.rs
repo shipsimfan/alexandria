@@ -1,4 +1,4 @@
-use crate::{DisplayMode, Result, Window};
+use crate::{CursorLock, DisplayMode, Result, Window};
 use alexandria_math::Vector2u;
 use std::borrow::Cow;
 
@@ -29,6 +29,14 @@ impl Window {
     pub fn set_display_mode(&mut self, display_mode: DisplayMode) -> Result<()> {
         self.handle.set_display_mode(display_mode)?;
         self.state.set_display_mode(display_mode);
+        Ok(())
+    }
+
+    /// Set how the cursor should be locked to the window
+    pub fn set_cursor_lock(&mut self, cursor_lock: CursorLock) -> Result<()> {
+        self.handle
+            .lock_cursor_to_window(cursor_lock == CursorLock::Locked && self.is_focused())?;
+        self.state.set_cursor_lock(cursor_lock);
         Ok(())
     }
 

@@ -1,9 +1,9 @@
-use crate::Window;
+use crate::{CursorLock, Window};
 use alexandria_math::Vector2;
 use win32::{
     DefWindowProc, GWLP_USERDATA, GetWindowLongPtr, HWND, LPARAM, LRESULT, SIZE_MAXIMIZED,
     SIZE_MINIMIZED, SIZE_RESTORED, UINT, WM_ACTIVATEAPP, WM_CLOSE, WM_ENTERSIZEMOVE,
-    WM_EXITSIZEMOVE, WM_SIZE, WPARAM,
+    WM_EXITSIZEMOVE, WM_MOVE, WM_SIZE, WPARAM,
 };
 
 impl Window {
@@ -45,6 +45,10 @@ impl Window {
                 let height = ((l_param >> 16) & 0xFFFF) as u32;
                 if width != 0 && height != 0 {
                     self.state.set_size(Vector2::new(width, height));
+
+                    if self.cursor_lock() == CursorLock::Locked && self.is_focused() {
+                        self.wnd_proc_result = self.handle.lock_cursor_to_window(true);
+                    }
                 }
 
                 match w_param {
@@ -54,8 +58,19 @@ impl Window {
                 }
             }
 
+            WM_MOVE => {
+                if self.cursor_lock() == CursorLock::Locked && self.is_focused() {
+                    self.wnd_proc_result = self.handle.lock_cursor_to_window(true);
+                }
+            }
+
             // The window either gained or lost focus
-            WM_ACTIVATEAPP => self.state.set_is_focused(w_param != 0),
+            WM_ACTIVATEAPP => {
+                self.state.set_is_focused(w_param != 0);
+                if self.cursor_lock() == CursorLock::Locked {
+                    self.wnd_proc_result = self.handle.lock_cursor_to_window(self.is_focused());
+                }
+            }
 
             // All other events
             _ => return unsafe { DefWindowProc(*self.handle, msg, w_param, l_param) },

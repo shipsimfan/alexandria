@@ -1,4 +1,4 @@
-use crate::{DisplayMode, WindowState};
+use crate::{CursorLock, DisplayMode, WindowState};
 use alexandria_math::Vector2u;
 use std::borrow::Cow;
 
@@ -16,6 +16,11 @@ impl WindowState {
     /// Set the current mode the windowing is displaying as
     pub(crate) fn set_display_mode(&mut self, display_mode: DisplayMode) {
         self.display_mode = display_mode;
+    }
+
+    /// Get how the cursor should be locked to the window
+    pub(crate) fn set_cursor_lock(&mut self, cursor_lock: CursorLock) {
+        self.cursor_lock = cursor_lock;
     }
 
     /// Set if a close has been requested

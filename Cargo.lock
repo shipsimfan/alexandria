@@ -118,4 +118,4 @@ source = "git+https://github.com/shipsimfan/lib-vulkan#a851383f121a69a945ae992a1
 [[package]]
 name = "win32"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-win32#4acda35025884e4a2f3a47e0c359cb3bfca02d59"
+source = "git+https://github.com/shipsimfan/lib-win32#bec6c0a80e8c27d98f605e7248b06d6a27fde1b7"
