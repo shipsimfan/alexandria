@@ -1,4 +1,5 @@
 [workspace]
+members = ["util/git"]
 
 [workspace.package]
 version = "0.2.0"
@@ -15,8 +16,8 @@ alexandria-color.path = "graphics/color"
 
 alexandria-math.path = "math"
 
-alexandria-system.path = "system"
 alexandria-util.path = "util"
+alexandria-system.path = "util/system"
 
 # External Dependencies
 data-format.git = "https://github.com/shipsimfan/lib-data-format"

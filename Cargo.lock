@@ -21,6 +21,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "alexandria-git"
+version = "0.2.0"
+
+[[package]]
 name = "alexandria-graphics"
 version = "0.2.0"
 dependencies = [

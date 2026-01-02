@@ -1,0 +1,10 @@
+[package]
+name = "alexandria-git"
+description = "Utilities for getting information about the current git repository"
+
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+publish.workspace = true
