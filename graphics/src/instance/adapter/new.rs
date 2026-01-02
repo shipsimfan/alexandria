@@ -1,5 +1,5 @@
 use crate::{GraphicsAdapter, GraphicsAdapterKind, GraphicsInstance, GraphicsVersion};
-use alexandria_util::UUID;
+use alexandria_util::{MemorySize, UUID};
 use std::{borrow::Cow, ffi::CStr};
 use vulkan::{
     VkMemoryHeapFlag, VkPhysicalDevice, VkPhysicalDeviceMemoryProperties,
@@ -45,6 +45,7 @@ impl<'instance> GraphicsAdapter<'instance> {
                 vram += heap.size;
             }
         }
+        let vram = MemorySize::new(vram);
 
         GraphicsAdapter {
             adapter,

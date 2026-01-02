@@ -6,4 +6,4 @@ impl<T: [const] PartialEq> const PartialEq for Quaternion<T> {
     }
 }
 
-impl<T: Eq> Eq for Quaternion<T> {}
+impl<T: [const] Eq> const Eq for Quaternion<T> {}

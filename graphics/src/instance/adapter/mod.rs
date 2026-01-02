@@ -1,5 +1,5 @@
 use crate::{GraphicsInstance, GraphicsVersion};
-use alexandria_util::UUID;
+use alexandria_util::{MemorySize, UUID};
 use vulkan::VkPhysicalDevice;
 
 mod functions;
@@ -33,7 +33,7 @@ pub struct GraphicsAdapter<'instance> {
     uuid: UUID,
 
     /// The amount of video memory on the adapter
-    vram: u64,
+    vram: MemorySize,
 
     /// The instance this adapter comes from
     _instance: &'instance GraphicsInstance,

@@ -15,6 +15,7 @@ alexandria-color.path = "graphics/color"
 
 alexandria-math.path = "math"
 
+alexandria-system.path = "system"
 alexandria-util.path = "util"
 
 # External Dependencies
@@ -45,4 +46,5 @@ data-format = [
 [dependencies]
 alexandria-graphics.workspace = true
 alexandria-math.workspace = true
+alexandria-system.workspace = true
 alexandria-util.workspace = true

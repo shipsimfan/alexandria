@@ -6,4 +6,4 @@ impl<T: [const] PartialEq> const PartialEq for Vector3<T> {
     }
 }
 
-impl<T: Eq> Eq for Vector3<T> {}
+impl<T: [const] Eq> const Eq for Vector3<T> {}

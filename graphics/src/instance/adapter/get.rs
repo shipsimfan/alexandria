@@ -1,5 +1,5 @@
 use crate::{GraphicsAdapter, GraphicsAdapterKind, GraphicsVersion};
-use alexandria_util::UUID;
+use alexandria_util::{MemorySize, UUID};
 
 impl<'instance> GraphicsAdapter<'instance> {
     /// Get the Vulkan version supported by this adapter
@@ -28,7 +28,7 @@ impl<'instance> GraphicsAdapter<'instance> {
     }
 
     /// Get the amount of video RAM the adapter has access to
-    pub fn vram(&self) -> u64 {
+    pub fn vram(&self) -> MemorySize {
         self.vram
     }
 }

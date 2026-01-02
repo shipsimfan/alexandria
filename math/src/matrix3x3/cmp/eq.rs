@@ -6,4 +6,4 @@ impl<T: [const] PartialEq> const PartialEq for Matrix3x3<T> {
     }
 }
 
-impl<T: Eq> Eq for Matrix3x3<T> {}
+impl<T: [const] Eq> const Eq for Matrix3x3<T> {}

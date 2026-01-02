@@ -6,4 +6,4 @@ impl<T: [const] PartialEq, Space: ColorSpace<T>> const PartialEq for Color3<T, S
     }
 }
 
-impl<T: Eq, Space: ColorSpace<T>> Eq for Color3<T, Space> {}
+impl<T: [const] Eq, Space: ColorSpace<T>> const Eq for Color3<T, Space> {}

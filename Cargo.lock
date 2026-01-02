@@ -8,6 +8,7 @@ version = "0.2.0"
 dependencies = [
  "alexandria-graphics",
  "alexandria-math",
+ "alexandria-system",
  "alexandria-util",
 ]
 
@@ -33,6 +34,14 @@ name = "alexandria-math"
 version = "0.2.0"
 dependencies = [
  "data-format",
+]
+
+[[package]]
+name = "alexandria-system"
+version = "0.2.0"
+dependencies = [
+ "alexandria-util",
+ "win32",
 ]
 
 [[package]]
@@ -84,3 +93,8 @@ dependencies = [
 name = "vulkan"
 version = "0.1.0"
 source = "git+https://github.com/shipsimfan/lib-vulkan#a851383f121a69a945ae992a13223653c371cd7e"
+
+[[package]]
+name = "win32"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-win32#b0a0fb08b6356380f79d27f901a02767e8812c71"
