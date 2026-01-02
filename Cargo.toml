@@ -24,6 +24,7 @@ data-format.git = "https://github.com/shipsimfan/lib-data-format"
 vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
 
 win32.git = "https://github.com/shipsimfan/lib-win32"
+linux.git = "https://github.com/shipsimfan/lib-linux"
 
 [package]
 name = "alexandria"

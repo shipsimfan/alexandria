@@ -41,6 +41,7 @@ name = "alexandria-system"
 version = "0.2.0"
 dependencies = [
  "alexandria-util",
+ "linux",
  "win32",
 ]
 
@@ -58,6 +59,11 @@ source = "git+https://github.com/shipsimfan/lib-data-format#4369c0b0a4317c41baea
 dependencies = [
  "macros",
 ]
+
+[[package]]
+name = "linux"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-linux#9f4ee2d3a80afd751c6aa07ed3a78b000f58c557"
 
 [[package]]
 name = "macros"

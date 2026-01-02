@@ -1,6 +1,7 @@
 use std::{arch::x86_64::__cpuid, borrow::Cow};
 
 /// Get the model name of the CPU
+#[allow(unused_unsafe)]
 pub fn cpu_model() -> String {
     // Get the highest extended result
     let highest_extended_result = unsafe { __cpuid(0x80000000) }.eax;

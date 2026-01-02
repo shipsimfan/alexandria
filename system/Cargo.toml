@@ -14,3 +14,6 @@ alexandria-util.workspace = true
 
 [target.'cfg(windows)'.dependencies]
 win32.workspace = true
+
+[target.'cfg(target_os = "linux")'.dependencies]
+linux.workspace = true
