@@ -5,6 +5,7 @@ use window_class::WindowClass;
 use window_handle::WindowHandle;
 
 mod error;
+mod get;
 mod new;
 mod process_messages;
 mod wait_for_message;

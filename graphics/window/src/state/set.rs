@@ -36,4 +36,14 @@ impl WindowState {
     pub(crate) const fn set_is_changing(&mut self, is_changing: bool) {
         self.is_changing = is_changing;
     }
+
+    /// Set if the window is minimized
+    pub(crate) const fn set_is_minimized(&mut self, is_minimized: bool) {
+        self.is_minimized = is_minimized;
+    }
+
+    /// Set if the window is maximized
+    pub(crate) const fn set_is_maximized(&mut self, is_maximized: bool) {
+        self.is_maximized = is_maximized;
+    }
 }

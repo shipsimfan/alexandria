@@ -17,6 +17,8 @@ impl WindowState {
             is_running: true,
             is_focused: false,
             is_changing: false,
+            is_minimized: false,
+            is_maximized: false,
         }
     }
 }

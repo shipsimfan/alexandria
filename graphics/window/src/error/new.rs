@@ -2,14 +2,6 @@ use crate::{OsError, WindowError};
 use std::borrow::Cow;
 
 impl WindowError {
-    /// Create a new [`WindowError`] containing only a message
-    pub(crate) fn new<S: Into<Cow<'static, str>>>(message: S) -> WindowError {
-        WindowError {
-            message: message.into(),
-            os: None,
-        }
-    }
-
     /// Create a new [`WindowError`] from a windowing system error
     pub(crate) fn new_os<S: Into<Cow<'static, str>>>(message: S, os: OsError) -> WindowError {
         WindowError {

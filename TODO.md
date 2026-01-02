@@ -1,15 +1,12 @@
 # ToDo
  1. Add window system (Windows)
-   1. Thread-local window state
-     - Minimized
-     - Maximized
-   2. Mutli-threaded user wake (PostMessage)
-   3. Window modification
+   1. Mutli-threaded user wake (PostMessage)
+   2. Window modification
        - Position
        - Size
        - Display mode
        - Request close
-   4. Cursor lock
+   3. Cursor lock
  2. Add Linux Windowing support
    1. Wayland
      1. Window creation

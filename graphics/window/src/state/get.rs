@@ -66,4 +66,14 @@ impl WindowState {
     pub const fn is_changing(&self) -> bool {
         self.is_changing
     }
+
+    /// Is the window minimized?
+    pub const fn is_minimized(&self) -> bool {
+        self.is_minimized
+    }
+
+    /// Is the window maximized?
+    pub const fn is_maximized(&self) -> bool {
+        self.is_maximized
+    }
 }

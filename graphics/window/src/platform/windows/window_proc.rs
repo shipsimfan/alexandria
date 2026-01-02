@@ -1,8 +1,9 @@
 use crate::Window;
 use alexandria_math::Vector2;
 use win32::{
-    DefWindowProc, GWLP_USERDATA, GetWindowLongPtr, HWND, LPARAM, LRESULT, UINT, WM_ACTIVATEAPP,
-    WM_CLOSE, WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_MOVE, WM_SIZE, WPARAM,
+    DefWindowProc, GWLP_USERDATA, GetWindowLongPtr, HWND, LPARAM, LRESULT, SIZE_MAXIMIZED,
+    SIZE_MINIMIZED, SIZE_RESTORED, UINT, WM_ACTIVATEAPP, WM_CLOSE, WM_ENTERSIZEMOVE,
+    WM_EXITSIZEMOVE, WM_MOVE, WM_SIZE, WPARAM,
 };
 
 impl Window {
@@ -42,7 +43,19 @@ impl Window {
             WM_SIZE => {
                 let width = (l_param & 0xFFFF) as u32;
                 let height = ((l_param >> 16) & 0xFFFF) as u32;
-                self.state.set_size(Vector2::new(width, height));
+                if width != 0 && height != 0 {
+                    self.state.set_size(Vector2::new(width, height));
+                }
+
+                match w_param {
+                    SIZE_MINIMIZED => self.state.set_is_minimized(true),
+                    SIZE_MAXIMIZED => self.state.set_is_maximized(true),
+                    SIZE_RESTORED => {
+                        self.state.set_is_minimized(false);
+                        self.state.set_is_maximized(false);
+                    }
+                    _ => {}
+                }
             }
 
             // The window has moved
