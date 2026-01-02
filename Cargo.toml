@@ -13,6 +13,7 @@ publish = false
 # Internal Dependencies
 alexandria-graphics.path = "graphics"
 alexandria-color.path = "graphics/color"
+alexandria-window.path = "graphics/window"
 
 alexandria-math.path = "math"
 

@@ -15,3 +15,4 @@ pub use instance::*;
 pub use misc::*;
 
 pub use alexandria_color as color;
+pub use alexandria_window as window;

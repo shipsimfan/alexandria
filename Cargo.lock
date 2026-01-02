@@ -30,6 +30,7 @@ version = "0.2.0"
 dependencies = [
  "alexandria-color",
  "alexandria-util",
+ "alexandria-window",
  "vulkan",
 ]
 
@@ -54,6 +55,16 @@ name = "alexandria-util"
 version = "0.2.0"
 dependencies = [
  "data-format",
+]
+
+[[package]]
+name = "alexandria-window"
+version = "0.2.0"
+dependencies = [
+ "alexandria-math",
+ "data-format",
+ "linux",
+ "win32",
 ]
 
 [[package]]

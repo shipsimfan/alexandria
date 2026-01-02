@@ -1,52 +1,51 @@
 # ToDo
  1. Add window system (Windows)
-   1. Window creation
-   2. `process_messages` + `wait_for_message` functions
-   3. Mutli-threaded user wake (PostMessage)
-   4. Thread-local window state
-     - Window Position
-     - Client Position
-     - Window Size
-     - Client Size
-     - Focus
-     - Display mode
-     - Close requested
+   1. Thread-local window state
      - Minimized
      - Maximized
-   5. Window modification
-   6. Cursor lock
+   2. Mutli-threaded user wake (PostMessage)
+   3. Window modification
+       - Position
+       - Size
+       - Display mode
+       - Request close
+   4. Cursor lock
  2. Add Linux Windowing support
    1. Wayland
      1. Window creation
      2. `process_messages` + `wait_for_message` functions
      3. Mutli-threaded user wake (eventfd)
      4. Thread-local window state
-       - Window Position
-       - Client Position
-       - Window Size
-       - Client Size
+       - Position
+       - Size
        - Focus
        - Display mode
        - Close requested
        - Minimized
        - Maximized
      5. Window modification
+       - Position
+       - Size
+       - Display mode
+       - Request close
      6. Cursor lock
    2. X11
      1. Window creation
      2. `process_messages` + `wait_for_message` functions
      3. Mutli-threaded user wake (eventfd)
      4. Thread-local window state
-       - Window Position
-       - Client Position
-       - Window Size
-       - Client Size
+       - Position
+       - Size
        - Focus
        - Display mode
        - Close requested
        - Minimized
        - Maximized
      5. Window modification
+       - Position
+       - Size
+       - Display mode
+       - Request close
      6. Cursor lock
  3. Input system
    1. System
