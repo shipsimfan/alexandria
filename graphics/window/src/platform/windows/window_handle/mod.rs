@@ -5,6 +5,7 @@ mod drop;
 mod get_size;
 mod new;
 mod set_display_mode;
+mod set_size;
 mod set_title;
 
 /// A Win32 window

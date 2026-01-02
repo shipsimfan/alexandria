@@ -1,11 +1,6 @@
 # ToDo
  1. Add window system (Windows)
-   1. Window modification
-       - Title
-       - Size
-       - Display mode
-       - Request close
-   2. Cursor lock to window
+   1. Cursor lock to window
  2. Add Linux Windowing support
    1. Wayland
      1. Window creation
