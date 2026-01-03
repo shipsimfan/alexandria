@@ -1,12 +1,14 @@
-use crate::WindowWakeHandleInner;
+use crate::{Result, WindowError, WindowWakeHandleInner};
 use win32::{PostThreadMessage, WM_APP, try_get_last_error};
 
 impl WindowWakeHandleInner {
     /// Wake the window thread if it is blocking
-    pub fn wake(&self) {
+    pub fn wake(&self) -> Result<()> {
         let thread_id = self.thread_id.lock().unwrap();
         if let Some(thread_id) = *thread_id {
-            try_get_last_error!(PostThreadMessage(thread_id, WM_APP, 0, 0)).unwrap();
+            try_get_last_error!(PostThreadMessage(thread_id, WM_APP, 0, 0))
+                .map_err(|os| WindowError::new_os("unable to wake window thread", os))?;
         }
+        Ok(())
     }
 }
