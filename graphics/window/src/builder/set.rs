@@ -26,4 +26,11 @@ impl WindowBuilder {
         self.display_mode = display_mode;
         self
     }
+
+    /// Set if X11 should be used over Wayland?
+    #[cfg(target_os = "linux")]
+    pub fn force_x11(&mut self, force_x11: bool) -> &mut WindowBuilder {
+        self.force_x11 = force_x11;
+        self
+    }
 }

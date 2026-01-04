@@ -64,6 +64,7 @@ dependencies = [
  "alexandria-math",
  "data-format",
  "linux",
+ "wayland",
  "win32",
 ]
 
@@ -114,6 +115,14 @@ dependencies = [
 name = "vulkan"
 version = "0.1.0"
 source = "git+https://github.com/shipsimfan/lib-vulkan#a851383f121a69a945ae992a13223653c371cd7e"
+
+[[package]]
+name = "wayland"
+version = "0.1.0"
+source = "git+https://github.com/shipsimfan/lib-wayland#8ab285ef3e90f049e0d8d5839de0c36125da4381"
+dependencies = [
+ "linux",
+]
 
 [[package]]
 name = "win32"

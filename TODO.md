@@ -1,5 +1,8 @@
 # ToDo
- 1. Add Linux Windowing support
+ 1. Implement renderer wrappers
+   1. Device
+   ...etc
+ 2. Add Linux Windowing support
    1. Wayland
      1. Window creation
      2. `process_messages` + `wait_for_message` functions
@@ -32,7 +35,7 @@
        - Display mode
        - Request close
      6. Cursor lock to window
- 2. Input system
+ 3. Input system
    1. System
    2. Keyboard
      1. Windows
@@ -46,15 +49,20 @@
      1. Windows
      2. Wayland
      3. X11
- 3. Implement renderer wrappers
-   1. Device
-   ...etc
- 4. Add model loading/parsing
- 5. Add texture loading/parsing
- 6. Add audio wrappers
- 7. Add more input types
+ 4. Add fullscreen support
+   - Windows (borderless, placed at (0, 0))
+   - Wayland (extension)
+   - X11
+ 5. Add model loading/parsing
+ 6. Add texture loading/parsing
+ 7. Add window icons
+   - Windows
+   - Wayland
+   - X11
+ 8. Add audio wrappers
+ 9. Add more input types
    - X-Box controllers (Windows)
    - General controllers
    - Joysticks
    - Steering Wheels, Pedals, Gear Shift
- 8. Add 2-d support to `Matrix3x3`
+ 10. Add 2-d support to `Matrix3x3`

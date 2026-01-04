@@ -17,4 +17,8 @@ pub struct WindowBuilder {
 
     /// The display mode for the window
     display_mode: DisplayMode,
+
+    /// Force the use of X11 over Wayland on Linux
+    #[cfg(target_os = "linux")]
+    force_x11: bool,
 }

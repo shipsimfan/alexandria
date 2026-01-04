@@ -27,6 +27,7 @@ vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
 
 win32.git = "https://github.com/shipsimfan/lib-win32"
 linux.git = "https://github.com/shipsimfan/lib-linux"
+wayland.git = "https://github.com/shipsimfan/lib-wayland"
 
 [package]
 name = "alexandria"

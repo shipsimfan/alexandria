@@ -1,9 +1,11 @@
 //! The Linux implementation of the window system
 
+use shared_library::{SharedLibrary, try_load_function};
 use wayland::WaylandWindow;
 use x11::X11Window;
 
 mod error;
+mod shared_library;
 mod wake_handle;
 
 mod wayland;

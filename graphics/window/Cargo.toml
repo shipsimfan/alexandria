@@ -22,3 +22,4 @@ win32.workspace = true
 
 [target.'cfg(target_os = "linux")'.dependencies]
 linux.workspace = true
+wayland.workspace = true

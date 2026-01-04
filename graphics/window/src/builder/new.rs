@@ -8,6 +8,8 @@ impl WindowBuilder {
             title: title.into(),
             size: None,
             display_mode: DisplayMode::default(),
+            #[cfg(target_os = "linux")]
+            force_x11: false,
         }
     }
 }
