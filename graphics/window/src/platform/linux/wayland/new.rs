@@ -17,13 +17,17 @@ impl WaylandWindow {
         display: Rc<WlDisplay>,
     ) -> Result<Box<Window>> {
         // Get the registered globals
-        let registry = display
+        let mut registry = display
             .clone()
             .get_registry()?
             .add_listener(WaylandGlobals::new())?;
         display.roundtrip()?;
 
         // Make sure all required global were bound
+        if let Err(error) = registry.data_mut().result() {
+            return Err(error);
+        }
+
         if registry.data().compositor().is_none() {
             return Err(WindowError::new("no Wayland compositor available"));
         }
