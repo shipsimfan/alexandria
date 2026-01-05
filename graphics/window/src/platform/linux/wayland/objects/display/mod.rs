@@ -5,6 +5,7 @@ use wayland::wl_display;
 mod dispatch;
 mod drop;
 mod get_registry;
+mod roundtrip;
 mod try_connect;
 
 /// The main connection to Wayland

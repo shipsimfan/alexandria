@@ -1,6 +1,6 @@
 use wayland::{
     WlDisplayConnect, WlDisplayDisconnect, WlDisplayDispatch, WlDisplayGetError,
-    WlProxyAddListener, WlProxyGetVersion, WlProxyMarshalFlags,
+    WlDisplayRoundtrip, WlProxyAddListener, WlProxyGetVersion, WlProxyMarshalFlags,
 };
 
 mod load;
@@ -12,6 +12,9 @@ pub(in crate::platform::linux) struct WaylandFunctions {
 
     /// The function to get the last error on the connection
     pub display_get_error: WlDisplayGetError,
+
+    /// The function to block until all outstanding requests are processed
+    pub display_roundtrip: WlDisplayRoundtrip,
 
     /// The function to dispatch all waiting events
     pub display_dispatch: WlDisplayDispatch,

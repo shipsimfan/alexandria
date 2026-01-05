@@ -2,10 +2,10 @@ use crate::{Result, WindowError, platform::linux::wayland::WlDisplay};
 use linux::errno::errno;
 
 impl WlDisplay {
-    /// Dispatch all waiting events
-    pub(in crate::platform::linux::wayland) fn dispatch(&self) -> Result<()> {
+    /// Block until all outstanding requests have been processed
+    pub(in crate::platform::linux::wayland) fn roundtrip(&self) -> Result<()> {
         let handle = self.handle.borrow_mut();
-        if unsafe { (self.library.f.display_dispatch)(*handle) } >= 0 {
+        if unsafe { (self.library.f.display_roundtrip)(*handle) } >= 0 {
             return Ok(());
         }
 
@@ -16,7 +16,7 @@ impl WlDisplay {
         }
 
         Err(WindowError::new_os(
-            "unable to dispatch Wayland events",
+            "unable to process Wayland events",
             linux::Error::new(error),
         ))
     }

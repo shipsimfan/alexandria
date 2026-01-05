@@ -2,12 +2,14 @@ use crate::platform::linux::wayland::{WaylandGlobals, WlRegistryListener, WlRegi
 use std::ffi::CStr;
 
 impl WlRegistryListener for WaylandGlobals {
-    fn global(&mut self, _: WlRegistryRef, name: u32, interface: &CStr, version: u32) {
-        println!(
-            "Global \"{}\" registered with name {} (version {})",
-            interface.to_string_lossy(),
-            name,
-            version
-        );
+    fn global(&mut self, registry: WlRegistryRef, name: u32, interface: &CStr, version: u32) {
+        if interface == self.compositor_name {
+            println!("Found compositor at name {} (v{})", name, version);
+
+            match registry.bind(name, version) {
+                Ok(compositor) => self.compositor = Some(compositor),
+                Err(error) => self.dispatch_result = Err(error),
+            }
+        }
     }
 }

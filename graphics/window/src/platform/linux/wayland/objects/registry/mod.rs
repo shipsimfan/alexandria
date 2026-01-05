@@ -11,7 +11,7 @@ mod drop;
 mod new;
 
 pub(in crate::platform::linux::wayland) use listener::WlRegistryListener;
-pub(in crate::platform::linux::wayland) use r#ref::WlRegistryRef;
+pub(in crate::platform::linux::wayland) use r#ref::{WaylandBind, WlRegistryRef};
 
 /// The Wayland global registry
 pub(in crate::platform::linux::wayland) struct WlRegistry<T = ()> {
@@ -19,7 +19,7 @@ pub(in crate::platform::linux::wayland) struct WlRegistry<T = ()> {
     handle: *mut wl_registry,
 
     /// The data used for listener callbacks
-    listener_data: Option<NonNull<T>>,
+    listener_data: Option<NonNull<(T, Rc<WlDisplay>)>>,
 
     /// The display this registry came from
     display: Rc<WlDisplay>,

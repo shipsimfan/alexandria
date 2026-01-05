@@ -1,20 +1,20 @@
 use crate::{
     Result, WindowError,
-    platform::linux::wayland::{WlRegistry, WlRegistryListener},
+    platform::linux::wayland::{WlDisplay, WlRegistry, WlRegistryListener},
 };
-use std::ptr::NonNull;
+use std::{ptr::NonNull, rc::Rc};
 use wayland::wl_registry_add_listener_dyn;
 
 impl WlRegistry {
     /// Add a listener for registry events
     pub fn add_listener<T: WlRegistryListener>(self, data: T) -> Result<WlRegistry<T>> {
-        let mut data = Box::new(data);
+        let mut data = Box::new((data, self.display.clone()));
 
         if unsafe {
             wl_registry_add_listener_dyn(
                 self.handle,
                 &WlRegistry::<T>::LISTENER,
-                (data.as_mut() as *mut T).cast(),
+                (data.as_mut() as *mut (T, Rc<WlDisplay>)).cast(),
                 self.display.library.f.proxy_add_listener,
             )
         } < 0

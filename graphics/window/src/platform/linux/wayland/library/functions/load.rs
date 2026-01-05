@@ -3,7 +3,7 @@ use crate::platform::linux::{
 };
 use wayland::{
     WL_DISPLAY_CONNECT, WL_DISPLAY_DISCONNECT, WL_DISPLAY_DISPATCH, WL_DISPLAY_GET_ERROR,
-    WL_PROXY_ADD_LISTENER, WL_PROXY_GET_VERSION, WL_PROXY_MARSHAL_FLAGS,
+    WL_DISPLAY_ROUNDTRIP, WL_PROXY_ADD_LISTENER, WL_PROXY_GET_VERSION, WL_PROXY_MARSHAL_FLAGS,
 };
 
 impl WaylandFunctions {
@@ -12,6 +12,7 @@ impl WaylandFunctions {
         Some(WaylandFunctions {
             display_connect: try_load_function!(library, WL_DISPLAY_CONNECT)?,
             display_get_error: try_load_function!(library, WL_DISPLAY_GET_ERROR)?,
+            display_roundtrip: try_load_function!(library, WL_DISPLAY_ROUNDTRIP)?,
             display_dispatch: try_load_function!(library, WL_DISPLAY_DISPATCH)?,
             display_disconnect: try_load_function!(library, WL_DISPLAY_DISCONNECT)?,
 

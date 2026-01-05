@@ -5,7 +5,7 @@ impl<T> WlRegistry<T> {
     pub fn data(&self) -> &T {
         self.listener_data
             .as_ref()
-            .map(|data| unsafe { data.as_ref() })
+            .map(|data| unsafe { &data.as_ref().0 })
             .unwrap()
     }
 
@@ -13,7 +13,7 @@ impl<T> WlRegistry<T> {
     pub fn data_mut(&mut self) -> &mut T {
         self.listener_data
             .as_mut()
-            .map(|data| unsafe { data.as_mut() })
+            .map(|data| unsafe { &mut data.as_mut().0 })
             .unwrap()
     }
 }
