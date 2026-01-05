@@ -1,24 +1,34 @@
 # ToDo
- 1. Implement renderer wrappers
-   1. Device
+ 1. Finish up basic `WaylandWindow`
+   1. `xdg_wm_base` creation & `xdg_wm_base_pong` on `xdg_wm_base.ping`
+   2. `xdg_surface` + `xdg_toplevel` creation & `xdg_surface_ack_configure` on `xdg_surface.configure`
+   3. Set `close_requested` on `xdg_toplevel.close`
+   4. Change `size` and `is_maximized` on `xdg_toplevel.configure`
+   5. Mutli-threaded user wake (eventfd)
+ 2. Add an optional `Input`-like callback trait for `WindowEvents`
+   - `on_close_requested`
+   - `on_resize(Vector2u)`
+   - `on_maximize(bool)`
+   - `on_focus(bool)`
+   - `on_display_mode_change(DisplayMode)` (if it ever happens)
+ 3. Implement renderer wrappers up to clearing the screen
+   1. `Surface`
+   2. `Device`
+   3. `Swapchain`
    ...etc
- 2. Add Linux Windowing support
+ 4. Add Linux Windowing support
    1. Wayland
      1. Window creation
-     2. `process_messages` + `wait_for_message` functions
-     3. Mutli-threaded user wake (eventfd)
-     4. Thread-local window state
-       - Size
+       - Display mode
+     2. Thread-local window state
        - Focus
        - Display mode
-       - Close requested
-       - Maximized
-     5. Window modification
+     3. Window modification
        - Title
        - Size
        - Display mode
        - Request close
-     6. Cursor lock to window
+     4. Cursor lock to window
    2. X11
      1. Window creation
      2. `process_messages` + `wait_for_message` functions
@@ -35,7 +45,7 @@
        - Display mode
        - Request close
      6. Cursor lock to window
- 3. Input system
+ 5. Input system
    1. System
    2. Keyboard
      1. Windows
@@ -49,20 +59,21 @@
      1. Windows
      2. Wayland
      3. X11
- 4. Add fullscreen support
+ 6. Add fullscreen support
    - Windows (borderless, placed at (0, 0))
    - Wayland (extension)
    - X11
- 5. Add model loading/parsing
- 6. Add texture loading/parsing
- 7. Add window icons
+ 7. Add full renderer wrappers for triangle
+ 8. Add model loading/parsing
+ 9. Add texture loading/parsing
+ 10. Add window icons
    - Windows
    - Wayland
    - X11
- 8. Add audio wrappers
- 9. Add more input types
+ 11. Add audio wrappers
+ 12. Add more input types
    - X-Box controllers (Windows)
    - General controllers
    - Joysticks
    - Steering Wheels, Pedals, Gear Shift
- 10. Add 2-d support to `Matrix3x3`
+ 13. Add 2-d support to `Matrix3x3`

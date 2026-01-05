@@ -18,7 +18,6 @@ mod deref;
 mod get;
 mod new;
 mod process_messages;
-mod wait_for_message;
 
 pub(crate) use error::OsError;
 pub(crate) use wake_handle::WindowWakeHandleInner;

@@ -10,7 +10,6 @@ mod objects;
 
 mod new;
 mod process_messages;
-mod wait_for_message;
 
 pub(in crate::platform::linux) use objects::*;
 

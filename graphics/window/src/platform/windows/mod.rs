@@ -17,7 +17,6 @@ mod get;
 mod new;
 mod process_messages;
 mod set;
-mod wait_for_message;
 mod window_proc;
 
 pub(crate) use error::OsError;
