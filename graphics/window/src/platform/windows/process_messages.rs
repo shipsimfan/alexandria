@@ -1,4 +1,4 @@
-use crate::{Result, Window};
+use crate::{Result, Window, WindowError};
 use std::ptr::null_mut;
 use win32::{DispatchMessage, GetMessage, MSG, PM_REMOVE, PeekMessage, TranslateMessage};
 
