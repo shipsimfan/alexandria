@@ -5,6 +5,6 @@ fn main() {
 
     while !window.is_close_requested() {
         window.wait_for_message().unwrap();
-        window.process_messages(None).unwrap();
+        window.process_messages().unwrap();
     }
 }

@@ -6,16 +6,10 @@ impl Window {
     /// Process all messages that have occurred since the last call
     ///
     /// If none have happened, this function will return immediately
-    pub fn process_messages(&mut self, max_messages: Option<u32>) -> Result<()> {
+    pub fn process_messages(&mut self) -> Result<()> {
         let mut msg = MSG::default();
-        let mut messages_processed = 0;
-        while max_messages
-            .map(|max| messages_processed < max)
-            .unwrap_or(true)
-            && unsafe { PeekMessage(&mut msg, null_mut(), 0, 0, PM_REMOVE) } != 0
-        {
+        while unsafe { PeekMessage(&mut msg, null_mut(), 0, 0, PM_REMOVE) } != 0 {
             self.process_message(&msg)?;
-            messages_processed += 1;
         }
 
         Ok(())

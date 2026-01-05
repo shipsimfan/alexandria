@@ -1,3 +1,4 @@
+mod new;
 mod wake;
 
 /// A handle which can be used to wake the

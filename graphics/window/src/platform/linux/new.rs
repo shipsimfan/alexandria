@@ -1,4 +1,7 @@
-use crate::{DisplayMode, Result, Window, platform::linux::wayland::WlDisplay};
+use crate::{
+    DisplayMode, Result, Window,
+    platform::linux::{WaylandWindow, wayland::WlDisplay},
+};
 use alexandria_math::Vector2u;
 use std::borrow::Cow;
 
@@ -12,12 +15,8 @@ impl Window {
     ) -> Result<Box<Window>> {
         // Try to connect to Wayland
         if !force_x11 {
-            if let Some(wl_display) = WlDisplay::try_connect() {
-                println!("Using Wayland!");
-
-                drop(wl_display);
-
-                todo!()
+            if let Some(display) = WlDisplay::try_connect() {
+                return WaylandWindow::new(title, size, display_mode, display);
             }
         }
 

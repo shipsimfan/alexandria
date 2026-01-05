@@ -31,12 +31,12 @@ pub struct Window {
     /// The handle to the window itself
     handle: WindowHandle,
 
-    /// The handle used to wake this thread if blocking for messages
-    wake_handle: Arc<WindowWakeHandleInner>,
-
     /// The class the window belongs to
     #[allow(unused)]
     class: WindowClass,
+
+    /// The handle used to wake this thread if blocking for messages
+    wake_handle: Arc<WindowWakeHandleInner>,
 
     /// The current state of the window
     state: WindowState,
