@@ -1,4 +1,6 @@
-use crate::{GraphicsAdapter, GraphicsAdapterKind, GraphicsInstance, GraphicsVersion};
+use crate::{
+    GraphicsAdapter, GraphicsAdapterKind, GraphicsVersion, instance::GraphicsInstanceInner,
+};
 use alexandria_util::{MemorySize, UUID};
 use std::{borrow::Cow, ffi::CStr};
 use vulkan::{
@@ -9,7 +11,7 @@ use vulkan::{
 impl<'instance> GraphicsAdapter<'instance> {
     /// Create a new [`GraphicsAdapter`]
     pub(in crate::instance) fn new(
-        instance: &'instance GraphicsInstance,
+        instance: &'instance GraphicsInstanceInner,
         adapter: VkPhysicalDevice,
     ) -> GraphicsAdapter<'instance> {
         // Get the properties

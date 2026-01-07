@@ -1,8 +1,8 @@
 use crate::{
     GraphicsError, GraphicsInstance, GraphicsInstanceBuilder, Result,
-    instance::GraphicsInstanceFunctions, util::load_global_function,
+    instance::GraphicsInstanceInner, util::load_global_function,
 };
-use std::{ffi::CString, ptr::null, str::FromStr};
+use std::{ffi::CString, ptr::null, str::FromStr, sync::Arc};
 use vulkan::{
     VK_CREATE_INSTANCE, VkApplicationInfo, VkCreateInstance, VkInstance, VkInstanceCreateInfo,
     try_vulkan,
@@ -37,12 +37,9 @@ impl<'a> GraphicsInstanceBuilder<'a> {
             ..Default::default()
         };
 
-        let mut layers = Vec::with_capacity(self.layers.len());
         let mut layer_ptrs = Vec::with_capacity(self.layers.len());
         for layer in &self.layers {
-            let layer = CString::from_str(layer).unwrap();
-            layer_ptrs.push(layer.as_ptr());
-            layers.push(layer);
+            layer_ptrs.push(layer.as_cstr().as_ptr());
         }
         create_info.enabled_layer_count = self.layers.len() as _;
         create_info.enabled_layer_names = layer_ptrs.as_ptr();
@@ -51,16 +48,12 @@ impl<'a> GraphicsInstanceBuilder<'a> {
         let create_instance: VkCreateInstance = load_global_function!(VK_CREATE_INSTANCE)?;
 
         // Create the instance
-        let mut instance = VkInstance::null();
-        try_vulkan!(create_instance(&create_info, null(), &mut instance))
+        let mut handle = VkInstance::null();
+        try_vulkan!(create_instance(&create_info, null(), &mut handle))
             .map_err(|vk| GraphicsError::new_vk("unable to create graphics instance", vk))?;
 
-        // Load instance functions
-        let functions = GraphicsInstanceFunctions::load(instance)?;
-
         Ok(GraphicsInstance {
-            instance,
-            functions,
+            inner: Arc::new(GraphicsInstanceInner::new(handle, &self.layers)?),
         })
     }
 }

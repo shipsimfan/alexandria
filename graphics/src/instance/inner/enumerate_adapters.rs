@@ -1,8 +1,8 @@
-use crate::{GraphicsAdapter, GraphicsError, GraphicsInstance, Result};
+use crate::{GraphicsAdapter, GraphicsError, Result, instance::GraphicsInstanceInner};
 use std::ptr::null_mut;
 use vulkan::try_vulkan;
 
-impl GraphicsInstance {
+impl GraphicsInstanceInner {
     /// Enumerate all the [`GraphicsAdapter`]s on the system
     pub fn enumerate_adapters<'instance>(
         &'instance self,
@@ -10,7 +10,7 @@ impl GraphicsInstance {
         // Get the number of adapters
         let mut adapter_count = 0;
         try_vulkan!((self.functions.enumerate_physical_devices)(
-            self.instance,
+            self.handle,
             &mut adapter_count,
             null_mut()
         ))
@@ -22,7 +22,7 @@ impl GraphicsInstance {
         // Get the adapter handles
         let mut adapters = Vec::with_capacity(adapter_count as _);
         try_vulkan!((self.functions.enumerate_physical_devices)(
-            self.instance,
+            self.handle,
             &mut adapter_count,
             adapters.as_mut_ptr(),
         ))

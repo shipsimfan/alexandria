@@ -1,4 +1,4 @@
-use crate::GraphicsVersion;
+use crate::{GraphicsInstanceLayer, GraphicsVersion};
 use std::borrow::Cow;
 
 mod create;
@@ -18,5 +18,5 @@ pub struct GraphicsInstanceBuilder<'a> {
     engine: Option<(Cow<'a, str>, GraphicsVersion)>,
 
     /// The requested layers to enable for the instance
-    layers: Vec<Cow<'a, str>>,
+    layers: Vec<GraphicsInstanceLayer>,
 }

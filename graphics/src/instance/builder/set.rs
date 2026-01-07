@@ -1,4 +1,4 @@
-use crate::{GraphicsInstanceBuilder, GraphicsVersion};
+use crate::{GraphicsInstanceBuilder, GraphicsInstanceLayer, GraphicsVersion};
 use std::borrow::Cow;
 
 impl<'a> GraphicsInstanceBuilder<'a> {
@@ -32,17 +32,20 @@ impl<'a> GraphicsInstanceBuilder<'a> {
     }
 
     /// Add a new layer to the list of requested layers
-    pub fn layer<S: Into<Cow<'a, str>>>(&mut self, layer: S) -> &mut GraphicsInstanceBuilder<'a> {
+    pub fn layer<S: Into<GraphicsInstanceLayer>>(
+        &mut self,
+        layer: S,
+    ) -> &mut GraphicsInstanceBuilder<'a> {
         self.layers.push(layer.into());
         self
     }
 
     /// Add new layers to the list of requested layers
-    pub fn layers<S: Into<Cow<'a, str>>, I: IntoIterator<Item = S>>(
+    pub fn layers<I: IntoIterator<Item = GraphicsInstanceLayer>>(
         &mut self,
         layers: I,
     ) -> &mut GraphicsInstanceBuilder<'a> {
-        self.layers.extend(layers.into_iter().map(Into::into));
+        self.layers.extend(layers);
         self
     }
 }

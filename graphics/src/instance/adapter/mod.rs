@@ -1,4 +1,4 @@
-use crate::{GraphicsInstance, GraphicsVersion};
+use crate::{GraphicsVersion, instance::GraphicsInstanceInner};
 use alexandria_util::{MemorySize, UUID};
 use vulkan::VkPhysicalDevice;
 
@@ -36,7 +36,7 @@ pub struct GraphicsAdapter<'instance> {
     vram: MemorySize,
 
     /// The instance this adapter comes from
-    _instance: &'instance GraphicsInstance,
+    _instance: &'instance GraphicsInstanceInner,
 }
 
 unsafe impl<'instance> Send for GraphicsAdapter<'instance> {}

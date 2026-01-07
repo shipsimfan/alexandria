@@ -1,27 +1,25 @@
 use adapter::GraphicsAdapterFunctions;
-use functions::GraphicsInstanceFunctions;
-use vulkan::VkInstance;
+use inner::GraphicsInstanceInner;
+use std::sync::Arc;
 
 mod adapter;
 mod builder;
-mod functions;
+mod debug_messenger;
+mod inner;
+mod layer;
 
-mod drop;
-mod enumerate_adapters;
+mod deref;
 mod enumerate_all_extensions;
 mod enumerate_all_layers;
+mod enumerate_layers;
 
 pub use adapter::{GraphicsAdapter, GraphicsAdapterKind};
 pub use builder::GraphicsInstanceBuilder;
+pub use debug_messenger::*;
+pub use layer::GraphicsInstanceLayer;
 
 /// The context for interacting with Vulkan
 pub struct GraphicsInstance {
-    /// A handle to the underlying graphics intance
-    instance: VkInstance,
-
-    /// The functions loaded for this instance
-    functions: GraphicsInstanceFunctions,
+    /// Reference to the graphics instance
+    inner: Arc<GraphicsInstanceInner>,
 }
-
-unsafe impl Send for GraphicsInstance {}
-unsafe impl Sync for GraphicsInstance {}
