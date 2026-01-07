@@ -1,6 +1,6 @@
 use crate::{
     Result,
-    platform::linux::wayland::{WaylandGlobals, WlCompositor},
+    platform::linux::wayland::{WaylandGlobals, WlCompositor, XdgWmBase},
 };
 
 impl WaylandGlobals {
@@ -16,6 +16,11 @@ impl WaylandGlobals {
     /// Get a reference to the global compositor
     pub fn compositor(&self) -> Option<&WlCompositor> {
         self.compositor.as_ref()
+    }
+
+    /// Get a reference to the XDG window manager
+    pub fn xdg_wm_base(&self) -> Option<&XdgWmBase> {
+        self.xdg_wm_base.as_ref()
     }
 
     /// Get a mutable reference to the global compositor

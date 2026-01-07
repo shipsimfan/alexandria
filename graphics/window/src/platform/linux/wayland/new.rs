@@ -31,6 +31,9 @@ impl WaylandWindow {
         if registry.data().compositor().is_none() {
             return Err(WindowError::new("no Wayland compositor available"));
         }
+        if registry.data().xdg_wm_base().is_none() {
+            return Err(WindowError::new("no XDG window manager available"));
+        }
 
         // Create surface
         let wl_surface = registry

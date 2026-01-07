@@ -1,4 +1,7 @@
-use crate::{Result, platform::linux::wayland::WlCompositor};
+use crate::{
+    Result,
+    platform::linux::wayland::{WlCompositor, XdgWmBase},
+};
 use std::ffi::CStr;
 
 mod get;
@@ -13,6 +16,12 @@ pub(in crate::platform::linux::wayland) struct WaylandGlobals {
     /// A reference to the global compositor
     compositor: Option<WlCompositor>,
 
-    /// The name of the `compositor` interface
+    /// A reference to the XDG window manager
+    xdg_wm_base: Option<XdgWmBase>,
+
+    /// The name of the `xdg_wm_base` interface
     compositor_name: &'static CStr,
+
+    /// The name of the `compositor` interface
+    xdg_wm_base_name: &'static CStr,
 }

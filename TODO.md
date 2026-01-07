@@ -1,13 +1,11 @@
 # ToDo
  1. Finish up basic `WaylandWindow`
-   1. `xdg_wm_base` creation
-   2. `xdg_wm_base_pong` on `xdg_wm_base.ping`
-   3. `xdg_surface` creations
-   4. `xdg_surface_ack_configure` on `xdg_surface.configure`
-   5. `xdg_toplevel` creation 
-   6. Set `close_requested` on `xdg_toplevel.close`
-   7. Change `size` and `is_maximized` on `xdg_toplevel.configure`
-   8. Mutli-threaded user wake (eventfd)
+   1. `xdg_surface` creations
+   2. `xdg_surface_ack_configure` on `xdg_surface.configure`
+   3. `xdg_toplevel` creation 
+   4. Set `close_requested` on `xdg_toplevel.close`
+   5. Change `size` and `is_maximized` on `xdg_toplevel.configure`
+   6. Mutli-threaded user wake (eventfd)
  2. Add an optional `Input`-like callback trait for `WindowEvents`
    - `on_close_requested`
    - `on_resize(Vector2u)`
@@ -15,10 +13,16 @@
    - `on_focus(bool)`
    - `on_display_mode_change(DisplayMode)` (if it ever happens)
  3. Implement renderer wrappers up to clearing the screen
-   1. `Surface`
-   2. `Device`
-   3. `Swapchain`
-   ...etc
+   1. `DebugMessenger`
+   2. `Surface`
+   3. `Device`
+   4. `Queue`
+   5. `Swapchain`
+   6. `ImageView`
+   7. `CommandPool`
+   8. `CommandBuffer`
+   9. `Semaphore`
+   10. `Fence`
  4. Add Linux Windowing support
    1. Wayland
      1. Window creation
