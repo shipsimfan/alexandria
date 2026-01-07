@@ -32,12 +32,23 @@ impl WaylandWindow {
             return Err(WindowError::new("no Wayland compositor available"));
         }
 
+        // Create surface
+        let wl_surface = registry
+            .data_mut()
+            .compositor_mut()
+            .unwrap()
+            .create_surface()?;
+
         // Create runtime state
         let wake_handle = WindowWakeHandleInner::new();
         let state = WindowState::new(title, size.unwrap_or(Vector2u::new(0, 0)), display_mode);
 
         Ok(Box::new(Window {
-            kind: WindowKind::Wayland(WaylandWindow { display, registry }),
+            kind: WindowKind::Wayland(WaylandWindow {
+                display,
+                registry,
+                wl_surface,
+            }),
             wake_handle,
             state,
         }))

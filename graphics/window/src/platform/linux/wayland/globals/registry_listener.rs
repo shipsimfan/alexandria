@@ -7,9 +7,7 @@ impl WlRegistryListener for WaylandGlobals {
             return;
         }
 
-        if interface == self.compositor_name {
-            println!("Found compositor at name {} (v{})", name, version);
-
+        if self.compositor.is_none() && interface == self.compositor_name {
             match registry.bind(name, version) {
                 Ok(compositor) => self.compositor = Some(compositor),
                 Err(error) => self.dispatch_result = Err(error),

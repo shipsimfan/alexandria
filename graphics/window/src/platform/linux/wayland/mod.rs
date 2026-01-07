@@ -15,9 +15,12 @@ pub(in crate::platform::linux) use objects::*;
 
 /// A window on a Wayland connection
 pub(in crate::platform::linux) struct WaylandWindow {
-    /// The main Wayland connection
-    display: Rc<WlDisplay>,
+    /// The surface created by the Wayland compositor
+    wl_surface: WlSurface,
 
     /// The global Wayland registry
     registry: WlRegistry<WaylandGlobals>,
+
+    /// The main Wayland connection
+    display: Rc<WlDisplay>,
 }

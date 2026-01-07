@@ -13,8 +13,13 @@ impl WaylandGlobals {
         result
     }
 
-    /// Get the global compositor
+    /// Get a reference to the global compositor
     pub fn compositor(&self) -> Option<&WlCompositor> {
         self.compositor.as_ref()
+    }
+
+    /// Get a mutable reference to the global compositor
+    pub fn compositor_mut(&mut self) -> Option<&mut WlCompositor> {
+        self.compositor.as_mut()
     }
 }
