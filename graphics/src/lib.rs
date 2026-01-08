@@ -6,6 +6,7 @@
 #![deny(rustdoc::redundant_explicit_links)]
 #![warn(rustdoc::broken_intra_doc_links)]
 #![feature(cstr_display)]
+#![feature(box_as_ptr)]
 
 mod instance;
 mod misc;

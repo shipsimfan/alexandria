@@ -1,4 +1,5 @@
-use crate::{GraphicsInstanceBuilder, GraphicsInstanceLayer, GraphicsVersion};
+use crate::{GraphicsInstanceBuilder, GraphicsInstanceExtension, GraphicsVersion};
+use std::borrow::Cow;
 
 impl<'a> GraphicsInstanceBuilder<'a> {
     /// Get the requested Vulkan version
@@ -40,8 +41,13 @@ impl<'a> GraphicsInstanceBuilder<'a> {
         self.get_engine().map(|(_, version)| version)
     }
 
+    /// Get requested extensions for the instance
+    pub fn get_extensions(&self) -> &[GraphicsInstanceExtension] {
+        &self.extensions
+    }
+
     /// Get requested layers for the instance
-    pub fn get_layers(&self) -> &[GraphicsInstanceLayer] {
+    pub fn get_layers(&self) -> &[Cow<'a, str>] {
         &self.layers
     }
 }

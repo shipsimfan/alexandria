@@ -1,6 +1,7 @@
 mod as_str;
 mod display;
 mod from_vk;
+mod to_vk;
 
 /// A severity that a Vulkan debug message can be
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]

@@ -1,13 +1,13 @@
-use crate::GraphicsInstanceLayer;
+use crate::GraphicsInstanceExtension;
 
 macro_rules! layer_cstrs {
     [$($variant: ident => $str: literal,)*] => {
-        impl GraphicsInstanceLayer {
-            /// Try to convert `str` into a [`GraphicsInstanceLayer`]
-            pub(in crate::instance) fn from_str(str: &str) -> Option<GraphicsInstanceLayer> {
+        impl GraphicsInstanceExtension {
+            /// Try to convert `str` into a [`GraphicsInstanceExtension`]
+            pub(in crate::instance) fn from_str(str: &str) -> Option<GraphicsInstanceExtension> {
                 match str {
                     $(
-                        $str => Some(GraphicsInstanceLayer::$variant),
+                        $str => Some(GraphicsInstanceExtension::$variant),
                     )*
                     _ => None,
                 }
@@ -16,7 +16,7 @@ macro_rules! layer_cstrs {
             /// Get the Vulkan string representation of this layer
             pub(in crate::instance) fn as_cstr(&self) -> &'static std::ffi::CStr {
                 match self {$(
-                    GraphicsInstanceLayer::$variant => unsafe {
+                    GraphicsInstanceExtension::$variant => unsafe {
                         std::ffi::CStr::from_bytes_with_nul_unchecked(
                             std::concat!($str, "\0").as_bytes()
                         )
@@ -27,4 +27,4 @@ macro_rules! layer_cstrs {
     };
 }
 
-layer_cstrs![KhronosValidation => "VK_LAYER_KHRONOS_validation",];
+layer_cstrs![DebugUtils => "VK_EXT_debug_utils",];

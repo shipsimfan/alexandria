@@ -1,18 +1,21 @@
 const TITLE: &str = "Blank Window Example";
 
-#[cfg(debug_assertions)]
-const VALIDATION_LAYERS: &[alexandria_graphics::GraphicsInstanceLayer] =
-    &[alexandria_graphics::GraphicsInstanceLayer::KhronosValidation];
-#[cfg(not(debug_assertions))]
-const VALIDATION_LAYERS: &[&str] = &[];
-
 fn main() {
     // Create Vulkan instance
-    let layers = if has_validation_layers() {
-        VALIDATION_LAYERS
-    } else {
-        println!("Warning: missing validation layers");
-        &[]
+    let layers = match debug_messenger::has_layers() {
+        Some(layers) => layers,
+        None => {
+            println!("Warning: missing validation layers");
+            &[]
+        }
+    };
+
+    let extensions = match debug_messenger::has_extensions() {
+        Some(extensions) => extensions,
+        None => {
+            println!("Warning: missing debug extensions");
+            &[]
+        }
     };
 
     let instance = alexandria_graphics::GraphicsInstance::builder(
@@ -20,8 +23,11 @@ fn main() {
     )
     .application(TITLE, alexandria_graphics::GraphicsVersion::VERSION_1_0)
     .layers(layers.into_iter().map(|l| *l))
+    .extensions(extensions.into_iter().map(|e| *e))
     .create()
     .unwrap();
+
+    let _debug_messenger = debug_messenger::create(&instance);
 
     // Create window
     let mut window = alexandria_graphics::window::Window::builder(TITLE)
@@ -34,29 +40,72 @@ fn main() {
     }
 }
 
-/// Does this system have Vulkan validation layers?
-fn has_validation_layers() -> bool {
-    if VALIDATION_LAYERS.len() == 0 {
-        return true;
+#[cfg(debug_assertions)]
+mod debug_messenger {
+    pub struct DebugCallback;
+
+    impl alexandria_graphics::GraphicsDebugMessengerCallback for DebugCallback {
+        fn message(
+            &self,
+            message: &str,
+            severity: alexandria_graphics::GraphicsDebugMessageSeverity,
+        ) {
+            println!("[{}] {}", severity, message);
+        }
     }
 
-    let layers = alexandria_graphics::GraphicsInstance::enumerate_layers().unwrap();
-
-    let mut has_validation_layers = true;
-    for validation_layer in VALIDATION_LAYERS {
-        let mut found = false;
-        for layer in &layers {
-            if layer == validation_layer {
-                found = true;
-                break;
+    /// Does this system have required Vulkan validation layers?
+    pub fn has_layers() -> Option<&'static [&'static str]> {
+        for layer in alexandria_graphics::GraphicsInstance::enumerate_all_layers().unwrap() {
+            if layer.name() == "VK_LAYER_KHRONOS_validation" {
+                return Some(&["VK_LAYER_KHRONOS_validation"]);
             }
         }
 
-        if !found {
-            has_validation_layers = false;
-            break;
-        }
+        None
     }
 
-    has_validation_layers
+    /// Does this system have required Vulkan validation extensions?
+    pub fn has_extensions() -> Option<&'static [alexandria_graphics::GraphicsInstanceExtension]> {
+        for extension in alexandria_graphics::GraphicsInstance::enumerate_extensions().unwrap() {
+            if extension == alexandria_graphics::GraphicsInstanceExtension::DebugUtils {
+                return Some(&[alexandria_graphics::GraphicsInstanceExtension::DebugUtils]);
+            }
+        }
+
+        None
+    }
+
+    /// Create a new debug messenger
+    pub fn create(
+        instance: &alexandria_graphics::GraphicsInstance,
+    ) -> alexandria_graphics::GraphicsDebugMessenger<DebugCallback> {
+        instance
+            .create_debug_messenger(
+                alexandria_graphics::GraphicsDebugMessageSeverity::Verbose,
+                DebugCallback,
+            )
+            .unwrap()
+    }
+}
+
+#[cfg(not(debug_assertions))]
+mod debug_messenger {
+    /// The required validation layers
+    pub const VALIDATION_LAYERS: &[&str] = &[];
+
+    /// Does this system have required Vulkan validation layers?
+    pub fn has_layers() -> bool {
+        true
+    }
+
+    /// Does this system have required Vulkan validation extensions?
+    pub fn has_extensions() -> bool {
+        true
+    }
+
+    /// Create a new debug messenger
+    pub fn create(_: &alexandria_graphics::GraphicsInstance) -> () {
+        ()
+    }
 }

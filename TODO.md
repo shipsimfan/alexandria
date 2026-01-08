@@ -11,16 +11,15 @@
    - `on_focus(bool)`
    - `on_display_mode_change(DisplayMode)` (if it ever happens)
  3. Implement renderer wrappers up to clearing the screen
-   1. `DebugMessenger`
-   2. `Surface`
-   3. `Device`
-   4. `Queue`
-   5. `Swapchain`
-   6. `ImageView`
-   7. `CommandPool`
-   8. `CommandBuffer`
-   9. `Semaphore`
-   10. `Fence`
+   1. `Surface`
+   2. `Device`
+   3. `Queue`
+   4. `Swapchain`
+   5. `ImageView`
+   6. `CommandPool`
+   7. `CommandBuffer`
+   8. `Semaphore`
+   9. `Fence`
  4. Add Linux Windowing support
    1. Wayland
      1. Window creation

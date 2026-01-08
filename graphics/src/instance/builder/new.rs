@@ -7,6 +7,7 @@ impl<'a> GraphicsInstanceBuilder<'a> {
             api_version,
             application: None,
             engine: None,
+            extensions: Vec::new(),
             layers: Vec::new(),
         }
     }

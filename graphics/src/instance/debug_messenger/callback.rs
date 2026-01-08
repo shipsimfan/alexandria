@@ -16,7 +16,7 @@ pub trait GraphicsDebugMessengerCallback {
 }
 
 /// The function to pass to the raw debug message callback
-pub(in crate::instance::debug_messenger) unsafe extern "C" fn debug_message_trampoline<
+pub(in crate::instance::debug_messenger) extern "system" fn debug_message_trampoline<
     C: GraphicsDebugMessengerCallback,
 >(
     message_severity: VkDebugUtilsMessageSeverityFlagExt,

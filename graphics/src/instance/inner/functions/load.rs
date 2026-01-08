@@ -1,5 +1,5 @@
 use crate::{
-    GraphicsInstanceLayer, Result,
+    GraphicsInstanceExtension, Result,
     instance::{
         GraphicsAdapterFunctions, GraphicsDebugMessengerFunctions, inner::GraphicsInstanceFunctions,
     },
@@ -11,11 +11,11 @@ impl GraphicsInstanceFunctions {
     /// Load all the required instance functions
     pub fn load(
         instance: VkInstance,
-        layers: &[GraphicsInstanceLayer],
+        extensions: &[GraphicsInstanceExtension],
     ) -> Result<GraphicsInstanceFunctions> {
         let mut debug_messenger = None;
-        for layer in layers {
-            if *layer == GraphicsInstanceLayer::KhronosValidation {
+        for extension in extensions {
+            if *extension == GraphicsInstanceExtension::DebugUtils {
                 debug_messenger = Some(GraphicsDebugMessengerFunctions::load(instance)?);
             }
         }
