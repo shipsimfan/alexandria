@@ -1,10 +1,10 @@
 use crate::platform::linux::wayland::{
     WaylandGlobals, WlRegistryListener, WlRegistryRef, XdgWmBase,
 };
-use std::ffi::CStr;
+use std::{ffi::CStr, rc::Rc};
 
 impl WlRegistryListener for WaylandGlobals {
-    fn global(&mut self, registry: WlRegistryRef, name: u32, interface: &CStr, version: u32) {
+    fn global(&mut self, mut registry: WlRegistryRef, name: u32, interface: &CStr, version: u32) {
         if self.dispatch_result.is_err() {
             return;
         }
@@ -19,7 +19,7 @@ impl WlRegistryListener for WaylandGlobals {
                 .bind::<XdgWmBase>(name, version)
                 .and_then(|xdg_wm_base| xdg_wm_base.register_ping_handler().map(|_| xdg_wm_base))
             {
-                Ok(xdg_wm_base) => self.xdg_wm_base = Some(xdg_wm_base),
+                Ok(xdg_wm_base) => self.xdg_wm_base = Some(Rc::new(xdg_wm_base)),
                 Err(error) => self.dispatch_result = Err(error),
             }
         }

@@ -1,11 +1,9 @@
 # ToDo
  1. Finish up basic `WaylandWindow`
-   1. `xdg_surface` creations
-   2. `xdg_surface_ack_configure` on `xdg_surface.configure`
-   3. `xdg_toplevel` creation 
-   4. Set `close_requested` on `xdg_toplevel.close`
-   5. Change `size` and `is_maximized` on `xdg_toplevel.configure`
-   6. Mutli-threaded user wake (eventfd)
+   1. `xdg_toplevel` creation 
+   2. Set `close_requested` on `xdg_toplevel.close`
+   3. Change `size` and `is_maximized` on `xdg_toplevel.configure`
+   4. Mutli-threaded user wake (eventfd)
  2. Add an optional `Input`-like callback trait for `WindowEvents`
    - `on_close_requested`
    - `on_resize(Vector2u)`

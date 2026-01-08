@@ -1,5 +1,6 @@
 //! The Wayland implementation of the window system
 
+use crate::WindowState;
 use globals::WaylandGlobals;
 use library::WaylandLibrary;
 use std::rc::Rc;
@@ -7,7 +8,9 @@ use std::rc::Rc;
 mod globals;
 mod library;
 mod objects;
+mod state;
 
+mod get;
 mod new;
 mod process_messages;
 
@@ -15,8 +18,8 @@ pub(in crate::platform::linux) use objects::*;
 
 /// A window on a Wayland connection
 pub(in crate::platform::linux) struct WaylandWindow {
-    /// The surface created by the Wayland compositor
-    wl_surface: WlSurface,
+    /// The surface created by the XDG window manager
+    xdg_surface: XdgSurface<WindowState>,
 
     /// The global Wayland registry
     registry: WlRegistry<WaylandGlobals>,

@@ -4,6 +4,8 @@ use wayland::xdg_shell::xdg_wm_base;
 
 mod bind;
 mod drop;
+mod get;
+mod get_xdg_surface;
 mod register_ping_handler;
 
 /// A reference to the XDG window manager

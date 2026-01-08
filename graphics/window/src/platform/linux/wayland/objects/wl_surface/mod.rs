@@ -2,7 +2,9 @@ use crate::platform::linux::wayland::WlDisplay;
 use std::rc::Rc;
 use wayland::wl_surface;
 
+mod commit;
 mod drop;
+mod get;
 mod new;
 
 /// A surface created from a Wayland compositor

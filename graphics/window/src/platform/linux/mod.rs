@@ -29,9 +29,6 @@ pub struct Window {
 
     /// The handle used to wake this thread if blocking for messages
     wake_handle: Arc<WindowWakeHandleInner>,
-
-    /// The current state of the window
-    state: WindowState,
 }
 
 /// The backend protocol for a given window

@@ -19,7 +19,7 @@ pub(in crate::platform::linux::wayland) trait WaylandBind {
 
 impl<'a> WlRegistryRef<'a> {
     /// Bind the global at `name`
-    pub fn bind<T: WaylandBind>(&self, name: u32, version: u32) -> Result<T> {
+    pub fn bind<T: WaylandBind>(&mut self, name: u32, version: u32) -> Result<T> {
         let handle = unsafe {
             wl_registry_bind_dyn(
                 self.handle,

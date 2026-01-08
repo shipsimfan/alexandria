@@ -42,18 +42,32 @@ impl WaylandWindow {
             .unwrap()
             .create_surface()?;
 
+        let mut xdg_surface = registry
+            .data()
+            .xdg_wm_base()
+            .unwrap()
+            .clone()
+            .get_xdg_surface(wl_surface)?
+            .add_listener(WindowState::new(
+                title,
+                size.unwrap_or(Vector2u::new(0, 0)),
+                display_mode,
+            ))?;
+
+        xdg_surface.surface_mut().commit();
+
+        display.roundtrip()?;
+
         // Create runtime state
         let wake_handle = WindowWakeHandleInner::new();
-        let state = WindowState::new(title, size.unwrap_or(Vector2u::new(0, 0)), display_mode);
 
         Ok(Box::new(Window {
             kind: WindowKind::Wayland(WaylandWindow {
                 display,
                 registry,
-                wl_surface,
+                xdg_surface,
             }),
             wake_handle,
-            state,
         }))
     }
 }

@@ -2,6 +2,7 @@ use crate::{
     Result,
     platform::linux::wayland::{WaylandGlobals, WlCompositor, XdgWmBase},
 };
+use std::rc::Rc;
 
 impl WaylandGlobals {
     /// Get the result from the last dispatch
@@ -19,7 +20,7 @@ impl WaylandGlobals {
     }
 
     /// Get a reference to the XDG window manager
-    pub fn xdg_wm_base(&self) -> Option<&XdgWmBase> {
+    pub fn xdg_wm_base(&self) -> Option<&Rc<XdgWmBase>> {
         self.xdg_wm_base.as_ref()
     }
 
