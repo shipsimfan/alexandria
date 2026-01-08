@@ -1,4 +1,4 @@
-use crate::platform::linux::wayland::{XdgWmBase, objects::xdg_surface::r#ref::XdgSurfaceRef};
+use crate::platform::linux::wayland::{XdgWmBase, objects::XdgSurfaceRef};
 use std::{ptr::null_mut, rc::Rc};
 use wayland::xdg_shell::xdg_surface;
 

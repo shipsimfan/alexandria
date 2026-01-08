@@ -23,7 +23,7 @@ impl XdgSurface {
         } < 0
         {
             return Err(WindowError::new(
-                "unable to set registry listener - listener already set",
+                "unable to set XDG surface listener - listener already set",
             ));
         }
 

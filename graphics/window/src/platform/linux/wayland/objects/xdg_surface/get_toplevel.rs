@@ -1,11 +1,11 @@
 use crate::{
     Result, WindowError,
-    platform::linux::wayland::{XdgSurface, XdgToplevel},
+    platform::linux::wayland::{XdgSurface, XdgToplevel, XdgToplevelListener},
 };
 use std::ptr::null_mut;
 use wayland::xdg_shell::xdg_surface_get_toplevel_dyn;
 
-impl<T> XdgSurface<T> {
+impl<T: XdgToplevelListener> XdgSurface<T> {
     /// Assign the toplevel role to this surface
     pub fn get_toplevel(self) -> Result<XdgToplevel<T>> {
         let handle = unsafe {
@@ -21,6 +21,6 @@ impl<T> XdgSurface<T> {
         }
 
         let wm = self.wm.clone();
-        Ok(XdgToplevel::new(handle, self, wm))
+        XdgToplevel::new(handle, self, wm)
     }
 }

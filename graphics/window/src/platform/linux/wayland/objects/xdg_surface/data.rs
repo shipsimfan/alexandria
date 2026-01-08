@@ -1,4 +1,5 @@
-use crate::platform::linux::wayland::XdgSurface;
+use crate::platform::linux::wayland::{XdgSurface, XdgWmBase};
+use std::rc::Rc;
 
 impl<T> XdgSurface<T> {
     /// Get a reference to the contained user data
@@ -15,5 +16,12 @@ impl<T> XdgSurface<T> {
             .as_mut()
             .map(|data| unsafe { &mut data.as_mut().0 })
             .unwrap()
+    }
+
+    /// Get a pointer to the raw data
+    pub(in crate::platform::linux::wayland::objects) unsafe fn raw_data(
+        &self,
+    ) -> *mut (T, Rc<XdgWmBase>) {
+        self.listener_data.unwrap().as_ptr()
     }
 }

@@ -3,7 +3,7 @@ use crate::platform::linux::wayland::XdgSurfaceRef;
 mod add;
 mod trampolines;
 
-/// An item which can be used at the callback to registry events
+/// An item which can be used at the callback to XDG surface events
 pub(in crate::platform::linux::wayland) trait XdgSurfaceListener:
     Sized
 {
