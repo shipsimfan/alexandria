@@ -19,7 +19,7 @@ pub(in crate::platform::linux) use objects::*;
 /// A window on a Wayland connection
 pub(in crate::platform::linux) struct WaylandWindow {
     /// The surface created by the XDG window manager
-    xdg_surface: XdgSurface<WindowState>,
+    toplevel_surface: XdgToplevel<WindowState>,
 
     /// The global Wayland registry
     registry: WlRegistry<WaylandGlobals>,

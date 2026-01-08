@@ -42,7 +42,7 @@ impl WaylandWindow {
             .unwrap()
             .create_surface()?;
 
-        let mut xdg_surface = registry
+        let xdg_surface = registry
             .data()
             .xdg_wm_base()
             .unwrap()
@@ -54,7 +54,9 @@ impl WaylandWindow {
                 display_mode,
             ))?;
 
-        xdg_surface.surface_mut().commit();
+        let mut toplevel_surface = xdg_surface.get_toplevel()?;
+
+        toplevel_surface.wl_surface_mut().commit();
 
         display.roundtrip()?;
 
@@ -63,9 +65,9 @@ impl WaylandWindow {
 
         Ok(Box::new(Window {
             kind: WindowKind::Wayland(WaylandWindow {
+                toplevel_surface,
                 display,
                 registry,
-                xdg_surface,
             }),
             wake_handle,
         }))

@@ -2,12 +2,14 @@ use crate::platform::linux::wayland::{WlSurface, XdgWmBase};
 use std::{ptr::NonNull, rc::Rc};
 use wayland::xdg_shell::xdg_surface;
 
+mod listener;
+mod r#ref;
+
 mod data;
 mod drop;
 mod get;
-mod listener;
+mod get_toplevel;
 mod new;
-mod r#ref;
 
 pub(in crate::platform::linux::wayland) use listener::XdgSurfaceListener;
 pub(in crate::platform::linux::wayland) use r#ref::XdgSurfaceRef;

@@ -1,6 +1,5 @@
-use std::ptr::null_mut;
-
 use crate::platform::linux::wayland::XdgSurface;
+use std::ptr::null_mut;
 use wayland::xdg_shell::xdg_surface_destroy_dyn;
 
 impl<T> Drop for XdgSurface<T> {
