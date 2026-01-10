@@ -13,8 +13,7 @@ impl Window {
         display_mode: DisplayMode,
     ) -> Result<Box<Window>> {
         // Convert the title to UTF-16
-        let mut title_utf16: Vec<_> = title.encode_utf16().collect();
-        title_utf16.push(0);
+        let mut title_utf16: Vec<_> = title.encode_utf16().chain([0]).collect();
 
         // Create window class
         let class = WindowClass::register(&title_utf16)?;

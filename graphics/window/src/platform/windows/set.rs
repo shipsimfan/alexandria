@@ -8,8 +8,7 @@ impl Window {
         let title = title.into();
 
         // Convert the title to UTF-16
-        let mut title_utf16: Vec<_> = title.encode_utf16().collect();
-        title_utf16.push(0);
+        let mut title_utf16: Vec<_> = title.encode_utf16().chain([0]).collect();
 
         // Set the window title
         self.handle.set_title(&title_utf16)?;

@@ -2,7 +2,7 @@ use crate::platform::linux::wayland::XdgSurfaceRef;
 use wayland::xdg_shell::xdg_surface_ack_configure_dyn;
 
 impl<'a> XdgSurfaceRef<'a> {
-    /// Acknowledge a configure event from the windwo manager
+    /// Acknowledge a configure event from the window manager
     pub fn ack_configure(&mut self, serial: u32) {
         unsafe {
             xdg_surface_ack_configure_dyn(

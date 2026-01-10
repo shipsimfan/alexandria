@@ -9,6 +9,8 @@ mod data;
 mod drop;
 mod get;
 mod new;
+mod set_app_id;
+mod set_title;
 
 pub(in crate::platform::linux::wayland) use listener::XdgToplevelListener;
 pub(in crate::platform::linux::wayland) use r#ref::XdgToplevelRef;

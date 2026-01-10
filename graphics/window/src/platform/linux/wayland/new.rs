@@ -6,7 +6,7 @@ use crate::{
     },
 };
 use alexandria_math::Vector2u;
-use std::{borrow::Cow, rc::Rc};
+use std::{borrow::Cow, ffi::CString, rc::Rc, str::FromStr};
 
 impl WaylandWindow {
     /// Create a new [`WaylandWindow`]
@@ -42,6 +42,7 @@ impl WaylandWindow {
             .unwrap()
             .create_surface()?;
 
+        let c_title = CString::from_str(&title).unwrap();
         let xdg_surface = registry
             .data()
             .xdg_wm_base()
@@ -55,6 +56,8 @@ impl WaylandWindow {
             ))?;
 
         let mut toplevel_surface = xdg_surface.get_toplevel()?;
+        toplevel_surface.set_title(&c_title);
+        toplevel_surface.set_app_id(&c_title);
 
         toplevel_surface.wl_surface_mut().commit();
 

@@ -4,6 +4,7 @@ use wayland::xdg_shell::xdg_surface;
 
 mod ack_configure;
 mod new;
+mod set_window_geometry;
 
 /// A temporary reference to an [`XdgSurface`](crate::platform::linux::wayland::XdgSurface)
 pub(in crate::platform::linux::wayland) struct XdgSurfaceRef<'a> {
