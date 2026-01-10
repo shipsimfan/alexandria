@@ -1,8 +1,8 @@
-use crate::{CursorLock, DisplayMode, Result, Window};
+use crate::{CursorLock, DisplayMode, Result, Window, WindowEvents};
 use alexandria_math::Vector2u;
 use std::borrow::Cow;
 
-impl Window {
+impl<Callbacks: WindowEvents> Window<Callbacks> {
     /// Set the title of the window to `title`
     pub fn set_title<S: Into<Cow<'static, str>>>(&mut self, title: S) -> Result<()> {
         let title = title.into();

@@ -1,4 +1,4 @@
-use crate::DisplayMode;
+use crate::{DisplayMode, WindowEvents};
 use alexandria_math::Vector2u;
 use std::borrow::Cow;
 
@@ -8,7 +8,7 @@ mod new;
 mod set;
 
 /// A builder struct for [`Window`](crate::Window)s
-pub struct WindowBuilder {
+pub struct WindowBuilder<Callbacks: WindowEvents = ()> {
     /// The title of the window to create
     title: Cow<'static, str>,
 
@@ -17,6 +17,9 @@ pub struct WindowBuilder {
 
     /// The display mode for the window
     display_mode: DisplayMode,
+
+    /// The callbacks to use for window events
+    callbacks: Callbacks,
 
     /// Force the use of X11 over Wayland on Linux
     #[cfg(target_os = "linux")]

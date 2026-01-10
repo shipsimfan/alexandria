@@ -1,7 +1,7 @@
-use crate::{DisplayMode, WindowBuilder};
+use crate::{DisplayMode, WindowBuilder, WindowEvents};
 use alexandria_math::Vector2u;
 
-impl WindowBuilder {
+impl<Callbacks: WindowEvents> WindowBuilder<Callbacks> {
     /// Get the title the window will be created with
     pub fn get_title(&self) -> &str {
         &self.title
@@ -15,6 +15,16 @@ impl WindowBuilder {
     /// Get the display mode the window will be created with
     pub fn get_display_mode(&self) -> DisplayMode {
         self.display_mode
+    }
+
+    /// Get a reference to the contained window event callback item
+    pub fn get_callbacks(&self) -> &Callbacks {
+        &self.callbacks
+    }
+
+    /// Get a mutable reference to the contained window event callback item
+    pub fn get_callbacks_mut(&mut self) -> &mut Callbacks {
+        &mut self.callbacks
     }
 
     /// Is X11 being forced to be used over Wayland?

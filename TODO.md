@@ -1,10 +1,5 @@
 # ToDo
- 1. Add an optional `Input`-like callback trait for `WindowEvents`
-   - `on_close_requested`
-   - `on_resize(Vector2u)`
-   - `on_maximize(bool)`
-   - `on_focus(bool)`
-   - `on_display_mode_change(DisplayMode)` (if it ever happens)
+ 1. Implement Linux callbacks for `WindowEvents`
  2. Implement renderer wrappers up to clearing the screen
    1. `Surface`
    2. `Device`

@@ -8,12 +8,14 @@
 
 mod builder;
 mod error;
+mod events;
 mod platform;
 mod state;
 mod wake_handle;
 
 pub use builder::*;
 pub use error::*;
+pub use events::*;
 pub use platform::*;
 pub use state::*;
 pub use wake_handle::*;

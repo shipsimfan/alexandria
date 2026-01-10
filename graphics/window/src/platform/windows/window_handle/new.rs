@@ -1,5 +1,5 @@
 use crate::{
-    DisplayMode, Result, WindowError,
+    DisplayMode, Result, WindowError, WindowEvents,
     platform::windows::{Window, WindowClass, WindowHandle},
 };
 use alexandria_math::{Vector2i, Vector2u};
@@ -8,12 +8,12 @@ use win32::{CW_USEDEFAULT, CreateWindowEx, GWLP_USERDATA, GetModuleHandle, SetWi
 
 impl WindowHandle {
     /// Creates a new window and returns the handle to it
-    pub fn new(
+    pub fn new<Callbacks: WindowEvents>(
         title: &[u16],
         class: &WindowClass,
         size: Option<Vector2u>,
         display_mode: DisplayMode,
-        window_ptr: *mut Window,
+        window_ptr: *mut Window<Callbacks>,
     ) -> Result<Self> {
         assert!(title.last().is_some());
         assert_eq!(*title.last().unwrap(), 0);

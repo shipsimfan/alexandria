@@ -16,7 +16,6 @@ impl WindowState {
             cursor_lock: CursorLock::Unlocked,
             is_close_requested: false,
             is_focused: true,
-            is_resizing: false,
             is_maximized: false,
         }
     }

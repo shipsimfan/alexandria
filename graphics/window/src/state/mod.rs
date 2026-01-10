@@ -32,9 +32,6 @@ pub struct WindowState {
     /// Is this window the one being focused on?
     is_focused: bool,
 
-    /// Is the window being actively resized?
-    is_resizing: bool,
-
     /// Is the window maximized?
     is_maximized: bool,
 }

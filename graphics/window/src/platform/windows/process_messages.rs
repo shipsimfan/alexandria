@@ -1,8 +1,8 @@
-use crate::{Result, Window, WindowError};
+use crate::{Result, Window, WindowError, WindowEvents};
 use std::ptr::null_mut;
 use win32::{DispatchMessage, GetMessage, MSG, PM_REMOVE, PeekMessage, TranslateMessage};
 
-impl Window {
+impl<Callbacks: WindowEvents> Window<Callbacks> {
     /// Process all messages that have occurred since the last call, or block until one arrives
     pub fn process_messages(&mut self) -> Result<()> {
         let mut msg = MSG::default();

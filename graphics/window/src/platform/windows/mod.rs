@@ -1,6 +1,6 @@
 //! The Windows implementation of the window system
 
-use crate::{Result, WindowState};
+use crate::{Result, WindowEvents, WindowState};
 use std::sync::Arc;
 use window_class::WindowClass;
 use window_handle::WindowHandle;
@@ -23,7 +23,7 @@ pub(crate) use error::OsError;
 pub(crate) use wake_handle::WindowWakeHandleInner;
 
 /// A window displayed for the user
-pub struct Window {
+pub struct Window<Callbacks: WindowEvents = ()> {
     /// The result of the window procedure
     wnd_proc_result: Result<()>,
 
@@ -39,4 +39,7 @@ pub struct Window {
 
     /// The current state of the window
     state: WindowState,
+
+    /// Callbacks for window events
+    callbacks: Callbacks,
 }

@@ -42,11 +42,6 @@ impl WindowState {
         self.is_focused
     }
 
-    /// Is the window being actively resized?
-    pub fn is_resizing(&self) -> bool {
-        self.is_resizing
-    }
-
     /// Is the window maximized?
     pub fn is_maximized(&self) -> bool {
         self.is_maximized

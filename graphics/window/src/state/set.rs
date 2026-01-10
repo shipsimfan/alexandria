@@ -28,14 +28,14 @@ impl WindowState {
         self.is_close_requested = is_close_requested;
     }
 
+    /// Clear a pending close request
+    pub fn clear_close_request(&mut self) {
+        self.set_is_close_requested(false);
+    }
+
     /// Set if the window is currently focused
     pub(crate) fn set_is_focused(&mut self, is_focused: bool) {
         self.is_focused = is_focused;
-    }
-
-    /// Set if the window is being actively  resized
-    pub(crate) fn set_is_resizing(&mut self, is_resizing: bool) {
-        self.is_resizing = is_resizing;
     }
 
     /// Set if the window is maximized

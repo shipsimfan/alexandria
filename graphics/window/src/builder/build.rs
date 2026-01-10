@@ -1,12 +1,13 @@
-use crate::{Result, Window, WindowBuilder};
+use crate::{Result, Window, WindowBuilder, WindowEvents};
 
-impl WindowBuilder {
+impl<Callbacks: WindowEvents> WindowBuilder<Callbacks> {
     /// Build a new [`Window`] with the provided properties
-    pub fn build(&mut self) -> Result<Box<Window>> {
+    pub fn build(self) -> Result<Box<Window<Callbacks>>> {
         Window::new(
-            self.title.clone(),
+            self.title,
             self.size,
             self.display_mode,
+            self.callbacks,
             #[cfg(target_os = "linux")]
             self.force_x11,
         )

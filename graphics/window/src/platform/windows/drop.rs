@@ -1,6 +1,6 @@
-use crate::{CursorLock, Window};
+use crate::{CursorLock, Window, WindowEvents};
 
-impl Drop for Window {
+impl<Callbacks: WindowEvents> Drop for Window<Callbacks> {
     fn drop(&mut self) {
         self.wake_handle.invalidate();
 
