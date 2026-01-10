@@ -1,5 +1,6 @@
 use wayland::{
-    WlDisplayConnect, WlDisplayDisconnect, WlDisplayDispatch, WlDisplayGetError,
+    WlDisplayCancelRead, WlDisplayConnect, WlDisplayDisconnect, WlDisplayDispatchPending,
+    WlDisplayFlush, WlDisplayGetError, WlDisplayGetFd, WlDisplayPrepareRead, WlDisplayReadEvents,
     WlDisplayRoundtrip, WlProxyAddListener, WlProxyGetVersion, WlProxyMarshalFlags,
 };
 
@@ -13,11 +14,26 @@ pub(in crate::platform::linux) struct WaylandFunctions {
     /// The function to get the last error on the connection
     pub display_get_error: WlDisplayGetError,
 
+    /// The function to get the underlying file descriptor of a display
+    pub display_get_fd: WlDisplayGetFd,
+
     /// The function to block until all outstanding requests are processed
     pub display_roundtrip: WlDisplayRoundtrip,
 
-    /// The function to dispatch all waiting events
-    pub display_dispatch: WlDisplayDispatch,
+    /// The function to prepare the display for reading events
+    pub display_prepare_read: WlDisplayPrepareRead,
+
+    /// The function to flush all waiting requests on the display
+    pub display_flush: WlDisplayFlush,
+
+    /// The function to actively read events from socket
+    pub display_read_events: WlDisplayReadEvents,
+
+    /// The function to cancel a prepared read request
+    pub display_cancel_read: WlDisplayCancelRead,
+
+    /// The function to dispatch all pending events
+    pub display_dispatch_pending: WlDisplayDispatchPending,
 
     /// The function to destroy the `wl_display` and end the connection
     pub display_disconnect: WlDisplayDisconnect,

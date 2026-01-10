@@ -11,6 +11,9 @@ impl Window {
 
     /// Get a reference that can be used to wake this thread if blocking for messages
     pub fn wake_handle(&self) -> WindowWakeHandle {
-        WindowWakeHandle::new(self.wake_handle.clone())
+        match &self.kind {
+            WindowKind::Wayland(wayland) => wayland.wake_handle(),
+            WindowKind::X11(_) => todo!(),
+        }
     }
 }

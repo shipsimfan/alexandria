@@ -1,13 +1,11 @@
 # ToDo
- 1. Finish up basic `WaylandWindow`
-   1. Mutli-threaded user wake (eventfd)
- 2. Add an optional `Input`-like callback trait for `WindowEvents`
+ 1. Add an optional `Input`-like callback trait for `WindowEvents`
    - `on_close_requested`
    - `on_resize(Vector2u)`
    - `on_maximize(bool)`
    - `on_focus(bool)`
    - `on_display_mode_change(DisplayMode)` (if it ever happens)
- 3. Implement renderer wrappers up to clearing the screen
+ 2. Implement renderer wrappers up to clearing the screen
    1. `Surface`
    2. `Device`
    3. `Queue`
@@ -17,7 +15,7 @@
    7. `CommandBuffer`
    8. `Semaphore`
    9. `Fence`
- 4. Add Linux Windowing support
+ 3. Add Linux Windowing support
    1. Wayland
      1. Window creation
        - Display mode
@@ -46,7 +44,7 @@
        - Display mode
        - Request close
      6. Cursor lock to window
- 5. Input system
+ 4. Input system
    1. System
    2. Keyboard
      1. Windows
@@ -60,21 +58,21 @@
      1. Windows
      2. Wayland
      3. X11
- 6. Add fullscreen support
+ 5. Add fullscreen support
    - Windows (borderless, placed at (0, 0))
    - Wayland (extension)
    - X11
- 7. Add full renderer wrappers for triangle
- 8. Add model loading/parsing
- 9. Add texture loading/parsing
- 10. Add window icons
+ 6. Add full renderer wrappers for triangle
+ 7. Add model loading/parsing
+ 8. Add texture loading/parsing
+ 9. Add window icons
    - Windows
    - Wayland
    - X11
- 11. Add audio wrappers
- 12. Add more input types
+ 10. Add audio wrappers
+ 11. Add more input types
    - X-Box controllers (Windows)
    - General controllers
    - Joysticks
    - Steering Wheels, Pedals, Gear Shift
- 13. Add 2-d support to `Matrix3x3`
+ 12. Add 2-d support to `Matrix3x3`

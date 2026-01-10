@@ -1,8 +1,6 @@
 //! The Linux implementation of the window system
 
-use crate::WindowState;
 use shared_library::{SharedLibrary, try_load_function};
-use std::sync::Arc;
 use wayland::WaylandWindow;
 use x11::X11Window;
 
@@ -26,9 +24,6 @@ pub(crate) use wake_handle::WindowWakeHandleInner;
 pub struct Window {
     /// The underlying kind of window this is
     kind: WindowKind,
-
-    /// The handle used to wake this thread if blocking for messages
-    wake_handle: Arc<WindowWakeHandleInner>,
 }
 
 /// The backend protocol for a given window

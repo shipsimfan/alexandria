@@ -64,15 +64,15 @@ impl WaylandWindow {
         display.roundtrip()?;
 
         // Create runtime state
-        let wake_handle = WindowWakeHandleInner::new();
+        let wake_handle = WindowWakeHandleInner::new()?;
 
         Ok(Box::new(Window {
             kind: WindowKind::Wayland(WaylandWindow {
+                wake_handle,
                 toplevel_surface,
                 display,
                 registry,
             }),
-            wake_handle,
         }))
     }
 }
