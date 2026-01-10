@@ -95,13 +95,13 @@ mod debug_messenger {
     pub const VALIDATION_LAYERS: &[&str] = &[];
 
     /// Does this system have required Vulkan validation layers?
-    pub fn has_layers() -> bool {
-        true
+    pub fn has_layers() -> Option<&'static [&'static str]> {
+        Some(&[])
     }
 
     /// Does this system have required Vulkan validation extensions?
-    pub fn has_extensions() -> bool {
-        true
+    pub fn has_extensions() -> Option<&'static [alexandria_graphics::GraphicsInstanceExtension]> {
+        Some(&[])
     }
 
     /// Create a new debug messenger
