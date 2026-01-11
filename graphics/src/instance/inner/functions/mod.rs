@@ -1,4 +1,8 @@
-use crate::instance::{GraphicsAdapterFunctions, GraphicsDebugMessengerFunctions};
+#[cfg(target_os = "windows")]
+use crate::instance::Win32WindowSurfaceFunctions;
+use crate::instance::{
+    GraphicsAdapterFunctions, GraphicsDebugMessengerFunctions, WindowSurfaceFunctions,
+};
 use vulkan::{VkDestroyInstance, VkEnumeratePhysicalDevices};
 
 mod get;
@@ -10,7 +14,14 @@ pub(in crate::instance) struct GraphicsInstanceFunctions {
     pub adapter: GraphicsAdapterFunctions,
 
     /// The functions used by debug messenger
-    pub debug_messenger: Option<GraphicsDebugMessengerFunctions>,
+    debug_messenger: Option<GraphicsDebugMessengerFunctions>,
+
+    /// The functions used by surfaces
+    surface: Option<WindowSurfaceFunctions>,
+
+    /// The functions used by Win32 surfaces
+    #[cfg(target_os = "windows")]
+    win32_surface: Option<Win32WindowSurfaceFunctions>,
 
     /// The function used to enumerate the physical devices on the system
     pub enumerate_physical_devices: VkEnumeratePhysicalDevices,

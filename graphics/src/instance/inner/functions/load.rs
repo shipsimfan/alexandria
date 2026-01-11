@@ -1,7 +1,10 @@
+#[cfg(target_os = "windows")]
+use crate::instance::Win32WindowSurfaceFunctions;
 use crate::{
     GraphicsInstanceExtension, Result,
     instance::{
-        GraphicsAdapterFunctions, GraphicsDebugMessengerFunctions, inner::GraphicsInstanceFunctions,
+        GraphicsAdapterFunctions, GraphicsDebugMessengerFunctions, WindowSurfaceFunctions,
+        inner::GraphicsInstanceFunctions,
     },
     util::load_instance_function,
 };
@@ -14,15 +17,31 @@ impl GraphicsInstanceFunctions {
         extensions: &[GraphicsInstanceExtension],
     ) -> Result<GraphicsInstanceFunctions> {
         let mut debug_messenger = None;
+        let mut surface = None;
+        #[cfg(target_os = "windows")]
+        let mut win32_surface = None;
+
         for extension in extensions {
-            if *extension == GraphicsInstanceExtension::DebugUtils {
-                debug_messenger = Some(GraphicsDebugMessengerFunctions::load(instance)?);
+            match *extension {
+                GraphicsInstanceExtension::DebugUtils => {
+                    debug_messenger = Some(GraphicsDebugMessengerFunctions::load(instance)?)
+                }
+                GraphicsInstanceExtension::Surface => {
+                    surface = Some(WindowSurfaceFunctions::load(instance)?)
+                }
+                #[cfg(target_os = "windows")]
+                GraphicsInstanceExtension::Win32Surface => {
+                    win32_surface = Some(Win32WindowSurfaceFunctions::load(instance)?)
+                }
             }
         }
 
         Ok(GraphicsInstanceFunctions {
             adapter: GraphicsAdapterFunctions::load(instance)?,
             debug_messenger,
+            surface,
+            #[cfg(target_os = "windows")]
+            win32_surface,
 
             enumerate_physical_devices: load_instance_function!(
                 instance,

@@ -6,7 +6,7 @@ use std::sync::Arc;
 
 impl GraphicsInstanceInner {
     /// Create a new [`GraphicsDebugMessenger`]
-    pub fn create_debug_messenger<C: GraphicsDebugMessengerCallback>(
+    pub(in crate::instance) fn create_debug_messenger<C: GraphicsDebugMessengerCallback>(
         self: Arc<Self>,
         min_severity: GraphicsDebugMessageSeverity,
         callback: C,

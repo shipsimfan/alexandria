@@ -1,7 +1,30 @@
 const TITLE: &str = "Blank Window Example";
 
 fn main() {
+    // Create window
+    let mut window = alexandria_graphics::window::Window::builder(TITLE)
+        .build()
+        .unwrap();
+
     // Create Vulkan instance
+    let instance = create_instance(&window);
+    let debug_messenger = debug_messenger::create(&instance);
+
+    // Create window surface
+    let surface = instance.create_window_surface(&mut window).unwrap();
+
+    // Main loop
+    while !window.is_close_requested() {
+        window.process_messages().unwrap();
+    }
+
+    drop(surface);
+    drop(debug_messenger);
+}
+
+fn create_instance(
+    window: &alexandria_graphics::window::Window,
+) -> alexandria_graphics::GraphicsInstance {
     let layers = match debug_messenger::has_layers() {
         Some(layers) => layers,
         None => {
@@ -10,7 +33,7 @@ fn main() {
         }
     };
 
-    let extensions = match debug_messenger::has_extensions() {
+    let debug_extensions = match debug_messenger::has_extensions() {
         Some(extensions) => extensions,
         None => {
             println!("Warning: missing debug extensions");
@@ -18,26 +41,15 @@ fn main() {
         }
     };
 
-    let instance = alexandria_graphics::GraphicsInstance::builder(
+    alexandria_graphics::GraphicsInstance::builder(
         alexandria_graphics::GraphicsVersion::VERSION_1_4,
     )
     .application(TITLE, alexandria_graphics::GraphicsVersion::VERSION_1_0)
     .layers(layers.into_iter().map(|l| *l))
-    .extensions(extensions.into_iter().map(|e| *e))
+    .extensions(debug_extensions.into_iter().map(|e| *e))
+    .window_extensions(&window)
     .create()
-    .unwrap();
-
-    let _debug_messenger = debug_messenger::create(&instance);
-
-    // Create window
-    let mut window = alexandria_graphics::window::Window::builder(TITLE)
-        .build()
-        .unwrap();
-
-    // Main loop
-    while !window.is_close_requested() {
-        window.process_messages().unwrap();
-    }
+    .unwrap()
 }
 
 #[cfg(debug_assertions)]

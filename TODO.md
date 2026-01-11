@@ -1,7 +1,8 @@
 # ToDo
  1. Implement Linux callbacks for `WindowEvents`
- 2. Implement renderer wrappers up to clearing the screen
-   1. `Surface`
+ 2. Update Windows `DisplayMode::Borderless` to set position to `(0, 0)`
+ 3. Implement renderer wrappers up to clearing the screen
+   1. `Surface` for Wayland
    2. `Device`
    3. `Queue`
    4. `Swapchain`
@@ -10,7 +11,7 @@
    7. `CommandBuffer`
    8. `Semaphore`
    9. `Fence`
- 3. Add Linux Windowing support
+ 4. Add Linux Windowing support
    1. Wayland
      1. Window creation
        - Display mode
@@ -39,7 +40,8 @@
        - Display mode
        - Request close
      6. Cursor lock to window
- 4. Input system
+     7. Surface creation
+ 5. Input system
    1. System
    2. Keyboard
      1. Windows
@@ -53,21 +55,26 @@
      1. Windows
      2. Wayland
      3. X11
- 5. Add fullscreen support
-   - Windows (borderless, placed at (0, 0))
+ 6. Add min size support
+   - Windows (`WM_GETMINMAXINFO`)
+   - Wayland (`xdg_toplevel_set_min_size()`)
+   - X11
+ 7. Add fullscreen support
+   - Windows (exclusive)
    - Wayland (extension)
    - X11
- 6. Add full renderer wrappers for triangle
- 7. Add model loading/parsing
- 8. Add texture loading/parsing
- 9. Add window icons
+ 8. Add renderer wrappers for triangle
+ 9. Add renderer wrappers for multi-cube
+ 10. Add model loading/parsing
+ 11. Add texture loading/parsing
+ 12. Add window icons
    - Windows
    - Wayland
    - X11
- 10. Add audio wrappers
- 11. Add more input types
+ 13. Add audio wrappers
+ 14. Add more input types
    - X-Box controllers (Windows)
    - General controllers
    - Joysticks
    - Steering Wheels, Pedals, Gear Shift
- 12. Add 2-d support to `Matrix3x3`
+ 15. Add 2-d support to `Matrix3x3`

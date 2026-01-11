@@ -17,6 +17,7 @@ mod get;
 mod new;
 mod process_messages;
 mod set;
+mod surface_creation_handle;
 mod window_proc;
 
 pub(crate) use error::OsError;

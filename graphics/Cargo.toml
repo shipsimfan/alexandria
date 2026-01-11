@@ -23,3 +23,6 @@ alexandria-window.workspace = true
 alexandria-util.workspace = true
 
 vulkan.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+vulkan = { workspace = true, features = ["win32"] }

@@ -1,3 +1,6 @@
+#[cfg(target_os = "windows")]
+use alexandria_window::Window;
+
 use crate::{GraphicsInstanceBuilder, GraphicsInstanceExtension, GraphicsVersion};
 use std::borrow::Cow;
 
@@ -62,5 +65,15 @@ impl<'a> GraphicsInstanceBuilder<'a> {
     ) -> &mut GraphicsInstanceBuilder<'a> {
         self.extensions.extend(extensions);
         self
+    }
+
+    /// Add the required extensions for create surfaces for `window`
+    #[cfg(target_os = "windows")]
+    #[allow(unused_variables)]
+    pub fn window_extensions(&mut self, window: &Window) -> &mut GraphicsInstanceBuilder<'a> {
+        self.extensions([
+            GraphicsInstanceExtension::Surface,
+            GraphicsInstanceExtension::Win32Surface,
+        ])
     }
 }
