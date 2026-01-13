@@ -19,7 +19,7 @@ mod enumerate_all_extensions;
 mod enumerate_all_layers;
 mod enumerate_extensions;
 
-pub use adapter::{GraphicsAdapter, GraphicsAdapterKind};
+pub use adapter::*;
 pub use builder::GraphicsInstanceBuilder;
 pub use debug_messenger::*;
 pub use extension::GraphicsInstanceExtension;

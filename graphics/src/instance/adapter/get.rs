@@ -1,4 +1,4 @@
-use crate::{GraphicsAdapter, GraphicsAdapterKind, GraphicsVersion};
+use crate::{GraphicsAdapter, GraphicsAdapterKind, GraphicsQueueFamilyInfo, GraphicsVersion};
 use alexandria_util::{MemorySize, UUID};
 
 impl<'instance> GraphicsAdapter<'instance> {
@@ -30,5 +30,10 @@ impl<'instance> GraphicsAdapter<'instance> {
     /// Get the amount of video RAM the adapter has access to
     pub fn vram(&self) -> MemorySize {
         self.vram
+    }
+
+    /// Get the queue families on the adapter
+    pub fn queue_families(&self) -> &[GraphicsQueueFamilyInfo] {
+        &self.queue_families
     }
 }

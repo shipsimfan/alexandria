@@ -4,18 +4,20 @@ use vulkan::VkPhysicalDevice;
 
 mod functions;
 mod kind;
+mod queue_family_info;
 
 mod get;
 mod new;
 
 pub use kind::GraphicsAdapterKind;
+pub use queue_family_info::GraphicsQueueFamilyInfo;
 
 pub(in crate::instance) use functions::GraphicsAdapterFunctions;
 
 /// A physical device which can be used for Vulkan
 pub struct GraphicsAdapter<'instance> {
     /// The underlying Vulkan physical device
-    adapter: VkPhysicalDevice,
+    handle: VkPhysicalDevice,
 
     /// The version of Vulkan supported by the device
     api_version: GraphicsVersion,
@@ -34,6 +36,9 @@ pub struct GraphicsAdapter<'instance> {
 
     /// The amount of video memory on the adapter
     vram: MemorySize,
+
+    /// The supported queue families on this device
+    queue_families: Vec<GraphicsQueueFamilyInfo>,
 
     /// The instance this adapter comes from
     _instance: &'instance GraphicsInstanceInner,
