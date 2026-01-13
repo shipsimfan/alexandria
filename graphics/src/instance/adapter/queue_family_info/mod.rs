@@ -2,6 +2,7 @@ mod get;
 mod new;
 
 /// Information describing a graphics queue family
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct GraphicsQueueFamilyInfo {
     /// The index of this queue family on the adapter
     index: u32,

@@ -6,8 +6,10 @@ mod functions;
 mod kind;
 mod queue_family_info;
 
+mod eq;
 mod get;
 mod new;
+mod ord;
 
 pub use kind::GraphicsAdapterKind;
 pub use queue_family_info::GraphicsQueueFamilyInfo;

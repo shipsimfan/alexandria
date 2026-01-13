@@ -30,9 +30,11 @@ impl GraphicsInstanceInner {
         unsafe { adapters.set_len(adapter_count as usize) };
 
         // Convert the handles into `GraphicsAdapter`s
-        Ok(adapters
+        let mut adapters: Vec<_> = adapters
             .into_iter()
             .map(|adapter| GraphicsAdapter::new(self, adapter))
-            .collect())
+            .collect();
+        adapters.sort_by(|a, b| b.cmp(a));
+        Ok(adapters)
     }
 }
