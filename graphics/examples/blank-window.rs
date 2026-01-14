@@ -13,6 +13,23 @@ fn main() {
     // Create window surface
     let surface = instance.create_window_surface(&mut window).unwrap();
 
+    // Select adapter
+    let (adapter, queue_family_index) = instance
+        .enumerate_adapters()
+        .unwrap()
+        .into_iter()
+        .filter_map(|adapter| {
+            is_adapter_supported(&adapter, &surface).map(|index| (adapter, index))
+        })
+        .next()
+        .expect("no compatible adapters");
+
+    println!(
+        "Using adapter \"{}\" with queue family {}",
+        adapter.name(),
+        queue_family_index
+    );
+
     // Main loop
     while !window.is_close_requested() {
         window.process_messages().unwrap();
@@ -20,6 +37,27 @@ fn main() {
 
     drop(surface);
     drop(debug_messenger);
+}
+
+/// Checks if `surface` is supported by `adapter`, returning the lowest queue family index that supports presenting and graphics
+fn is_adapter_supported(
+    adapter: &alexandria_graphics::GraphicsAdapter,
+    surface: &alexandria_graphics::WindowSurface,
+) -> Option<u32> {
+    for queue_family in adapter.queue_families() {
+        if !queue_family.graphics() {
+            continue;
+        }
+
+        if adapter
+            .supports_surface(queue_family.index(), surface)
+            .unwrap()
+        {
+            return Some(queue_family.index());
+        }
+    }
+
+    None
 }
 
 fn create_instance(

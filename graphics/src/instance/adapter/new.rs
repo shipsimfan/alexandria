@@ -86,7 +86,7 @@ impl<'instance> GraphicsAdapter<'instance> {
             uuid,
             vram,
             queue_families,
-            _instance: instance,
+            instance,
         }
     }
 }

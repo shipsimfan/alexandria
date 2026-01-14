@@ -10,6 +10,7 @@ mod eq;
 mod get;
 mod new;
 mod ord;
+mod supports_surface;
 
 pub use kind::GraphicsAdapterKind;
 pub use queue_family_info::GraphicsQueueFamilyInfo;
@@ -43,7 +44,7 @@ pub struct GraphicsAdapter<'instance> {
     queue_families: Vec<GraphicsQueueFamilyInfo>,
 
     /// The instance this adapter comes from
-    _instance: &'instance GraphicsInstanceInner,
+    instance: &'instance GraphicsInstanceInner,
 }
 
 unsafe impl<'instance> Send for GraphicsAdapter<'instance> {}

@@ -5,6 +5,7 @@ use vulkan::khr_surface::VkSurfaceKhr;
 mod functions;
 
 mod drop;
+mod get;
 mod new;
 
 #[cfg(target_os = "windows")]
