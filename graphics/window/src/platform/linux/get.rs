@@ -16,4 +16,20 @@ impl<Callbacks: WindowEvents> Window<Callbacks> {
             WindowKind::X11(_) => todo!(),
         }
     }
+
+    /// Get a reference to the window event callback item
+    pub fn callbacks(&self) -> &Callbacks {
+        match &self.kind {
+            WindowKind::Wayland(wayland) => wayland.callbacks(),
+            WindowKind::X11(_) => todo!(),
+        }
+    }
+
+    /// Get a mutable reference to the window event callback item
+    pub fn callbacks_mut(&mut self) -> &mut Callbacks {
+        match &mut self.kind {
+            WindowKind::Wayland(wayland) => wayland.callbacks_mut(),
+            WindowKind::X11(_) => todo!(),
+        }
+    }
 }

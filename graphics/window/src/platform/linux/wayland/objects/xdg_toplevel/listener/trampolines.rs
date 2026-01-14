@@ -1,6 +1,4 @@
-use crate::platform::linux::wayland::{
-    XdgToplevel, XdgToplevelListener, XdgToplevelRef, XdgWmBase,
-};
+use crate::platform::linux::wayland::{XdgToplevel, XdgToplevelListener, XdgWmBase};
 use std::{ffi::c_void, rc::Rc};
 use wayland::{
     wl_array,
@@ -21,42 +19,36 @@ impl<T: XdgToplevelListener> XdgToplevel<T> {
 /// Trampoline for responding to a toplevel surface configure event
 unsafe extern "C" fn configure_trampoline<T: XdgToplevelListener>(
     data: *mut c_void,
-    toplevel: *mut xdg_toplevel,
+    _: *mut xdg_toplevel,
     width: i32,
     height: i32,
     _: *mut wl_array,
 ) {
     let data: &mut (T, Rc<XdgWmBase>) = unsafe { &mut *data.cast() };
 
-    let toplevel = XdgToplevelRef::new(toplevel, &data.1);
-
-    data.0.configure(toplevel, width, height);
+    data.0.configure(width, height);
 }
 
 /// Trampoline for responding to a close request
 unsafe extern "C" fn close_trampoline<T: XdgToplevelListener>(
     data: *mut c_void,
-    toplevel: *mut xdg_toplevel,
+    _: *mut xdg_toplevel,
 ) {
     let data: &mut (T, Rc<XdgWmBase>) = unsafe { &mut *data.cast() };
 
-    let toplevel = XdgToplevelRef::new(toplevel, &data.1);
-
-    data.0.close(toplevel);
+    data.0.close();
 }
 
 /// Trampoline for responding to a toplevel surface configure bounds event
 unsafe extern "C" fn configure_bounds_trampoline<T: XdgToplevelListener>(
     data: *mut c_void,
-    toplevel: *mut xdg_toplevel,
+    _: *mut xdg_toplevel,
     width: i32,
     height: i32,
 ) {
     let data: &mut (T, Rc<XdgWmBase>) = unsafe { &mut *data.cast() };
 
-    let toplevel = XdgToplevelRef::new(toplevel, &data.1);
-
-    data.0.configure_bounds(toplevel, width, height);
+    data.0.configure_bounds(width, height);
 }
 
 /// Trampoline for responding to a close request

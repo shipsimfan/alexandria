@@ -1,8 +1,8 @@
 use crate::{
-    DisplayMode, Result, Window, WindowError, WindowEvents, WindowState, WindowWakeHandleInner,
+    DisplayMode, Result, Window, WindowError, WindowEvents, WindowWakeHandleInner,
     platform::linux::{
         WaylandWindow, WindowKind,
-        wayland::{WaylandGlobals, WlDisplay},
+        wayland::{WaylandEventHandler, WaylandGlobals, WlDisplay},
     },
 };
 use alexandria_math::Vector2u;
@@ -50,10 +50,11 @@ impl<Callbacks: WindowEvents> WaylandWindow<Callbacks> {
             .unwrap()
             .clone()
             .get_xdg_surface(wl_surface)?
-            .add_listener(WindowState::new(
+            .add_listener(WaylandEventHandler::new(
                 title,
                 size.unwrap_or(Vector2u::new(0, 0)),
                 display_mode,
+                callbacks,
             ))?;
 
         let mut toplevel_surface = xdg_surface.get_toplevel()?;
@@ -73,7 +74,6 @@ impl<Callbacks: WindowEvents> WaylandWindow<Callbacks> {
                 toplevel_surface,
                 display,
                 registry,
-                callbacks,
             }),
         }))
     }
