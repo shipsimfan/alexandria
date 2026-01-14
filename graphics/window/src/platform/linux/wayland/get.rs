@@ -1,6 +1,6 @@
-use crate::{WindowState, WindowWakeHandle, platform::linux::WaylandWindow};
+use crate::{WindowEvents, WindowState, WindowWakeHandle, platform::linux::WaylandWindow};
 
-impl WaylandWindow {
+impl<Callbacks: WindowEvents> WaylandWindow<Callbacks> {
     /// Get the current state of the window
     pub fn state(&self) -> &WindowState {
         self.toplevel_surface.xdg_surface().data()

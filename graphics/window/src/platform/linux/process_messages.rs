@@ -1,6 +1,6 @@
-use crate::{Result, Window, platform::linux::WindowKind};
+use crate::{Result, Window, WindowEvents, platform::linux::WindowKind};
 
-impl Window {
+impl<Callbacks: WindowEvents> Window<Callbacks> {
     /// Process all messages that have occurred since the last call, or block until one arrives
     pub fn process_messages(&mut self) -> Result<()> {
         match &mut self.kind {

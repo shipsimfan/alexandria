@@ -1,5 +1,9 @@
 # ToDo
  1. Implement Linux callbacks for `WindowEvents`
+   1. On resize
+   2. On close requested
+   3. On maximized
+   4. On restore
  2. Update Windows `DisplayMode::Borderless` to set position to `(0, 0)`
  3. Implement renderer wrappers up to clearing the screen
    1. `Surface` for Wayland

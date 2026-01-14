@@ -1,7 +1,7 @@
-use crate::{Window, WindowState};
+use crate::{Window, WindowEvents, WindowState};
 use std::ops::Deref;
 
-impl Deref for Window {
+impl<Callbacks: WindowEvents> Deref for Window<Callbacks> {
     type Target = WindowState;
 
     fn deref(&self) -> &Self::Target {
@@ -9,7 +9,7 @@ impl Deref for Window {
     }
 }
 
-impl AsRef<WindowState> for Window {
+impl<Callbacks: WindowEvents> AsRef<WindowState> for Window<Callbacks> {
     fn as_ref(&self) -> &WindowState {
         self.state()
     }

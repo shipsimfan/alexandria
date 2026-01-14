@@ -1,10 +1,10 @@
-use crate::{Result, WindowError, platform::linux::WaylandWindow};
+use crate::{Result, WindowError, WindowEvents, platform::linux::WaylandWindow};
 use linux::{
     poll::{POLLIN, poll, pollfd},
     try_linux,
 };
 
-impl WaylandWindow {
+impl<Callbacks: WindowEvents> WaylandWindow<Callbacks> {
     /// Process all messages that have occurred since the last call, or block until one arrives
     pub fn process_messages(&mut self) -> Result<()> {
         // Dispatch events before reading

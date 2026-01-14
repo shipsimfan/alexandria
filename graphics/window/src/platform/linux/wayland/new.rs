@@ -1,5 +1,5 @@
 use crate::{
-    DisplayMode, Result, Window, WindowError, WindowState, WindowWakeHandleInner,
+    DisplayMode, Result, Window, WindowError, WindowEvents, WindowState, WindowWakeHandleInner,
     platform::linux::{
         WaylandWindow, WindowKind,
         wayland::{WaylandGlobals, WlDisplay},
@@ -8,14 +8,15 @@ use crate::{
 use alexandria_math::Vector2u;
 use std::{borrow::Cow, ffi::CString, rc::Rc, str::FromStr};
 
-impl WaylandWindow {
+impl<Callbacks: WindowEvents> WaylandWindow<Callbacks> {
     /// Create a new [`WaylandWindow`]
     pub fn new(
         title: Cow<'static, str>,
         size: Option<Vector2u>,
         display_mode: DisplayMode,
         display: Rc<WlDisplay>,
-    ) -> Result<Box<Window>> {
+        callbacks: Callbacks,
+    ) -> Result<Box<Window<Callbacks>>> {
         // Get the registered globals
         let mut registry = display
             .clone()
@@ -72,6 +73,7 @@ impl WaylandWindow {
                 toplevel_surface,
                 display,
                 registry,
+                callbacks,
             }),
         }))
     }

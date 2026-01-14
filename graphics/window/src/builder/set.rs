@@ -37,6 +37,8 @@ impl<Callbacks: WindowEvents> WindowBuilder<Callbacks> {
             size: self.size,
             display_mode: self.display_mode,
             callbacks,
+            #[cfg(target_os = "linux")]
+            force_x11: self.force_x11,
         }
     }
 

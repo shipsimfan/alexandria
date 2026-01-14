@@ -20,16 +20,18 @@ mod process_messages;
 pub(crate) use error::OsError;
 pub(crate) use wake_handle::WindowWakeHandleInner;
 
+use crate::WindowEvents;
+
 /// A window displayed for the user
-pub struct Window {
+pub struct Window<Callbacks: WindowEvents = ()> {
     /// The underlying kind of window this is
-    kind: WindowKind,
+    kind: WindowKind<Callbacks>,
 }
 
 /// The backend protocol for a given window
-enum WindowKind {
+enum WindowKind<Callbacks: WindowEvents> {
     /// The protocol used is Wayland
-    Wayland(WaylandWindow),
+    Wayland(WaylandWindow<Callbacks>),
 
     /// The protocol used is X11
     X11(X11Window),

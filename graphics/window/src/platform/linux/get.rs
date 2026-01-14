@@ -1,6 +1,6 @@
-use crate::{Window, WindowState, WindowWakeHandle, platform::linux::WindowKind};
+use crate::{Window, WindowEvents, WindowState, WindowWakeHandle, platform::linux::WindowKind};
 
-impl Window {
+impl<Callbacks: WindowEvents> Window<Callbacks> {
     /// Get the current state of the window
     pub fn state(&self) -> &WindowState {
         match &self.kind {
