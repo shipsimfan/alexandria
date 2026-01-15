@@ -48,6 +48,7 @@ impl<Callbacks: WindowEvents> Window<Callbacks> {
                 class,
                 state,
                 callbacks,
+                is_resizing: None,
             },
         ))
     }

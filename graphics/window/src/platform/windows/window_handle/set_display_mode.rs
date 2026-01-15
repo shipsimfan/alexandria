@@ -30,16 +30,13 @@ impl WindowHandle {
             }
         }
 
-        try_get_last_error!(SetWindowPos(
-            self.handle,
-            null_mut(),
-            0,
-            0,
-            0,
-            0,
-            SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED
-        ))
-        .map_err(|error| WindowError::new_os("unable to set window display mode", error))?;
+        let mut flags = SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED;
+        if display_mode != DisplayMode::Borderless {
+            flags |= SWP_NOMOVE;
+        }
+
+        try_get_last_error!(SetWindowPos(self.handle, null_mut(), 0, 0, 0, 0, flags))
+            .map_err(|error| WindowError::new_os("unable to set window display mode", error))?;
 
         Ok(())
     }

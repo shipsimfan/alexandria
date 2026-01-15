@@ -1,8 +1,9 @@
 use crate::{CursorLock, Window, WindowEvents};
-use alexandria_math::Vector2;
+use alexandria_math::{Vector2, Vector2u};
 use win32::{
     DefWindowProc, GWLP_USERDATA, GetWindowLongPtr, HWND, LPARAM, LRESULT, SIZE_MAXIMIZED,
-    SIZE_MINIMIZED, SIZE_RESTORED, UINT, WM_ACTIVATEAPP, WM_CLOSE, WM_MOVE, WM_SIZE, WPARAM,
+    SIZE_MINIMIZED, SIZE_RESTORED, UINT, WM_ACTIVATEAPP, WM_CLOSE, WM_ENTERSIZEMOVE,
+    WM_EXITSIZEMOVE, WM_MOVE, WM_SIZE, WPARAM,
 };
 
 impl<Callbacks: WindowEvents> Window<Callbacks> {
@@ -36,16 +37,26 @@ impl<Callbacks: WindowEvents> Window<Callbacks> {
                 self.callbacks.on_close_requested();
             }
 
+            // The user has begun moving or resizing the window
+            WM_ENTERSIZEMOVE => self.is_resizing = Some(self.size()),
+
+            // The user has stopped moving or resizing the window
+            WM_EXITSIZEMOVE => {
+                if let Some(size) = self.is_resizing.take() {
+                    self.on_resize(size);
+                }
+            }
+
             // The window has changed size
             WM_SIZE => {
                 let width = (l_param & 0xFFFF) as u32;
                 let height = ((l_param >> 16) & 0xFFFF) as u32;
                 if width != 0 && height != 0 {
-                    self.state.set_size(Vector2::new(width, height));
-                    self.callbacks.on_resize(self.state.size());
-
-                    if self.cursor_lock() == CursorLock::Locked && self.is_focused() {
-                        self.wnd_proc_result = self.handle.lock_cursor_to_window(true);
+                    let size = Vector2::new(width, height);
+                    if self.is_resizing.is_none() {
+                        self.on_resize(size);
+                    } else {
+                        self.is_resizing = Some(size);
                     }
                 }
 
@@ -82,5 +93,18 @@ impl<Callbacks: WindowEvents> Window<Callbacks> {
         }
 
         0
+    }
+
+    fn on_resize(&mut self, size: Vector2u) {
+        if size == self.size() {
+            return;
+        }
+
+        self.state.set_size(size);
+        self.callbacks.on_resize(size);
+
+        if self.cursor_lock() == CursorLock::Locked && self.is_focused() {
+            self.wnd_proc_result = self.handle.lock_cursor_to_window(true);
+        }
     }
 }

@@ -1,6 +1,7 @@
 //! The Windows implementation of the window system
 
 use crate::{Result, WindowEvents, WindowState};
+use alexandria_math::Vector2u;
 use std::sync::Arc;
 use window_class::WindowClass;
 use window_handle::WindowHandle;
@@ -43,4 +44,9 @@ pub struct Window<Callbacks: WindowEvents = ()> {
 
     /// Callbacks for window events
     callbacks: Callbacks,
+
+    /// Is the window currently resizing?
+    ///
+    /// If it is, this stores the last seen size
+    is_resizing: Option<Vector2u>,
 }

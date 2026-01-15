@@ -28,14 +28,20 @@ impl WindowHandle {
             None => Vector2i::new(CW_USEDEFAULT, CW_USEDEFAULT),
         };
 
+        let position = if display_mode == DisplayMode::Borderless {
+            0
+        } else {
+            CW_USEDEFAULT
+        };
+
         let handle = unsafe {
             CreateWindowEx(
                 ex_style,
                 **class as _,
                 title.as_ptr(),
                 style,
-                CW_USEDEFAULT,
-                CW_USEDEFAULT,
+                position,
+                position,
                 size.x,
                 size.y,
                 null_mut(),
