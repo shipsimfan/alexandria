@@ -3,6 +3,7 @@ use crate::{
     platform::linux::wayland::{WaylandEventHandler, XdgToplevelListener},
 };
 use alexandria_math::{Vector2, Vector2u};
+use wayland::xdg_shell::xdg_toplevel_state;
 
 const SCALE_NUMERATOR: u32 = 9;
 const SCALE_DENOMINATOR: u32 = 10;
@@ -15,7 +16,7 @@ impl<Callbacks: WindowEvents> XdgToplevelListener for WaylandEventHandler<Callba
         self.did_close_request = true;
     }
 
-    fn configure(&mut self, width: i32, height: i32) {
+    fn configure(&mut self, width: i32, height: i32, state: &[xdg_toplevel_state]) {
         if width > 0 && height > 0 {
             let new_size = Vector2::new(width as _, height as _);
             self.state.set_size(new_size);
@@ -24,6 +25,17 @@ impl<Callbacks: WindowEvents> XdgToplevelListener for WaylandEventHandler<Callba
             self.state.set_size(FALLBACK_SIZE);
             self.did_resize = true;
         }
+
+        let mut is_maximized = false;
+        for state in state {
+            if *state == xdg_toplevel_state::Maximized {
+                is_maximized = true;
+                break;
+            }
+        }
+
+        self.did_maximize_or_restore |= is_maximized != self.state.is_maximized();
+        self.state.set_is_maximized(is_maximized);
     }
 
     fn configure_bounds(&mut self, width: i32, height: i32) {

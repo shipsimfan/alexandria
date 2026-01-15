@@ -2,7 +2,7 @@ use crate::platform::linux::wayland::{XdgToplevel, XdgToplevelListener, XdgWmBas
 use std::{ffi::c_void, rc::Rc};
 use wayland::{
     wl_array,
-    xdg_shell::{xdg_toplevel, xdg_toplevel_listener},
+    xdg_shell::{xdg_toplevel, xdg_toplevel_listener, xdg_toplevel_state},
 };
 
 impl<T: XdgToplevelListener> XdgToplevel<T> {
@@ -22,11 +22,19 @@ unsafe extern "C" fn configure_trampoline<T: XdgToplevelListener>(
     _: *mut xdg_toplevel,
     width: i32,
     height: i32,
-    _: *mut wl_array,
+    state: *mut wl_array,
 ) {
     let data: &mut (T, Rc<XdgWmBase>) = unsafe { &mut *data.cast() };
 
-    data.0.configure(width, height);
+    let state = unsafe { &*state };
+    let state = unsafe {
+        std::slice::from_raw_parts(
+            state.data.cast(),
+            state.size / std::mem::size_of::<xdg_toplevel_state>(),
+        )
+    };
+
+    data.0.configure(width, height, state);
 }
 
 /// Trampoline for responding to a close request

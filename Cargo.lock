@@ -122,7 +122,7 @@ dependencies = [
 [[package]]
 name = "wayland"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-wayland#c3b97381a5346e8661d9582655564cbd10e8a6b4"
+source = "git+https://github.com/shipsimfan/lib-wayland#4db083116a15b79a9139f5b518e1b4e13893c089"
 dependencies = [
  "linux",
 ]
