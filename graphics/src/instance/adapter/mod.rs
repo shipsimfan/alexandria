@@ -11,6 +11,8 @@ mod get;
 mod new;
 mod ord;
 mod supports_surface;
+mod surface_present_modes;
+mod swapchain_formats;
 
 pub use kind::GraphicsAdapterKind;
 pub use queue_family_info::GraphicsQueueFamilyInfo;

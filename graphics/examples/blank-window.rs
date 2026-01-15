@@ -14,7 +14,7 @@ fn main() {
     let surface = instance.create_window_surface(&mut window).unwrap();
 
     // Select adapter
-    let (adapter, queue_family_index) = instance
+    let (adapter, (queue_family_index, swapchain_format)) = instance
         .enumerate_adapters()
         .unwrap()
         .into_iter()
@@ -25,9 +25,10 @@ fn main() {
         .expect("no compatible adapters");
 
     println!(
-        "Using adapter \"{}\" with queue family {}",
+        "Using adapter \"{}\" with queue family {} and swapchain format {:?}",
         adapter.name(),
-        queue_family_index
+        queue_family_index,
+        swapchain_format
     );
 
     // Main loop
@@ -43,18 +44,33 @@ fn main() {
 fn is_adapter_supported(
     adapter: &alexandria_graphics::GraphicsAdapter,
     surface: &alexandria_graphics::WindowSurface,
-) -> Option<u32> {
+) -> Option<(u32, alexandria_graphics::SwapchainFormat)> {
     for queue_family in adapter.queue_families() {
         if !queue_family.graphics() {
             continue;
         }
 
-        if adapter
+        if !adapter
             .supports_surface(queue_family.index(), surface)
             .unwrap()
         {
-            return Some(queue_family.index());
+            continue;
         }
+
+        let mut formats = adapter.swapchain_formats(surface).unwrap();
+        if formats.len() == 0 {
+            continue;
+        }
+
+        let format = if formats.contains(&alexandria_graphics::SwapchainFormat::B8G8R8A8Srgb) {
+            alexandria_graphics::SwapchainFormat::B8G8R8A8Srgb
+        } else if formats.contains(&alexandria_graphics::SwapchainFormat::R8G8B8A8Srgb) {
+            alexandria_graphics::SwapchainFormat::R8G8B8A8Srgb
+        } else {
+            formats.swap_remove(0)
+        };
+
+        return Some((queue_family.index(), format));
     }
 
     None

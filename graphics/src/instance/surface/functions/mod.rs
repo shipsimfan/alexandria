@@ -1,4 +1,7 @@
-use vulkan::khr_surface::{VkDestroySurfaceKhr, VkGetPhysicalDeviceSurfaceSupportKhr};
+use vulkan::khr_surface::{
+    VkDestroySurfaceKhr, VkGetPhysicalDeviceSurfaceFormatsKhr,
+    VkGetPhysicalDeviceSurfacePresentModesKhr, VkGetPhysicalDeviceSurfaceSupportKhr,
+};
 
 #[cfg(target_os = "windows")]
 mod win32;
@@ -11,6 +14,12 @@ pub(in crate::instance) use win32::Win32WindowSurfaceFunctions;
 pub(in crate::instance) struct WindowSurfaceFunctions {
     /// Get if a physical device supports presentation on a surface using a specific queue family
     pub get_physical_device_surface_support: VkGetPhysicalDeviceSurfaceSupportKhr,
+
+    /// Get the swapchain presentation modes supported by a physical device
+    pub get_physical_device_surface_present_modes: VkGetPhysicalDeviceSurfacePresentModesKhr,
+
+    /// Get the surface formats supported by a physical device
+    pub get_physical_device_surface_formats: VkGetPhysicalDeviceSurfaceFormatsKhr,
 
     /// The function to destroy the surface
     pub destroy_surface: VkDestroySurfaceKhr,

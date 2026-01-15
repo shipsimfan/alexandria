@@ -8,10 +8,12 @@
 #![feature(cstr_display)]
 #![feature(box_as_ptr)]
 
+mod device;
 mod instance;
 mod misc;
 mod util;
 
+pub use device::*;
 pub use instance::*;
 pub use misc::*;
 
