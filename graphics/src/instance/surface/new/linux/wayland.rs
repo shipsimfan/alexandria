@@ -1,7 +1,9 @@
 use crate::{GraphicsError, Result, WindowSurface, instance::inner::GraphicsInstanceInner};
 use alexandria_window::{WaylandWindow, WindowEvents};
 use std::{ptr::null, sync::Arc};
-use vulkan::{khr_surface::VkSurfaceKhr, try_vulkan};
+use vulkan::{
+    khr_surface::VkSurfaceKhr, khr_wayland_surface::VkWaylandSurfaceCreateInfoKhr, try_vulkan,
+};
 
 impl WindowSurface {
     /// Create a new Wayland [`WindowSurface`]

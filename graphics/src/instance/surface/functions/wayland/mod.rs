@@ -1,3 +1,5 @@
+use vulkan::khr_wayland_surface::VkCreateWaylandSurfaceKhr;
+
 mod load;
 
 /// Functions used by Wayland window surfaces

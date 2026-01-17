@@ -26,3 +26,6 @@ vulkan.workspace = true
 
 [target.'cfg(windows)'.dependencies]
 vulkan = { workspace = true, features = ["win32"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+vulkan = { workspace = true, features = ["wayland"] }

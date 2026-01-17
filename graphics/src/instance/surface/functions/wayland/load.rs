@@ -1,5 +1,5 @@
 use crate::{Result, instance::WaylandWindowSurfaceFunctions, util::load_instance_function};
-use vulkan::VkInstance;
+use vulkan::{VkInstance, khr_wayland_surface::VK_CREATE_WAYLAND_SURFACE_KHR};
 
 impl WaylandWindowSurfaceFunctions {
     /// Load all the required Wayland surface functions

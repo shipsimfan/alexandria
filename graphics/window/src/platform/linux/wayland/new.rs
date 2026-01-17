@@ -10,7 +10,7 @@ use std::{borrow::Cow, ffi::CString, rc::Rc, str::FromStr};
 
 impl<Callbacks: WindowEvents> WaylandWindow<Callbacks> {
     /// Create a new [`WaylandWindow`]
-    pub fn new(
+    pub(in crate::platform::linux) fn new(
         title: Cow<'static, str>,
         size: Option<Vector2u>,
         display_mode: DisplayMode,

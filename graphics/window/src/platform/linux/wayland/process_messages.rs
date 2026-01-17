@@ -6,7 +6,7 @@ use linux::{
 
 impl<Callbacks: WindowEvents> WaylandWindow<Callbacks> {
     /// Process all messages that have occurred since the last call, or block until one arrives
-    pub fn process_messages(&mut self) -> Result<()> {
+    pub(in crate::platform::linux) fn process_messages(&mut self) -> Result<()> {
         // Dispatch events before reading
         if !self.display.prepare_read() {
             return self.display.dispatch_pending();

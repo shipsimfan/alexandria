@@ -2,15 +2,14 @@
  1. Add is_resizing tracking to coalecse resizes
    - Wayland
  2. Implement renderer wrappers up to clearing the screen
-   1. `Surface` for Wayland
-   2. `Device`
-   3. `Queue`
-   4. `Swapchain`
-   5. `ImageView`
-   6. `CommandPool`
-   7. `CommandBuffer`
-   8. `Semaphore`
-   9. `Fence`
+   1. `Device`
+   2. `Queue`
+   3. `Swapchain`
+   4. `ImageView`
+   5. `CommandPool`
+   6. `CommandBuffer`
+   7. `Semaphore`
+   8. `Fence`
  3. Add Linux Windowing support
    1. Wayland
      1. Window creation

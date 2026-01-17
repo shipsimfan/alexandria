@@ -1,7 +1,5 @@
-#[cfg(target_os = "windows")]
-use alexandria_window::Window;
-
 use crate::{GraphicsInstanceBuilder, GraphicsInstanceExtension, GraphicsVersion};
+use alexandria_window::{Window, WindowEvents};
 use std::borrow::Cow;
 
 impl<'a> GraphicsInstanceBuilder<'a> {
@@ -70,10 +68,29 @@ impl<'a> GraphicsInstanceBuilder<'a> {
     /// Add the required extensions for create surfaces for `window`
     #[cfg(target_os = "windows")]
     #[allow(unused_variables)]
-    pub fn window_extensions(&mut self, window: &Window) -> &mut GraphicsInstanceBuilder<'a> {
+    pub fn window_extensions<Callbacks: WindowEvents>(
+        &mut self,
+        window: &Window<Callbacks>,
+    ) -> &mut GraphicsInstanceBuilder<'a> {
         self.extensions([
             GraphicsInstanceExtension::Surface,
             GraphicsInstanceExtension::Win32Surface,
+        ])
+    }
+
+    /// Add the required extensions for create surfaces for `window`
+    #[cfg(target_os = "linux")]
+    #[allow(unused_variables)]
+    pub fn window_extensions<Callbacks: WindowEvents>(
+        &mut self,
+        window: &Window<Callbacks>,
+    ) -> &mut GraphicsInstanceBuilder<'a> {
+        self.extensions([
+            GraphicsInstanceExtension::Surface,
+            match window {
+                Window::Wayland(_) => GraphicsInstanceExtension::WaylandSurface,
+                Window::X11(_) => todo!(),
+            },
         ])
     }
 }
