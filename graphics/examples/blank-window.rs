@@ -3,7 +3,6 @@ const TITLE: &str = "Blank Window Example";
 fn main() {
     // Create window
     let mut window = alexandria_graphics::window::Window::builder(TITLE)
-        .display_mode(alexandria_graphics::window::DisplayMode::Borderless)
         .build()
         .unwrap();
 

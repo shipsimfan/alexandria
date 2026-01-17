@@ -5,7 +5,7 @@ use crate::instance::Win32WindowSurfaceFunctions;
 use crate::instance::{
     GraphicsAdapterFunctions, GraphicsDebugMessengerFunctions, WindowSurfaceFunctions,
 };
-use vulkan::{VkDestroyInstance, VkEnumeratePhysicalDevices, VkGetDeviceProcAddr};
+use vulkan::{VkCreateDevice, VkDestroyInstance, VkEnumeratePhysicalDevices, VkGetDeviceProcAddr};
 
 mod get;
 mod load;
@@ -29,11 +29,14 @@ pub(crate) struct GraphicsInstanceFunctions {
     #[cfg(target_os = "linux")]
     wayland_surface: Option<WaylandWindowSurfaceFunctions>,
 
-    /// The function to get an address of device procedure
-    pub get_device_proc_addr: VkGetDeviceProcAddr,
-
     /// The function used to enumerate the physical devices on the system
     pub(in crate::instance) enumerate_physical_devices: VkEnumeratePhysicalDevices,
+
+    /// The function to create a graphics device
+    pub create_device: VkCreateDevice,
+
+    /// The function to get an address of graphics device procedure
+    pub get_device_proc_addr: VkGetDeviceProcAddr,
 
     /// The function used to destroy the instance
     pub(in crate::instance) destroy_instance: VkDestroyInstance,
