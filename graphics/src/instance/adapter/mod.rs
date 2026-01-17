@@ -6,6 +6,7 @@ mod functions;
 mod kind;
 mod queue_family_info;
 
+mod enumerate_all_extensions;
 mod eq;
 mod get;
 mod new;

@@ -16,5 +16,5 @@ pub struct GraphicsInstanceInner {
     handle: VkInstance,
 
     /// The functions loaded for this instance
-    pub(in crate::instance) functions: GraphicsInstanceFunctions,
+    pub(crate) functions: GraphicsInstanceFunctions,
 }

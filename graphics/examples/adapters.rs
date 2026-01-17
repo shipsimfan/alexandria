@@ -47,5 +47,15 @@ fn main() {
             }
             println!(")");
         }
+
+        let extensions = adapter.enumerate_all_extensions().unwrap();
+        if extensions.len() == 0 {
+            println!("   - No extensions");
+        } else {
+            println!("   - Extensions:");
+            for extension in extensions {
+                println!("     - {}", extension);
+            }
+        }
     }
 }

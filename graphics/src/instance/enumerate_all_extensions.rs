@@ -10,8 +10,6 @@ use vulkan::{
 impl GraphicsInstance {
     /// Enumerate all Vulkan extensions supported on this system, even if Alexandria doesn't
     /// support them
-    ///
-    /// TODO: Change this to support selecting layer
     pub fn enumerate_all_extensions(
         layer: Option<&GraphicsLayer>,
     ) -> Result<Vec<GraphicsExtension>> {

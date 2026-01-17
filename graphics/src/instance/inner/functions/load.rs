@@ -8,11 +8,13 @@ use crate::{
     },
     util::load_instance_function,
 };
-use vulkan::{VK_DESTROY_INSTANCE, VK_ENUMERATE_PHYSICAL_DEVICES, VkInstance};
+use vulkan::{
+    VK_DESTROY_INSTANCE, VK_ENUMERATE_PHYSICAL_DEVICES, VK_GET_DEVICE_PROC_ADDR, VkInstance,
+};
 
 impl GraphicsInstanceFunctions {
     /// Load all the required instance functions
-    pub fn load(
+    pub(in crate::instance) fn load(
         instance: VkInstance,
         extensions: &[GraphicsInstanceExtension],
     ) -> Result<GraphicsInstanceFunctions> {
@@ -53,6 +55,7 @@ impl GraphicsInstanceFunctions {
             #[cfg(target_os = "linux")]
             wayland_surface,
 
+            get_device_proc_addr: load_instance_function!(instance, VK_GET_DEVICE_PROC_ADDR)?,
             enumerate_physical_devices: load_instance_function!(
                 instance,
                 VK_ENUMERATE_PHYSICAL_DEVICES
