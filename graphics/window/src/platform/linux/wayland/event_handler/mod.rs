@@ -1,4 +1,5 @@
 use crate::{WindowEvents, WindowState};
+use alexandria_math::Vector2u;
 
 mod get;
 mod new;
@@ -20,4 +21,9 @@ pub(in crate::platform::linux::wayland) struct WaylandEventHandler<Callbacks: Wi
 
     /// The user provided callbacks for window events
     callbacks: Callbacks,
+
+    /// Is the window currently resizing?
+    ///
+    /// If it is, this stores the last seen size
+    is_resizing: Option<Vector2u>,
 }

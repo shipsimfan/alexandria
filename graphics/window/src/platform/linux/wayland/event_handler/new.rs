@@ -18,6 +18,7 @@ impl<Callbacks: WindowEvents> WaylandEventHandler<Callbacks> {
             did_maximize_or_restore: false,
             did_close_request: false,
             callbacks,
+            is_resizing: None,
         }
     }
 }

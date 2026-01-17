@@ -1,7 +1,5 @@
 # ToDo
- 1. Add is_resizing tracking to coalecse resizes
-   - Wayland
- 2. Implement renderer wrappers up to clearing the screen
+ 1. Implement renderer wrappers up to clearing the screen
    1. `Device`
    2. `Queue`
    3. `Swapchain`
@@ -10,7 +8,7 @@
    6. `CommandBuffer`
    7. `Semaphore`
    8. `Fence`
- 3. Add Linux Windowing support
+ 2. Add Linux Windowing support
    1. Wayland
      1. Window creation
        - Display mode
@@ -40,7 +38,7 @@
        - Request close
      6. Cursor lock to window
      7. Surface creation
- 4. Input system
+ 3. Input system
    1. System
    2. Keyboard
      1. Windows
@@ -54,26 +52,26 @@
      1. Windows
      2. Wayland
      3. X11
- 5. Add min size support
+ 4. Add min size support
    - Windows (`WM_GETMINMAXINFO`)
    - Wayland (`xdg_toplevel_set_min_size()`)
    - X11
- 6. Add fullscreen support
+ 5. Add fullscreen support
    - Windows (exclusive)
    - Wayland (extension)
    - X11
- 7. Add renderer wrappers for triangle
- 8. Add renderer wrappers for multi-cube
- 9. Add model loading/parsing
- 10. Add texture loading/parsing
- 11. Add window icons
+ 6. Add renderer wrappers for triangle
+ 7. Add renderer wrappers for multi-cube
+ 8. Add model loading/parsing
+ 9. Add texture loading/parsing
+ 10. Add window icons
    - Windows
    - Wayland
    - X11
- 12. Add audio wrappers
- 13. Add more input types
+ 11. Add audio wrappers
+ 12. Add more input types
    - X-Box controllers (Windows)
    - General controllers
    - Joysticks
    - Steering Wheels, Pedals, Gear Shift
- 14. Add 2-d support to `Matrix3x3`
+ 13. Add 2-d support to `Matrix3x3`

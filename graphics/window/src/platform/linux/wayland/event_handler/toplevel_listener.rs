@@ -17,25 +17,44 @@ impl<Callbacks: WindowEvents> XdgToplevelListener for WaylandEventHandler<Callba
     }
 
     fn configure(&mut self, width: i32, height: i32, state: &[xdg_toplevel_state]) {
-        if width > 0 && height > 0 {
-            let new_size = Vector2::new(width as _, height as _);
-            self.state.set_size(new_size);
-            self.did_resize |= new_size != self.state.size();
-        } else if self.state.size() == Vector2::ZERO {
-            self.state.set_size(FALLBACK_SIZE);
-            self.did_resize = true;
-        }
-
+        // Check states
         let mut is_maximized = false;
+        let mut is_resizing = false;
         for state in state {
-            if *state == xdg_toplevel_state::Maximized {
-                is_maximized = true;
-                break;
+            match *state {
+                xdg_toplevel_state::Maximized => is_maximized = true,
+                xdg_toplevel_state::Resizing => is_resizing = true,
+                _ => {}
             }
         }
 
         self.did_maximize_or_restore |= is_maximized != self.state.is_maximized();
         self.state.set_is_maximized(is_maximized);
+
+        // Update size
+        if is_resizing {
+            self.is_resizing = Some(if width > 0 && height > 0 {
+                Vector2::new(width as _, height as _)
+            } else if self.state.size() == Vector2::ZERO {
+                FALLBACK_SIZE
+            } else {
+                self.state.size()
+            });
+        } else {
+            let resize = self.is_resizing.take();
+            let new_size = if width > 0 && height > 0 {
+                Vector2::new(width as _, height as _)
+            } else if let Some(new_size) = resize {
+                new_size
+            } else if self.state.size() == Vector2::ZERO {
+                FALLBACK_SIZE
+            } else {
+                self.state.size()
+            };
+
+            self.state.set_size(new_size);
+            self.did_resize |= new_size != self.state.size();
+        }
     }
 
     fn configure_bounds(&mut self, width: i32, height: i32) {
