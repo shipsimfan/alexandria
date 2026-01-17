@@ -7,6 +7,8 @@ impl std::fmt::Display for GraphicsInstanceExtension {
             GraphicsInstanceExtension::Surface => write!(f, "surface"),
             #[cfg(target_os = "windows")]
             GraphicsInstanceExtension::Win32Surface => write!(f, "win32 surface"),
+            #[cfg(target_os = "linux")]
+            GraphicsInstanceExtension::WaylandSurface => write!(f, "wayland surface"),
         }
     }
 }

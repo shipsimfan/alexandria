@@ -1,7 +1,7 @@
 use crate::{
     DisplayMode, Result, Window, WindowError, WindowEvents, WindowWakeHandleInner,
     platform::linux::{
-        WaylandWindow, WindowKind,
+        WaylandWindow,
         wayland::{WaylandEventHandler, WaylandGlobals, WlDisplay},
     },
 };
@@ -68,13 +68,11 @@ impl<Callbacks: WindowEvents> WaylandWindow<Callbacks> {
         // Create runtime state
         let wake_handle = WindowWakeHandleInner::new()?;
 
-        Ok(Box::new(Window {
-            kind: WindowKind::Wayland(WaylandWindow {
-                wake_handle,
-                toplevel_surface,
-                display,
-                registry,
-            }),
-        }))
+        Ok(Box::new(Window::Wayland(WaylandWindow {
+            wake_handle,
+            toplevel_surface,
+            display,
+            registry,
+        })))
     }
 }

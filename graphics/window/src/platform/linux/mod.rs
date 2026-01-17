@@ -1,8 +1,7 @@
 //! The Linux implementation of the window system
 
+use crate::WindowEvents;
 use shared_library::{SharedLibrary, try_load_function};
-use wayland::WaylandWindow;
-use x11::X11Window;
 
 mod error;
 mod shared_library;
@@ -20,16 +19,11 @@ mod process_messages;
 pub(crate) use error::OsError;
 pub(crate) use wake_handle::WindowWakeHandleInner;
 
-use crate::WindowEvents;
+pub use wayland::WaylandWindow;
+pub use x11::X11Window;
 
 /// A window displayed for the user
-pub struct Window<Callbacks: WindowEvents = ()> {
-    /// The underlying kind of window this is
-    kind: WindowKind<Callbacks>,
-}
-
-/// The backend protocol for a given window
-enum WindowKind<Callbacks: WindowEvents> {
+pub enum Window<Callbacks: WindowEvents = ()> {
     /// The protocol used is Wayland
     Wayland(WaylandWindow<Callbacks>),
 

@@ -37,4 +37,6 @@ layer_cstrs![
     Surface => "VK_KHR_surface",
     #[cfg(target_os = "windows")]
     Win32Surface => "VK_KHR_win32_surface",
+    #[cfg(target_os = "linux")]
+    WaylandSurface => "VK_KHR_wayland_surface",
 ];

@@ -8,6 +8,7 @@ mod drop;
 mod flush;
 mod get_fd;
 mod get_registry;
+mod handle;
 mod prepare_read;
 mod read_events;
 mod roundtrip;

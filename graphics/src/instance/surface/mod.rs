@@ -8,6 +8,8 @@ mod drop;
 mod get;
 mod new;
 
+#[cfg(target_os = "linux")]
+pub(in crate::instance) use functions::WaylandWindowSurfaceFunctions;
 #[cfg(target_os = "windows")]
 pub(in crate::instance) use functions::Win32WindowSurfaceFunctions;
 pub(in crate::instance) use functions::WindowSurfaceFunctions;

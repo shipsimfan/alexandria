@@ -14,11 +14,12 @@ mod objects;
 mod get;
 mod new;
 mod process_messages;
+mod surface_creation_handle;
 
 pub(in crate::platform::linux) use objects::*;
 
 /// A window on a Wayland connection
-pub(in crate::platform::linux) struct WaylandWindow<Callbacks: WindowEvents> {
+pub struct WaylandWindow<Callbacks: WindowEvents> {
     /// The handle used to wake this thread if blocking for messages
     wake_handle: Arc<WindowWakeHandleInner>,
 

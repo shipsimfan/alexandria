@@ -20,6 +20,8 @@ impl GraphicsInstanceFunctions {
         let mut surface = None;
         #[cfg(target_os = "windows")]
         let mut win32_surface = None;
+        #[cfg(target_os = "linux")]
+        let mut wayland_surface = None;
 
         for extension in extensions {
             match *extension {
@@ -33,6 +35,12 @@ impl GraphicsInstanceFunctions {
                 GraphicsInstanceExtension::Win32Surface => {
                     win32_surface = Some(Win32WindowSurfaceFunctions::load(instance)?)
                 }
+                #[cfg(target_os = "linux")]
+                GraphicsInstanceExtension::WaylandSurface => {
+                    use crate::instance::WaylandWindowSurfaceFunctions;
+
+                    wayland_surface = Some(WaylandWindowSurfaceFunctions::load(instance)?)
+                }
             }
         }
 
@@ -42,6 +50,8 @@ impl GraphicsInstanceFunctions {
             surface,
             #[cfg(target_os = "windows")]
             win32_surface,
+            #[cfg(target_os = "linux")]
+            wayland_surface,
 
             enumerate_physical_devices: load_instance_function!(
                 instance,

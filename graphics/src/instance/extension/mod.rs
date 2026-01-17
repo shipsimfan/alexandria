@@ -13,4 +13,8 @@ pub enum GraphicsInstanceExtension {
     /// Windows-specific window surface extension
     #[cfg(target_os = "windows")]
     Win32Surface,
+
+    /// Wayland-specific window surface extension
+    #[cfg(target_os = "linux")]
+    WaylandSurface,
 }

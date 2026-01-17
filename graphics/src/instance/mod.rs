@@ -1,6 +1,8 @@
 use adapter::GraphicsAdapterFunctions;
 use inner::GraphicsInstanceInner;
 use std::sync::Arc;
+#[cfg(target_os = "linux")]
+use surface::WaylandWindowSurfaceFunctions;
 #[cfg(target_os = "windows")]
 use surface::Win32WindowSurfaceFunctions;
 use surface::WindowSurfaceFunctions;

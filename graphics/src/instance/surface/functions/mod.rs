@@ -3,11 +3,16 @@ use vulkan::khr_surface::{
     VkGetPhysicalDeviceSurfacePresentModesKhr, VkGetPhysicalDeviceSurfaceSupportKhr,
 };
 
+#[cfg(target_os = "linux")]
+mod wayland;
 #[cfg(target_os = "windows")]
 mod win32;
 
 mod load;
 
+#[cfg(target_os = "linux")]
+pub(in crate::instance) use wayland::WaylandWindowSurfaceFunctions;
+#[cfg(target_os = "windows")]
 pub(in crate::instance) use win32::Win32WindowSurfaceFunctions;
 
 /// Functions used by window surfaces
