@@ -1,3 +1,4 @@
+mod into_vk;
 mod new;
 
 /// The information describing a queue to create

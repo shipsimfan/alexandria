@@ -1,13 +1,12 @@
 # ToDo
  1. Implement renderer wrappers up to clearing the screen
-   1. `Device`
-   2. `Queue`
-   3. `Swapchain`
-   4. `ImageView`
-   5. `CommandPool`
-   6. `CommandBuffer`
-   7. `Semaphore`
-   8. `Fence`
+   1. `Queue`
+   2. `Swapchain`
+   3. `ImageView`
+   4. `CommandPool`
+   5. `CommandBuffer`
+   6. `Semaphore`
+   7. `Fence`
  2. Add Linux Windowing support
    1. Wayland
      1. Window creation

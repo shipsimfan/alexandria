@@ -7,7 +7,7 @@ macro_rules! layer_cstrs {
     )*] => {
         impl GraphicsDeviceExtension {
             /// Try to convert `str` into a [`GraphicsDeviceExtension`]
-            pub(in crate::device) fn from_str(str: &str) -> Option<GraphicsDeviceExtension> {
+            pub(crate) fn from_str(str: &str) -> Option<GraphicsDeviceExtension> {
                 match str {
                     $(
                         $(#[$meta])*
@@ -34,4 +34,5 @@ macro_rules! layer_cstrs {
 
 layer_cstrs![
     Swapchain => "VK_KHR_swapchain",
+    ExtendedDynamicState => "VK_EXT_extended_dynamic_state",
 ];

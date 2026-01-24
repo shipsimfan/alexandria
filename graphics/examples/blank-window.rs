@@ -31,11 +31,22 @@ fn main() {
         swapchain_format
     );
 
+    // Create device
+    let graphics_device = adapter
+        .device_builder()
+        .queue(alexandria_graphics::GraphicsQueueCreateInfo {
+            queue_family: queue_family_index,
+            priorities: &[1.0],
+        })
+        .create()
+        .unwrap();
+
     // Main loop
     while !window.is_close_requested() {
         window.process_messages().unwrap();
     }
 
+    drop(graphics_device);
     drop(surface);
     drop(debug_messenger);
 }

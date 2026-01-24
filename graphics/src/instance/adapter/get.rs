@@ -1,5 +1,9 @@
-use crate::{GraphicsAdapter, GraphicsAdapterKind, GraphicsQueueFamilyInfo, GraphicsVersion};
+use crate::{
+    GraphicsAdapter, GraphicsAdapterKind, GraphicsInstance, GraphicsQueueFamilyInfo,
+    GraphicsVersion,
+};
 use alexandria_util::{MemorySize, UUID};
+use vulkan::VkPhysicalDevice;
 
 impl<'instance> GraphicsAdapter<'instance> {
     /// Get the Vulkan version supported by this adapter
@@ -35,5 +39,15 @@ impl<'instance> GraphicsAdapter<'instance> {
     /// Get the queue families on the adapter
     pub fn queue_families(&self) -> &[GraphicsQueueFamilyInfo] {
         &self.queue_families
+    }
+
+    /// Get the graphics instance this adapter came from
+    pub(crate) fn instance(&self) -> &'instance GraphicsInstance {
+        self.instance
+    }
+
+    /// Get access to the physical device handle
+    pub(crate) fn handle(&self) -> VkPhysicalDevice {
+        self.handle
     }
 }

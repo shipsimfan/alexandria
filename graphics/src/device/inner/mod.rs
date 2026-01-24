@@ -5,6 +5,7 @@ use vulkan::VkDevice;
 mod functions;
 
 mod drop;
+mod new;
 
 /// An interface for interacting with a specific Vulkan device
 pub struct GraphicsDeviceInner {

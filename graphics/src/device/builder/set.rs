@@ -3,12 +3,12 @@ use crate::{
     GraphicsQueueCreateInfo,
 };
 
-impl<'instance, 'a> GraphicsDeviceBuilder<'instance, 'a> {
+impl<'adapter, 'instance, 'a> GraphicsDeviceBuilder<'adapter, 'instance, 'a> {
     /// Add a new element of extended information to adjust the device to be created
     pub fn extended_info<E: Into<GraphicsDeviceExtendedCreateInfo>>(
         &mut self,
         info: E,
-    ) -> &mut GraphicsDeviceBuilder<'instance, 'a> {
+    ) -> &mut GraphicsDeviceBuilder<'adapter, 'instance, 'a> {
         self.extended_info.push(info.into());
         self
     }
@@ -17,7 +17,7 @@ impl<'instance, 'a> GraphicsDeviceBuilder<'instance, 'a> {
     pub fn extended_infos<E: Into<GraphicsDeviceExtendedCreateInfo>, I: IntoIterator<Item = E>>(
         &mut self,
         infos: I,
-    ) -> &mut GraphicsDeviceBuilder<'instance, 'a> {
+    ) -> &mut GraphicsDeviceBuilder<'adapter, 'instance, 'a> {
         self.extended_info.extend(infos.into_iter().map(Into::into));
         self
     }
@@ -26,7 +26,7 @@ impl<'instance, 'a> GraphicsDeviceBuilder<'instance, 'a> {
     pub fn queue(
         &mut self,
         queue: GraphicsQueueCreateInfo<'a>,
-    ) -> &mut GraphicsDeviceBuilder<'instance, 'a> {
+    ) -> &mut GraphicsDeviceBuilder<'adapter, 'instance, 'a> {
         self.queues.push(queue);
         self
     }
@@ -35,7 +35,7 @@ impl<'instance, 'a> GraphicsDeviceBuilder<'instance, 'a> {
     pub fn queues<I: IntoIterator<Item = GraphicsQueueCreateInfo<'a>>>(
         &mut self,
         queues: I,
-    ) -> &mut GraphicsDeviceBuilder<'instance, 'a> {
+    ) -> &mut GraphicsDeviceBuilder<'adapter, 'instance, 'a> {
         self.queues.extend(queues);
         self
     }
@@ -44,7 +44,7 @@ impl<'instance, 'a> GraphicsDeviceBuilder<'instance, 'a> {
     pub fn extension(
         &mut self,
         extension: GraphicsDeviceExtension,
-    ) -> &mut GraphicsDeviceBuilder<'instance, 'a> {
+    ) -> &mut GraphicsDeviceBuilder<'adapter, 'instance, 'a> {
         self.extensions.push(extension);
         self
     }
@@ -53,7 +53,7 @@ impl<'instance, 'a> GraphicsDeviceBuilder<'instance, 'a> {
     pub fn extensions<I: IntoIterator<Item = GraphicsDeviceExtension>>(
         &mut self,
         extensions: I,
-    ) -> &mut GraphicsDeviceBuilder<'instance, 'a> {
+    ) -> &mut GraphicsDeviceBuilder<'adapter, 'instance, 'a> {
         self.extensions.extend(extensions);
         self
     }

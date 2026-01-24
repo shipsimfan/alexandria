@@ -1,4 +1,4 @@
-use crate::{GraphicsVersion, instance::GraphicsInstanceInner};
+use crate::{GraphicsInstance, GraphicsVersion};
 use alexandria_util::{MemorySize, UUID};
 use vulkan::VkPhysicalDevice;
 
@@ -6,7 +6,9 @@ mod functions;
 mod kind;
 mod queue_family_info;
 
+mod device_builder;
 mod enumerate_all_extensions;
+mod enumerate_extensions;
 mod eq;
 mod get;
 mod new;
@@ -47,7 +49,7 @@ pub struct GraphicsAdapter<'instance> {
     queue_families: Vec<GraphicsQueueFamilyInfo>,
 
     /// The instance this adapter comes from
-    instance: &'instance GraphicsInstanceInner,
+    instance: &'instance GraphicsInstance,
 }
 
 unsafe impl<'instance> Send for GraphicsAdapter<'instance> {}

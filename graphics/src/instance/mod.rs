@@ -17,6 +17,7 @@ mod inner;
 mod surface;
 
 mod deref;
+mod enumerate_adapters;
 mod enumerate_all_extensions;
 mod enumerate_all_layers;
 mod enumerate_extensions;
@@ -28,6 +29,7 @@ pub use extension::GraphicsInstanceExtension;
 pub use surface::WindowSurface;
 
 /// The context for interacting with Vulkan
+#[derive(Clone)]
 pub struct GraphicsInstance {
     /// Reference to the graphics instance
     inner: Arc<GraphicsInstanceInner>,

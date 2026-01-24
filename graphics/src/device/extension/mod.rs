@@ -6,4 +6,7 @@ mod strs;
 pub enum GraphicsDeviceExtension {
     /// The extension to enable using swapchains
     Swapchain,
+
+    /// The extension to enable extended dynamic rendering
+    ExtendedDynamicState,
 }

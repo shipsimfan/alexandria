@@ -3,7 +3,7 @@ use crate::{
     GraphicsQueueCreateInfo,
 };
 
-impl<'instance, 'a> GraphicsDeviceBuilder<'instance, 'a> {
+impl<'adapter, 'instance, 'a> GraphicsDeviceBuilder<'adapter, 'instance, 'a> {
     /// Get the extended information adjusting the device to be created
     pub fn get_extended_info(&self) -> &[GraphicsDeviceExtendedCreateInfo] {
         &self.extended_info

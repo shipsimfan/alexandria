@@ -3,6 +3,7 @@ use std::borrow::Cow;
 
 impl WindowError {
     /// Create a new [`WindowError`] without a windowing system error
+    #[cfg_attr(target_os = "windows", allow(unused))]
     pub(crate) fn new<S: Into<Cow<'static, str>>>(message: S) -> WindowError {
         WindowError {
             message: message.into(),
