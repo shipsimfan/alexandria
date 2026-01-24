@@ -6,6 +6,7 @@ mod functions;
 
 mod drop;
 mod new;
+mod get;
 
 /// An interface for interacting with a specific Vulkan device
 pub struct GraphicsDeviceInner {

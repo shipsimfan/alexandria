@@ -32,7 +32,7 @@ fn main() {
     );
 
     // Create device
-    let graphics_device = adapter
+    let (graphics_device, mut queues) = adapter
         .device_builder()
         .queue(alexandria_graphics::GraphicsQueueCreateInfo {
             queue_family: queue_family_index,
@@ -41,13 +41,15 @@ fn main() {
         .create()
         .unwrap();
 
+    let queue = queues.swap_remove(0);
+
     // Main loop
     while !window.is_close_requested() {
         window.process_messages().unwrap();
     }
 
+    drop(queue);
     drop(graphics_device);
-    drop(surface);
     drop(debug_messenger);
 }
 
