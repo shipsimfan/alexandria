@@ -3,6 +3,7 @@ use other::OtherSwapchainFormat;
 mod other;
 
 mod from_vk;
+mod into_vk;
 
 /// The format swapchain images can be in
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

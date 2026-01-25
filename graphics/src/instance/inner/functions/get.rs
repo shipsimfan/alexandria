@@ -3,8 +3,7 @@ use crate::instance::WaylandWindowSurfaceFunctions;
 #[cfg(target_os = "windows")]
 use crate::instance::Win32WindowSurfaceFunctions;
 use crate::instance::{
-    GraphicsDebugMessengerFunctions, WindowSurfaceFunctions,
-    inner::functions::GraphicsInstanceFunctions,
+    GraphicsDebugMessengerFunctions, WindowSurfaceFunctions, inner::GraphicsInstanceFunctions,
 };
 
 impl GraphicsInstanceFunctions {

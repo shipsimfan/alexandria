@@ -1,5 +1,5 @@
-mod into_vk;
 mod new;
+mod to_vk;
 
 /// The information describing a queue to create
 pub struct GraphicsQueueCreateInfo<'a> {

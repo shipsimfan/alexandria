@@ -29,6 +29,7 @@ name = "alexandria-graphics"
 version = "0.2.0"
 dependencies = [
  "alexandria-color",
+ "alexandria-math",
  "alexandria-util",
  "alexandria-window",
  "vulkan",

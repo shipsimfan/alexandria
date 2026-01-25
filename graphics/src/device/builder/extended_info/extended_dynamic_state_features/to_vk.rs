@@ -3,7 +3,7 @@ use vulkan::ext_extended_dynamic_state::VkPhysicalDeviceExtendedDynamicStateFeat
 
 impl GraphicsDeviceExtendedDynamicStateFeatures {
     /// Convert this structure into its Vulkan counterpart
-    pub(in crate::device::builder::extended_info) fn into_vk(
+    pub(in crate::device::builder::extended_info) fn to_vk(
         &self,
     ) -> VkPhysicalDeviceExtendedDynamicStateFeaturesExt {
         VkPhysicalDeviceExtendedDynamicStateFeaturesExt::default()

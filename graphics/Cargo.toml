@@ -20,6 +20,7 @@ data-format = [
 alexandria-color.workspace = true
 alexandria-window.workspace = true
 
+alexandria-math.workspace = true
 alexandria-util.workspace = true
 
 vulkan.workspace = true

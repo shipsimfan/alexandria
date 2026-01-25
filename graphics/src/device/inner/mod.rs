@@ -4,9 +4,10 @@ use vulkan::VkDevice;
 
 mod functions;
 
+mod create_swapchain;
 mod drop;
-mod new;
 mod get;
+mod new;
 
 /// An interface for interacting with a specific Vulkan device
 pub struct GraphicsDeviceInner {

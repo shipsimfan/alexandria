@@ -17,7 +17,7 @@ impl GraphicsDeviceInner {
         // Convert extended info to Vulkan
         let mut extended_info: Vec<_> = extended_info
             .into_iter()
-            .map(|extended_info| extended_info.into_vk())
+            .map(|extended_info| extended_info.to_vk())
             .collect();
 
         let next = if extended_info.len() > 0 {
@@ -31,7 +31,7 @@ impl GraphicsDeviceInner {
         };
 
         // Convert queues to Vulkan
-        let queues: Vec<_> = queues.into_iter().map(|queue| queue.into_vk()).collect();
+        let queues: Vec<_> = queues.into_iter().map(|queue| queue.to_vk()).collect();
 
         // Convert extensions to C strings
         let mut extension_ptrs = Vec::with_capacity(extensions.len());
@@ -43,7 +43,7 @@ impl GraphicsDeviceInner {
             next,
             queue_create_info_count: queues.len() as _,
             queue_create_infos: queues.as_ptr(),
-            enabled_layer_count: extension_ptrs.len() as _,
+            enabled_extension_count: extension_ptrs.len() as _,
             enabled_extension_names: extension_ptrs.as_ptr(),
             ..Default::default()
         };
@@ -57,7 +57,7 @@ impl GraphicsDeviceInner {
         ))
         .map_err(|vk| GraphicsError::new_vk("unable to create graphics device", vk))?;
 
-        let functions = GraphicsDeviceFunctions::load(adapter.instance(), handle)?;
+        let functions = GraphicsDeviceFunctions::load(adapter.instance(), handle, extensions)?;
 
         Ok(GraphicsDeviceInner {
             handle,

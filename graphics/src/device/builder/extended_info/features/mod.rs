@@ -1,5 +1,5 @@
 mod default;
-mod into_vk;
+mod to_vk;
 
 /// General graphics device features
 pub struct GraphicsDeviceFeatures {}

@@ -1,5 +1,6 @@
 use vulkan::VkFormat;
 
+mod into_vk;
 mod new;
 
 /// A non-standard swapchain format

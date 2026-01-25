@@ -34,6 +34,7 @@ fn main() {
     // Create device
     let (graphics_device, mut queues) = adapter
         .device_builder()
+        .extension(alexandria_graphics::GraphicsDeviceExtension::Swapchain)
         .queue(alexandria_graphics::GraphicsQueueCreateInfo {
             queue_family: queue_family_index,
             priorities: &[1.0],
@@ -43,11 +44,23 @@ fn main() {
 
     let queue = queues.swap_remove(0);
 
+    // Create swapchain
+    let swapchain = graphics_device
+        .create_swapchain(
+            3,
+            swapchain_format,
+            window.size(),
+            alexandria_graphics::SwapchainPresentMode::Fifo,
+            &surface,
+        )
+        .unwrap();
+
     // Main loop
     while !window.is_close_requested() {
         window.process_messages().unwrap();
     }
 
+    drop(swapchain);
     drop(queue);
     drop(graphics_device);
     drop(debug_messenger);
@@ -58,6 +71,11 @@ fn is_adapter_supported(
     adapter: &alexandria_graphics::GraphicsAdapter,
     surface: &alexandria_graphics::WindowSurface,
 ) -> Option<(u32, alexandria_graphics::SwapchainFormat)> {
+    let extensions = adapter.enumerate_extensions().unwrap();
+    if !extensions.contains(&alexandria_graphics::GraphicsDeviceExtension::Swapchain) {
+        return None;
+    }
+
     for queue_family in adapter.queue_families() {
         if !queue_family.graphics() {
             continue;

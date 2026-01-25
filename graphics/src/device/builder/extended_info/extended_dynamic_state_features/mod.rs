@@ -1,5 +1,5 @@
 mod default;
-mod into_vk;
+mod to_vk;
 
 /// Extended dynamic state features
 pub struct GraphicsDeviceExtendedDynamicStateFeatures {}

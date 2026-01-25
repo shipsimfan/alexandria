@@ -1,10 +1,10 @@
 use crate::{GraphicsDevice, device::GraphicsDeviceInner};
-use std::ops::Deref;
+use std::{ops::Deref, sync::Arc};
 
 impl Deref for GraphicsDevice {
-    type Target = GraphicsDeviceInner;
+    type Target = Arc<GraphicsDeviceInner>;
 
     fn deref(&self) -> &Self::Target {
-        self.inner.as_ref()
+        &self.inner
     }
 }

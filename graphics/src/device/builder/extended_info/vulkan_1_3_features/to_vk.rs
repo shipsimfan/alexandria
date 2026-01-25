@@ -3,7 +3,7 @@ use vulkan::VkPhysicalDeviceVulkan13Features;
 
 impl GraphicsDeviceVulkan13Features {
     /// Convert this structure into its Vulkan counterpart
-    pub(in crate::device::builder::extended_info) fn into_vk(
+    pub(in crate::device::builder::extended_info) fn to_vk(
         &self,
     ) -> VkPhysicalDeviceVulkan13Features {
         VkPhysicalDeviceVulkan13Features::default()
