@@ -1,9 +1,12 @@
 use crate::{
-    GraphicsError, Result, Swapchain, SwapchainFormat, SwapchainPresentMode, WindowSurface,
-    device::GraphicsDeviceInner,
+    GpuImage, GraphicsError, Result, Swapchain, SwapchainFormat, SwapchainPresentMode,
+    WindowSurface, device::GraphicsDeviceInner,
 };
 use alexandria_math::Vector2u;
-use std::{ptr::null, sync::Arc};
+use std::{
+    ptr::{null, null_mut},
+    sync::Arc,
+};
 use vulkan::{
     VK_TRUE, VkExtent2D, VkImageUsageFlag, VkSharingMode,
     khr_surface::{VkCompositeAlphaFlagKhr, VkSurfaceTransformFlagKhr},
@@ -22,6 +25,7 @@ impl<'surface> Swapchain<'surface> {
         surface: &'surface WindowSurface,
         device: Arc<GraphicsDeviceInner>,
     ) -> Result<Swapchain<'surface>> {
+        // Create swapchain
         let (image_format, image_color_space) = image_format.into_vk();
 
         let create_info = VkSwapchainCreateInfoKhr {
@@ -52,8 +56,34 @@ impl<'surface> Swapchain<'surface> {
         ))
         .map_err(|vk| GraphicsError::new_vk("unable to create a swapchain", vk))?;
 
+        // Get images
+        let mut image_count = 0;
+        try_vulkan!((device.functions.swapchain().get_swapchain_images)(
+            device.handle(),
+            handle,
+            &mut image_count,
+            null_mut()
+        ))
+        .map_err(|vk| GraphicsError::new_vk("unable to get swapchain image count", vk))?;
+
+        let mut images = Vec::with_capacity(image_count as _);
+        try_vulkan!((device.functions.swapchain().get_swapchain_images)(
+            device.handle(),
+            handle,
+            &mut image_count,
+            images.as_mut_ptr()
+        ))
+        .map_err(|vk| GraphicsError::new_vk("unable to get swapchain images", vk))?;
+        unsafe { images.set_len(image_count as _) };
+
+        let images = images
+            .into_iter()
+            .map(|handle| GpuImage::new(handle, device.clone()))
+            .collect();
+
         Ok(Swapchain {
             handle,
+            images,
             _surface: surface,
             device,
         })

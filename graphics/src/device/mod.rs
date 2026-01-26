@@ -3,6 +3,7 @@ use std::sync::Arc;
 
 mod builder;
 mod extension;
+mod image;
 mod inner;
 mod queue;
 mod swapchain;
@@ -11,6 +12,7 @@ mod deref;
 
 pub use builder::*;
 pub use extension::GraphicsDeviceExtension;
+pub use image::GpuImage;
 pub use queue::GraphicsQueue;
 pub use swapchain::*;
 

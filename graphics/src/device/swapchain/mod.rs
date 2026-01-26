@@ -1,4 +1,4 @@
-use crate::{WindowSurface, device::GraphicsDeviceInner};
+use crate::{GpuImage, WindowSurface, device::GraphicsDeviceInner};
 use std::sync::Arc;
 use vulkan::khr_swapchain::VkSwapchainKhr;
 
@@ -7,6 +7,7 @@ mod functions;
 mod present_mode;
 
 mod drop;
+mod get;
 mod new;
 
 pub use format::SwapchainFormat;
@@ -18,6 +19,9 @@ pub(in crate::device) use functions::SwapchainFunctions;
 pub struct Swapchain<'surface> {
     /// The handle to the underlying swapchain
     handle: VkSwapchainKhr,
+
+    /// The set of images that make up this swapchain
+    images: Vec<GpuImage>,
 
     /// The surface this swapchain was created for
     _surface: &'surface WindowSurface,
