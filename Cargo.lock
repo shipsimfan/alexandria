@@ -4,67 +4,11 @@ version = 4
 
 [[package]]
 name = "alexandria"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
- "alexandria-graphics",
- "alexandria-math",
- "alexandria-system",
- "alexandria-util",
-]
-
-[[package]]
-name = "alexandria-color"
-version = "0.2.0"
-dependencies = [
- "alexandria-math",
  "data-format",
-]
-
-[[package]]
-name = "alexandria-git"
-version = "0.2.0"
-
-[[package]]
-name = "alexandria-graphics"
-version = "0.2.0"
-dependencies = [
- "alexandria-color",
- "alexandria-math",
- "alexandria-util",
- "alexandria-window",
+ "linux",
  "vulkan",
-]
-
-[[package]]
-name = "alexandria-math"
-version = "0.2.0"
-dependencies = [
- "data-format",
-]
-
-[[package]]
-name = "alexandria-system"
-version = "0.2.0"
-dependencies = [
- "alexandria-util",
- "linux",
- "win32",
-]
-
-[[package]]
-name = "alexandria-util"
-version = "0.2.0"
-dependencies = [
- "data-format",
-]
-
-[[package]]
-name = "alexandria-window"
-version = "0.2.0"
-dependencies = [
- "alexandria-math",
- "data-format",
- "linux",
  "wayland",
  "win32",
 ]
@@ -116,10 +60,6 @@ dependencies = [
 name = "vulkan"
 version = "0.1.0"
 source = "git+https://github.com/shipsimfan/lib-vulkan#c363f2dc27b2595c36e6353c414d073e05b20de7"
-dependencies = [
- "wayland",
- "win32",
-]
 
 [[package]]
 name = "wayland"
