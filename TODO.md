@@ -1,4 +1,14 @@
 # ToDo
+ 1. Re-add `Uuid` and `MemorySize`
+ 2. Re-add system info
+ 3. Re-add git utils
+ 4. Add platform agnostic `SharedObject`
+ 5. Re-add graphics info
+ 6. Add event system
+ 7. Re-add windowing
+ 8. Re-add device graphics items
+
+# After re-organization
  1. Implement renderer wrappers up to clearing the screen
    1. `ImageView`
    2. `CommandPool`

@@ -26,7 +26,9 @@
 mod context;
 mod error;
 
+pub mod gpu;
 pub mod math;
+pub mod window;
 
 pub use context::*;
 pub use error::*;

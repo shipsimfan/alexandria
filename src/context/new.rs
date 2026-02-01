@@ -1,9 +1,11 @@
-use crate::{AlexandriaContext, Error, Result, context::ALEXANDRIA_CONTEXT_ACTIVE};
-use std::marker::PhantomData;
+use crate::{
+    AlexandriaContext, Error, Result, context::ALEXANDRIA_CONTEXT_ACTIVE, gpu::GpuSubsystem,
+    window::WindowSubsystem,
+};
 
 impl AlexandriaContext {
     /// Create a new [`AlexandriaContext`]
-    pub(in crate::context) fn new() -> Result<AlexandriaContext> {
+    pub(in crate::context) fn new(mut gpu: bool, window: bool) -> Result<AlexandriaContext> {
         ALEXANDRIA_CONTEXT_ACTIVE.with_borrow_mut(|context_active| {
             if *context_active {
                 return Err(Error::new(
@@ -15,6 +17,22 @@ impl AlexandriaContext {
             Ok(())
         })?;
 
-        Ok(AlexandriaContext { _priv: PhantomData })
+        // Normalize creation flags
+        gpu |= window;
+
+        // Create subsystems
+        let gpu = if gpu {
+            Some(GpuSubsystem::new()?)
+        } else {
+            None
+        };
+
+        let window = if window {
+            Some(WindowSubsystem::new()?)
+        } else {
+            None
+        };
+
+        Ok(AlexandriaContext { gpu, window })
     }
 }

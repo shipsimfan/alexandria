@@ -1,10 +1,12 @@
-use std::marker::PhantomData;
-
 mod create;
 mod new;
+mod set;
 
 /// A builder for an [`AlexandriaContext`](crate::AlexandriaContext)
 pub struct AlexandriaContextBuilder {
-    /// A value to prevent this from being made externally
-    _priv: PhantomData<()>,
+    /// Should the GPU subsystem be initialized?
+    gpu: bool,
+
+    /// Should the window subsystem be initialized? This implies `gpu` too
+    window: bool,
 }

@@ -1,6 +1,9 @@
 /// Prints out information about the graphics hardware on the system
 fn main() {
-    let context = alexandria::AlexandriaContext::builder().create().unwrap();
+    let context = alexandria::AlexandriaContext::builder()
+        .gpu()
+        .create()
+        .unwrap();
 
     // TODO: List graphics instance extensions
 

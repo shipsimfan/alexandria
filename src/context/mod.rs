@@ -1,16 +1,21 @@
-use std::{cell::RefCell, marker::PhantomData};
+use crate::{gpu::GpuSubsystem, window::WindowSubsystem};
+use std::cell::RefCell;
 
 mod builder;
 
 mod drop;
+mod get;
 mod new;
 
 pub use builder::AlexandriaContextBuilder;
 
 /// The main entry point for interacting with Alexandria
 pub struct AlexandriaContext {
-    /// A value to prevent this from being made externally
-    _priv: PhantomData<()>,
+    /// The subsystem for interacting and controling GPUs
+    gpu: Option<GpuSubsystem>,
+
+    /// The system for interacting with platform windowing systems
+    window: Option<WindowSubsystem>,
 }
 
 thread_local! {
