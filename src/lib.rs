@@ -23,4 +23,8 @@
 #![feature(associated_type_defaults)]
 #![feature(formatting_options)]
 
+mod error;
+
 pub mod math;
+
+pub use error::*;
