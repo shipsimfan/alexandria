@@ -1,6 +1,6 @@
-use crate::UUID;
+use crate::Uuid;
 
-impl std::fmt::Display for UUID {
+impl std::fmt::Display for Uuid {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         const DASHES: &[usize] = &[4, 6, 8, 10];
 

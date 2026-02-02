@@ -1,6 +1,6 @@
-use crate::UUID;
+use crate::Uuid;
 
-impl UUID {
+impl Uuid {
     /// Get the bytes of this [`UUID`]
     pub const fn as_bytes(&self) -> &[u8; 16] {
         &self.bytes

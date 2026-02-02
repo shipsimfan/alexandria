@@ -1,4 +1,4 @@
-use crate::UUID;
+use crate::Uuid;
 use std::str::FromStr;
 
 /// An invalid UUID was parsed
@@ -26,7 +26,7 @@ const fn to_ascii_hexdigit(b: u8) -> Result<u8, InvalidUUID> {
     }
 }
 
-impl UUID {
+impl Uuid {
     /// Attempt to parse `s` into a [`UUID`]
     pub const fn from_str(s: &str) -> Result<Self, InvalidUUID> {
         // Validate length
@@ -61,11 +61,11 @@ impl UUID {
             bi += 1;
         }
 
-        Ok(UUID::from_flat(bytes))
+        Ok(Uuid::from_flat(bytes))
     }
 }
 
-impl const FromStr for UUID {
+impl const FromStr for Uuid {
     type Err = InvalidUUID;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
