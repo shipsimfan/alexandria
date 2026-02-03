@@ -10,6 +10,7 @@ publish = false
 
 [features]
 data-format = ["dep:data-format"]
+git = []
 
 [dependencies]
 data-format = { git = "https://github.com/shipsimfan/lib-data-format", optional = true }
@@ -22,3 +23,8 @@ win32.git = "https://github.com/shipsimfan/lib-win32"
 [target.'cfg(target_os = "linux")'.dependencies]
 linux.git = "https://github.com/shipsimfan/lib-linux"
 wayland.git = "https://github.com/shipsimfan/lib-wayland"
+
+
+[[example]]
+name = "git-info"
+required-features = ["git"]

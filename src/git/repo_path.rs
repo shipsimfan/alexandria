@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 
 /// Get the path to the root of the git repo
-pub(crate) fn git_repo_path() -> Option<PathBuf> {
+pub(in crate::git) fn git_repo_path() -> Option<PathBuf> {
     let base_path = Path::new(".git");
     if !base_path.exists() {
         return None;

@@ -1,4 +1,4 @@
-use crate::git_repo_path;
+use crate::git::git_repo_path;
 
 /// Gets the current branch of the current working directory, if there is one
 pub fn current_branch() -> Option<String> {

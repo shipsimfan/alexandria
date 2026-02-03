@@ -32,6 +32,9 @@ pub mod math;
 pub mod system;
 pub mod window;
 
+#[cfg(feature = "git")]
+pub mod git;
+
 pub use context::*;
 pub use error::*;
 pub use misc::*;
