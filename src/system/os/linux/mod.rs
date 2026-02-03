@@ -10,6 +10,5 @@ mod os_version;
 pub use cpu_cores::cpu_cores;
 pub use hostname::hostname;
 pub use installed_memory::installed_memory;
-pub use os_family::OS_FAMILY;
 pub use os_name::os_name;
 pub use os_version::os_version;

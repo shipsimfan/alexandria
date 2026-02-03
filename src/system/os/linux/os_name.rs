@@ -1,4 +1,4 @@
-use crate::OS_FAMILY;
+use crate::system::OsFamily;
 use std::borrow::Cow;
 
 /// Keys containing potential names, ordered from better to worse
@@ -18,7 +18,7 @@ enum OsVersionKey {
 pub fn os_name() -> String {
     let os_version = match read_os_version() {
         Some(os_version) => os_version,
-        None => return OS_FAMILY.to_owned(),
+        None => return OsFamily::CURRENT.to_string(),
     };
 
     // Parse it for a valid key
@@ -46,7 +46,7 @@ pub fn os_name() -> String {
             Cow::Owned(owned) => owned,
             Cow::Borrowed(borrowed) => borrowed.to_owned(),
         },
-        None => OS_FAMILY.to_owned(),
+        None => OsFamily::CURRENT.to_string(),
     }
 }
 

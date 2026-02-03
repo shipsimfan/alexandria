@@ -1,11 +1,10 @@
 # ToDo
- 1. Re-add system info
- 2. Re-add git utils
- 3. Add platform agnostic `SharedObject`
- 4. Re-add graphics info
- 5. Add event system
- 6. Re-add windowing
- 7. Re-add device graphics items
+ 1. Re-add git utils
+ 2. Add platform agnostic `SharedObject`
+ 3. Re-add graphics info
+ 4. Add event system
+ 5. Re-add windowing
+ 6. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen
