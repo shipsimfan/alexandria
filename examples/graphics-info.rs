@@ -5,6 +5,11 @@ fn main() {
         .create()
         .unwrap();
 
+    println!("     --- Graphics Information ---");
+
+    // Get Vulkan version
+    println!("Vulkan Version: {}", context.gpu().version().unwrap());
+
     // TODO: List graphics instance extensions
 
     // TODO: List graphics instance layers

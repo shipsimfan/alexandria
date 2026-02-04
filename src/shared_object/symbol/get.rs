@@ -1,0 +1,8 @@
+use crate::{SharedObject, Symbol};
+
+impl<T> Symbol<T> {
+    /// Get a reference to the shared object that this symbol came from
+    pub const fn shared_object(&self) -> &SharedObject {
+        &self.shared_object
+    }
+}

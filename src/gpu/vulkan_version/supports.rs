@@ -1,8 +1,8 @@
-use crate::GraphicsVersion;
+use crate::gpu::VulkanVersion;
 
-impl GraphicsVersion {
+impl VulkanVersion {
     /// Does this version support `version`
-    pub const fn supports(&self, version: &GraphicsVersion) -> bool {
+    pub const fn supports(&self, version: &VulkanVersion) -> bool {
         let self_variant = self.variant();
         let self_major = self.major();
         if self_variant != version.variant() || self_major != version.major() {

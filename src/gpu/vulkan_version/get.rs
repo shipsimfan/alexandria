@@ -1,9 +1,9 @@
-use crate::GraphicsVersion;
+use crate::gpu::VulkanVersion;
 use vulkan::{
     vk_api_version_major, vk_api_version_minor, vk_api_version_patch, vk_api_version_variant,
 };
 
-impl GraphicsVersion {
+impl VulkanVersion {
     /// Get the variant of Vulkan being used
     pub const fn variant(&self) -> u8 {
         vk_api_version_variant!(self.version) as u8

@@ -1,3 +1,4 @@
+mod define_handle;
 mod memory_size;
 mod uuid;
 

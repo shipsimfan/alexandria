@@ -59,7 +59,6 @@ dependencies = [
 [[package]]
 name = "vulkan"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-vulkan#c363f2dc27b2595c36e6353c414d073e05b20de7"
 
 [[package]]
 name = "wayland"

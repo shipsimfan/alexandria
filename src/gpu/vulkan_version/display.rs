@@ -1,6 +1,6 @@
-use crate::GraphicsVersion;
+use crate::gpu::VulkanVersion;
 
-impl std::fmt::Display for GraphicsVersion {
+impl std::fmt::Display for VulkanVersion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let variant = self.variant();
         if variant != 0 {

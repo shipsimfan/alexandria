@@ -26,6 +26,7 @@
 mod context;
 mod error;
 mod misc;
+mod shared_object;
 
 pub mod gpu;
 pub mod math;
@@ -38,3 +39,4 @@ pub mod git;
 pub use context::*;
 pub use error::*;
 pub use misc::*;
+pub use shared_object::*;
