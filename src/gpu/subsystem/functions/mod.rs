@@ -7,7 +7,7 @@ use vulkan::{
 mod load;
 
 /// The Vulkan functions not tied to a specific instance
-pub(in crate::gpu::subsystem) struct GlobalVulkanFunctions {
+pub(in crate::gpu) struct GlobalVulkanFunctions {
     /// The function used to get other functions
     pub get_instance_proc_addr: FunctionSymbol<VkGetInstanceProcAddr>,
 

@@ -16,6 +16,7 @@ macro_rules! define_handle {
 
         impl $outer {
             #[doc = std::concat!("Create a new [`", std::stringify!($outer), "`] from an [`", std::stringify!($inner), "`]")]
+            #[allow(unused)]
             pub(crate) fn from_inner(inner: $inner) -> $outer {
                 $outer {
                     inner: std::sync::Arc::new(inner),

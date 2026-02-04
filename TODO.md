@@ -1,8 +1,9 @@
 # ToDo
- 1. Re-add graphics info
+ 1. Re-add Vulkan debug messenger
  2. Add event system
  3. Re-add windowing
- 4. Re-add device graphics items
+ 4. Re-add surface creation
+ 5. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen

@@ -1,24 +1,16 @@
-use crate::{gpu::GpuSubsystem, window::WindowSubsystem};
-use std::cell::RefCell;
+use crate::define_handle;
 
 mod builder;
+mod inner;
 
-mod drop;
-mod get;
+mod from_weak;
 mod new;
 
 pub use builder::AlexandriaContextBuilder;
 
-/// The main entry point for interacting with Alexandria
-pub struct AlexandriaContext {
-    /// The subsystem for interacting and controling GPUs
-    gpu: Option<GpuSubsystem>,
+pub(crate) use inner::AlexandriaContextInner;
 
-    /// The system for interacting with platform windowing systems
-    window: Option<WindowSubsystem>,
-}
-
-thread_local! {
-    /// A boolean to make sure only a single [`AlexandriaContext`] exists on a given thread
-    static ALEXANDRIA_CONTEXT_ACTIVE: RefCell<bool> = RefCell::new(false);
-}
+define_handle!(
+    /// The main entry point for interacting with Alexandria
+    pub AlexandriaContext -> AlexandriaContextInner
+);

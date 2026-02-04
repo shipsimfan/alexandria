@@ -1,7 +1,14 @@
 //! Subsystem for interacting with and controlling GPUs
 
-mod subsystem;
-mod vulkan_version;
+use util::*;
 
+mod device;
+mod instance;
+mod misc;
+mod subsystem;
+mod util;
+
+pub use device::*;
+pub use instance::*;
+pub use misc::*;
 pub use subsystem::GpuSubsystem;
-pub use vulkan_version::VulkanVersion;
