@@ -10,6 +10,10 @@ pub enum ErrorInner {
     /// An error from Vulkan
     Vulkan(vulkan::VkResult),
 
+    /// An error from Linux
+    #[cfg(target_os = "linux")]
+    Linux(linux::Error),
+
     /// An error from Windows
     #[cfg(target_os = "windows")]
     Win32(win32::Error),

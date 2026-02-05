@@ -7,6 +7,13 @@ impl From<vulkan::VkResult> for ErrorInner {
     }
 }
 
+#[cfg(target_os = "linux")]
+impl From<linux::Error> for ErrorInner {
+    fn from(error: linux::Error) -> Self {
+        ErrorInner::Linux(error)
+    }
+}
+
 #[cfg(target_os = "windows")]
 impl From<win32::Error> for ErrorInner {
     fn from(error: win32::Error) -> Self {

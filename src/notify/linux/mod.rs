@@ -1,0 +1,16 @@
+use std::ffi::c_int;
+
+mod drop;
+mod new;
+mod notify;
+mod reset;
+mod wait;
+
+/// The implementation of a [`Notify`](crate::Notify) on Linux
+pub(in crate::notify) struct NotifyInner {
+    /// The handle to the eventfd
+    handle: c_int,
+
+    /// Should the notify be reset after waiting?
+    auto_reset: bool,
+}
