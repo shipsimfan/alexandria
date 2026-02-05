@@ -1,21 +1,14 @@
-use crate::AlexandriaContextInner;
+use crate::define_handle;
 use functions::GlobalVulkanFunctions;
-use std::{mem::MaybeUninit, sync::Weak};
+use inner::GpuSubsystemInner;
 
 mod functions;
+mod inner;
 
-mod all_extensions;
-mod extensions;
 mod instance_builder;
-mod layers;
 mod new;
-mod version;
 
-/// Allows interaction and control over GPUs
-pub struct GpuSubsystem {
-    /// The context this subsystem is a part of
-    context: Weak<MaybeUninit<AlexandriaContextInner>>,
-
-    /// The Vulkan functions not specific to any Vulkan instance
-    pub(in crate::gpu) functions: GlobalVulkanFunctions,
-}
+define_handle!(
+    /// Allows interaction and control over GPUs
+    pub GpuSubsystem -> GpuSubsystemInner
+);

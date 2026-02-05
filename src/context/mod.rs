@@ -1,16 +1,15 @@
-use crate::define_handle;
+use crate::define_local_handle;
 
 mod builder;
 mod inner;
 
-mod from_weak;
 mod new;
 
 pub use builder::AlexandriaContextBuilder;
 
 pub(crate) use inner::AlexandriaContextInner;
 
-define_handle!(
+define_local_handle!(
     /// The main entry point for interacting with Alexandria
     pub AlexandriaContext -> AlexandriaContextInner
 );

@@ -1,7 +1,4 @@
-use crate::{
-    AlexandriaContext,
-    gpu::{VulkanInstanceExtension, VulkanVersion},
-};
+use crate::gpu::{GpuSubsystem, VulkanInstanceExtension, VulkanVersion};
 use std::borrow::Cow;
 
 mod create;
@@ -12,7 +9,7 @@ mod set;
 /// A builder for [`VulkanInstance`](crate::VulkanInstance)s
 pub struct VulkanInstanceBuilder<'a> {
     /// The context to use to build the instance
-    context: AlexandriaContext,
+    context: GpuSubsystem,
 
     /// The requested version of Vulkan to use
     api_version: VulkanVersion,

@@ -2,15 +2,10 @@ use crate::{
     AlexandriaContextInner, Error, Result, context::inner::ALEXANDRIA_CONTEXT_ACTIVE,
     gpu::GpuSubsystem, window::WindowSubsystem,
 };
-use std::{mem::MaybeUninit, sync::Weak};
 
 impl AlexandriaContextInner {
     /// Create a new [`AlexandriaContextInner`]
-    pub(in crate::context) fn new(
-        context: &Weak<MaybeUninit<AlexandriaContextInner>>,
-        mut gpu: bool,
-        window: bool,
-    ) -> Result<AlexandriaContextInner> {
+    pub(in crate::context) fn new(mut gpu: bool, window: bool) -> Result<AlexandriaContextInner> {
         ALEXANDRIA_CONTEXT_ACTIVE.with_borrow_mut(|context_active| {
             if *context_active {
                 return Err(Error::new(
@@ -27,7 +22,7 @@ impl AlexandriaContextInner {
 
         // Create subsystems
         let gpu = if gpu {
-            Some(GpuSubsystem::new(context.clone())?)
+            Some(GpuSubsystem::new()?)
         } else {
             None
         };

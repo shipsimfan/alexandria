@@ -1,4 +1,4 @@
-use crate::{AlexandriaContext, gpu::VulkanInstanceFunctions};
+use crate::gpu::{GpuSubsystem, VulkanInstanceFunctions};
 use vulkan::VkInstance;
 
 mod drop;
@@ -15,5 +15,5 @@ pub struct VulkanInstanceInner {
     pub(in crate::gpu) functions: VulkanInstanceFunctions,
 
     /// The context this instance came from
-    _context: AlexandriaContext,
+    _context: GpuSubsystem,
 }

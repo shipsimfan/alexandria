@@ -1,4 +1,5 @@
 mod define_handle;
+mod define_local_handle;
 mod memory_size;
 mod uuid;
 

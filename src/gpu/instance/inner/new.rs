@@ -1,7 +1,7 @@
 use crate::{
-    AlexandriaContext, Error, Result,
+    Error, Result,
     gpu::{
-        VulkanInstanceExtension, VulkanInstanceFunctions, VulkanVersion,
+        GpuSubsystem, VulkanInstanceExtension, VulkanInstanceFunctions, VulkanVersion,
         instance::VulkanInstanceInner,
     },
 };
@@ -11,7 +11,7 @@ use vulkan::{VkApplicationInfo, VkInstance, VkInstanceCreateInfo, try_vulkan};
 impl VulkanInstanceInner {
     /// Create a new [`VulkanInstanceInner`]
     pub(in crate::gpu::instance) fn new(
-        context: AlexandriaContext,
+        context: &GpuSubsystem,
         api_version: VulkanVersion,
         application: Option<(&str, VulkanVersion)>,
         engine: Option<(&str, VulkanVersion)>,
@@ -63,19 +63,19 @@ impl VulkanInstanceInner {
 
         // Create the instance
         let mut handle = VkInstance::null();
-        try_vulkan!((context.gpu().functions.create_instance)(
+        try_vulkan!((context.functions.create_instance)(
             &create_info,
             null(),
             &mut handle
         ))
         .map_err(|vk| Error::new_with("unable to create graphics instance", vk))?;
 
-        let functions = VulkanInstanceFunctions::load(context.gpu(), handle, extensions)?;
+        let functions = VulkanInstanceFunctions::load(context, handle, extensions)?;
 
         Ok(VulkanInstanceInner {
             handle,
             functions,
-            _context: context,
+            _context: context.clone(),
         })
     }
 }

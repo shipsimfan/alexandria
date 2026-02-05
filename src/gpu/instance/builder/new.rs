@@ -1,12 +1,9 @@
-use crate::{
-    AlexandriaContext,
-    gpu::{VulkanInstanceBuilder, VulkanVersion},
-};
+use crate::gpu::{GpuSubsystem, VulkanInstanceBuilder, VulkanVersion};
 
 impl<'a> VulkanInstanceBuilder<'a> {
     /// Create a new [`VulkanInstanceBuilder`]
     pub(in crate::gpu) fn new(
-        context: AlexandriaContext,
+        context: GpuSubsystem,
         api_version: VulkanVersion,
     ) -> VulkanInstanceBuilder<'a> {
         VulkanInstanceBuilder {

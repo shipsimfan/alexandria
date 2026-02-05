@@ -1,11 +1,11 @@
 use crate::{
     Error, Result,
-    gpu::{GpuSubsystem, VulkanExtension, VulkanLayer},
+    gpu::{VulkanExtension, VulkanLayer, subsystem::GpuSubsystemInner},
 };
 use std::{ffi::CString, ptr::null_mut};
 use vulkan::try_vulkan;
 
-impl GpuSubsystem {
+impl GpuSubsystemInner {
     /// Enumerate all Vulkan extensions supported on this system, even if Alexandria doesn't
     /// support them
     pub fn all_extensions(&self, layer: Option<&VulkanLayer>) -> Result<Vec<VulkanExtension>> {

@@ -9,7 +9,7 @@ impl<'a> VulkanInstanceBuilder<'a> {
     pub fn create(&self) -> Result<VulkanInstance> {
         Ok(VulkanInstance {
             inner: Arc::new(VulkanInstanceInner::new(
-                self.context.clone(),
+                &self.context,
                 self.api_version,
                 self.application.as_ref().map(|(s, v)| (s.as_ref(), *v)),
                 self.engine.as_ref().map(|(s, v)| (s.as_ref(), *v)),

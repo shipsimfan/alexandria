@@ -1,10 +1,10 @@
 use crate::{
     Error, Result,
-    gpu::{GpuSubsystem, VulkanVersion},
+    gpu::{VulkanVersion, subsystem::GpuSubsystemInner},
 };
 use vulkan::try_vulkan;
 
-impl GpuSubsystem {
+impl GpuSubsystemInner {
     /// Get the maximum supported Vulkan version of the current system
     pub fn version(&self) -> Result<VulkanVersion> {
         // Get the version

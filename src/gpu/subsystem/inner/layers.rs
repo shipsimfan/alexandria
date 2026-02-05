@@ -1,11 +1,11 @@
 use crate::{
     Error, Result,
-    gpu::{GpuSubsystem, VulkanLayer},
+    gpu::{VulkanLayer, subsystem::GpuSubsystemInner},
 };
 use std::ptr::null_mut;
 use vulkan::try_vulkan;
 
-impl GpuSubsystem {
+impl GpuSubsystemInner {
     /// Enumerate all Vulkan layers supported on this system
     pub fn layers(&self) -> Result<Vec<VulkanLayer>> {
         // Get the number of layers supported
