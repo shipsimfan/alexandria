@@ -2,7 +2,8 @@ use crate::{
     Result,
     gpu::{
         GpuSubsystem, VulkanInstanceExtension, VulkanInstanceFunctions,
-        instance::VulkanAdapterFunctions, load_instance_function,
+        instance::{VulkanAdapterFunctions, VulkanDebugMessengerFunctions},
+        load_instance_function,
     },
 };
 use vulkan::{
@@ -17,36 +18,37 @@ impl VulkanInstanceFunctions {
         instance: VkInstance,
         extensions: &[VulkanInstanceExtension],
     ) -> Result<VulkanInstanceFunctions> {
-        /*
         let mut debug_messenger = None;
+        /*
         let mut surface = None;
         #[cfg(target_os = "windows")]
         let mut win32_surface = None;
         #[cfg(target_os = "linux")]
         let mut wayland_surface = None;
+        */
 
         for extension in extensions {
             match *extension {
                 VulkanInstanceExtension::DebugUtils => {
-                    //debug_messenger = Some(GraphicsDebugMessengerFunctions::load(instance)?)
+                    debug_messenger = Some(VulkanDebugMessengerFunctions::load(context, instance)?)
                 }
                 VulkanInstanceExtension::Surface => {
-                    //surface = Some(WindowSurfaceFunctions::load(instance)?)
+                    //surface = Some(WindowSurfaceFunctions::load(context, instance)?)
                 }
                 #[cfg(target_os = "windows")]
                 VulkanInstanceExtension::Win32Surface => {
-                    //win32_surface = Some(Win32WindowSurfaceFunctions::load(instance)?)
+                    //win32_surface = Some(Win32WindowSurfaceFunctions::load(context, instance)?)
                 }
                 #[cfg(target_os = "linux")]
                 VulkanInstanceExtension::WaylandSurface => {
-                    //wayland_surface = Some(WaylandWindowSurfaceFunctions::load(instance)?)
+                    //wayland_surface = Some(WaylandWindowSurfaceFunctions::load(context, instance)?)
                 }
             }
         }
-        */
 
         Ok(VulkanInstanceFunctions {
             adapter: VulkanAdapterFunctions::load(context, instance)?,
+            debug_messenger,
 
             enumerate_physical_devices: load_instance_function!(
                 context,

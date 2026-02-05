@@ -1,4 +1,4 @@
-use crate::instance::GraphicsInstanceInner;
+use crate::gpu::instance::VulkanInstanceInner;
 use callback::debug_message_trampoline;
 use std::sync::Arc;
 use vulkan::ext_debug_utils::VkDebugUtilsMessengerExt;
@@ -10,13 +10,13 @@ mod message_severity;
 mod drop;
 mod new;
 
-pub use callback::GraphicsDebugMessengerCallback;
-pub use message_severity::GraphicsDebugMessageSeverity;
+pub use callback::VulkanDebugMessengerCallback;
+pub use message_severity::VulkanDebugMessageSeverity;
 
-pub(in crate::instance) use functions::GraphicsDebugMessengerFunctions;
+pub(in crate::gpu::instance) use functions::VulkanDebugMessengerFunctions;
 
 /// An object which calls a callback when a debug message is emitted from Vulkan
-pub struct GraphicsDebugMessenger<C: GraphicsDebugMessengerCallback> {
+pub struct VulkanDebugMessenger<C: VulkanDebugMessengerCallback> {
     /// The callback for Vulkan debug messages
     #[allow(unused)]
     callback: Box<C>,
@@ -25,5 +25,5 @@ pub struct GraphicsDebugMessenger<C: GraphicsDebugMessengerCallback> {
     handle: VkDebugUtilsMessengerExt,
 
     /// The instance this debug messenger was created for
-    instance: Arc<GraphicsInstanceInner>,
+    instance: Arc<VulkanInstanceInner>,
 }

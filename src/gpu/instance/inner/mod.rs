@@ -1,6 +1,7 @@
 use crate::gpu::{GpuSubsystem, VulkanInstanceFunctions};
 use vulkan::VkInstance;
 
+mod create_debug_messenger;
 mod drop;
 mod enumerate_adapters;
 mod get;

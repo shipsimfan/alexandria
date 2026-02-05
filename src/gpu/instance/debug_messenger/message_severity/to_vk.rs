@@ -1,27 +1,27 @@
-use crate::GraphicsDebugMessageSeverity;
+use crate::gpu::VulkanDebugMessageSeverity;
 use vulkan::ext_debug_utils::{
     VkDebugUtilsMessageSeverityFlagExt, VkDebugUtilsMessageSeverityFlagsExt,
 };
 
-impl GraphicsDebugMessageSeverity {
-    /// Convert a [`GraphicsDebugMessageSeverity`] into a Vulkan severity set
-    pub(in crate::instance::debug_messenger) fn to_vk(
+impl VulkanDebugMessageSeverity {
+    /// Convert a [`VulkanDebugMessageSeverity`] into a Vulkan severity set
+    pub(in crate::gpu::instance::debug_messenger) fn to_vk(
         &self,
     ) -> VkDebugUtilsMessageSeverityFlagsExt {
         match self {
-            GraphicsDebugMessageSeverity::Error => {
+            VulkanDebugMessageSeverity::Error => {
                 VkDebugUtilsMessageSeverityFlagExt::ErrorBitExt.into()
             }
-            GraphicsDebugMessageSeverity::Warning => {
+            VulkanDebugMessageSeverity::Warning => {
                 VkDebugUtilsMessageSeverityFlagExt::ErrorBitExt
                     | VkDebugUtilsMessageSeverityFlagExt::WarningBitExt
             }
-            GraphicsDebugMessageSeverity::Info => {
+            VulkanDebugMessageSeverity::Info => {
                 VkDebugUtilsMessageSeverityFlagExt::ErrorBitExt
                     | VkDebugUtilsMessageSeverityFlagExt::WarningBitExt
                     | VkDebugUtilsMessageSeverityFlagExt::InfoBitExt
             }
-            GraphicsDebugMessageSeverity::Verbose => {
+            VulkanDebugMessageSeverity::Verbose => {
                 VkDebugUtilsMessageSeverityFlagExt::ErrorBitExt
                     | VkDebugUtilsMessageSeverityFlagExt::WarningBitExt
                     | VkDebugUtilsMessageSeverityFlagExt::InfoBitExt

@@ -1,6 +1,5 @@
+use crate::gpu::VulkanDebugMessageSeverity;
 use std::ffi::{CStr, c_void};
-
-use crate::GraphicsDebugMessageSeverity;
 use vulkan::{
     VK_FALSE, VkBool32,
     ext_debug_utils::{
@@ -10,14 +9,14 @@ use vulkan::{
 };
 
 /// An object which can be used as a callback for Vulkan debug messages
-pub trait GraphicsDebugMessengerCallback {
+pub trait VulkanDebugMessengerCallback {
     /// Called when a debug message is emitted from Vulkan
-    fn message(&self, message: &str, severity: GraphicsDebugMessageSeverity);
+    fn message(&self, message: &str, severity: VulkanDebugMessageSeverity);
 }
 
 /// The function to pass to the raw debug message callback
-pub(in crate::instance::debug_messenger) extern "system" fn debug_message_trampoline<
-    C: GraphicsDebugMessengerCallback,
+pub(in crate::gpu::instance::debug_messenger) extern "system" fn debug_message_trampoline<
+    C: VulkanDebugMessengerCallback,
 >(
     message_severity: VkDebugUtilsMessageSeverityFlagExt,
     _: VkDebugUtilsMessageTypeFlagsExt,
@@ -28,7 +27,7 @@ pub(in crate::instance::debug_messenger) extern "system" fn debug_message_trampo
     let callback_data = unsafe { &*callback_data };
 
     let message = unsafe { CStr::from_ptr(callback_data.message) }.to_string_lossy();
-    let severity = GraphicsDebugMessageSeverity::from_vk(message_severity);
+    let severity = VulkanDebugMessageSeverity::from_vk(message_severity);
 
     data.message(&message, severity);
 

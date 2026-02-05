@@ -1,7 +1,9 @@
 use crate::{
-    GraphicsDebugMessageSeverity, GraphicsDebugMessenger, GraphicsDebugMessengerCallback,
-    GraphicsError, Result,
-    instance::{debug_messenger::debug_message_trampoline, inner::GraphicsInstanceInner},
+    Error, Result,
+    gpu::{
+        VulkanDebugMessageSeverity, VulkanDebugMessenger, VulkanDebugMessengerCallback,
+        instance::{debug_messenger::debug_message_trampoline, inner::VulkanInstanceInner},
+    },
 };
 use std::{ptr::null, sync::Arc};
 use vulkan::{
@@ -12,13 +14,13 @@ use vulkan::{
     try_vulkan,
 };
 
-impl<C: GraphicsDebugMessengerCallback> GraphicsDebugMessenger<C> {
-    /// Create a new [`GraphicsDebugMessenger`]
-    pub(in crate::instance) fn new(
-        instance: Arc<GraphicsInstanceInner>,
-        min_severity: GraphicsDebugMessageSeverity,
+impl<C: VulkanDebugMessengerCallback> VulkanDebugMessenger<C> {
+    /// Create a new [`VulkanDebugMessenger`]
+    pub(in crate::gpu::instance) fn new(
+        instance: Arc<VulkanInstanceInner>,
+        min_severity: VulkanDebugMessageSeverity,
         callback: C,
-    ) -> Result<GraphicsDebugMessenger<C>> {
+    ) -> Result<VulkanDebugMessenger<C>> {
         let callback = Box::new(callback);
 
         let mut create_info = VkDebugUtilsMessengerCreateInfoExt {
@@ -42,9 +44,9 @@ impl<C: GraphicsDebugMessengerCallback> GraphicsDebugMessenger<C> {
             null(),
             &mut handle,
         ))
-        .map_err(|error| GraphicsError::new_vk("unable to create debug messenger", error))?;
+        .map_err(|error| Error::new_with("unable to create debug messenger", error))?;
 
-        Ok(GraphicsDebugMessenger {
+        Ok(VulkanDebugMessenger {
             callback,
             handle,
             instance,

@@ -5,7 +5,7 @@ mod to_vk;
 
 /// A severity that a Vulkan debug message can be
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum GraphicsDebugMessageSeverity {
+pub enum VulkanDebugMessageSeverity {
     /// Most verbose output
     Verbose,
 
