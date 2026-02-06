@@ -1,8 +1,9 @@
 # ToDo
- 1. Add event system
- 2. Re-add windowing
- 3. Re-add surface creation
- 4. Re-add device graphics items
+ 1. Add `Rect`
+ 2. Add event system
+ 3. Re-add windowing
+ 4. Re-add surface creation
+ 5. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen
