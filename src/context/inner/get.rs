@@ -1,6 +1,12 @@
 use crate::{AlexandriaContextInner, EventQueue, gpu::GpuSubsystem, window::WindowSubsystem};
+use std::time::Instant;
 
 impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
+    /// Get the time the context was created at
+    pub fn start_time(&self) -> Instant {
+        self.start_time
+    }
+
     /// Get a reference to the event queue
     pub fn event_queue(&self) -> &EventQueue<UserEvent> {
         &self.event_queue

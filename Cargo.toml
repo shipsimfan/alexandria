@@ -14,6 +14,7 @@ git = []
 
 [dependencies]
 data-format = { git = "https://github.com/shipsimfan/lib-data-format", optional = true }
+time.git = "https://github.com/shipsimfan/lib-time"
 
 vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
 

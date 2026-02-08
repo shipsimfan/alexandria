@@ -1,10 +1,8 @@
 # ToDo
  1. Add `Rect`
- 2. Add time subsystem
- 3. Add timesteps to events
- 4. Re-add windowing
- 5. Re-add surface creation
- 6. Re-add device graphics items
+ 2. Re-add windowing
+ 3. Re-add surface creation
+ 4. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen

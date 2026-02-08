@@ -2,6 +2,7 @@ use crate::{
     AlexandriaContextInner, Error, EventQueue, Result, context::inner::ALEXANDRIA_CONTEXT_ACTIVE,
     gpu::GpuSubsystem, window::WindowSubsystem,
 };
+use std::time::Instant;
 
 impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
     /// Create a new [`AlexandriaContextInner`]
@@ -39,6 +40,7 @@ impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
         };
 
         Ok(AlexandriaContextInner {
+            start_time: Instant::now(),
             event_queue,
             gpu,
             window,

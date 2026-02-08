@@ -39,6 +39,8 @@ pub mod window;
 #[cfg(feature = "git")]
 pub mod git;
 
+pub use time;
+
 pub use context::*;
 pub use error::*;
 pub use events::*;
