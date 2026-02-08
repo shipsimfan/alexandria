@@ -6,6 +6,7 @@ impl<T> SlotMap<T> {
         self.slots[id.index()]
             .free(id, self.first_free)
             .map(|value| {
+                self.len -= 1;
                 self.first_free = Some(id.index());
                 value
             })

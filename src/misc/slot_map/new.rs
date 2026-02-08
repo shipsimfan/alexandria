@@ -5,6 +5,7 @@ impl<T> SlotMap<T> {
     pub const fn new() -> SlotMap<T> {
         SlotMap {
             slots: Vec::new(),
+            len: 0,
             first_free: None,
         }
     }
@@ -13,6 +14,7 @@ impl<T> SlotMap<T> {
     pub fn with_capacity(capacity: usize) -> SlotMap<T> {
         SlotMap {
             slots: Vec::with_capacity(capacity),
+            len: 0,
             first_free: None,
         }
     }

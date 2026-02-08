@@ -5,5 +5,5 @@ mod slot_map;
 mod uuid;
 
 pub use memory_size::MemorySize;
-pub use slot_map::{Id, SlotMap};
+pub use slot_map::*;
 pub use uuid::Uuid;
