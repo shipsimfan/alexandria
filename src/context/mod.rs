@@ -11,5 +11,5 @@ pub(crate) use inner::AlexandriaContextInner;
 
 define_local_handle!(
     /// The main entry point for interacting with Alexandria
-    pub AlexandriaContext -> AlexandriaContextInner
+    pub AlexandriaContext<UserEvent: Send> -> AlexandriaContextInner<UserEvent>
 );

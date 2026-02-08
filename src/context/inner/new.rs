@@ -1,11 +1,14 @@
 use crate::{
-    AlexandriaContextInner, Error, Result, context::inner::ALEXANDRIA_CONTEXT_ACTIVE,
+    AlexandriaContextInner, Error, EventQueue, Result, context::inner::ALEXANDRIA_CONTEXT_ACTIVE,
     gpu::GpuSubsystem, window::WindowSubsystem,
 };
 
-impl AlexandriaContextInner {
+impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
     /// Create a new [`AlexandriaContextInner`]
-    pub(in crate::context) fn new(mut gpu: bool, window: bool) -> Result<AlexandriaContextInner> {
+    pub(in crate::context) fn new(
+        mut gpu: bool,
+        window: bool,
+    ) -> Result<AlexandriaContextInner<UserEvent>> {
         ALEXANDRIA_CONTEXT_ACTIVE.with_borrow_mut(|context_active| {
             if *context_active {
                 return Err(Error::new(
@@ -21,6 +24,8 @@ impl AlexandriaContextInner {
         gpu |= window;
 
         // Create subsystems
+        let event_queue = EventQueue::new()?;
+
         let gpu = if gpu {
             Some(GpuSubsystem::new()?)
         } else {
@@ -33,6 +38,10 @@ impl AlexandriaContextInner {
             None
         };
 
-        Ok(AlexandriaContextInner { gpu, window })
+        Ok(AlexandriaContextInner {
+            event_queue,
+            gpu,
+            window,
+        })
     }
 }

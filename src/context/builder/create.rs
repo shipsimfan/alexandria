@@ -1,8 +1,8 @@
-use crate::{AlexandriaContext, AlexandriaContextBuilder, Result};
+use crate::{AlexandriaContext, AlexandriaContextBuilder, EventPump, Result};
 
-impl AlexandriaContextBuilder {
-    /// Create a new [`AlexandriaContext`] with the provided options
-    pub fn create(self) -> Result<AlexandriaContext> {
+impl<UserEvent: Send> AlexandriaContextBuilder<UserEvent> {
+    /// Create a new [`AlexandriaContext`] and [`EventPump`] with the provided options
+    pub fn create(self) -> Result<(AlexandriaContext<UserEvent>, EventPump<UserEvent>)> {
         AlexandriaContext::new(self.gpu, self.window)
     }
 }

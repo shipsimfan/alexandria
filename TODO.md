@@ -1,9 +1,10 @@
 # ToDo
  1. Add `Rect`
- 2. Add event system
- 3. Re-add windowing
- 4. Re-add surface creation
- 5. Re-add device graphics items
+ 2. Add time subsystem
+ 3. Add timesteps to events
+ 4. Re-add windowing
+ 5. Re-add surface creation
+ 6. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen
@@ -79,3 +80,5 @@
    - Joysticks
    - Steering Wheels, Pedals, Gear Shift
  13. Add 2-d support to `Matrix3x3`
+ 14. Add more external control to event queue
+ 15. Add max capacity to event queue

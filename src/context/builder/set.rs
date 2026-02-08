@@ -1,6 +1,6 @@
 use crate::AlexandriaContextBuilder;
 
-impl AlexandriaContextBuilder {
+impl<UserEvent: Send> AlexandriaContextBuilder<UserEvent> {
     /// Enable the GPU subsystem
     pub fn gpu(mut self) -> Self {
         self.gpu = true;

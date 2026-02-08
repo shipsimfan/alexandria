@@ -1,6 +1,6 @@
 /// Prints out information about the graphics hardware on the system
 fn main() {
-    let context = alexandria::AlexandriaContext::builder()
+    let (context, _) = alexandria::AlexandriaContext::<()>::builder()
         .gpu()
         .create()
         .unwrap();

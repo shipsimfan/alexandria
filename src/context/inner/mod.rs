@@ -1,4 +1,4 @@
-use crate::{gpu::GpuSubsystem, window::WindowSubsystem};
+use crate::{EventQueue, gpu::GpuSubsystem, window::WindowSubsystem};
 use std::cell::RefCell;
 
 mod drop;
@@ -6,7 +6,10 @@ mod get;
 mod new;
 
 /// The main entry point for interacting with Alexandria
-pub struct AlexandriaContextInner {
+pub struct AlexandriaContextInner<UserEvent: Send> {
+    /// The event queue for this context
+    event_queue: EventQueue<UserEvent>,
+
     /// The subsystem for interacting and controling GPUs
     gpu: Option<GpuSubsystem>,
 
