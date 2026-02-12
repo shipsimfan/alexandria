@@ -1,5 +1,6 @@
 use std::marker::PhantomData;
 
+mod bump_generation;
 mod clone;
 mod debug;
 mod display;
@@ -9,7 +10,7 @@ mod hash;
 mod new;
 mod ord;
 
-/// An ID pointing at a stable value in a [`SlotMap`](crate::SlotMap)
+/// An ID pointing at a stable value in a map
 pub struct Id<T> {
     /// The index into the slot map
     index: u32,
