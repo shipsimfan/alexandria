@@ -1,9 +1,14 @@
-use crate::{Result, window::WindowSubsystem};
-use std::marker::PhantomData;
+use crate::{
+    Result,
+    window::{WindowSubsystem, subsystem::WindowSubsystemInner},
+};
+use std::rc::Rc;
 
 impl WindowSubsystem {
     /// Create a new [`WindowSubsystem`]
     pub(crate) fn new() -> Result<WindowSubsystem> {
-        Ok(WindowSubsystem { _priv: PhantomData })
+        WindowSubsystemInner::new().map(|inner| WindowSubsystem {
+            inner: Rc::new(inner),
+        })
     }
 }

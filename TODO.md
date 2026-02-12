@@ -1,8 +1,13 @@
 # ToDo
- 1. Add `Rect`
- 2. Re-add windowing
- 3. Re-add surface creation
- 4. Re-add device graphics items
+ 1. Add `SwapMap`
+ 2. Add `Rect`
+ 3. Add `Display` enumeration
+ 4. Add message only window
+ 5. Implement pump events on Windows
+ 6. Add display related events + handling on Windows
+ 7. Re-add windows on Windows
+ 8. Re-add surface creation on Windows
+ 9. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen
@@ -13,34 +18,57 @@
    5. `Fence`
  2. Add Linux Windowing support
    1. Wayland
-     1. Window creation
-       - Display mode
-     2. Thread-local window state
-       - Focus
-       - Display mode
-     3. Window modification
-       - Title
+     1. Connection
+     2. Display enumeration
+     3. `process_messages` + `wait_for_message` functions
+     4. Window creation
+     5. Thread-local window state
        - Size
-       - Display mode
-       - Request close
-     4. Cursor lock to window
-   2. X11
-     1. Window creation
-     2. `process_messages` + `wait_for_message` functions
-     3. Mutli-threaded user wake (eventfd)
-     4. Thread-local window state
-       - Size
-       - Focus
-       - Display mode
+       - Position
+       - Is focused
        - Close requested
-       - Maximized
-     5. Window modification
+       - Is maximized
+       - Is minimized
+       - Is resizing
+       - Is moving
+       - Display styles (e.g. Is borderless)
+     6. Window modification
        - Title
        - Size
-       - Display mode
+       - Position
        - Request close
-     6. Cursor lock to window
-     7. Surface creation
+       - Maximized
+       - Show
+       - Hide
+       - Display styles (e.g. borderless)
+     7. Cursor lock to window
+     8. Surface creation
+   2. X11
+     1. Connection
+     2. Display enumeration
+     3. `process_messages` + `wait_for_message` functions
+     4. Window creation
+     5. Thread-local window state
+       - Size
+       - Position
+       - Is focused
+       - Close requested
+       - Is maximized
+       - Is minimized
+       - Is resizing
+       - Is moving
+       - Display styles (e.g. Is borderless)
+     6. Window modification
+       - Title
+       - Size
+       - Position
+       - Request close
+       - Maximized
+       - Show
+       - Hide
+       - Display styles (e.g. borderless)
+     7. Cursor lock to window
+     8. Surface creation
  3. Input system
    1. System
    2. Keyboard
