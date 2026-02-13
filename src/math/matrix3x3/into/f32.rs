@@ -1,12 +1,12 @@
-use crate::math::{Matrix3x3, number::FromF32};
+use crate::math::{Matrix3x3, number::IntoF32};
 use std::marker::Destruct;
 
 impl<T> Matrix3x3<T> {
-    /// Create a [`Matrix3x3`] from one made of [`f32`]s
-    pub const fn from_f32(matrix: Matrix3x3<f32>) -> Self
+    /// Convert this matrix's elements into [`f32`]s
+    pub const fn into_f32(self) -> Matrix3x3<f32>
     where
-        T: [const] FromF32 + [const] Destruct,
+        T: [const] IntoF32 + [const] Destruct,
     {
-        matrix.map(FromF32::from_f32)
+        self.map(IntoF32::into_f32)
     }
 }

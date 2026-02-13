@@ -1,12 +1,12 @@
-use crate::math::{Vector3, number::FromF32};
+use crate::math::{Vector3, number::IntoF32};
 use std::marker::Destruct;
 
 impl<T> Vector3<T> {
-    /// Create a [`Vector3`] from one made of [`f32`]s
-    pub const fn from_f32(vector: Vector3<f32>) -> Self
+    /// Convert this vector's elements into [`f32`]s
+    pub const fn into_f32(self) -> Vector3<f32>
     where
-        T: [const] FromF32 + [const] Destruct,
+        T: [const] IntoF32 + [const] Destruct,
     {
-        vector.map(FromF32::from_f32)
+        self.map(IntoF32::into_f32)
     }
 }

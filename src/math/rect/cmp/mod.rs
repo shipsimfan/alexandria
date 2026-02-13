@@ -1,0 +1,9 @@
+mod approx_eq;
+mod contains_point;
+mod contains_rect;
+mod eq;
+mod hash;
+mod intersection;
+mod intersects;
+mod is_valid;
+mod union;

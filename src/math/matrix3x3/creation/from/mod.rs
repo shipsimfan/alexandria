@@ -1,4 +1,5 @@
 mod array;
+mod f32;
 mod flat_array;
 mod flat_slice;
 mod matrix3x3;

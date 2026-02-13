@@ -1,12 +1,11 @@
 # ToDo
- 1. Add `Rect`
- 2. Add `Display` enumeration
- 3. Add message only window
- 4. Implement pump events on Windows
- 5. Add display related events + handling on Windows
- 6. Re-add windows on Windows
- 7. Re-add surface creation on Windows
- 8. Re-add device graphics items
+ 1. Add `Display` enumeration
+ 2. Add message only window
+ 3. Implement pump events on Windows
+ 4. Add display related events + handling on Windows
+ 5. Re-add windows on Windows
+ 6. Re-add surface creation on Windows
+ 7. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen
