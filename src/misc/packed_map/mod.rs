@@ -2,9 +2,15 @@ use crate::Id;
 
 mod convert_index;
 mod get;
+mod index;
 mod insert;
+mod into_iter;
+mod len;
 mod new;
 mod remove;
+
+#[cfg(test)]
+mod tests;
 
 /// A list of elements accessible by stable ID, tailored for iteration
 ///

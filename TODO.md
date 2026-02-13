@@ -1,13 +1,12 @@
 # ToDo
- 1. Add `SwapMap`
- 2. Add `Rect`
- 3. Add `Display` enumeration
- 4. Add message only window
- 5. Implement pump events on Windows
- 6. Add display related events + handling on Windows
- 7. Re-add windows on Windows
- 8. Re-add surface creation on Windows
- 9. Re-add device graphics items
+ 1. Add `Rect`
+ 2. Add `Display` enumeration
+ 3. Add message only window
+ 4. Implement pump events on Windows
+ 5. Add display related events + handling on Windows
+ 6. Re-add windows on Windows
+ 7. Re-add surface creation on Windows
+ 8. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen
