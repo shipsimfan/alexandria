@@ -3,5 +3,5 @@
 mod display;
 mod subsystem;
 
-pub use display::Display;
+pub use display::{Display, DisplayIter};
 pub use subsystem::WindowSubsystem;

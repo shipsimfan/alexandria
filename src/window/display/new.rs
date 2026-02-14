@@ -1,8 +1,12 @@
-use crate::window::{Display, display::DisplayInner};
+use crate::window::{Display, subsystem::WindowSubsystemInner};
+use std::cell::Ref;
 
-impl Display {
+impl<'a> Display<'a> {
     /// Create a new [`Display`]
-    fn new(inner: DisplayInner) -> Display {
-        Display { inner }
+    pub(in crate::window::display) fn new(
+        index: usize,
+        r#ref: Ref<'a, WindowSubsystemInner>,
+    ) -> Display<'a> {
+        Display { index, r#ref }
     }
 }

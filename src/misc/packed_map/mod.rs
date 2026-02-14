@@ -1,16 +1,23 @@
 use crate::Id;
 
+mod key_value_iters;
+
+mod at_index;
 mod convert_index;
+mod from_iter;
 mod get;
 mod index;
 mod insert;
 mod into_iter;
+mod into_key_values;
 mod len;
 mod new;
 mod remove;
 
 #[cfg(test)]
 mod tests;
+
+pub use key_value_iters::*;
 
 /// A list of elements accessible by stable ID, tailored for iteration
 ///

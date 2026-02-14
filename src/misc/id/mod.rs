@@ -1,6 +1,7 @@
 use std::marker::PhantomData;
 
 mod bump_generation;
+mod cast;
 mod clone;
 mod debug;
 mod display;

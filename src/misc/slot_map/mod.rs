@@ -3,6 +3,7 @@ use slot::Slot;
 mod iters;
 mod slot;
 
+mod from_iter;
 mod get;
 mod index;
 mod insert;
