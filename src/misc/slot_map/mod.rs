@@ -1,6 +1,7 @@
 use slot::Slot;
 
 mod iters;
+mod key_value_iters;
 mod slot;
 
 mod from_iter;
@@ -8,11 +9,13 @@ mod get;
 mod index;
 mod insert;
 mod into_iter;
+mod into_key_values;
 mod len;
 mod new;
 mod remove;
 
 pub use iters::*;
+pub use key_value_iters::*;
 
 /// A list of elements accessible by stable ID, tailored for access
 ///

@@ -79,6 +79,11 @@ impl<'a> Display<'a> {
         self.inner().dpi()
     }
 
+    /// Get the scale factor for UI
+    pub fn content_scale(&self) -> f32 {
+        (self.dpi() as f32) / 96.0
+    }
+
     /// Is this display the primary display?
     pub fn is_primary(&self) -> bool {
         self.inner().is_primary()

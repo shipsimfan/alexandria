@@ -19,7 +19,7 @@ fn main() {
         println!(
             "  - DPI: {} ({}%)",
             display.dpi(),
-            (display.dpi() * 100) / 96
+            display.content_scale() * 100.0
         );
         println!(
             "  - Is Primary? {}",
