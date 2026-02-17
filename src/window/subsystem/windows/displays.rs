@@ -5,7 +5,7 @@ use crate::{
 
 impl WindowSubsystemInner {
     /// Get the set of currently active displays
-    pub(in crate::window) fn displays(&self) -> &PackedMap<DisplayInner> {
+    pub fn displays(&self) -> &PackedMap<DisplayInner> {
         &self.displays
     }
 }

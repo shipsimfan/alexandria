@@ -1,9 +1,9 @@
-use crate::SwapchainFormat;
+use crate::gpu::SwapchainFormat;
 use vulkan::{VkFormat, khr_surface::VkColorSpaceKhr};
 
 impl SwapchainFormat {
     /// Convert this format into its Vulkan counter-part
-    pub(in crate::device::swapchain) fn into_vk(self) -> (VkFormat, VkColorSpaceKhr) {
+    pub(in crate::gpu::device::swapchain) fn into_vk(self) -> (VkFormat, VkColorSpaceKhr) {
         match self {
             SwapchainFormat::B8G8R8A8Srgb => {
                 (VkFormat::B8G8R8A8UNorm, VkColorSpaceKhr::SRGBNonlinearKhr)

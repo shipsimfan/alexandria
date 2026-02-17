@@ -1,16 +1,18 @@
 # ToDo
- 1. Improve display enumeration on Windows
-   - Proper name
-   - Better ID
-   - Current mode + supported modes (width, height, bpp, refresh rate, orientation)
- 2. Add more display access functions to `WindowSubsystem`
-   - `display<'a>(&'a self, id) -> Display<'a>`
-   - `num_displays(&self) -> usize`
-   - `primary_display<'a>(&'a self) -> Display<'a>` (auto-sort by `is_primary` so the primary is always in index 0)
- 3. Add message only window
- 4. Implement pump events on Windows
- 5. Add display related events + handling on Windows
- 6. Add display enumeration on Wayland
+ 1. Add message only window
+ 2. Implement pump events on Windows
+ 3. Add display related events + handling on Windows
+   - `DisplayAdded`
+   - `DisplayRemoved`
+   - `DisplayMoved`
+   - `DisplayResized`
+   - `DisplayWorkAreaChanged`
+   - `DisplayRefreshRateChanged`
+   - `DisplayRotated`
+   - `DisplayDpiChanged`
+ 4. Add display enumeration on Wayland
+ 5. Implement message pump on Wayland
+ 6. Add display related events + handling on Wayland
  7. Re-add windows on Windows
  8. Re-add surface creation on Windows
  9. Re-add device graphics items

@@ -3,10 +3,10 @@ use crate::Id;
 mod key_value_iters;
 
 mod at_index;
-mod convert_index;
 mod from_iter;
 mod get;
 mod index;
+mod index_of;
 mod insert;
 mod into_iter;
 mod into_key_values;

@@ -3,7 +3,7 @@ use std::cell::Ref;
 
 impl<'a> Display<'a> {
     /// Create a new [`Display`]
-    pub(in crate::window::display) fn new(
+    pub(in crate::window) fn new(
         index: usize,
         r#ref: Ref<'a, WindowSubsystemInner>,
     ) -> Display<'a> {

@@ -3,7 +3,10 @@ use crate::{
     window::{display::DisplayInner, subsystem::WindowSubsystemInner},
 };
 use win32::{
-    DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2, SetProcessDpiAwarenessContext, try_get_last_error,
+    ComInterface, ComPtr, DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2,
+    SetProcessDpiAwarenessContext,
+    dxgi::{CreateDXGIFactory, IDXGIFactory},
+    try_get_last_error, try_hresult,
 };
 
 impl WindowSubsystemInner {
@@ -15,9 +18,20 @@ impl WindowSubsystemInner {
         ))
         .map_err(|os| Error::new_with("unable to set DPI awareness", os))?;
 
-        // Enumerate the available displays
-        let displays = DisplayInner::enumerate()?.into_iter().collect();
+        // Create DXGI factory
+        let mut dxgi_factory = ComPtr::<IDXGIFactory>::new_in(|factory| {
+            try_hresult!(CreateDXGIFactory(&IDXGIFactory::IID, factory.cast()))
+        })
+        .map_err(|os| Error::new_with("unable to create a DXGI factory", os))?;
 
-        Ok(WindowSubsystemInner { displays })
+        // Enumerate the available displays
+        let displays = DisplayInner::enumerate(&mut dxgi_factory)?
+            .into_iter()
+            .collect();
+
+        Ok(WindowSubsystemInner {
+            displays,
+            dxgi_factory,
+        })
     }
 }

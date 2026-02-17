@@ -1,4 +1,10 @@
-use crate::math::Recti;
+use crate::{
+    math::{Rational, Recti, Vector2u},
+    window::{DisplayMode, DisplayOrientation},
+};
+use display_config::DisplayConfig;
+
+mod display_config;
 
 mod enumerate;
 mod get;
@@ -12,8 +18,20 @@ pub(in crate::window) struct DisplayInner {
     /// The rectangle that describes the work area
     work_area: Recti,
 
+    /// The current refresh rate of the display
+    refresh_rate: Rational,
+
     /// The DPI to use for UI scaling. 96 represents 100% scaling
     dpi: u32,
+
+    /// The physical size of the display, in millimeters
+    physical_size: Option<Vector2u>,
+
+    /// The current orientation of the display
+    orientation: DisplayOrientation,
+
+    /// The modes supported by the display
+    modes: Vec<DisplayMode>,
 
     /// Is this monitor the primary monitor?
     is_primary: bool,

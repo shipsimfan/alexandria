@@ -1,6 +1,6 @@
 use crate::{
-    math::{Recti, Vector2i},
-    window::Display,
+    math::{Rational, Recti, Vector2f, Vector2i, Vector2u},
+    window::{Display, DisplayMode, DisplayOrientation},
 };
 
 impl<'a> Display<'a> {
@@ -74,6 +74,11 @@ impl<'a> Display<'a> {
         self.inner().work_area_height()
     }
 
+    /// Get the current refresh rate
+    pub fn refresh_rate(&self) -> Rational {
+        self.inner().refresh_rate()
+    }
+
     /// Get the DPI to use for UI scaling. 96 represents 100% scaling
     pub fn dpi(&self) -> u32 {
         self.inner().dpi()
@@ -82,6 +87,40 @@ impl<'a> Display<'a> {
     /// Get the scale factor for UI
     pub fn content_scale(&self) -> f32 {
         (self.dpi() as f32) / 96.0
+    }
+
+    /// Get the physical size of this display, in millimeters
+    pub fn physical_size(&self) -> Option<Vector2u> {
+        self.inner().physical_size()
+    }
+
+    /// Get the physical size of this display, in inches
+    pub fn physical_size_inches(&self) -> Option<Vector2f> {
+        self.inner()
+            .physical_size()
+            .map(|physical_size| physical_size.into_f32() / 25.4)
+    }
+
+    /// Get the physical size of the diagonal of this display, in millimeters
+    pub fn physical_diagonal(&self) -> Option<f32> {
+        self.physical_size()
+            .map(|physical_size| physical_size.into_f32().length())
+    }
+
+    /// Get the physical size of the diagonal of this display, in inches
+    pub fn physical_diagonal_inches(&self) -> Option<f32> {
+        self.physical_size_inches()
+            .map(|physical_size| physical_size.into_f32().length())
+    }
+
+    /// Get the current orientation of the display
+    pub fn current_orientation(&self) -> DisplayOrientation {
+        self.inner().current_orientation()
+    }
+
+    /// Get the list of modes this display supports
+    pub fn modes(&self) -> &[DisplayMode] {
+        self.inner().modes()
     }
 
     /// Is this display the primary display?

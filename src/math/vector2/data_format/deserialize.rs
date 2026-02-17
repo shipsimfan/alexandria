@@ -10,7 +10,7 @@ struct Vector2Converter<'de, T: Deserialize<'de>> {
 
 impl<'de, T: Deserialize<'de>> Deserialize<'de> for Vector2<T> {
     fn deserialize<D: data_format::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        deserializer.deserialize_map(Vector2Converter::default())
+        deserializer.deserialize_list(Vector2Converter::default())
     }
 }
 

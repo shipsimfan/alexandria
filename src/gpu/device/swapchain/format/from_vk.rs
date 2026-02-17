@@ -1,4 +1,4 @@
-use crate::{SwapchainFormat, device::swapchain::format::other::OtherSwapchainFormat};
+use crate::gpu::{SwapchainFormat, device::swapchain::format::other::OtherSwapchainFormat};
 use vulkan::{
     VkFormat,
     khr_surface::{VkColorSpaceKhr, VkSurfaceFormatKhr},
