@@ -11,7 +11,7 @@ use win32::{
 /// Get the output at `index` on `adapter`
 fn get_output(index: u32, adapter: &mut IDXGIAdapter) -> Result<Option<ComPtr<IDXGIOutput>>> {
     let mut output = null_mut();
-    match adapter.enum_outputs(index, &mut output) {
+    match unsafe { adapter.enum_outputs(index, &mut output) } {
         S_OK => Ok(Some(ComPtr::new(output))),
         DXGI_ERROR_NOT_FOUND => Ok(None),
         error => Err(Error::new_with(
@@ -41,7 +41,7 @@ fn enumerate_outputs(
 /// Get the adapter at `index` in `factory`
 fn get_adapter(index: u32, factory: &mut IDXGIFactory) -> Result<Option<ComPtr<IDXGIAdapter>>> {
     let mut adapter = null_mut();
-    match factory.enum_adapters(index, &mut adapter) {
+    match unsafe { factory.enum_adapters(index, &mut adapter) } {
         S_OK => Ok(Some(ComPtr::new(adapter))),
         DXGI_ERROR_NOT_FOUND => Ok(None),
         error => Err(Error::new_with(

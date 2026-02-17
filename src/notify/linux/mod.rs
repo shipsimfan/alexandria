@@ -14,3 +14,6 @@ pub(in crate::notify) struct NotifyInner {
     /// Should the notify be reset after waiting?
     auto_reset: bool,
 }
+
+unsafe impl Send for NotifyInner {}
+unsafe impl Sync for NotifyInner {}
