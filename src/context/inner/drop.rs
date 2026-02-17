@@ -1,10 +1,9 @@
 use crate::{AlexandriaContextInner, context::inner::ALEXANDRIA_CONTEXT_ACTIVE};
+use std::sync::atomic::Ordering;
 
 impl<UserEvent: Send> Drop for AlexandriaContextInner<UserEvent> {
     fn drop(&mut self) {
-        ALEXANDRIA_CONTEXT_ACTIVE.with_borrow_mut(|context_active| {
-            assert_eq!(*context_active, true);
-            *context_active = false;
-        });
+        let prev = ALEXANDRIA_CONTEXT_ACTIVE.swap(false, Ordering::Release);
+        assert!(prev);
     }
 }

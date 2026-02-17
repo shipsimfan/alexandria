@@ -1,5 +1,5 @@
 use crate::{EventQueue, gpu::GpuSubsystem, window::WindowSubsystem};
-use std::{cell::RefCell, time::Instant};
+use std::{sync::atomic::AtomicBool, time::Instant};
 
 mod drop;
 mod get;
@@ -20,7 +20,6 @@ pub struct AlexandriaContextInner<UserEvent: Send> {
     window: Option<WindowSubsystem>,
 }
 
-thread_local! {
-    /// A boolean to make sure only a single [`AlexandriaContext`] exists on a given thread
-    static ALEXANDRIA_CONTEXT_ACTIVE: RefCell<bool> = RefCell::new(false);
-}
+/// A boolean to make sure only a single [`AlexandriaContext`](crate::AlexandriaContext) is active
+/// in a given process
+static ALEXANDRIA_CONTEXT_ACTIVE: AtomicBool = AtomicBool::new(false);

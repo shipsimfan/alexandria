@@ -2,7 +2,7 @@ use crate::{
     AlexandriaContextInner, Error, EventQueue, Result, context::inner::ALEXANDRIA_CONTEXT_ACTIVE,
     gpu::GpuSubsystem, window::WindowSubsystem,
 };
-use std::time::Instant;
+use std::{sync::atomic::Ordering, time::Instant};
 
 impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
     /// Create a new [`AlexandriaContextInner`]
@@ -10,16 +10,14 @@ impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
         mut gpu: bool,
         window: bool,
     ) -> Result<AlexandriaContextInner<UserEvent>> {
-        ALEXANDRIA_CONTEXT_ACTIVE.with_borrow_mut(|context_active| {
-            if *context_active {
-                return Err(Error::new(
-                    "another Alexandria context is already active on this thread",
-                ));
-            }
-
-            *context_active = true;
-            Ok(())
-        })?;
+        if ALEXANDRIA_CONTEXT_ACTIVE
+            .compare_exchange(false, true, Ordering::Acquire, Ordering::Relaxed)
+            .is_err()
+        {
+            return Err(Error::new(
+                "another Alexandria context is already active on this thread",
+            ));
+        }
 
         // Normalize creation flags
         gpu |= window;
