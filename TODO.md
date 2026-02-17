@@ -1,21 +1,12 @@
 # ToDo
- 1. Add message only window
- 2. Implement pump events on Windows
- 3. Add display related events + handling on Windows
-   - `DisplayAdded`
-   - `DisplayRemoved`
-   - `DisplayMoved`
-   - `DisplayResized`
-   - `DisplayWorkAreaChanged`
-   - `DisplayRefreshRateChanged`
-   - `DisplayRotated`
+ 1. Add display related events + handling on Windows
    - `DisplayDpiChanged`
- 4. Add display enumeration on Wayland
- 5. Implement message pump on Wayland
- 6. Add display related events + handling on Wayland
- 7. Re-add windows on Windows
- 8. Re-add surface creation on Windows
- 9. Re-add device graphics items
+ 2. Add display enumeration on Wayland
+ 3. Implement message pump on Wayland
+ 4. Add display related events + handling on Wayland
+ 5. Re-add windows on Windows
+ 6. Re-add surface creation on Windows
+ 7. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen

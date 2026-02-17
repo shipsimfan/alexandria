@@ -87,7 +87,7 @@ fn get_windows_product_version(info: &RTL_OSVERSIONINFOEXW) -> &'static str {
         )
     } == 0
     {
-        panic!("TESTING");
+        return "";
     };
 
     match product_info {

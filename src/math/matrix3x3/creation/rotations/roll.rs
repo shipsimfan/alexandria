@@ -37,7 +37,6 @@ mod tests {
 
                 let rotation = Matrix3x3f::from_roll(ROLL);
 
-                println!("TESTING:\n{:#}", rotation);
                 let output = rotation.transform_point(INPUT);
 
                 assert!(output.approx_eq(OUTPUT, 1e-5), "rotate roll failed: {} vs. {}", output, OUTPUT);

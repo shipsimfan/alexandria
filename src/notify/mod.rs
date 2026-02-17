@@ -10,6 +10,7 @@ mod linux;
 #[cfg(target_os = "windows")]
 mod windows;
 
+mod get;
 mod new;
 mod notify;
 mod reset;

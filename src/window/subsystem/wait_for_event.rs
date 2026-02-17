@@ -8,6 +8,6 @@ impl WindowSubsystem {
         notify: &Notify,
         timeout: Option<Duration>,
     ) -> Result<bool> {
-        notify.wait(timeout)
+        self.inner.borrow().wait_for_event(notify, timeout)
     }
 }

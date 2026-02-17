@@ -1,6 +1,10 @@
 use crate::{
     Error, Result,
-    window::{display::DisplayInner, subsystem::WindowSubsystemInner},
+    window::{
+        Win32Window, WindowClass,
+        display::DisplayInner,
+        subsystem::{WindowSubsystemInner, windows::MessageOnlyWndProc},
+    },
 };
 use win32::{
     ComInterface, ComPtr, DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2,
@@ -18,6 +22,20 @@ impl WindowSubsystemInner {
         ))
         .map_err(|os| Error::new_with("unable to set DPI awareness", os))?;
 
+        // Create message only window
+        let message_window_class = WindowClass::register("message only", 0)
+            .map_err(|os| Error::new_with("unable to create message only window class", os))?;
+        let message_window = Win32Window::new(
+            None,
+            None,
+            None,
+            0,
+            0,
+            message_window_class,
+            MessageOnlyWndProc::new(),
+        )
+        .map_err(|os| Error::new_with("unable to create message only window", os))?;
+
         // Create DXGI factory
         let mut dxgi_factory = ComPtr::<IDXGIFactory>::new_in(|factory| {
             try_hresult!(CreateDXGIFactory(&IDXGIFactory::IID, factory.cast()))
@@ -31,6 +49,7 @@ impl WindowSubsystemInner {
 
         Ok(WindowSubsystemInner {
             displays,
+            message_window,
             dxgi_factory,
         })
     }

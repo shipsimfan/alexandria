@@ -1,13 +1,14 @@
 use win32::HANDLE;
 
 mod drop;
+mod get;
 mod new;
 mod notify;
 mod reset;
 mod wait;
 
 /// The implementation of a [`Notify`](crate::Notify) on Windows
-pub(in crate::notify) struct NotifyInner {
+pub(crate) struct NotifyInner {
     /// The handle to the win32 event
     handle: HANDLE,
 }

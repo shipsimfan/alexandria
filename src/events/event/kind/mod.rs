@@ -1,11 +1,92 @@
+use crate::{
+    Id,
+    math::{Rational, Recti, Vector2i},
+    window::{Display, DisplayOrientation},
+};
+
 mod from;
 
 /// A specific event kind that can pushed into an [`EventQueue`](crate::EventQueue)
 #[derive(Debug, Clone, PartialEq)]
 pub enum EventKind<UserEvent: Send> {
+    /*
+     *** GENERAL EVENTS ***
+     */
     /// The process has been requested to be shutdown
     Quit,
 
+    /*
+     *** DISPLAY EVENTS ***
+     */
+    /// A new [`Display`] was added
+    DisplayAdded {
+        /// The ID of the newly added [`Display`]
+        id: Id<Display<'static>>,
+    },
+
+    /// A new [`Display`] was removed
+    DisplayRemoved {
+        /// The ID of the removed [`Display`]
+        id: Id<Display<'static>>,
+    },
+
+    /// A [`Display`] was moved
+    DisplayMoved {
+        /// The ID of the moved [`Display`]
+        id: Id<Display<'static>>,
+
+        /// The new position of the [`Display`]
+        new_position: Vector2i,
+    },
+
+    /// A [`Display`] was resized
+    DisplayResized {
+        /// The ID of the resized [`Display`]
+        id: Id<Display<'static>>,
+
+        /// The new size of the [`Display`]
+        new_size: Vector2i,
+    },
+
+    /// A [`Display`]'s work area changed
+    DisplayWorkAreaChanged {
+        /// The ID of the changed [`Display`]
+        id: Id<Display<'static>>,
+
+        /// The new work area of the [`Display`]
+        new_work_area: Recti,
+    },
+
+    /// A [`Display`]'s refresh rate changed
+    DisplayRefreshRateChanged {
+        /// The ID of the changed [`Display`]
+        id: Id<Display<'static>>,
+
+        /// The new refresh rate of the [`Display`]
+        new_refresh_rate: Rational,
+    },
+
+    /// A [`Display`] was rotated
+    DisplayRotated {
+        /// The ID of the rotated [`Display`]
+        id: Id<Display<'static>>,
+
+        /// The new orientation of the [`Display`]
+        new_orientation: DisplayOrientation,
+    },
+
+    /// A [`Display`]'s DPI changed
+    DisplayDpiChanged {
+        /// The ID of the changed [`Display`]
+        id: Id<Display<'static>>,
+
+        /// The new DPI of the [`Display`]
+        new_dpi: u32,
+    },
+
+    /*
+     *** USER EVENT ***
+     */
     /// An event defined by the user of Alexandria
     User(UserEvent),
 }
