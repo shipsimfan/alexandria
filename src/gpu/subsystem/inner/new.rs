@@ -10,7 +10,7 @@ const VULKAN_LIBRARY_NAME: &str = "libvulkan.so.1";
 
 impl GpuSubsystemInner {
     /// Create a new [`GpuSubsystemInner`]
-    pub(in crate::gpu::subsystem) fn new() -> Result<GpuSubsystemInner> {
+    pub fn new() -> Result<GpuSubsystemInner> {
         let vulkan_library = SharedObject::open(VULKAN_LIBRARY_NAME)?;
         let functions = GlobalVulkanFunctions::load(&vulkan_library)?;
 

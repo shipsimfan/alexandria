@@ -7,7 +7,7 @@ use vulkan::try_vulkan;
 
 impl VulkanInstanceInner {
     /// Enumerate all the [`VulkanAdapter`]s on the system
-    pub(in crate::gpu::instance) fn enumerate_adapters<'instance>(
+    pub fn enumerate_adapters<'instance>(
         &self,
         instance: &'instance VulkanInstance,
     ) -> Result<Vec<VulkanAdapter<'instance>>> {

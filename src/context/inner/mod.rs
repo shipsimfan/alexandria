@@ -6,7 +6,7 @@ mod get;
 mod new;
 
 /// The main entry point for interacting with Alexandria
-pub struct AlexandriaContextInner<UserEvent: Send> {
+pub(in crate::context) struct AlexandriaContextInner<UserEvent: Send> {
     /// The time the context was created
     start_time: Instant,
 

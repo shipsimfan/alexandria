@@ -1,4 +1,6 @@
-use crate::{AlexandriaContextInner, EventQueue, gpu::GpuSubsystem, window::WindowSubsystem};
+use crate::{
+    EventQueue, context::AlexandriaContextInner, gpu::GpuSubsystem, window::WindowSubsystem,
+};
 use std::time::Instant;
 
 impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
@@ -17,22 +19,8 @@ impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
         self.gpu.as_ref()
     }
 
-    /// Get a reference to the GPU subsystem
-    ///
-    /// This function will panic if the GPU subsystem wasn't initialized at creation
-    pub fn gpu(&self) -> &GpuSubsystem {
-        self.gpu_opt().unwrap()
-    }
-
     /// Get a reference to the windowing subsystem, if its been initialized
     pub fn window_opt(&self) -> Option<&WindowSubsystem> {
         self.window.as_ref()
-    }
-
-    /// Get a reference to the windowing subsystem
-    ///
-    /// This function will panic if the windowing subsystem wasn't initialized at creation
-    pub fn window(&self) -> &WindowSubsystem {
-        self.window_opt().unwrap()
     }
 }

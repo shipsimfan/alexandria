@@ -16,7 +16,7 @@ macro_rules! define_handle {
         impl$(<$generic_arg_name$(: $generic_arg_type)*>)* $outer$(<$generic_arg_name>)* {
             #[doc = std::concat!("Create a new [`", std::stringify!($outer), "`] from an [`", std::stringify!($inner), "`]")]
             #[allow(unused)]
-            pub(crate) fn from_inner(inner: $inner) -> $outer$(<$generic_arg_name>)* {
+            fn from_inner(inner: $inner) -> $outer$(<$generic_arg_name>)* {
                 $outer {
                     inner: std::sync::Arc::new(inner),
                 }
@@ -28,14 +28,6 @@ macro_rules! define_handle {
                 $outer {
                     inner: self.inner.clone(),
                 }
-            }
-        }
-
-        impl$(<$generic_arg_name$(: $generic_arg_type)*>)* std::ops::Deref for $outer$(<$generic_arg_name>)* {
-            type Target = $inner;
-
-            fn deref(&self) -> &Self::Target {
-                self.inner.as_ref()
             }
         }
     };

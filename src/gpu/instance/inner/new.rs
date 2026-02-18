@@ -10,7 +10,7 @@ use vulkan::{VkApplicationInfo, VkInstance, VkInstanceCreateInfo, try_vulkan};
 
 impl VulkanInstanceInner {
     /// Create a new [`VulkanInstanceInner`]
-    pub(in crate::gpu::instance) fn new(
+    pub fn new(
         context: &GpuSubsystem,
         api_version: VulkanVersion,
         application: Option<(&str, VulkanVersion)>,
@@ -63,7 +63,7 @@ impl VulkanInstanceInner {
 
         // Create the instance
         let mut handle = VkInstance::null();
-        try_vulkan!((context.functions.create_instance)(
+        try_vulkan!((context.functions().create_instance)(
             &create_info,
             null(),
             &mut handle

@@ -1,15 +1,14 @@
 use crate::{
-    AlexandriaContextInner, Error, EventQueue, Result, context::inner::ALEXANDRIA_CONTEXT_ACTIVE,
-    gpu::GpuSubsystem, window::WindowSubsystem,
+    Error, EventQueue, Result,
+    context::{AlexandriaContextInner, inner::ALEXANDRIA_CONTEXT_ACTIVE},
+    gpu::GpuSubsystem,
+    window::WindowSubsystem,
 };
 use std::{sync::atomic::Ordering, time::Instant};
 
 impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
     /// Create a new [`AlexandriaContextInner`]
-    pub(in crate::context) fn new(
-        mut gpu: bool,
-        window: bool,
-    ) -> Result<AlexandriaContextInner<UserEvent>> {
+    pub fn new(mut gpu: bool, window: bool) -> Result<AlexandriaContextInner<UserEvent>> {
         if ALEXANDRIA_CONTEXT_ACTIVE
             .compare_exchange(false, true, Ordering::Acquire, Ordering::Relaxed)
             .is_err()

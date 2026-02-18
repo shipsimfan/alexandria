@@ -2,12 +2,12 @@
 macro_rules! load_instance_function {
     ($context: expr, $instance: expr, $name: expr) => {{
         let name = $name;
-        unsafe { ($context.functions.get_instance_proc_addr)($instance, name.as_ptr()) }
+        unsafe { ($context.functions().get_instance_proc_addr)($instance, name.as_ptr()) }
             .map(|function| unsafe {
                 $crate::FunctionSymbol::new(
                     std::mem::transmute(function),
                     $context
-                        .functions
+                        .functions()
                         .get_instance_proc_addr
                         .shared_object()
                         .clone(),

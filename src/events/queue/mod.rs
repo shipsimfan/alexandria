@@ -4,7 +4,10 @@ use inner::EventQueueInner;
 mod inner;
 mod iter;
 
+mod get;
 mod new;
+mod pop;
+mod push;
 
 pub use iter::EventIter;
 

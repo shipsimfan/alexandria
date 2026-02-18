@@ -2,10 +2,10 @@ use crate::{
     Error, Result,
     gpu::{
         VulkanDebugMessageSeverity, VulkanDebugMessenger, VulkanDebugMessengerCallback,
-        instance::{debug_messenger::debug_message_trampoline, inner::VulkanInstanceInner},
+        VulkanInstance, instance::debug_messenger::debug_message_trampoline,
     },
 };
-use std::{ptr::null, sync::Arc};
+use std::ptr::null;
 use vulkan::{
     ext_debug_utils::{
         VkDebugUtilsMessageTypeFlagExt, VkDebugUtilsMessengerCreateInfoExt,
@@ -17,7 +17,7 @@ use vulkan::{
 impl<C: VulkanDebugMessengerCallback> VulkanDebugMessenger<C> {
     /// Create a new [`VulkanDebugMessenger`]
     pub(in crate::gpu::instance) fn new(
-        instance: Arc<VulkanInstanceInner>,
+        instance: VulkanInstance,
         min_severity: VulkanDebugMessageSeverity,
         callback: C,
     ) -> Result<VulkanDebugMessenger<C>> {
@@ -36,7 +36,7 @@ impl<C: VulkanDebugMessengerCallback> VulkanDebugMessenger<C> {
 
         let mut handle = VkDebugUtilsMessengerExt::null();
         try_vulkan!((instance
-            .functions
+            .functions()
             .debug_messenger()
             .create_debug_messenger)(
             instance.handle(),

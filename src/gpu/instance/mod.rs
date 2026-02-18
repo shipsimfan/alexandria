@@ -9,6 +9,7 @@ mod inner;
 
 mod create_debug_messenger;
 mod enumerate_adapters;
+mod get;
 
 pub use adapter::*;
 pub use builder::VulkanInstanceBuilder;

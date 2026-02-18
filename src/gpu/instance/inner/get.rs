@@ -1,9 +1,14 @@
-use crate::gpu::instance::VulkanInstanceInner;
+use crate::gpu::{VulkanInstanceFunctions, instance::VulkanInstanceInner};
 use vulkan::VkInstance;
 
 impl VulkanInstanceInner {
     /// Get accesss to the instance handle
-    pub(in crate::gpu::instance) fn handle(&self) -> VkInstance {
+    pub fn handle(&self) -> VkInstance {
         self.handle
+    }
+
+    /// Get the instance level functions
+    pub fn functions(&self) -> &VulkanInstanceFunctions {
+        &self.functions
     }
 }

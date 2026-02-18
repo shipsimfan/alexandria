@@ -17,7 +17,7 @@ impl<'instance> VulkanAdapter<'instance> {
         // Get the properties
         let mut properties = VkPhysicalDeviceProperties::default();
         unsafe {
-            (instance.functions.adapter.get_physical_device_properties)(handle, &mut properties)
+            (instance.functions().adapter.get_physical_device_properties)(handle, &mut properties)
         };
 
         // Extract the properties
@@ -38,7 +38,7 @@ impl<'instance> VulkanAdapter<'instance> {
         let mut memory_information = VkPhysicalDeviceMemoryProperties::default();
         unsafe {
             (instance
-                .functions
+                .functions()
                 .adapter
                 .get_physical_device_memory_properties)(handle, &mut memory_information)
         };
@@ -57,7 +57,7 @@ impl<'instance> VulkanAdapter<'instance> {
         let mut num_queue_families = 0;
         unsafe {
             (instance
-                .functions
+                .functions()
                 .adapter
                 .get_physical_device_queue_family_properties)(
                 handle,
@@ -69,7 +69,7 @@ impl<'instance> VulkanAdapter<'instance> {
         let mut queue_families = Vec::with_capacity(num_queue_families as _);
         unsafe {
             (instance
-                .functions
+                .functions()
                 .adapter
                 .get_physical_device_queue_family_properties)(
                 handle,

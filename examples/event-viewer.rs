@@ -1,11 +1,8 @@
-use std::time::Instant;
-
 fn handle_event(
     event: &alexandria::Event<()>,
-    start: Instant,
     context: &alexandria::AlexandriaContext<()>,
 ) -> bool {
-    let time = event.time - start;
+    let time = event.time - context.start_time();
     print!("{:10.03} ", time.as_secs_f64());
 
     match event.kind {
@@ -73,7 +70,6 @@ fn handle_event(
 }
 
 fn main() {
-    let start = Instant::now();
     let (context, mut pump) = alexandria::AlexandriaContext::<()>::builder()
         .window()
         .create()
@@ -81,12 +77,12 @@ fn main() {
 
     loop {
         let event = pump.wait().unwrap();
-        if handle_event(&event, start, &context) {
+        if handle_event(&event, &context) {
             break;
         }
 
         while let Some(event) = pump.poll().unwrap() {
-            if handle_event(&event, start, &context) {
+            if handle_event(&event, &context) {
                 break;
             }
         }

@@ -5,10 +5,6 @@ use linux::SharedObjectInner;
 #[cfg(target_os = "windows")]
 use windows::SharedObjectInner;
 
-mod load_function;
-mod load_symbol;
-mod open;
-
 mod function_symbol;
 mod symbol;
 
@@ -16,6 +12,11 @@ mod symbol;
 mod linux;
 #[cfg(target_os = "windows")]
 mod windows;
+
+mod get;
+mod load_function;
+mod load_symbol;
+mod open;
 
 pub use function_symbol::FunctionSymbol;
 pub use symbol::Symbol;

@@ -1,6 +1,5 @@
-use crate::gpu::instance::VulkanInstanceInner;
+use crate::gpu::VulkanInstance;
 use callback::debug_message_trampoline;
-use std::sync::Arc;
 use vulkan::ext_debug_utils::VkDebugUtilsMessengerExt;
 
 mod callback;
@@ -25,5 +24,5 @@ pub struct VulkanDebugMessenger<C: VulkanDebugMessengerCallback> {
     handle: VkDebugUtilsMessengerExt,
 
     /// The instance this debug messenger was created for
-    instance: Arc<VulkanInstanceInner>,
+    instance: VulkanInstance,
 }

@@ -6,7 +6,7 @@ use std::{collections::VecDeque, sync::Mutex};
 
 impl<UserEvent: Send> EventQueueInner<UserEvent> {
     /// Create a new [`EventQueueInner`]
-    pub(in crate::events::queue) fn new() -> Result<EventQueueInner<UserEvent>> {
+    pub fn new() -> Result<EventQueueInner<UserEvent>> {
         let notify = Notify::new(false, false)?;
 
         set_quit_handler(notify.clone())?;

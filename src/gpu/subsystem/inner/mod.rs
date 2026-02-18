@@ -1,13 +1,13 @@
 use crate::gpu::subsystem::GlobalVulkanFunctions;
 
 mod all_extensions;
-mod extensions;
+mod get;
 mod layers;
 mod new;
 mod version;
 
 /// Allows interaction and control over GPUs
-pub struct GpuSubsystemInner {
+pub(in crate::gpu::subsystem) struct GpuSubsystemInner {
     /// The Vulkan functions not specific to any Vulkan instance
-    pub(in crate::gpu) functions: GlobalVulkanFunctions,
+    functions: GlobalVulkanFunctions,
 }

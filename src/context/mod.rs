@@ -1,13 +1,13 @@
 use crate::define_local_handle;
+use inner::AlexandriaContextInner;
 
 mod builder;
 mod inner;
 
+mod get;
 mod new;
 
 pub use builder::AlexandriaContextBuilder;
-
-pub(crate) use inner::AlexandriaContextInner;
 
 define_local_handle!(
     /// The main entry point for interacting with Alexandria

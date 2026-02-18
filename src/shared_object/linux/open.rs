@@ -8,7 +8,7 @@ use std::{
 
 impl SharedObjectInner {
     /// Open a new shared object at `path`
-    pub(in crate::shared_object) fn open<P: AsRef<Path>>(path: P) -> Result<SharedObjectInner> {
+    pub fn open<P: AsRef<Path>>(path: P) -> Result<SharedObjectInner> {
         let path = path.as_ref();
         let path_c = CString::new(path.to_string_lossy().as_bytes()).unwrap();
 

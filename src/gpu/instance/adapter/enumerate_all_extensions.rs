@@ -13,7 +13,7 @@ impl<'instance> VulkanAdapter<'instance> {
         let mut extension_count = 0;
         try_vulkan!((self
             .instance
-            .functions
+            .functions()
             .adapter
             .enumerate_device_extension_properties)(
             self.handle,
@@ -30,7 +30,7 @@ impl<'instance> VulkanAdapter<'instance> {
         let mut extensions = Vec::with_capacity(extension_count as usize);
         try_vulkan!((self
             .instance
-            .functions
+            .functions()
             .adapter
             .enumerate_device_extension_properties)(
             self.handle,

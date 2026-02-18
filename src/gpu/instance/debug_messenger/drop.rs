@@ -6,7 +6,7 @@ impl<C: VulkanDebugMessengerCallback> Drop for VulkanDebugMessenger<C> {
         unsafe {
             (self
                 .instance
-                .functions
+                .functions()
                 .debug_messenger()
                 .destroy_debug_messenger)(self.instance.handle(), self.handle, null())
         };

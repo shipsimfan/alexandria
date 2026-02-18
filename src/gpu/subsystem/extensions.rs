@@ -1,9 +1,9 @@
 use crate::{
     Result,
-    gpu::{VulkanInstanceExtension, VulkanLayer, subsystem::GpuSubsystemInner},
+    gpu::{GpuSubsystem, VulkanInstanceExtension, VulkanLayer},
 };
 
-impl GpuSubsystemInner {
+impl GpuSubsystem {
     /// Enumerate all Alexandria supported Vulkan extensions supported on this system
     pub fn enumerate_extensions(
         &self,

@@ -7,7 +7,7 @@ mod load_raw_symbol;
 mod open;
 
 /// The definition of a shared object on Windows
-pub struct SharedObjectInner {
+pub(in crate::shared_object) struct SharedObjectInner {
     /// The handle to the shared object
     handle: HMODULE,
 

@@ -4,7 +4,7 @@ use win32::{LoadLibrary, try_get_last_error};
 
 impl SharedObjectInner {
     /// Open a new shared object at `path`
-    pub(in crate::shared_object) fn open<P: AsRef<Path>>(path: P) -> Result<SharedObjectInner> {
+    pub fn open<P: AsRef<Path>>(path: P) -> Result<SharedObjectInner> {
         let path = path.as_ref();
         let path_utf16: Vec<_> = path.to_string_lossy().encode_utf16().chain([0]).collect();
 
