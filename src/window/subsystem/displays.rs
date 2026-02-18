@@ -24,17 +24,22 @@ impl WindowSubsystem {
     }
 
     /// Find the primary display
-    pub fn primary_display<'a>(&'a self) -> (Id<Display<'static>>, Display<'a>) {
+    pub fn primary_display<'a>(&'a self) -> Option<(Id<Display<'static>>, Display<'a>)> {
         let inner = self.inner.borrow();
         for i in 0..inner.displays().len() {
             let (id, display) = inner.displays().at_index(i);
             if display.is_primary() {
-                return (unsafe { id.cast() }, Display::new(i, inner));
+                return Some((unsafe { id.cast() }, Display::new(i, inner)));
             }
         }
-        (
-            unsafe { inner.displays().key_at_index(0).cast() },
-            Display::new(0, inner),
-        )
+
+        if inner.displays().len() > 0 {
+            Some((
+                unsafe { inner.displays().key_at_index(0).cast() },
+                Display::new(0, inner),
+            ))
+        } else {
+            None
+        }
     }
 }

@@ -1,5 +1,5 @@
 use crate::{
-    EventQueue, PackedMap, Result,
+    EventKind, EventQueue, PackedMap, Result,
     window::{
         display::DisplayInner,
         subsystem::windows::{MessageOnlyWndProc, message_only_wnd_proc::re_enumerate_displays},
@@ -25,7 +25,16 @@ impl MessageOnlyWndProc {
         if self.refresh_dpi {
             self.refresh_dpi = false;
 
-            println!("Refresh DPI");
+            for (id, display) in displays.key_value_iter_mut() {
+                let old_dpi = display.dpi();
+                display.refresh_dpi()?;
+                if display.dpi() != old_dpi {
+                    pump.push(EventKind::DisplayDpiChanged {
+                        id: unsafe { id.cast() },
+                        new_dpi: display.dpi(),
+                    })?;
+                }
+            }
         }
 
         Ok(())

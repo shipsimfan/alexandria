@@ -3,15 +3,20 @@ use crate::{
     window::{DisplayMode, DisplayOrientation},
 };
 use display_config::DisplayConfig;
+use win32::HMONITOR;
 
 mod display_config;
 
 mod enumerate;
 mod get;
 mod new;
+mod refresh_dpi;
 
 /// The implementation of [`Display`](crate::window::Display)s for Winodws
 pub(in crate::window) struct DisplayInner {
+    /// The handle to the display
+    handle: HMONITOR,
+
     /// The rectangle that describes the entire display
     rect: Recti,
 

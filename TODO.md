@@ -1,12 +1,10 @@
 # ToDo
- 1. Add display related events + handling on Windows
-   - `DisplayDpiChanged`
- 2. Add display enumeration on Wayland
- 3. Implement message pump on Wayland
- 4. Add display related events + handling on Wayland
- 5. Re-add windows on Windows
- 6. Re-add surface creation on Windows
- 7. Re-add device graphics items
+ 1. Add display enumeration on Wayland
+ 2. Implement message pump on Wayland
+ 3. Add display related events + handling on Wayland
+ 4. Re-add windows on Windows
+ 5. Re-add surface creation on Windows
+ 6. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen

@@ -1,7 +1,7 @@
 use crate::{
     Error, Result,
     window::{
-        Win32Window, WindowClass,
+        Win32Window, WindowClass, WindowStyle,
         display::DisplayInner,
         subsystem::{WindowSubsystemInner, windows::MessageOnlyWndProc},
     },
@@ -29,8 +29,7 @@ impl WindowSubsystemInner {
             None,
             None,
             None,
-            0,
-            0,
+            WindowStyle::default(),
             message_window_class,
             MessageOnlyWndProc::new(),
         )

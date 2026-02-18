@@ -10,8 +10,7 @@ use std::ptr::{null, null_mut};
 use win32::{
     CreateDC, DEVMODE, DISPLAY_DEVICE, DISPLAY_DEVICE_ACTIVE, DISPLAY_DEVICE_MIRRORING_DRIVER,
     DeleteDC, ENUM_CURRENT_SETTINGS, EnumDisplayDevices, EnumDisplaySettingsEx, GetDeviceCaps,
-    GetDpiForMonitor, GetMonitorInfo, HMONITOR, HORZSIZE, MONITOR_DPI_TYPE, MONITORINFOEX,
-    MONITORINFOF_PRIMARY, TRUE, VERTSIZE,
+    GetMonitorInfo, HMONITOR, HORZSIZE, MONITORINFOEX, MONITORINFOF_PRIMARY, TRUE, VERTSIZE,
     dxgi::{DXGI_FORMAT, DXGI_OUTPUT_DESC, IDXGIOutput},
     try_get_last_error, try_hresult,
 };
@@ -49,20 +48,6 @@ fn get_monitor_info(handle: HMONITOR) -> Result<MONITORINFOEX> {
     ))
     .map(|_| monitor_info)
     .map_err(|os| Error::new_with("unable to enumerate displays", os))
-}
-
-/// Get the DPI of a monitor
-fn get_dpi(handle: HMONITOR) -> Result<u32> {
-    let mut dpi_x = 0;
-    let mut dpi_y = 0;
-    try_hresult!(GetDpiForMonitor(
-        handle,
-        MONITOR_DPI_TYPE::EffectiveDpi,
-        &mut dpi_x,
-        &mut dpi_y
-    ))
-    .map(|_| dpi_x)
-    .map_err(|os| Error::new_with("unable to get display DPI", os))
 }
 
 /// Get the GDI name of a monitor
@@ -201,13 +186,22 @@ fn get_name_and_refresh_rate(
 
 fn get_modes(output: &mut IDXGIOutput) -> Result<Vec<DisplayMode>> {
     let mut num_modes = 0;
-    try_hresult!(output.get_display_mode_list(
-        DXGI_FORMAT::B8G8R8A8UNormSRGB,
-        0,
-        &mut num_modes,
-        null_mut()
-    ))
-    .map_err(|os| Error::new_with("unable to get output mode count", os))?;
+    match unsafe {
+        output.get_display_mode_list(
+            DXGI_FORMAT::B8G8R8A8UNormSRGB,
+            0,
+            &mut num_modes,
+            null_mut(),
+        )
+    } {
+        win32::S_OK => {}
+        win32::DXGI_ERROR_NOT_FOUND => return Ok(Vec::new()),
+        result => {
+            let os = win32::Error::new(result);
+            println!("TESTING: {} ({})", os, os.0);
+            return Err(Error::new_with("unable to get output mode count", os));
+        }
+    }
     if num_modes == 0 {
         return Ok(Vec::new());
     }
@@ -255,7 +249,6 @@ impl DisplayInner {
         modes.sort_by(|a, b| b.cmp(a));
 
         // Extract info from the output description
-        let dpi = get_dpi(output_desc.monitor)?;
         let monitor_info = get_monitor_info(output_desc.monitor)?;
 
         let (gdi_name, gdi_name_utf16) = get_gdi_name(&output_desc);
@@ -275,17 +268,24 @@ impl DisplayInner {
             refresh_rate = get_refresh_rate(gdi_name_utf16);
         }
 
-        Ok(Some(DisplayInner {
+        // Create the display structure
+        let mut display = DisplayInner {
+            handle: output_desc.monitor,
             rect,
             work_area,
             refresh_rate,
-            dpi,
+            dpi: 0,
             physical_size,
             orientation,
             modes,
             is_primary,
             name,
             id,
-        }))
+        };
+
+        // Get the dpi
+        display.refresh_dpi()?;
+
+        Ok(Some(display))
     }
 }

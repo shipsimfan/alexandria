@@ -2,4 +2,4 @@
 mod windows;
 
 #[cfg(target_os = "windows")]
-pub(in crate::window) use windows::{Win32Window, WindowClass, WindowProc};
+pub(in crate::window) use windows::{Win32Window, WindowClass, WindowProc, WindowStyle};
