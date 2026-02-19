@@ -1,5 +1,5 @@
 use crate::{
-    Error, Result,
+    Error, PackedMap, Result,
     window::{
         Win32Window, WindowClass, WindowStyle,
         display::DisplayInner,
@@ -48,6 +48,7 @@ impl WindowSubsystemInner {
 
         Ok(WindowSubsystemInner {
             displays,
+            windows: PackedMap::new(),
             message_window,
             dxgi_factory,
         })

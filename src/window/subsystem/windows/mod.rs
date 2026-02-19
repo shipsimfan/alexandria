@@ -1,6 +1,6 @@
 use crate::{
     PackedMap,
-    window::{Win32Window, display::DisplayInner},
+    window::{Win32Window, display::DisplayInner, window::WindowInner},
 };
 use message_only_wnd_proc::MessageOnlyWndProc;
 use win32::{ComPtr, dxgi::IDXGIFactory};
@@ -16,6 +16,9 @@ mod wait_for_event;
 pub(in crate::window) struct WindowSubsystemInner {
     /// The current set of displays
     displays: PackedMap<DisplayInner>,
+
+    /// The current set of windows
+    windows: PackedMap<WindowInner>,
 
     /// An invisible window to receive messages
     message_window: Win32Window<MessageOnlyWndProc>,
