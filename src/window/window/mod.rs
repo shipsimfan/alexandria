@@ -1,23 +1,30 @@
 use crate::{Id, window::WindowSubsystem};
 
 mod builder;
+mod iter;
 
 #[cfg(target_os = "windows")]
 mod windows;
 
+mod destroy;
+mod get;
+mod inner;
+mod new;
+
 pub use builder::WindowBuilder;
+pub use iter::WindowIter;
 
 #[cfg(target_os = "windows")]
 pub(in crate::window) use windows::{
-    Win32Window, WindowClass, WindowInner, WindowProc, WindowStyle,
+    StandardWndProc, Win32Window, WindowClass, WindowInner, WindowProc, WindowStyle,
 };
 
 /// A reference to a window for which can be rendered into
 #[derive(Clone)]
-pub struct Window {
+pub struct Window<UserEvent: 'static + Send> {
     /// The ID of the window being pointed at
-    id: Id<WindowInner>,
+    id: Id<Window<UserEvent>>,
 
     /// A reference to the context containing the window
-    context: WindowSubsystem,
+    context: WindowSubsystem<UserEvent>,
 }

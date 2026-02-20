@@ -1,6 +1,6 @@
 use crate::{Event, EventIter, Result};
 
-impl<'a, UserEvent: Send> Iterator for EventIter<'a, UserEvent> {
+impl<'a, UserEvent: 'static + Send> Iterator for EventIter<'a, UserEvent> {
     type Item = Result<Event<UserEvent>>;
 
     fn next(&mut self) -> Option<Self::Item> {

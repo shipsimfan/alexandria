@@ -1,3 +1,49 @@
+fn main() {
+    let mut args = std::env::args();
+    args.next(); // skip executable name
+    let mut create_window = true;
+    for arg in args {
+        if arg == "--no-window" {
+            create_window = false;
+        } else {
+            eprintln!("Unknown argument: {}", arg);
+            std::process::exit(1);
+        }
+    }
+
+    let (context, mut pump) = alexandria::AlexandriaContext::<()>::builder()
+        .window()
+        .create()
+        .unwrap();
+
+    let window = if create_window {
+        Some(
+            context
+                .window()
+                .create_window("Event Viewer")
+                .resizable()
+                .create()
+                .unwrap(),
+        )
+    } else {
+        None
+    };
+
+    let mut running = true;
+    while running {
+        let event = pump.wait().unwrap();
+        running &= handle_event(&event, &context);
+
+        while let Some(event) = pump.poll().unwrap() {
+            running &= handle_event(&event, &context);
+        }
+    }
+
+    if let Some(window) = window {
+        window.destroy();
+    }
+}
+
 fn handle_event(
     event: &alexandria::Event<()>,
     context: &alexandria::AlexandriaContext<()>,
@@ -8,7 +54,7 @@ fn handle_event(
     match event.kind {
         alexandria::EventKind::Quit => {
             println!("[QUIT]");
-            return true;
+            return false;
         }
 
         alexandria::EventKind::DisplayAdded { id } => {
@@ -62,31 +108,16 @@ fn handle_event(
                 (new_dpi as f32 / 0.96).trunc()
             );
         }
+        alexandria::EventKind::WindowCloseRequest { id } => {
+            println!("[WINDOW][CLOSE REQUEST] {}", id);
+            context
+                .event_queue()
+                .push(alexandria::EventKind::Quit)
+                .unwrap();
+        }
 
         alexandria::EventKind::User(_) => println!("[USER]"),
     }
 
-    false
-}
-
-fn main() {
-    let (context, mut pump) = alexandria::AlexandriaContext::<()>::builder()
-        .window()
-        .create()
-        .unwrap();
-
-    loop {
-        let event = pump.wait().unwrap();
-        if handle_event(&event, &context) {
-            break;
-        }
-
-        while let Some(event) = pump.poll().unwrap() {
-            if handle_event(&event, &context) {
-                break;
-            }
-        }
-    }
-
-    drop(context);
+    true
 }

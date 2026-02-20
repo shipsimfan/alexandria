@@ -6,7 +6,7 @@ use crate::{
 };
 use std::{sync::atomic::Ordering, time::Instant};
 
-impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
+impl<UserEvent: 'static + Send> AlexandriaContextInner<UserEvent> {
     /// Create a new [`AlexandriaContextInner`]
     pub fn new(mut gpu: bool, window: bool) -> Result<AlexandriaContextInner<UserEvent>> {
         if ALEXANDRIA_CONTEXT_ACTIVE
@@ -31,7 +31,7 @@ impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
         };
 
         let window = if window {
-            Some(WindowSubsystem::new()?)
+            Some(WindowSubsystem::new(event_queue.clone())?)
         } else {
             None
         };

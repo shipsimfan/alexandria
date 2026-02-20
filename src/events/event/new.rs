@@ -1,7 +1,7 @@
 use crate::{Event, EventKind};
 use std::time::Instant;
 
-impl<UserEvent: Send> Event<UserEvent> {
+impl<UserEvent: 'static + Send> Event<UserEvent> {
     /// Create a new [`Event`]
     pub(in crate::events) fn new<K: Into<EventKind<UserEvent>>>(kind: K) -> Self {
         Event {

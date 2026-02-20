@@ -1,14 +1,14 @@
 use crate::{
     Id,
     math::{Rational, Recti, Vector2i},
-    window::{Display, DisplayOrientation},
+    window::{Display, DisplayOrientation, Window},
 };
 
 mod from;
 
 /// A specific event kind that can pushed into an [`EventQueue`](crate::EventQueue)
 #[derive(Debug, Clone, PartialEq)]
-pub enum EventKind<UserEvent: Send> {
+pub enum EventKind<UserEvent: 'static + Send> {
     /*
      *** GENERAL EVENTS ***
      */
@@ -21,19 +21,19 @@ pub enum EventKind<UserEvent: Send> {
     /// A new [`Display`] was added
     DisplayAdded {
         /// The ID of the newly added [`Display`]
-        id: Id<Display<'static>>,
+        id: Id<Display<'static, UserEvent>>,
     },
 
     /// A new [`Display`] was removed
     DisplayRemoved {
         /// The ID of the removed [`Display`]
-        id: Id<Display<'static>>,
+        id: Id<Display<'static, UserEvent>>,
     },
 
     /// A [`Display`] was moved
     DisplayMoved {
         /// The ID of the moved [`Display`]
-        id: Id<Display<'static>>,
+        id: Id<Display<'static, UserEvent>>,
 
         /// The new position of the [`Display`]
         new_position: Vector2i,
@@ -42,8 +42,7 @@ pub enum EventKind<UserEvent: Send> {
     /// A [`Display`] was resized
     DisplayResized {
         /// The ID of the resized [`Display`]
-        id: Id<Display<'static>>,
-
+        id: Id<Display<'static, UserEvent>>,
         /// The new size of the [`Display`]
         new_size: Vector2i,
     },
@@ -51,7 +50,7 @@ pub enum EventKind<UserEvent: Send> {
     /// A [`Display`]'s work area changed
     DisplayWorkAreaChanged {
         /// The ID of the changed [`Display`]
-        id: Id<Display<'static>>,
+        id: Id<Display<'static, UserEvent>>,
 
         /// The new work area of the [`Display`]
         new_work_area: Recti,
@@ -60,7 +59,7 @@ pub enum EventKind<UserEvent: Send> {
     /// A [`Display`]'s refresh rate changed
     DisplayRefreshRateChanged {
         /// The ID of the changed [`Display`]
-        id: Id<Display<'static>>,
+        id: Id<Display<'static, UserEvent>>,
 
         /// The new refresh rate of the [`Display`]
         new_refresh_rate: Rational,
@@ -69,7 +68,7 @@ pub enum EventKind<UserEvent: Send> {
     /// A [`Display`] was rotated
     DisplayRotated {
         /// The ID of the rotated [`Display`]
-        id: Id<Display<'static>>,
+        id: Id<Display<'static, UserEvent>>,
 
         /// The new orientation of the [`Display`]
         new_orientation: DisplayOrientation,
@@ -78,10 +77,19 @@ pub enum EventKind<UserEvent: Send> {
     /// A [`Display`]'s DPI changed
     DisplayDpiChanged {
         /// The ID of the changed [`Display`]
-        id: Id<Display<'static>>,
+        id: Id<Display<'static, UserEvent>>,
 
         /// The new DPI of the [`Display`]
         new_dpi: u32,
+    },
+
+    /*
+     *** WINDOW EVENTS ***
+     */
+    /// A [`Window`] was requested to be closed
+    WindowCloseRequest {
+        /// The ID of the [`Window`] that is requesting to be closed
+        id: Id<Window<UserEvent>>,
     },
 
     /*

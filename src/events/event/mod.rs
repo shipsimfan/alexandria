@@ -8,7 +8,7 @@ pub use kind::EventKind;
 
 /// An event that can pushed into an [`EventQueue`](crate::EventQueue)
 #[derive(Debug, Clone, PartialEq)]
-pub struct Event<UserEvent: Send> {
+pub struct Event<UserEvent: 'static + Send> {
     /// The time the event was pushed onto the queue
     pub time: Instant,
 

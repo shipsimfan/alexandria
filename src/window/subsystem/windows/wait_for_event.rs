@@ -4,7 +4,7 @@ use win32::{
     DWORD, FALSE, INFINITE, MsgWaitForMultipleObjects, QS_ALLINPUT, WAIT_OBJECT_0, WAIT_TIMEOUT,
 };
 
-impl WindowSubsystemInner {
+impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
     /// Wait for an event to occur on the window subsystem, `notify` signals, or `timeout` passes
     pub(in crate::window::subsystem) fn wait_for_event(
         &self,

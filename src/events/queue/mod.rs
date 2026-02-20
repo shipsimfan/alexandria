@@ -15,5 +15,5 @@ pub(in crate::events) use inner::pump_quit_event;
 
 define_handle! {
     /// A queue of events that can be pushed from any thread
-   pub EventQueue<UserEvent: Send> -> EventQueueInner<UserEvent>
+   pub EventQueue<UserEvent: 'static + Send> -> EventQueueInner<UserEvent>
 }

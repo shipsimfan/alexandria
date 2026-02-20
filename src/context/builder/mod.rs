@@ -5,7 +5,7 @@ mod new;
 mod set;
 
 /// A builder for an [`AlexandriaContext`](crate::AlexandriaContext)
-pub struct AlexandriaContextBuilder<UserEvent: Send = ()> {
+pub struct AlexandriaContextBuilder<UserEvent: 'static + Send = ()> {
     /// Should the GPU subsystem be initialized?
     gpu: bool,
 

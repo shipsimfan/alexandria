@@ -9,7 +9,7 @@ use win32::dxgi::IDXGIFactory;
 
 impl MessageOnlyWndProc {
     /// Pump global events
-    pub fn pump_events<UserEvent: Send>(
+    pub fn pump_events<UserEvent: 'static + Send>(
         &mut self,
         pump: &EventQueue<UserEvent>,
         displays: &mut PackedMap<DisplayInner>,

@@ -8,7 +8,7 @@ mod wait;
 
 /// A type that allows pumping events from the thread that initialized the
 /// [`AlexandriaContext`](crate::AlexandriaContext)
-pub struct EventPump<UserEvent: Send> {
+pub struct EventPump<UserEvent: 'static + Send> {
     /// The queue to pump events onto
     queue: EventQueue<UserEvent>,
 

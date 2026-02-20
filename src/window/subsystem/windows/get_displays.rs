@@ -3,7 +3,7 @@ use crate::{
     window::{display::DisplayInner, subsystem::WindowSubsystemInner},
 };
 
-impl WindowSubsystemInner {
+impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
     /// Get the set of currently active displays
     pub fn displays(&self) -> &PackedMap<DisplayInner> {
         &self.displays

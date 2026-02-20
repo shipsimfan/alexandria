@@ -20,10 +20,10 @@ pub use orientation::DisplayOrientation;
 pub(in crate::window) use windows::DisplayInner;
 
 /// An active display for presenting images to a user
-pub struct Display<'a> {
+pub struct Display<'a, UserEvent: 'static + Send> {
     /// The index of the display in `r#ref`
     index: usize,
 
     /// The reference to the window subsystem containing this display
-    r#ref: Ref<'a, WindowSubsystemInner>,
+    r#ref: Ref<'a, WindowSubsystemInner<UserEvent>>,
 }

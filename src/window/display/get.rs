@@ -3,7 +3,7 @@ use crate::{
     window::{Display, DisplayMode, DisplayOrientation},
 };
 
-impl<'a> Display<'a> {
+impl<'a, UserEvent: 'static + Send> Display<'a, UserEvent> {
     /// Get the rectangle describing the area of this display covers
     pub fn rect(&self) -> Recti {
         self.inner().rect()

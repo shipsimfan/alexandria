@@ -1,6 +1,6 @@
 use crate::{AlexandriaContext, EventPump, Result, context::AlexandriaContextInner};
 
-impl<UserEvent: Send> AlexandriaContext<UserEvent> {
+impl<UserEvent: 'static + Send> AlexandriaContext<UserEvent> {
     /// Create a new [`AlexandriaContext`] and [`EventPump`]
     pub(in crate::context) fn new(
         gpu: bool,

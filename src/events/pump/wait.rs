@@ -1,7 +1,7 @@
 use crate::{Event, EventPump, Result};
 use std::time::Duration;
 
-impl<UserEvent: Send> EventPump<UserEvent> {
+impl<UserEvent: 'static + Send> EventPump<UserEvent> {
     /// Wait indefinetly until an event is available
     pub fn wait(&mut self) -> Result<Event<UserEvent>> {
         self.wait_timeout(None).map(|event| event.unwrap())

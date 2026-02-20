@@ -13,7 +13,7 @@ mod push;
 pub(in crate::events) use quit_handler::pump_quit_event;
 
 /// A queue of events that can be pushed from any thread
-pub(in crate::events::queue) struct EventQueueInner<UserEvent: Send> {
+pub(in crate::events::queue) struct EventQueueInner<UserEvent: 'static + Send> {
     /// The queue for events
     queue: Mutex<VecDeque<Event<UserEvent>>>,
 

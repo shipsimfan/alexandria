@@ -4,7 +4,7 @@ use crate::{
 };
 use std::{collections::VecDeque, sync::Mutex};
 
-impl<UserEvent: Send> EventQueueInner<UserEvent> {
+impl<UserEvent: 'static + Send> EventQueueInner<UserEvent> {
     /// Create a new [`EventQueueInner`]
     pub fn new() -> Result<EventQueueInner<UserEvent>> {
         let notify = Notify::new(false, false)?;

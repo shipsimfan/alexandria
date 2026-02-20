@@ -3,6 +3,53 @@
  2. Implement message pump on Wayland
  3. Add display related events + handling on Wayland
  4. Re-add windows on Windows
+   1. Window destruction
+   2. Fullscreen window creation
+   3. Add minimum and maximum size handling
+   4. Add Window Events
+      - Close Requested
+      - Moved
+      - Resized
+      - Minimized
+      - Maximized
+      - Restored
+      - Focus Gained
+      - Focus Lost
+      - Shown
+      - Hidden
+      - DPI Changed
+      - Enter Fullscreen
+      - Leave Fullscreen
+      - Destroyed
+   5. Window state tracking
+     - Title
+     - Size
+     - Minimum Size
+     - Maximum Size
+     - Position
+     - Maximized
+     - Minimized
+     - Focus
+     - Hidden
+     - Borderless
+     - Resizable
+     - Is Resizing
+     - Is Moving
+     - Fullscreen + Fullscreen Display Mode
+     - DPI
+   6. Window state setting
+     - Title
+     - Size
+     - Minimum Size
+     - Maximum Size
+     - Position
+     - Request close
+     - Maximized
+     - Minimized
+     - Hidden
+     - Borderless
+     - Resizable
+     - Fullscreen + Fullscreen Display Mode
  5. Re-add surface creation on Windows
  6. Re-add device graphics items
 

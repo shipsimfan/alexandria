@@ -3,7 +3,7 @@ use crate::{
 };
 use std::time::Instant;
 
-impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
+impl<UserEvent: 'static + Send> AlexandriaContextInner<UserEvent> {
     /// Get the time the context was created at
     pub fn start_time(&self) -> Instant {
         self.start_time
@@ -20,7 +20,7 @@ impl<UserEvent: Send> AlexandriaContextInner<UserEvent> {
     }
 
     /// Get a reference to the windowing subsystem, if its been initialized
-    pub fn window_opt(&self) -> Option<&WindowSubsystem> {
+    pub fn window_opt(&self) -> Option<&WindowSubsystem<UserEvent>> {
         self.window.as_ref()
     }
 }

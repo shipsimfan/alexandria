@@ -1,13 +1,13 @@
 use crate::{
-    Result,
+    EventQueue, Result,
     window::{WindowSubsystem, subsystem::WindowSubsystemInner},
 };
 use std::{cell::RefCell, rc::Rc};
 
-impl WindowSubsystem {
+impl<UserEvent: 'static + Send> WindowSubsystem<UserEvent> {
     /// Create a new [`WindowSubsystem`]
-    pub(crate) fn new() -> Result<WindowSubsystem> {
-        WindowSubsystemInner::new().map(|inner| WindowSubsystem {
+    pub(crate) fn new(event_queue: EventQueue<UserEvent>) -> Result<WindowSubsystem<UserEvent>> {
+        WindowSubsystemInner::new(event_queue).map(|inner| WindowSubsystem {
             inner: Rc::new(RefCell::new(inner)),
         })
     }

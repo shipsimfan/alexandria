@@ -11,5 +11,5 @@ pub use builder::AlexandriaContextBuilder;
 
 define_local_handle!(
     /// The main entry point for interacting with Alexandria
-    pub AlexandriaContext<UserEvent: Send> -> AlexandriaContextInner<UserEvent>
+    pub AlexandriaContext<UserEvent: 'static + Send> -> AlexandriaContextInner<UserEvent>
 );

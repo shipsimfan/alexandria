@@ -1,6 +1,6 @@
 use crate::window::{Display, display::DisplayInner};
 
-impl<'a> Display<'a> {
+impl<'a, UserEvent: 'static + Send> Display<'a, UserEvent> {
     /// Get the [`DisplayInner`] this points to
     #[inline]
     pub(in crate::window::display) fn inner(&self) -> &DisplayInner {

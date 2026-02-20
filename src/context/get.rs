@@ -1,7 +1,7 @@
 use crate::{AlexandriaContext, EventQueue, gpu::GpuSubsystem, window::WindowSubsystem};
 use std::time::Instant;
 
-impl<UserEvent: Send> AlexandriaContext<UserEvent> {
+impl<UserEvent: 'static + Send> AlexandriaContext<UserEvent> {
     /// Get the time the context was created at
     pub fn start_time(&self) -> Instant {
         self.inner.start_time()
@@ -25,14 +25,14 @@ impl<UserEvent: Send> AlexandriaContext<UserEvent> {
     }
 
     /// Get a reference to the windowing subsystem, if its been initialized
-    pub fn window_opt(&self) -> Option<&WindowSubsystem> {
+    pub fn window_opt(&self) -> Option<&WindowSubsystem<UserEvent>> {
         self.inner.window_opt()
     }
 
     /// Get a reference to the windowing subsystem
     ///
     /// This function will panic if the windowing subsystem wasn't initialized at creation
-    pub fn window(&self) -> &WindowSubsystem {
+    pub fn window(&self) -> &WindowSubsystem<UserEvent> {
         self.window_opt().unwrap()
     }
 }

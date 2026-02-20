@@ -1,5 +1,5 @@
 use crate::{
-    Error, PackedMap, Result,
+    Error, EventQueue, PackedMap, Result,
     window::{
         Win32Window, WindowClass, WindowStyle,
         display::DisplayInner,
@@ -7,15 +7,17 @@ use crate::{
     },
 };
 use win32::{
-    ComInterface, ComPtr, DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2,
+    CS_OWNDC, ComInterface, ComPtr, DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2,
     SetProcessDpiAwarenessContext,
     dxgi::{CreateDXGIFactory, IDXGIFactory},
     try_get_last_error, try_hresult,
 };
 
-impl WindowSubsystemInner {
+impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
     /// Create a new [`WindowSubsystemInner`]
-    pub(in crate::window::subsystem) fn new() -> Result<WindowSubsystemInner> {
+    pub(in crate::window::subsystem) fn new(
+        event_queue: EventQueue<UserEvent>,
+    ) -> Result<WindowSubsystemInner<UserEvent>> {
         // Set the DPI awareness
         try_get_last_error!(SetProcessDpiAwarenessContext(
             DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2
@@ -35,6 +37,10 @@ impl WindowSubsystemInner {
         )
         .map_err(|os| Error::new_with("unable to create message only window", os))?;
 
+        // Create the standard window class
+        let standard_window_class = WindowClass::register("standard", CS_OWNDC)
+            .map_err(|os| Error::new_with("unable to create standard window class", os))?;
+
         // Create DXGI factory
         let mut dxgi_factory = ComPtr::<IDXGIFactory>::new_in(|factory| {
             try_hresult!(CreateDXGIFactory(&IDXGIFactory::IID, factory.cast()))
@@ -49,7 +55,9 @@ impl WindowSubsystemInner {
         Ok(WindowSubsystemInner {
             displays,
             windows: PackedMap::new(),
+            event_queue,
             message_window,
+            standard_window_class,
             dxgi_factory,
         })
     }

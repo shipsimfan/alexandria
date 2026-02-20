@@ -1,7 +1,7 @@
 //! Subsystem for interacting with platform windowing systems
 
 #[cfg(target_os = "windows")]
-use window::{Win32Window, WindowClass, WindowProc, WindowStyle};
+use window::{StandardWndProc, Win32Window, WindowClass, WindowProc, WindowStyle};
 
 mod display;
 mod subsystem;
@@ -9,4 +9,4 @@ mod window;
 
 pub use display::{Display, DisplayIter, DisplayMode, DisplayOrientation};
 pub use subsystem::WindowSubsystem;
-pub use window::{Window, WindowBuilder};
+pub use window::{Window, WindowBuilder, WindowIter};

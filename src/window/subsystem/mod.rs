@@ -3,8 +3,11 @@ use std::{cell::RefCell, rc::Rc};
 #[cfg(target_os = "windows")]
 mod windows;
 
+mod clone;
 mod create_window;
-mod displays;
+mod destroy_window;
+mod get_displays;
+mod get_windows;
 mod new;
 mod pump_events;
 mod wait_for_event;
@@ -13,8 +16,7 @@ mod wait_for_event;
 pub(in crate::window) use windows::WindowSubsystemInner;
 
 /// Allows interaction with the platform windowing system
-#[derive(Clone)]
-pub struct WindowSubsystem {
+pub struct WindowSubsystem<UserEvent: 'static + Send> {
     /// The platform specific implementation of the subsystem
-    inner: Rc<RefCell<WindowSubsystemInner>>,
+    inner: Rc<RefCell<WindowSubsystemInner<UserEvent>>>,
 }

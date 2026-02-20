@@ -1,12 +1,11 @@
-use std::cell::Ref;
-
 use crate::{
     Id,
     window::{Display, DisplayIter},
 };
+use std::cell::Ref;
 
-impl<'a> Iterator for DisplayIter<'a> {
-    type Item = (Id<Display<'static>>, Display<'a>);
+impl<'a, UserEvent: 'static + Send> Iterator for DisplayIter<'a, UserEvent> {
+    type Item = (Id<Display<'static, UserEvent>>, Display<'a, UserEvent>);
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.index >= self.r#ref.displays().len() {

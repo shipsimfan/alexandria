@@ -1,14 +1,14 @@
 use crate::{AlexandriaContext, AlexandriaContextBuilder};
 use std::marker::PhantomData;
 
-impl<UserEvent: Send> AlexandriaContext<UserEvent> {
+impl<UserEvent: 'static + Send> AlexandriaContext<UserEvent> {
     /// Create a new [`AlexandriaContextBuilder`]
     pub fn builder() -> AlexandriaContextBuilder<UserEvent> {
         AlexandriaContextBuilder::new()
     }
 }
 
-impl<UserEvent: Send> AlexandriaContextBuilder<UserEvent> {
+impl<UserEvent: 'static + Send> AlexandriaContextBuilder<UserEvent> {
     /// Create a new [`AlexandriaContextBuilder`]
     pub fn new() -> AlexandriaContextBuilder<UserEvent> {
         AlexandriaContextBuilder {

@@ -2,7 +2,7 @@ use crate::{EventKind, EventQueue, Result, events::queue::inner::quit_handler::Q
 use std::sync::atomic::Ordering;
 
 /// Check if a quit event has been signalled by the operating system
-pub(in crate::events) fn pump_quit_event<UserEvent: Send>(
+pub(in crate::events) fn pump_quit_event<UserEvent: 'static + Send>(
     event_pump: &EventQueue<UserEvent>,
 ) -> Result<()> {
     let quit_signalled = QUIT_SIGNALLED.swap(false, Ordering::Acquire);

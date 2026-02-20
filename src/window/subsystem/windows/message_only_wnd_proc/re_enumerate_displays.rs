@@ -3,7 +3,7 @@ use win32::dxgi::IDXGIFactory;
 
 /// Re-enumerate the displays in the system, emitting the appropriate events for changes
 pub(in crate::window::subsystem::windows::message_only_wnd_proc) fn re_enumerate_displays<
-    UserEvent: Send,
+    UserEvent: 'static + Send,
 >(
     pump: &EventQueue<UserEvent>,
     displays: &mut PackedMap<DisplayInner>,

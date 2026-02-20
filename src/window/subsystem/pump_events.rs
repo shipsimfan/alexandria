@@ -1,8 +1,8 @@
-use crate::{EventQueue, Result, window::WindowSubsystem};
+use crate::{Result, window::WindowSubsystem};
 
-impl WindowSubsystem {
+impl<UserEvent: 'static + Send> WindowSubsystem<UserEvent> {
     /// Pumps events from input devices and the window system onto the event queue
-    pub(crate) fn pump_events<UserEvent: Send>(&self, pump: &EventQueue<UserEvent>) -> Result<()> {
-        self.inner.borrow_mut().pump_events(pump)
+    pub(crate) fn pump_events(&self) -> Result<()> {
+        self.inner.borrow_mut().pump_events()
     }
 }

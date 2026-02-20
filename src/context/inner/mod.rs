@@ -6,7 +6,7 @@ mod get;
 mod new;
 
 /// The main entry point for interacting with Alexandria
-pub(in crate::context) struct AlexandriaContextInner<UserEvent: Send> {
+pub(in crate::context) struct AlexandriaContextInner<UserEvent: 'static + Send> {
     /// The time the context was created
     start_time: Instant,
 
@@ -17,7 +17,7 @@ pub(in crate::context) struct AlexandriaContextInner<UserEvent: Send> {
     gpu: Option<GpuSubsystem>,
 
     /// The system for interacting with platform windowing systems
-    window: Option<WindowSubsystem>,
+    window: Option<WindowSubsystem<UserEvent>>,
 }
 
 /// A boolean to make sure only a single [`AlexandriaContext`](crate::AlexandriaContext) is active

@@ -4,12 +4,13 @@ use crate::{
 };
 use std::borrow::Cow;
 
+mod create;
 mod get;
 mod new;
 mod set;
 
 /// A builder for new [`Window`](crate::window::Window)s
-pub struct WindowBuilder {
+pub struct WindowBuilder<UserEvent: 'static + Send> {
     /// The name of the window
     title: Cow<'static, str>,
 
@@ -49,5 +50,5 @@ pub struct WindowBuilder {
     fullscreen_mode: Option<DisplayMode>,
 
     /// The context to produce the window on
-    context: WindowSubsystem,
+    context: WindowSubsystem<UserEvent>,
 }

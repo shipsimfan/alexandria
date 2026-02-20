@@ -1,12 +1,12 @@
 use crate::window::{WindowBuilder, WindowSubsystem};
 use std::borrow::Cow;
 
-impl WindowBuilder {
+impl<UserEvent: 'static + Send> WindowBuilder<UserEvent> {
     /// Create a new [`WindowBuilder`]
     pub(in crate::window) fn new(
         title: Cow<'static, str>,
-        context: WindowSubsystem,
-    ) -> WindowBuilder {
+        context: WindowSubsystem<UserEvent>,
+    ) -> WindowBuilder<UserEvent> {
         WindowBuilder {
             title,
             size: None,

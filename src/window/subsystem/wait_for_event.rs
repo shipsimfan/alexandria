@@ -1,7 +1,7 @@
 use crate::{Notify, Result, window::WindowSubsystem};
 use std::time::Duration;
 
-impl WindowSubsystem {
+impl<UserEvent: 'static + Send> WindowSubsystem<UserEvent> {
     /// Wait for an event to occur on the window subsystem, `notify` signals, or `timeout` passes
     pub(crate) fn wait_for_event(
         &self,

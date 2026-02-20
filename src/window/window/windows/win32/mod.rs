@@ -4,6 +4,7 @@ use win32::HWND;
 
 mod deref;
 mod drop;
+mod get;
 mod new;
 
 /// A raw Win32 window
