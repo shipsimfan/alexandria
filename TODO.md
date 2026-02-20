@@ -66,52 +66,100 @@
      2. Display enumeration
      3. `process_messages` + `wait_for_message` functions
      4. Window creation
-     5. Thread-local window state
-       - Size
-       - Position
-       - Is focused
-       - Close requested
-       - Is maximized
-       - Is minimized
-       - Is resizing
-       - Is moving
-       - Display styles (e.g. Is borderless)
-     6. Window modification
+     5. Add Window Events
+        - Close Requested
+        - Moved
+        - Resized
+        - Minimized
+        - Maximized
+        - Restored
+        - Focus Gained
+        - Focus Lost
+        - Shown
+        - Hidden
+        - DPI Changed
+        - Enter Fullscreen
+        - Leave Fullscreen
+        - Destroyed
+     6. Window state tracking
        - Title
        - Size
+       - Minimum Size
+       - Maximum Size
+       - Position
+       - Maximized
+       - Minimized
+       - Focus
+       - Hidden
+       - Borderless
+       - Resizable
+       - Is Resizing
+       - Is Moving
+       - Fullscreen + Fullscreen Display Mode
+       - DPI
+    7. Window state setting
+       - Title
+       - Size
+       - Minimum Size
+       - Maximum Size
        - Position
        - Request close
        - Maximized
-       - Show
-       - Hide
-       - Display styles (e.g. borderless)
-     7. Cursor lock to window
+       - Minimized
+       - Hidden
+       - Borderless
+       - Resizable
+       - Fullscreen + Fullscreen Display Mode
      8. Surface creation
    2. X11
      1. Connection
      2. Display enumeration
      3. `process_messages` + `wait_for_message` functions
      4. Window creation
-     5. Thread-local window state
-       - Size
-       - Position
-       - Is focused
-       - Close requested
-       - Is maximized
-       - Is minimized
-       - Is resizing
-       - Is moving
-       - Display styles (e.g. Is borderless)
-     6. Window modification
+     5. Add Window Events
+        - Close Requested
+        - Moved
+        - Resized
+        - Minimized
+        - Maximized
+        - Restored
+        - Focus Gained
+        - Focus Lost
+        - Shown
+        - Hidden
+        - DPI Changed
+        - Enter Fullscreen
+        - Leave Fullscreen
+        - Destroyed
+     6. Window state tracking
        - Title
        - Size
+       - Minimum Size
+       - Maximum Size
+       - Position
+       - Maximized
+       - Minimized
+       - Focus
+       - Hidden
+       - Borderless
+       - Resizable
+       - Is Resizing
+       - Is Moving
+       - Fullscreen + Fullscreen Display Mode
+       - DPI
+    7. Window state setting
+       - Title
+       - Size
+       - Minimum Size
+       - Maximum Size
        - Position
        - Request close
        - Maximized
-       - Show
-       - Hide
-       - Display styles (e.g. borderless)
-     7. Cursor lock to window
+       - Minimized
+       - Hidden
+       - Borderless
+       - Resizable
+       - Fullscreen + Fullscreen Display Mode
      8. Surface creation
  3. Input system
    1. System
@@ -131,24 +179,24 @@
    - Windows (`WM_GETMINMAXINFO`)
    - Wayland (`xdg_toplevel_set_min_size()`)
    - X11
- 5. Add fullscreen support
-   - Windows (exclusive)
-   - Wayland (extension)
-   - X11
- 6. Add renderer wrappers for triangle
- 7. Add renderer wrappers for multi-cube
- 8. Add model loading/parsing
- 9. Add texture loading/parsing
- 10. Add window icons
+ 5. Add renderer wrappers for triangle
+ 6. Add renderer wrappers for multi-cube
+ 7. Add model loading/parsing
+ 8. Add texture loading/parsing
+ 9. Add window icons
    - Windows
    - Wayland
    - X11
- 11. Add audio wrappers
- 12. Add more input types
+ 10. Add audio wrappers (pull-style)
+   - WASAPI
+   - PipeWire
+   - PulseAudio
+   - ALSA
+ 11. Add more input types
    - X-Box controllers (Windows)
    - General controllers
    - Joysticks
    - Steering Wheels, Pedals, Gear Shift
- 13. Add 2-d support to `Matrix3x3`
- 14. Add more external control to event queue
- 15. Add max capacity to event queue
+ 12. Add 2-d support to `Matrix3x3`
+ 13. Add more external control to event queue
+ 14. Add max capacity to event queue
