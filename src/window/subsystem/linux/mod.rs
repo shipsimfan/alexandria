@@ -1,0 +1,18 @@
+use std::marker::PhantomData;
+
+mod create_window;
+mod destroy_window;
+mod get_displays;
+mod get_windows;
+mod new;
+mod pump_events;
+mod wait_for_event;
+
+/// The implementation of the [`WindowSubsystem`](crate::window::WindowSubsystem) for Linux
+pub(in crate::window) enum WindowSubsystemInner<UserEvent: 'static + Send> {
+    /// The Wayland implementation of the window subsystem
+    Wayland(PhantomData<UserEvent>),
+
+    /// The X11 implementation of the window subsystem
+    X11(PhantomData<UserEvent>),
+}

@@ -1,5 +1,7 @@
 use std::{cell::RefCell, rc::Rc};
 
+#[cfg(target_os = "linux")]
+mod linux;
 #[cfg(target_os = "windows")]
 mod windows;
 
@@ -12,6 +14,8 @@ mod new;
 mod pump_events;
 mod wait_for_event;
 
+#[cfg(target_os = "linux")]
+pub(in crate::window) use linux::WindowSubsystemInner;
 #[cfg(target_os = "windows")]
 pub(in crate::window) use windows::WindowSubsystemInner;
 

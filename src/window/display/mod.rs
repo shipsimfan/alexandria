@@ -5,6 +5,8 @@ mod iter;
 mod mode;
 mod orientation;
 
+#[cfg(target_os = "linux")]
+mod linux;
 #[cfg(target_os = "windows")]
 mod windows;
 
@@ -16,6 +18,8 @@ pub use iter::DisplayIter;
 pub use mode::DisplayMode;
 pub use orientation::DisplayOrientation;
 
+#[cfg(target_os = "linux")]
+pub(in crate::window) use linux::DisplayInner;
 #[cfg(target_os = "windows")]
 pub(in crate::window) use windows::DisplayInner;
 

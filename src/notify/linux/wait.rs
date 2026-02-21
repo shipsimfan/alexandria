@@ -25,9 +25,11 @@ impl NotifyInner {
                 fds.as_mut_ptr(),
                 fds.len() as _,
                 timeout_ms.unwrap_or(-1)
-            ))? {
-                0 => return Ok(false),
-                _ => {}
+            )) {
+                Ok(0) => return Ok(false),
+                Ok(_) => {}
+                Err(linux::Error::EINTR) => continue,
+                Err(error) => return Err(error),
             }
 
             if !self.auto_reset {

@@ -2,6 +2,8 @@ use crate::Notify;
 use handler::quit_handler;
 use std::sync::{Mutex, atomic::AtomicBool};
 
+#[cfg(target_os = "linux")]
+use linux as os;
 #[cfg(target_os = "windows")]
 use windows as os;
 
@@ -10,6 +12,8 @@ mod handler;
 mod pump;
 mod set;
 
+#[cfg(target_os = "linux")]
+mod linux;
 #[cfg(target_os = "windows")]
 mod windows;
 
