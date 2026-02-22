@@ -1,5 +1,5 @@
 use crate::{Error, Result, shared_object::SharedObjectInner};
-use linux::dlfcn::{RTLD_NOW, dlerror, dlopen};
+use linux::dlfcn::{RTLD_LOCAL, RTLD_NOW, dlerror, dlopen};
 use std::{
     ffi::{CStr, CString},
     path::Path,
@@ -12,7 +12,7 @@ impl SharedObjectInner {
         let path = path.as_ref();
         let path_c = CString::new(path.to_string_lossy().as_bytes()).unwrap();
 
-        let handle = unsafe { dlopen(path_c.as_ptr(), RTLD_NOW) };
+        let handle = unsafe { dlopen(path_c.as_ptr(), RTLD_LOCAL | RTLD_NOW) };
         if handle == null_mut() {
             let error = unsafe { dlerror() };
             return Err(Error::new_with(

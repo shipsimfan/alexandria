@@ -1,5 +1,5 @@
 use crate::notify::NotifyInner;
-use std::os::windows::raw::HANDLE;
+use win32::HANDLE;
 
 impl NotifyInner {
     /// Get the handle to the underlying event

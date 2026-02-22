@@ -1,13 +1,14 @@
 use std::ffi::c_int;
 
 mod drop;
+mod get;
 mod new;
 mod notify;
 mod reset;
 mod wait;
 
 /// The implementation of a [`Notify`](crate::Notify) on Linux
-pub(in crate::notify) struct NotifyInner {
+pub(crate) struct NotifyInner {
     /// The handle to the eventfd
     handle: c_int,
 

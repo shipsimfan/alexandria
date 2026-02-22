@@ -17,25 +17,6 @@ impl<Callbacks: WindowEvents> WaylandWindow<Callbacks> {
         display: Rc<WlDisplay>,
         callbacks: Callbacks,
     ) -> Result<Box<Window<Callbacks>>> {
-        // Get the registered globals
-        let mut registry = display
-            .clone()
-            .get_registry()?
-            .add_listener(WaylandGlobals::new())?;
-        display.roundtrip()?;
-
-        // Make sure all required global were bound
-        if let Err(error) = registry.data_mut().result() {
-            return Err(error);
-        }
-
-        if registry.data().compositor().is_none() {
-            return Err(WindowError::new("no Wayland compositor available"));
-        }
-        if registry.data().xdg_wm_base().is_none() {
-            return Err(WindowError::new("no XDG window manager available"));
-        }
-
         // Create surface
         let wl_surface = registry
             .data_mut()

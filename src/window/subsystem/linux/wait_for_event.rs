@@ -8,6 +8,9 @@ impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
         notify: &Notify,
         timeout: Option<Duration>,
     ) -> Result<bool> {
-        notify.wait(timeout)
+        match self {
+            WindowSubsystemInner::Wayland(wayland) => wayland.wait_for_event(notify, timeout),
+            WindowSubsystemInner::X11 => todo!(),
+        }
     }
 }

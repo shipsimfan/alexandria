@@ -1,4 +1,6 @@
-use std::marker::PhantomData;
+use wayland::{WaylandWindowSubsystem, WlDisplay};
+
+mod wayland;
 
 mod create_window;
 mod destroy_window;
@@ -11,8 +13,8 @@ mod wait_for_event;
 /// The implementation of the [`WindowSubsystem`](crate::window::WindowSubsystem) for Linux
 pub(in crate::window) enum WindowSubsystemInner<UserEvent: 'static + Send> {
     /// The Wayland implementation of the window subsystem
-    Wayland(PhantomData<UserEvent>),
+    Wayland(WaylandWindowSubsystem<UserEvent>),
 
     /// The X11 implementation of the window subsystem
-    X11(PhantomData<UserEvent>),
+    X11,
 }
