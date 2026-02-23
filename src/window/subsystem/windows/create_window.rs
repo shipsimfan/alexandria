@@ -13,6 +13,7 @@ impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
             self.standard_window_class.clone(),
             builder,
             &self.event_queue,
+            &self.displays,
         )?;
 
         let id = self.windows.insert(inner);

@@ -108,4 +108,19 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     pub fn height(&self) -> i32 {
         self.height_opt().expect("window has been destroyed")
     }
+
+    /// Is the window currently in fullscreen mode?
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn is_fullscreen_opt(&self) -> Option<bool> {
+        self.with_inner(|inner| inner.is_fullscreen())
+    }
+
+    /// Is the window currently in fullscreen mode?
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn is_fullscreen(&self) -> bool {
+        self.is_fullscreen_opt().expect("window has been destroyed")
+    }
 }

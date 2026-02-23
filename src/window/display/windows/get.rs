@@ -1,7 +1,9 @@
 use crate::{
+    Error, Result,
     math::{Rational, Recti, Vector2u},
     window::{DisplayMode, DisplayOrientation, display::DisplayInner},
 };
+use win32::{GetMonitorInfo, MONITORINFO, try_get_last_error};
 
 impl<UserEvent> DisplayInner<UserEvent> {
     /// Get the rectangle describing the area of this display covers
@@ -52,5 +54,13 @@ impl<UserEvent> DisplayInner<UserEvent> {
     /// Get the id of this display
     pub fn id(&self) -> &str {
         &self.id
+    }
+
+    /// Get the current rectangle of the display, bypassing the cached value
+    pub fn get_rect(&self) -> Result<Recti> {
+        let mut monitor_info = MONITORINFO::default();
+        try_get_last_error!(GetMonitorInfo(self.handle, &mut monitor_info))
+            .map_err(|os| Error::new_with("unable to get display rect", os))?;
+        Ok(monitor_info.monitor.into())
     }
 }

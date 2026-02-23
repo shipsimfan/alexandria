@@ -274,6 +274,7 @@ impl<UserEvent> DisplayInner<UserEvent> {
         // Create the display structure
         let mut display = DisplayInner {
             handle: output_desc.monitor,
+            device_name: output_desc.device_name,
             rect,
             work_area,
             refresh_rate,

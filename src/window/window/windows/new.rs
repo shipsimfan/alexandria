@@ -1,8 +1,9 @@
 use crate::{
-    Error, EventQueue, Result,
+    Error, EventQueue, PackedMap, Result,
     math::{Recti, Vector2},
     window::{
         Win32Window, WindowBuilder, WindowClass, WindowStyle,
+        display::DisplayInner,
         window::{WindowInner, windows::StandardWndProc},
     },
 };
@@ -14,6 +15,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
         class: Rc<WindowClass<StandardWndProc<UserEvent>>>,
         builder: &WindowBuilder<UserEvent>,
         event_queue: &EventQueue<UserEvent>,
+        displays: &PackedMap<DisplayInner<UserEvent>>,
     ) -> Result<WindowInner<UserEvent>> {
         // Prepare window style
         let style = if builder.is_fullscreen() {
@@ -35,33 +37,38 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
         };
 
         // Prepare for fullscreen
-        let (size, position) = if builder.is_fullscreen() {
+        let (size, position, fullscreen_display) = if builder.is_fullscreen() {
             // Find the display at the requested position
             let position = builder.get_position().unwrap_or(Vector2::ZERO);
-            let display = builder
-                .get_context()
-                .display_for_point(position)
-                .unwrap_or_else(|| {
-                    builder
-                        .get_context()
-                        .primary_display()
-                        .expect("no displays registered")
-                })
-                .1;
-
-            // Change the display settings if needed
-            if let Some(fullscreen_mode) = builder.get_fullscreen_mode() {
-                todo!("Call `ChangeDisplaySettings`");
+            let mut display = None;
+            for (display_id, test_display) in displays.key_value_iter() {
+                if test_display.rect().contains_point(&position) {
+                    display = Some((display_id, test_display));
+                    break;
+                }
             }
 
+            let (display_id, display) = display.expect("no displays registered");
+
+            // Change the display settings if needed
+            let fullscreen_mode = match builder.get_fullscreen_mode() {
+                Some(fullscreen_mode) => {
+                    display.set_fullscreen_mode(fullscreen_mode)?;
+                    Some(display_id)
+                }
+                None => None,
+            };
+
             // Update the position and size to the display's directly
-            todo!("Call `GetMonitorInfo`");
+            let rect = display.get_rect()?;
+            (Some(rect.size), Some(rect.position), fullscreen_mode)
         } else {
             (
                 builder
                     .get_size()
                     .map(|size| Vector2::new(size.x as i32, size.y as i32)),
                 builder.get_position(),
+                None,
             )
         };
 
@@ -85,6 +92,9 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             .map_err(|os| Error::new_with("unable to get window size", os))?;
         window.rect = Recti::new(position, size);
 
-        Ok(WindowInner { window })
+        Ok(WindowInner {
+            window,
+            fullscreen_display,
+        })
     }
 }

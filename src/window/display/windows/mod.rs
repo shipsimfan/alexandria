@@ -1,11 +1,10 @@
-use std::marker::PhantomData;
-
 use crate::{
     math::{Rational, Recti, Vector2u},
     window::{DisplayMode, DisplayOrientation},
 };
 use display_config::DisplayConfig;
-use win32::HMONITOR;
+use std::marker::PhantomData;
+use win32::{CCHDEVICENAME, HMONITOR};
 
 mod display_config;
 
@@ -13,11 +12,15 @@ mod enumerate;
 mod get;
 mod new;
 mod refresh_dpi;
+mod set_fullscreen_mode;
 
 /// The implementation of [`Display`](crate::window::Display)s for Winodws
 pub(in crate::window) struct DisplayInner<UserEvent> {
     /// The handle to the display
     handle: HMONITOR,
+
+    /// The GDI device name
+    device_name: [u16; CCHDEVICENAME],
 
     /// The rectangle that describes the entire display
     rect: Recti,
