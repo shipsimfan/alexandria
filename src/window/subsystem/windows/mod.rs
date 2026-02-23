@@ -21,7 +21,7 @@ mod wait_for_event;
 /// The implementation of the [`WindowSubsystem`](crate::window::WindowSubsystem) for Windows
 pub(in crate::window) struct WindowSubsystemInner<UserEvent: 'static + Send> {
     /// The current set of displays
-    displays: PackedMap<DisplayInner>,
+    displays: PackedMap<DisplayInner<UserEvent>>,
 
     /// The current set of windows
     windows: PackedMap<WindowInner<UserEvent>>,

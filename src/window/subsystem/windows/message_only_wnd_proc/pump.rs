@@ -12,7 +12,7 @@ impl MessageOnlyWndProc {
     pub fn pump_events<UserEvent: 'static + Send>(
         &mut self,
         pump: &EventQueue<UserEvent>,
-        displays: &mut PackedMap<DisplayInner>,
+        displays: &mut PackedMap<DisplayInner<UserEvent>>,
         dxgi_factory: &mut IDXGIFactory,
     ) -> Result<()> {
         if self.enumerate_displays {

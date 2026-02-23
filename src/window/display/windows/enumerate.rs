@@ -22,10 +22,10 @@ fn get_output(index: u32, adapter: &mut IDXGIAdapter) -> Result<Option<ComPtr<ID
 }
 
 /// Enumerate the DXGI outputs on `adapter`
-fn enumerate_outputs(
+fn enumerate_outputs<UserEvent>(
     adapter: &mut IDXGIAdapter,
     display_configs: &[DisplayConfig],
-    displays: &mut Vec<DisplayInner>,
+    displays: &mut Vec<DisplayInner<UserEvent>>,
 ) -> Result<()> {
     let mut j = 0;
     while let Some(mut output) = get_output(j, adapter)? {
@@ -52,10 +52,10 @@ fn get_adapter(index: u32, factory: &mut IDXGIFactory) -> Result<Option<ComPtr<I
 }
 
 /// Enumerate the DXGI adapters in `factory`
-fn enumerate_adapters(
+fn enumerate_adapters<UserEvent>(
     factory: &mut IDXGIFactory,
     display_configs: &[DisplayConfig],
-) -> Result<Vec<DisplayInner>> {
+) -> Result<Vec<DisplayInner<UserEvent>>> {
     let mut displays = Vec::new();
     let mut i = 0;
     while let Some(mut adapter) = get_adapter(i, factory)? {
@@ -66,9 +66,9 @@ fn enumerate_adapters(
     Ok(displays)
 }
 
-impl DisplayInner {
+impl<UserEvent> DisplayInner<UserEvent> {
     /// Enumerate all currently available displays
-    pub fn enumerate(factory: &mut IDXGIFactory) -> Result<Vec<DisplayInner>> {
+    pub fn enumerate(factory: &mut IDXGIFactory) -> Result<Vec<DisplayInner<UserEvent>>> {
         let display_configs = DisplayConfig::enumerate()?;
         enumerate_adapters(factory, &display_configs)
     }

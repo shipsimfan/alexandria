@@ -6,7 +6,7 @@ pub(in crate::window::subsystem::windows::message_only_wnd_proc) fn re_enumerate
     UserEvent: 'static + Send,
 >(
     pump: &EventQueue<UserEvent>,
-    displays: &mut PackedMap<DisplayInner>,
+    displays: &mut PackedMap<DisplayInner<UserEvent>>,
     dxgi_factory: &mut IDXGIFactory,
 ) -> Result<()> {
     let mut new_displays = DisplayInner::enumerate(dxgi_factory)?;
@@ -33,16 +33,16 @@ pub(in crate::window::subsystem::windows::message_only_wnd_proc) fn re_enumerate
         };
 
         // Update the display if a match was found and emit appropriate events
-        if display.position() != found_display.position() {
+        if display.rect().position != found_display.rect().position {
             pump.push(EventKind::DisplayMoved {
                 id: unsafe { id.cast() },
-                new_position: found_display.position(),
+                new_position: found_display.rect().position,
             })?;
         }
-        if display.size() != found_display.size() {
+        if display.rect().size != found_display.rect().size {
             pump.push(EventKind::DisplayResized {
                 id: unsafe { id.cast() },
-                new_size: found_display.size(),
+                new_size: found_display.rect().size,
             })?;
         }
         if display.work_area() != found_display.work_area() {

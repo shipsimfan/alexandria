@@ -6,7 +6,10 @@ use crate::{
         display::{DisplayInner, windows::DisplayConfig},
     },
 };
-use std::ptr::{null, null_mut};
+use std::{
+    marker::PhantomData,
+    ptr::{null, null_mut},
+};
 use win32::{
     CreateDC, DEVMODE, DISPLAY_DEVICE, DISPLAY_DEVICE_ACTIVE, DISPLAY_DEVICE_MIRRORING_DRIVER,
     DeleteDC, ENUM_CURRENT_SETTINGS, EnumDisplayDevices, EnumDisplaySettingsEx, GetDeviceCaps,
@@ -232,12 +235,12 @@ fn get_refresh_rate(gdi_name: &[u16]) -> Rational {
     return Rational::from_int(dev_mode.display_frequency as _);
 }
 
-impl DisplayInner {
+impl<UserEvent> DisplayInner<UserEvent> {
     /// Create a new [`DisplayInner`]
     pub(in crate::window::display::windows) fn new(
         output: &mut IDXGIOutput,
         display_configs: &[DisplayConfig],
-    ) -> Result<Option<DisplayInner>> {
+    ) -> Result<Option<DisplayInner<UserEvent>>> {
         // Get the output description
         let output_desc = get_output_desc(output)?;
         if output_desc.attached_to_desktop != TRUE {
@@ -281,6 +284,7 @@ impl DisplayInner {
             is_primary,
             name,
             id,
+            _user_event: PhantomData,
         };
 
         // Get the dpi

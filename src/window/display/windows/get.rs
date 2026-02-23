@@ -1,9 +1,9 @@
 use crate::{
-    math::{Rational, Recti, Vector2i, Vector2u},
+    math::{Rational, Recti, Vector2u},
     window::{DisplayMode, DisplayOrientation, display::DisplayInner},
 };
 
-impl DisplayInner {
+impl<UserEvent> DisplayInner<UserEvent> {
     /// Get the rectangle describing the area of this display covers
     pub fn rect(&self) -> Recti {
         self.rect

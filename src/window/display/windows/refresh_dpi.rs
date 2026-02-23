@@ -1,7 +1,7 @@
 use crate::{Error, Result, window::display::DisplayInner};
 use win32::{GetDpiForMonitor, MONITOR_DPI_TYPE, try_hresult};
 
-impl DisplayInner {
+impl<UserEvent> DisplayInner<UserEvent> {
     /// Reload the DPI of this display
     pub fn refresh_dpi(&mut self) -> Result<()> {
         let mut dpi_y = 0;

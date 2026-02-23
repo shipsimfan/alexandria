@@ -108,6 +108,7 @@ fn handle_event(
                 (new_dpi as f32 / 0.96).trunc()
             );
         }
+
         alexandria::EventKind::WindowCloseRequest { id } => {
             println!("[WINDOW][CLOSE REQUEST] {}", id);
             context

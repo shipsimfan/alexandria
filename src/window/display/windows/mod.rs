@@ -1,3 +1,5 @@
+use std::marker::PhantomData;
+
 use crate::{
     math::{Rational, Recti, Vector2u},
     window::{DisplayMode, DisplayOrientation},
@@ -13,7 +15,7 @@ mod new;
 mod refresh_dpi;
 
 /// The implementation of [`Display`](crate::window::Display)s for Winodws
-pub(in crate::window) struct DisplayInner {
+pub(in crate::window) struct DisplayInner<UserEvent> {
     /// The handle to the display
     handle: HMONITOR,
 
@@ -46,4 +48,7 @@ pub(in crate::window) struct DisplayInner {
 
     /// A best-effort ID for correlating displays between enumerations
     id: String,
+
+    /// A marker for the user event type
+    _user_event: PhantomData<UserEvent>,
 }
