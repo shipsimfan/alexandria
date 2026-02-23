@@ -8,7 +8,7 @@ use wayland::{
 mod load;
 
 /// All functions that must be loaded for `Wayland`
-pub(in crate::window::subsystem::linux::wayland) struct WaylandFunctions {
+pub(in crate::window) struct WaylandFunctions {
     /// The function to connect to Wayland
     pub display_connect: FunctionSymbol<WlDisplayConnect>,
 

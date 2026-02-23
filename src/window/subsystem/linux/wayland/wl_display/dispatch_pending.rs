@@ -1,4 +1,4 @@
-use crate::{Error, Result, window::subsystem::linux::WlDisplay};
+use crate::{Error, Result, window::WlDisplay};
 use linux::errno::errno;
 
 impl WlDisplay {

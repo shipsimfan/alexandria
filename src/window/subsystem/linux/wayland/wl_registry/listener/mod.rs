@@ -10,4 +10,7 @@ pub(in crate::window::subsystem::linux::wayland) trait WlRegistryListener:
 {
     /// Called when a new global is registered
     fn global(&mut self, registry: WlRegistryRef, name: u32, interface: &CStr, version: u32);
+
+    /// Called when a global is removed
+    fn global_remove(&mut self, registry: WlRegistryRef, name: u32);
 }

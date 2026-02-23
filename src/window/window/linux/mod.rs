@@ -8,5 +8,5 @@ pub(in crate::window) enum WindowInner<UserEvent: 'static + Send> {
     Wayland(PhantomData<UserEvent>),
 
     /// The X11 implementation of a window
-    X11(PhantomData<UserEvent>),
+    X11,
 }

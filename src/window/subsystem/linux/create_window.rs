@@ -9,6 +9,9 @@ impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
         &mut self,
         builder: &WindowBuilder<UserEvent>,
     ) -> Result<Window<UserEvent>> {
-        todo!()
+        match self {
+            WindowSubsystemInner::Wayland(wayland) => wayland.create_window(builder),
+            WindowSubsystemInner::X11 => todo!(),
+        }
     }
 }

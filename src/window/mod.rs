@@ -1,5 +1,7 @@
 //! Subsystem for interacting with platform windowing systems
 
+#[cfg(target_os = "linux")]
+use subsystem::{WaylandBind, WaylandFunctions, WaylandLibrary, WlDisplay, WlRegistryRef};
 #[cfg(target_os = "windows")]
 use window::{StandardWndProc, Win32Window, WindowClass, WindowProc, WindowStyle};
 

@@ -1,13 +1,15 @@
 # ToDo
  1. Add display enumeration on Wayland
- 2. Implement message pump on Wayland
- 3. Add display related events + handling on Wayland
- 4. Re-add windows on Windows
-   1. Window destruction
-   2. Fullscreen window creation
-   3. Add minimum and maximum size handling
-   4. Add Window Events
-      - Close Requested
+   1. Add `zxdg_output_manager_v1`
+   2. Add `zxdg_output_v1`
+      - `logical_position` --> `rect.position` + `work_area.position` (override both from `wl_output.geometry`)
+      - `logical_size` --> Derive scale from rotation + mode size (Add new field for mode size) and scale into `rect.size` + `work_area.size`
+      - `name` --> `id` (override `wl_output.name`)
+      - `description` --> `name` (override `wl_output.name` and `wl_output.description`)
+ 2. Re-add windows on Windows
+   1. Fullscreen window creation
+   2. Add minimum and maximum size handling
+   3. Add Window Events
       - Moved
       - Resized
       - Minimized
@@ -21,7 +23,7 @@
       - Enter Fullscreen
       - Leave Fullscreen
       - Destroyed
-   5. Window state tracking
+   4. Window state tracking
      - Title
      - Size
      - Minimum Size
@@ -37,7 +39,7 @@
      - Is Moving
      - Fullscreen + Fullscreen Display Mode
      - DPI
-   6. Window state setting
+   5. Window state setting
      - Title
      - Size
      - Minimum Size
@@ -50,8 +52,8 @@
      - Borderless
      - Resizable
      - Fullscreen + Fullscreen Display Mode
- 5. Re-add surface creation on Windows
- 6. Re-add device graphics items
+ 3. Re-add surface creation on Windows
+ 4. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen
@@ -62,11 +64,10 @@
    5. `Fence`
  2. Add Linux Windowing support
    1. Wayland
-     1. Connection
-     2. Display enumeration
-     3. `process_messages` + `wait_for_message` functions
-     4. Window creation
-     5. Add Window Events
+     1. Window creation
+     2. Window destruction
+     3. Surface creation
+     4. Add Window Events
         - Close Requested
         - Moved
         - Resized
@@ -81,7 +82,7 @@
         - Enter Fullscreen
         - Leave Fullscreen
         - Destroyed
-     6. Window state tracking
+     5. Window state tracking
        - Title
        - Size
        - Minimum Size
@@ -97,7 +98,7 @@
        - Is Moving
        - Fullscreen + Fullscreen Display Mode
        - DPI
-    7. Window state setting
+     6. Window state setting
        - Title
        - Size
        - Minimum Size
@@ -110,13 +111,14 @@
        - Borderless
        - Resizable
        - Fullscreen + Fullscreen Display Mode
-     8. Surface creation
    2. X11
      1. Connection
-     2. Display enumeration
-     3. `process_messages` + `wait_for_message` functions
+     2. `pump_events` + `wait_for_event` functions
+     3. Display enumeration
      4. Window creation
-     5. Add Window Events
+     5. Window destruction
+     6. Surface creation
+     7. Add Window Events
         - Close Requested
         - Moved
         - Resized
@@ -131,7 +133,7 @@
         - Enter Fullscreen
         - Leave Fullscreen
         - Destroyed
-     6. Window state tracking
+     8. Window state tracking
        - Title
        - Size
        - Minimum Size
@@ -147,7 +149,7 @@
        - Is Moving
        - Fullscreen + Fullscreen Display Mode
        - DPI
-    7. Window state setting
+     9. Window state setting
        - Title
        - Size
        - Minimum Size
@@ -160,7 +162,6 @@
        - Borderless
        - Resizable
        - Fullscreen + Fullscreen Display Mode
-     8. Surface creation
  3. Input system
    1. System
    2. Keyboard
@@ -182,21 +183,39 @@
  5. Add renderer wrappers for triangle
  6. Add renderer wrappers for multi-cube
  7. Add model loading/parsing
+   1. obj
+   2. fbx
+   3. gltf/glb
+   4. dae
  8. Add texture loading/parsing
+   1. qoi
+   2. png
+   3. jpg
+   4. tga
+   5. bmp
+   6. dds
+   7. ktx2
+   8. exr
  9. Add window icons
-   - Windows
-   - Wayland
-   - X11
+   1. Windows
+   2. Wayland
+   3. X11
  10. Add audio wrappers (pull-style)
-   - WASAPI
-   - PipeWire
-   - PulseAudio
-   - ALSA
- 11. Add more input types
-   - X-Box controllers (Windows)
-   - General controllers
-   - Joysticks
-   - Steering Wheels, Pedals, Gear Shift
- 12. Add 2-d support to `Matrix3x3`
- 13. Add more external control to event queue
- 14. Add max capacity to event queue
+   1. WASAPI
+   2. PipeWire
+   3. PulseAudio
+   4. ALSA
+ 11. Add audio file loading/parsing
+   1. wav
+   2. ogg
+   3. mp3
+   4. flac
+   5. opus
+ 12. Add more input types
+   1. X-Box controllers (Windows)
+   2. General controllers
+   3. Joysticks
+   4. Steering Wheels, Pedals, Gear Shift
+ 13. Add 2-d support to `Matrix3x3`
+ 14. Add more external control to event queue
+ 15. Add max capacity to event queue

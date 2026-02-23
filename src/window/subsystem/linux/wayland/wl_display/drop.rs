@@ -1,4 +1,4 @@
-use crate::window::subsystem::linux::WlDisplay;
+use crate::window::WlDisplay;
 
 impl Drop for WlDisplay {
     fn drop(&mut self) {

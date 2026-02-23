@@ -1,4 +1,4 @@
-use crate::window::subsystem::linux::WlDisplay;
+use crate::window::WlDisplay;
 use std::{ptr::NonNull, rc::Rc};
 use wayland::wl_registry;
 
@@ -10,8 +10,9 @@ mod deref;
 mod drop;
 mod new;
 
+pub(in crate::window) use r#ref::{WaylandBind, WlRegistryRef};
+
 pub(in crate::window::subsystem::linux::wayland) use listener::WlRegistryListener;
-pub(in crate::window::subsystem::linux::wayland) use r#ref::{WaylandBind, WlRegistryRef};
 
 /// The Wayland global registry
 pub(in crate::window::subsystem::linux::wayland) struct WlRegistry<T = ()> {
@@ -22,5 +23,5 @@ pub(in crate::window::subsystem::linux::wayland) struct WlRegistry<T = ()> {
     listener_data: Option<NonNull<(T, Rc<WlDisplay>)>>,
 
     /// The display this registry came from
-    display: Rc<WlDisplay>,
+    connection: Rc<WlDisplay>,
 }

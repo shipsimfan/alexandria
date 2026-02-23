@@ -1,4 +1,4 @@
-use crate::window::subsystem::linux::WlDisplay;
+use crate::window::WlDisplay;
 use std::ffi::c_int;
 
 impl WlDisplay {

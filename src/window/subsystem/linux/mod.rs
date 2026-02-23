@@ -1,4 +1,4 @@
-use wayland::{WaylandWindowSubsystem, WlDisplay};
+use wayland::WaylandWindowSubsystem;
 
 mod wayland;
 
@@ -9,6 +9,10 @@ mod get_windows;
 mod new;
 mod pump_events;
 mod wait_for_event;
+
+pub(in crate::window) use wayland::{
+    WaylandBind, WaylandFunctions, WaylandLibrary, WlDisplay, WlRegistryRef,
+};
 
 /// The implementation of the [`WindowSubsystem`](crate::window::WindowSubsystem) for Linux
 pub(in crate::window) enum WindowSubsystemInner<UserEvent: 'static + Send> {

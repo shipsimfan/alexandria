@@ -1,12 +1,12 @@
 use crate::{
     Error, Result,
-    window::subsystem::linux::{WlDisplay, wayland::WlRegistryRef},
+    window::{WlDisplay, WlRegistryRef},
 };
 use std::{ffi::CStr, ptr::null_mut, rc::Rc};
 use wayland::{wl_interface, wl_registry_bind_dyn};
 
 /// An item which is bindable from the Wayland registry
-pub(in crate::window::subsystem::linux::wayland) trait WaylandBind {
+pub(in crate::window) trait WaylandBind {
     /// The handle type for this item
     type Handle;
 
@@ -14,7 +14,7 @@ pub(in crate::window::subsystem::linux::wayland) trait WaylandBind {
     const INTERFACE: &wl_interface;
 
     /// Create this item from a handle and source display
-    fn from_handle(handle: *mut Self::Handle, display: Rc<WlDisplay>) -> Self;
+    fn from_handle(handle: *mut Self::Handle, connection: Rc<WlDisplay>) -> Self;
 }
 
 impl<'a> WlRegistryRef<'a> {
@@ -26,7 +26,7 @@ impl<'a> WlRegistryRef<'a> {
                 name,
                 T::INTERFACE,
                 version.min(T::INTERFACE.version as _),
-                *self.display.library.f.proxy_marshal_flags,
+                *self.connection.library.f.proxy_marshal_flags,
             )
         };
         if handle == null_mut() {
@@ -36,6 +36,6 @@ impl<'a> WlRegistryRef<'a> {
             )));
         }
 
-        Ok(T::from_handle(handle.cast(), self.display.clone()))
+        Ok(T::from_handle(handle.cast(), self.connection.clone()))
     }
 }

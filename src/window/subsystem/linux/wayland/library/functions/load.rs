@@ -1,6 +1,4 @@
-use crate::{
-    Result, SharedObject, load_function, window::subsystem::linux::wayland::WaylandFunctions,
-};
+use crate::{Result, SharedObject, load_function, window::WaylandFunctions};
 use wayland::{
     WL_DISPLAY_CANCEL_READ, WL_DISPLAY_CONNECT, WL_DISPLAY_DISCONNECT, WL_DISPLAY_DISPATCH_PENDING,
     WL_DISPLAY_FLUSH, WL_DISPLAY_GET_ERROR, WL_DISPLAY_GET_FD, WL_DISPLAY_PREPARE_READ,

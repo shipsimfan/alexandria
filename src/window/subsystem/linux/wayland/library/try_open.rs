@@ -1,6 +1,6 @@
 use crate::{
     Error, Result, SharedObject,
-    window::subsystem::linux::wayland::{WaylandFunctions, WaylandLibrary},
+    window::{WaylandFunctions, WaylandLibrary},
 };
 
 impl WaylandLibrary {

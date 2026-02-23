@@ -24,8 +24,8 @@ dependencies = [
 
 [[package]]
 name = "linux"
-version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-linux#9f4ee2d3a80afd751c6aa07ed3a78b000f58c557"
+version = "1.0.0"
+source = "git+https://github.com/shipsimfan/lib-linux#45d3b9e8ca5b92e9c769f6fae99fad8f54944975"
 
 [[package]]
 name = "macros"
@@ -74,7 +74,7 @@ source = "git+https://github.com/shipsimfan/lib-vulkan#b40bc95c18f84898dd7511344
 [[package]]
 name = "wayland"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-wayland#4db083116a15b79a9139f5b518e1b4e13893c089"
+source = "git+https://github.com/shipsimfan/lib-wayland#4835f21ce20af7ced63a548f57b5036356f053eb"
 dependencies = [
  "linux",
 ]

@@ -1,6 +1,9 @@
-use crate::{Result, window::subsystem::linux::wayland::WaylandGlobals};
+use crate::{
+    PackedMap, Result,
+    window::{display::DisplayInner, subsystem::linux::wayland::WaylandGlobals},
+};
 
-impl WaylandGlobals {
+impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
     /// Get the result from the last dispatch
     ///
     /// This function takes the result, setting it back to `Ok(())`
@@ -8,6 +11,11 @@ impl WaylandGlobals {
         let mut result = Ok(());
         std::mem::swap(&mut result, &mut self.dispatch_result);
         result
+    }
+
+    /// Get the set of currently active displays
+    pub fn displays(&self) -> &PackedMap<DisplayInner<UserEvent>> {
+        &self.displays
     }
 
     /*

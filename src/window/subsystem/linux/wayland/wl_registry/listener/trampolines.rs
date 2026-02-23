@@ -1,5 +1,6 @@
-use crate::window::subsystem::linux::wayland::{
-    WlDisplay, WlRegistry, WlRegistryListener, WlRegistryRef,
+use crate::window::{
+    WlDisplay, WlRegistryRef,
+    subsystem::linux::wayland::{WlRegistry, WlRegistryListener},
 };
 use std::{
     ffi::{CStr, c_char, c_void},
@@ -12,7 +13,7 @@ impl<T: WlRegistryListener> WlRegistry<T> {
     pub(in crate::window::subsystem::linux::wayland::wl_registry::listener) const LISTENER:
         wl_registry_listener = wl_registry_listener {
         global: global_trampoline::<T>,
-        global_remove: global_remove_trampoline,
+        global_remove: global_remove_trampoline::<T>,
     };
 }
 
@@ -33,9 +34,14 @@ unsafe extern "C" fn global_trampoline<T: WlRegistryListener>(
 }
 
 /// Trampoline for responding to a global being removed from the registry
-unsafe extern "C" fn global_remove_trampoline(
-    _: *mut c_void,
-    _: *mut wayland::wl_registry,
-    _: u32,
+unsafe extern "C" fn global_remove_trampoline<T: WlRegistryListener>(
+    data: *mut c_void,
+    registry: *mut wayland::wl_registry,
+    name: u32,
 ) {
+    let data: &mut (T, Rc<WlDisplay>) = unsafe { &mut *data.cast() };
+
+    let registry = WlRegistryRef::new(registry, &data.1);
+
+    data.0.global_remove(registry, name);
 }

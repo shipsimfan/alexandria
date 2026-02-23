@@ -1,4 +1,4 @@
-use crate::window::subsystem::linux::WlDisplay;
+use crate::window::WlDisplay;
 
 impl WlDisplay {
     /// Cancel a previous `prepare_read`

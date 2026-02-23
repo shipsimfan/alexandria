@@ -1,4 +1,4 @@
-use crate::window::subsystem::linux::WlDisplay;
+use crate::window::WlDisplay;
 
 impl WlDisplay {
     /// Prepare this display for reading events from the underlying socket. If this function

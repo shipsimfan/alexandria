@@ -8,14 +8,13 @@ mod drop;
 mod flush;
 mod get_fd;
 mod get_registry;
-mod handle;
 mod prepare_read;
 mod read_events;
 mod roundtrip;
 mod try_connect;
 
 /// The main connection to Wayland
-pub(in crate::window::subsystem::linux) struct WlDisplay {
+pub(in crate::window) struct WlDisplay {
     /// The handle to the display
     handle: RefCell<*mut wl_display>,
 
