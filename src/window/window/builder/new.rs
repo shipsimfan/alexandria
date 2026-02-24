@@ -19,7 +19,6 @@ impl<UserEvent: 'static + Send> WindowBuilder<UserEvent> {
             minimized: false,
             maximized: false,
             fullscreen: false,
-            fullscreen_mode: None,
             context,
         }
     }

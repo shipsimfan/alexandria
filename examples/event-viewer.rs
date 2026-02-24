@@ -22,10 +22,6 @@ fn main() {
                 .window()
                 .create_window("Event Viewer")
                 .fullscreen()
-                .fullscreen_mode(Some(alexandria::window::DisplayMode {
-                    size: alexandria::math::Vector2::new(1280, 720),
-                    refresh_rate: alexandria::math::Rational::from_int(60),
-                }))
                 .create()
                 .unwrap(),
         )

@@ -2,7 +2,6 @@ use crate::window::subsystem::WindowSubsystemInner;
 use std::cell::Ref;
 
 mod iter;
-mod mode;
 mod orientation;
 
 #[cfg(target_os = "linux")]
@@ -15,7 +14,6 @@ mod inner;
 mod new;
 
 pub use iter::DisplayIter;
-pub use mode::DisplayMode;
 pub use orientation::DisplayOrientation;
 
 #[cfg(target_os = "linux")]

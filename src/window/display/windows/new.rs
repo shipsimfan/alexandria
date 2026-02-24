@@ -2,7 +2,7 @@ use crate::{
     Error, Result,
     math::{Rational, Rect, Vector2u},
     window::{
-        DisplayMode, DisplayOrientation,
+        DisplayOrientation,
         display::{DisplayInner, windows::DisplayConfig},
     },
 };
@@ -14,7 +14,7 @@ use win32::{
     CreateDC, DEVMODE, DISPLAY_DEVICE, DISPLAY_DEVICE_ACTIVE, DISPLAY_DEVICE_MIRRORING_DRIVER,
     DeleteDC, ENUM_CURRENT_SETTINGS, EnumDisplayDevices, EnumDisplaySettingsEx, GetDeviceCaps,
     GetMonitorInfo, HMONITOR, HORZSIZE, MONITORINFOEX, MONITORINFOF_PRIMARY, TRUE, VERTSIZE,
-    dxgi::{DXGI_FORMAT, DXGI_OUTPUT_DESC, IDXGIOutput},
+    dxgi::{DXGI_OUTPUT_DESC, IDXGIOutput},
     try_get_last_error, try_hresult,
 };
 
@@ -187,42 +187,6 @@ fn get_name_and_refresh_rate(
     (name, id, refresh_rate)
 }
 
-fn get_modes(output: &mut IDXGIOutput) -> Result<Vec<DisplayMode>> {
-    let mut num_modes = 0;
-    match unsafe {
-        output.get_display_mode_list(
-            DXGI_FORMAT::B8G8R8A8UNormSRGB,
-            0,
-            &mut num_modes,
-            null_mut(),
-        )
-    } {
-        win32::S_OK => {}
-        win32::DXGI_ERROR_NOT_FOUND => return Ok(Vec::new()),
-        result => {
-            let os = win32::Error::new(result);
-            println!("TESTING: {} ({})", os, os.0);
-            return Err(Error::new_with("unable to get output mode count", os));
-        }
-    }
-    if num_modes == 0 {
-        return Ok(Vec::new());
-    }
-
-    let mut modes = Vec::with_capacity(num_modes as _);
-    try_hresult!(output.get_display_mode_list(
-        DXGI_FORMAT::B8G8R8A8UNormSRGB,
-        0,
-        &mut num_modes,
-        modes.as_mut_ptr()
-    ))
-    .map_err(|os| Error::new_with("unable to get output modes", os))?;
-
-    unsafe { modes.set_len(num_modes as _) };
-
-    Ok(modes.iter().filter_map(DisplayMode::from_dxgi).collect())
-}
-
 /// Get the current refresh rate of the monitor
 fn get_refresh_rate(gdi_name: &[u16]) -> Rational {
     let mut dev_mode = DEVMODE::default();
@@ -246,10 +210,6 @@ impl<UserEvent> DisplayInner<UserEvent> {
         if output_desc.attached_to_desktop != TRUE {
             return Ok(None);
         }
-
-        // Enumerate the modes
-        let mut modes = get_modes(output)?;
-        modes.sort_by(|a, b| b.cmp(a));
 
         // Extract info from the output description
         let monitor_info = get_monitor_info(output_desc.monitor)?;
@@ -281,7 +241,6 @@ impl<UserEvent> DisplayInner<UserEvent> {
             dpi: 0,
             physical_size,
             orientation,
-            modes,
             is_primary,
             name,
             id,

@@ -1,6 +1,6 @@
 use crate::{
     math::{Vector2i, Vector2u},
-    window::{DisplayMode, WindowSubsystem},
+    window::WindowSubsystem,
 };
 use std::borrow::Cow;
 
@@ -42,12 +42,9 @@ pub struct WindowBuilder<UserEvent: 'static + Send> {
     maximized: bool,
 
     /// Should the window be fullscreen?
-    fullscreen: bool,
-
-    /// The fullscreen mode to try and use
     ///
-    /// If this is [`None`], the window will be put into borderless fullscreen
-    fullscreen_mode: Option<DisplayMode>,
+    /// This will be borderless fullscreen
+    fullscreen: bool,
 
     /// The context to produce the window on
     context: WindowSubsystem<UserEvent>,

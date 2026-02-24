@@ -7,6 +7,9 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
     ) -> StandardWndProc<UserEvent> {
         StandardWndProc {
             rect: Recti::default(),
+            windowed_rect: Recti::default(),
+            is_fullscreen: false,
+
             id: None,
             event_queue,
         }

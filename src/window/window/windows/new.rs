@@ -37,38 +37,31 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
         };
 
         // Prepare for fullscreen
-        let (size, position, fullscreen_display) = if builder.is_fullscreen() {
+        let (size, position) = if builder.is_fullscreen() {
             // Find the display at the requested position
             let position = builder.get_position().unwrap_or(Vector2::ZERO);
             let mut display = None;
-            for (display_id, test_display) in displays.key_value_iter() {
+            for test_display in displays {
                 if test_display.rect().contains_point(&position) {
-                    display = Some((display_id, test_display));
+                    display = Some(test_display);
                     break;
                 }
             }
 
-            let (display_id, display) = display.expect("no displays registered");
-
-            // Change the display settings if needed
-            let fullscreen_mode = match builder.get_fullscreen_mode() {
-                Some(fullscreen_mode) => {
-                    display.set_fullscreen_mode(fullscreen_mode)?;
-                    Some(display_id)
+            match display {
+                Some(display) => {
+                    // Update the position and size to the display's directly
+                    let rect = display.get_rect()?;
+                    (Some(rect.size), Some(rect.position))
                 }
-                None => None,
-            };
-
-            // Update the position and size to the display's directly
-            let rect = display.get_rect()?;
-            (Some(rect.size), Some(rect.position), fullscreen_mode)
+                None => (None, None),
+            }
         } else {
             (
                 builder
                     .get_size()
                     .map(|size| Vector2::new(size.x as i32, size.y as i32)),
                 builder.get_position(),
-                None,
             )
         };
 
@@ -90,11 +83,14 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
         let size = window
             .get_client_size()
             .map_err(|os| Error::new_with("unable to get window size", os))?;
-        window.rect = Recti::new(position, size);
 
-        Ok(WindowInner {
-            window,
-            fullscreen_display,
-        })
+        window.init(
+            Recti::new(position, size),
+            builder.get_position(),
+            builder.get_size(),
+            builder.is_fullscreen(),
+        );
+
+        Ok(WindowInner { window })
     }
 }

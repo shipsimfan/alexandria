@@ -1,6 +1,6 @@
 use crate::{
     math::{Rational, Recti, Vector2f, Vector2i, Vector2u},
-    window::{Display, DisplayMode, DisplayOrientation},
+    window::{Display, DisplayOrientation},
 };
 
 impl<'a, UserEvent: 'static + Send> Display<'a, UserEvent> {
@@ -116,11 +116,6 @@ impl<'a, UserEvent: 'static + Send> Display<'a, UserEvent> {
     /// Get the current orientation of the display
     pub fn current_orientation(&self) -> DisplayOrientation {
         self.inner().current_orientation()
-    }
-
-    /// Get the list of modes this display supports
-    pub fn modes(&self) -> &[DisplayMode] {
-        self.inner().modes()
     }
 
     /// Is this display the primary display?

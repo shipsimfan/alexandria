@@ -1,7 +1,7 @@
 use crate::{
     Error, Result,
     math::{Rational, Recti, Vector2u},
-    window::{DisplayMode, DisplayOrientation, display::DisplayInner},
+    window::{DisplayOrientation, display::DisplayInner},
 };
 use win32::{GetMonitorInfo, MONITORINFO, try_get_last_error};
 
@@ -34,11 +34,6 @@ impl<UserEvent> DisplayInner<UserEvent> {
     /// Get the current orientation of the display
     pub fn current_orientation(&self) -> DisplayOrientation {
         self.orientation
-    }
-
-    /// Get the list of modes this display supports
-    pub fn modes(&self) -> &[DisplayMode] {
-        &self.modes
     }
 
     /// Is this display the primary display?

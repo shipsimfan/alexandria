@@ -35,14 +35,5 @@ fn main() {
             "  Is Primary? {}",
             if display.is_primary() { "Yes" } else { "No" }
         );
-        println!("  Display Modes:");
-        for mode in display.modes() {
-            println!(
-                "    - {}x{} @ {:.02}Hz",
-                mode.width(),
-                mode.height(),
-                mode.refresh_rate.as_f32()
-            );
-        }
     }
 }

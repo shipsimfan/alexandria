@@ -1,6 +1,6 @@
 use crate::{
     math::{Rational, Recti, Vector2u},
-    window::{DisplayMode, DisplayOrientation},
+    window::DisplayOrientation,
 };
 use display_config::DisplayConfig;
 use std::marker::PhantomData;
@@ -12,9 +12,8 @@ mod enumerate;
 mod get;
 mod new;
 mod refresh_dpi;
-mod set_fullscreen_mode;
 
-/// The implementation of [`Display`](crate::window::Display)s for Winodws
+/// The implementation of [`Display`](crate::window::Display)s for Windows
 pub(in crate::window) struct DisplayInner<UserEvent> {
     /// The handle to the display
     handle: HMONITOR,
@@ -39,9 +38,6 @@ pub(in crate::window) struct DisplayInner<UserEvent> {
 
     /// The current orientation of the display
     orientation: DisplayOrientation,
-
-    /// The modes supported by the display
-    modes: Vec<DisplayMode>,
 
     /// Is this monitor the primary monitor?
     is_primary: bool,

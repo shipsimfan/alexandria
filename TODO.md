@@ -7,9 +7,8 @@
       - `name` --> `id` (override `wl_output.name`)
       - `description` --> `name` (override `wl_output.name` and `wl_output.description`)
  2. Re-add windows on Windows
-   1. Fullscreen window creation
-   2. Add minimum and maximum size handling
-   3. Add Window Events
+   1. Add minimum and maximum size handling
+   2. Add Window Events
       - Moved
       - Resized
       - Minimized
@@ -23,7 +22,7 @@
       - Enter Fullscreen
       - Leave Fullscreen
       - Destroyed
-   4. Window state tracking
+   3. Window state tracking
      - Title
      - Size
      - Minimum Size
@@ -39,7 +38,7 @@
      - Is Moving
      - Fullscreen + Fullscreen Display Mode
      - DPI
-   5. Window state setting
+   4. Window state setting
      - Title
      - Size
      - Minimum Size

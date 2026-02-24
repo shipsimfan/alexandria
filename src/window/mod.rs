@@ -9,6 +9,6 @@ mod display;
 mod subsystem;
 mod window;
 
-pub use display::{Display, DisplayIter, DisplayMode, DisplayOrientation};
+pub use display::{Display, DisplayIter, DisplayOrientation};
 pub use subsystem::WindowSubsystem;
 pub use window::{Window, WindowBuilder, WindowIter};

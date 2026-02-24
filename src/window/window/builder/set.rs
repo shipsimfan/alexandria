@@ -1,6 +1,6 @@
 use crate::{
     math::{Vector2i, Vector2u},
-    window::{DisplayMode, WindowBuilder},
+    window::WindowBuilder,
 };
 use std::borrow::Cow;
 
@@ -133,14 +133,6 @@ impl<UserEvent: 'static + Send> WindowBuilder<UserEvent> {
     /// This is the default
     pub fn not_fullscreen(&mut self) -> &mut Self {
         self.fullscreen = false;
-        self
-    }
-
-    /// Set the fullscreen mode to try and use
-    ///
-    /// If this is [`None`], the window will be put into borderless fullscreen
-    pub fn fullscreen_mode(&mut self, fullscreen_mode: Option<DisplayMode>) -> &mut Self {
-        self.fullscreen_mode = fullscreen_mode;
         self
     }
 }
