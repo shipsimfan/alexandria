@@ -21,7 +21,8 @@ fn main() {
             context
                 .window()
                 .create_window("Event Viewer")
-                .fullscreen()
+                .minimum_size(Some((800, 600).into()))
+                .resizable()
                 .create()
                 .unwrap(),
         )

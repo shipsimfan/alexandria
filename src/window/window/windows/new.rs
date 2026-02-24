@@ -36,6 +36,19 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             style
         };
 
+        // Normalize window size
+        let builder_size = builder.get_size().map(|mut size| {
+            if let Some(minimum_size) = builder.get_minimum_size() {
+                size = size.max_v(minimum_size);
+            }
+
+            if let Some(maximum_size) = builder.get_maximum_size() {
+                size = size.min_v(maximum_size);
+            }
+
+            Vector2::new(size.x as _, size.y as _)
+        });
+
         // Prepare for fullscreen
         let (size, position) = if builder.is_fullscreen() {
             // Find the display at the requested position
@@ -57,12 +70,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
                 None => (None, None),
             }
         } else {
-            (
-                builder
-                    .get_size()
-                    .map(|size| Vector2::new(size.x as i32, size.y as i32)),
-                builder.get_position(),
-            )
+            (builder_size, builder.get_position())
         };
 
         // Create the window
@@ -72,7 +80,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             size,
             style,
             class,
-            StandardWndProc::new(event_queue.clone()),
+            StandardWndProc::new(style, event_queue.clone()),
         )
         .map_err(|os| Error::new_with("unable to create a window", os))?;
 
@@ -87,9 +95,12 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
         window.init(
             Recti::new(position, size),
             builder.get_position(),
-            builder.get_size(),
+            builder_size,
             builder.is_fullscreen(),
         );
+
+        window.set_minimum_size(builder.get_minimum_size())?;
+        window.set_maximum_size(builder.get_maximum_size())?;
 
         Ok(WindowInner { window })
     }
