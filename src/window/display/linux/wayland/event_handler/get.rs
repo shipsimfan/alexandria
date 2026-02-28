@@ -1,8 +1,6 @@
 use crate::{
     math::{Rational, Recti, Vector2u},
-    window::{
-        DisplayMode, DisplayOrientation, display::linux::wayland::WaylandDisplayEventHandler,
-    },
+    window::{DisplayOrientation, display::linux::wayland::WaylandDisplayEventHandler},
 };
 
 impl<UserEvent: 'static + Send> WaylandDisplayEventHandler<UserEvent> {
@@ -34,11 +32,6 @@ impl<UserEvent: 'static + Send> WaylandDisplayEventHandler<UserEvent> {
     /// Get the current orientation of the display
     pub fn current_orientation(&self) -> DisplayOrientation {
         self.orientation
-    }
-
-    /// Get the list of modes this display supports
-    pub fn modes(&self) -> &[DisplayMode] {
-        &self.modes
     }
 
     /// Is this display the primary display?

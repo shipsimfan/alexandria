@@ -28,9 +28,6 @@ impl<UserEvent: 'static + Send> WaylandDisplayEventHandler<UserEvent> {
             orientation: DisplayOrientation::Landscape,
             rotated: false,
 
-            modes: Vec::new(),
-            truncate_modes: false,
-
             is_primary: false,
             name: String::new(),
             id: String::new(),

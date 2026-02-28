@@ -1,7 +1,7 @@
 use crate::{
     EventQueue, Id,
     math::{Rational, Recti, Vector2u},
-    window::{Display, DisplayMode, DisplayOrientation},
+    window::{Display, DisplayOrientation},
 };
 
 mod get;
@@ -54,12 +54,6 @@ pub(in crate::window::display::linux::wayland) struct WaylandDisplayEventHandler
 
     /// Has the display been rotated since the last `done` event?
     rotated: bool,
-
-    /// The modes supported by the display
-    modes: Vec<DisplayMode>,
-
-    /// Should we truncate the modes list on the next `mode` event?
-    truncate_modes: bool,
 
     /// Is this monitor the primary monitor?
     is_primary: bool,

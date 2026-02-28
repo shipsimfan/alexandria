@@ -5,4 +5,9 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
     pub fn rect(&self) -> Recti {
         todo!()
     }
+
+    /// Is the window currently in fullscreen mode?
+    pub fn is_fullscreen(&self) -> bool {
+        todo!()
+    }
 }

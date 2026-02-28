@@ -1,6 +1,6 @@
 use crate::{
     math::{Rational, Recti, Vector2u},
-    window::{DisplayMode, DisplayOrientation, display::DisplayInner},
+    window::{DisplayOrientation, display::DisplayInner},
 };
 
 impl<UserEvent: 'static + Send> DisplayInner<UserEvent> {
@@ -48,14 +48,6 @@ impl<UserEvent: 'static + Send> DisplayInner<UserEvent> {
     pub fn current_orientation(&self) -> DisplayOrientation {
         match self {
             DisplayInner::Wayland(wayland) => wayland.current_orientation(),
-            DisplayInner::X11 => todo!(),
-        }
-    }
-
-    /// Get the list of modes this display supports
-    pub fn modes(&self) -> &[DisplayMode] {
-        match self {
-            DisplayInner::Wayland(wayland) => wayland.modes(),
             DisplayInner::X11 => todo!(),
         }
     }

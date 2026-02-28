@@ -2,7 +2,7 @@ use crate::{
     EventKind,
     math::{Rational, Vector2i, Vector2u},
     window::{
-        DisplayMode, DisplayOrientation,
+        DisplayOrientation,
         display::linux::wayland::{WaylandDisplayEventHandler, WlOutputListener},
     },
 };
@@ -60,32 +60,24 @@ impl<UserEvent: 'static + Send> WlOutputListener for WaylandDisplayEventHandler<
     }
 
     fn mode(&mut self, flags: i32, width: i32, height: i32, refresh: i32) {
-        if self.truncate_modes {
-            self.modes.clear();
-            self.truncate_modes = false;
+        // Check flags for current and set the display's size and refresh rate if it's the current mode
+        if flags & (wl_output_mode::Current as i32) == 0 {
+            return;
         }
 
-        self.modes.push(DisplayMode {
-            size: Vector2u::new(width as _, height as _),
-            refresh_rate: Rational::new(refresh, NonZeroU32::new(1000).unwrap()),
-        });
+        let new_size = Vector2i::new(width, height);
+        if self.rect.size != new_size {
+            self.rect.size = new_size;
+            self.resized = true;
 
-        // Check flags for current and set the display's size and refresh rate if it's the current mode
-        if flags & (wl_output_mode::Current as i32) != 0 {
-            let new_size = Vector2i::new(width, height);
-            if self.rect.size != new_size {
-                self.rect.size = new_size;
-                self.resized = true;
+            self.work_area.size = new_size;
+            self.work_area_changed = true;
+        }
 
-                self.work_area.size = new_size;
-                self.work_area_changed = true;
-            }
-
-            let new_refresh_rate = Rational::new(refresh, NonZeroU32::new(1000).unwrap());
-            if self.refresh_rate != new_refresh_rate {
-                self.refresh_rate = new_refresh_rate;
-                self.refresh_rate_changed = true;
-            }
+        let new_refresh_rate = Rational::new(refresh, NonZeroU32::new(1000).unwrap());
+        if self.refresh_rate != new_refresh_rate {
+            self.refresh_rate = new_refresh_rate;
+            self.refresh_rate_changed = true;
         }
     }
 
@@ -156,7 +148,6 @@ impl<UserEvent: 'static + Send> WlOutputListener for WaylandDisplayEventHandler<
         }
 
         self.events_enabled = true;
-        self.truncate_modes = true;
     }
 
     fn scale(&mut self, _: i32) {}
