@@ -1,5 +1,8 @@
-use crate::{EventQueue, Id, PackedMap, Result, window::display::DisplayInner};
-use std::ffi::CStr;
+use crate::{
+    EventQueue, PackedMap, Result,
+    window::{XdgOutputManager, display::DisplayInner},
+};
+use std::{ffi::CStr, rc::Rc};
 
 mod add_global;
 mod enable_events;
@@ -22,8 +25,9 @@ pub(in crate::window::subsystem::linux::wayland) struct WaylandGlobals<UserEvent
     /// The displays that have been bound from the registry
     displays: PackedMap<DisplayInner<UserEvent>>,
 
-    /// A mapping from the global name to the display it is associated with
-    name_to_display_map: Vec<(u32, Id<DisplayInner<UserEvent>>)>,
+    /// A reference to the global output manager
+    xdg_output_manager: Option<Rc<XdgOutputManager>>,
+
     /*
     /// A reference to the global compositor
     compositor: Option<WlCompositor>,
@@ -31,7 +35,11 @@ pub(in crate::window::subsystem::linux::wayland) struct WaylandGlobals<UserEvent
     /// A reference to the XDG window manager
     xdg_wm_base: Option<Rc<XdgWmBase>>,
     */
-    wl_output_name: &'static CStr,
+    /// The name of the `wl_output_manager` interface
+    wl_output_manager_name: &'static CStr,
+
+    /// The name of the `xdg_output` interface
+    xdg_output_name: &'static CStr,
     /*
     /// The name of the `xdg_wm_base` interface
     compositor_name: &'static CStr,

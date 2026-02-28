@@ -1,11 +1,7 @@
 # ToDo
- 1. Add display enumeration on Wayland
-   1. Add `zxdg_output_manager_v1`
-   2. Add `zxdg_output_v1`
-      - `logical_position` --> `rect.position` + `work_area.position` (override both from `wl_output.geometry`)
-      - `logical_size` --> Derive scale from rotation + mode size (Add new field for mode size) and scale into `rect.size` + `work_area.size`
-      - `name` --> `id` (override `wl_output.name`)
-      - `description` --> `name` (override `wl_output.name` and `wl_output.description`)
+ 1. Add error handling for pushed events during event pumping
+   - Linux
+   - Windows
  2. Re-add windows on Windows
    1. Add Window Events
       - Moved

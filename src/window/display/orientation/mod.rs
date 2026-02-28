@@ -1,6 +1,8 @@
 #[cfg(target_os = "windows")]
 mod from_dxgi;
 
+mod rotate;
+
 /// The orientation a display can be in
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum DisplayOrientation {

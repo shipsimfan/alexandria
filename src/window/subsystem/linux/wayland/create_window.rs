@@ -1,9 +1,6 @@
 use crate::{
     Result,
-    window::{
-        Window, WindowBuilder,
-        subsystem::{WindowSubsystemInner, linux::wayland::WaylandWindowSubsystem},
-    },
+    window::{Window, WindowBuilder, subsystem::linux::wayland::WaylandWindowSubsystem},
 };
 
 impl<UserEvent: 'static + Send> WaylandWindowSubsystem<UserEvent> {

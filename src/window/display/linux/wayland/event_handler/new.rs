@@ -1,6 +1,6 @@
 use crate::{
     EventQueue,
-    math::{Rational, Recti},
+    math::{Rational, Recti, Vector2u},
     window::{DisplayOrientation, display::linux::wayland::WaylandDisplayEventHandler},
 };
 
@@ -13,6 +13,7 @@ impl<UserEvent: 'static + Send> WaylandDisplayEventHandler<UserEvent> {
             display_id: None,
 
             rect: Recti::default(),
+            xdg_position: false,
             moved: false,
             resized: false,
 
@@ -22,7 +23,10 @@ impl<UserEvent: 'static + Send> WaylandDisplayEventHandler<UserEvent> {
             refresh_rate: Rational::default(),
             refresh_rate_changed: false,
 
-            dpi: 96,
+            logical_size: Vector2u::default(),
+            content_scale: 1.0,
+            content_scale_changed: false,
+
             physical_size: None,
 
             orientation: DisplayOrientation::Landscape,

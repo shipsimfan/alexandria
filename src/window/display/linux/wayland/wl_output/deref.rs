@@ -1,4 +1,4 @@
-use crate::window::display::linux::wayland::WlOutput;
+use crate::window::WlOutput;
 use std::ops::{Deref, DerefMut};
 
 impl<T> Deref for WlOutput<T> {

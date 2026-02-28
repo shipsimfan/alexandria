@@ -101,12 +101,14 @@ fn handle_event(
         } => {
             println!("[DISPLAY][ROTATED] {} to {:?}", id, new_orientation);
         }
-        alexandria::EventKind::DisplayDpiChanged { id, new_dpi } => {
+        alexandria::EventKind::DisplayContentScaleChanged {
+            id,
+            new_content_scale,
+        } => {
             println!(
-                "[DISPLAY][DPI CHANGED] {} to {} ({}%)",
+                "[DISPLAY][SCALE CHANGED] {} to ({}%)",
                 id,
-                new_dpi,
-                (new_dpi as f32 / 0.96).trunc()
+                (new_content_scale * 100.0).round(),
             );
         }
 

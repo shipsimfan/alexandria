@@ -17,7 +17,7 @@ pub use iter::DisplayIter;
 pub use orientation::DisplayOrientation;
 
 #[cfg(target_os = "linux")]
-pub(in crate::window) use linux::DisplayInner;
+pub(in crate::window) use linux::{DisplayInner, WlOutput, XdgOutput, XdgOutputListener};
 #[cfg(target_os = "windows")]
 pub(in crate::window) use windows::DisplayInner;
 

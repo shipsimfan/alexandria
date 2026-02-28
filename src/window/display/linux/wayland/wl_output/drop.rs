@@ -1,4 +1,4 @@
-use crate::window::display::linux::wayland::WlOutput;
+use crate::window::WlOutput;
 use wayland::wl_output_release_dyn;
 
 impl<T> Drop for WlOutput<T> {

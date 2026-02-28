@@ -1,7 +1,11 @@
 //! Subsystem for interacting with platform windowing systems
 
 #[cfg(target_os = "linux")]
-use subsystem::{WaylandBind, WaylandFunctions, WaylandLibrary, WlDisplay, WlRegistryRef};
+use display::{WlOutput, XdgOutput, XdgOutputListener};
+#[cfg(target_os = "linux")]
+use subsystem::{
+    WaylandBind, WaylandFunctions, WaylandLibrary, WlDisplay, WlRegistryRef, XdgOutputManager,
+};
 #[cfg(target_os = "windows")]
 use window::{StandardWndProc, Win32Window, WindowClass, WindowProc, WindowStyle};
 

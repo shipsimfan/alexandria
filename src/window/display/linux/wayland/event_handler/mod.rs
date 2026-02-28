@@ -4,10 +4,12 @@ use crate::{
     window::{Display, DisplayOrientation},
 };
 
+mod disable_events;
 mod get;
 mod new;
 mod output_listener;
 mod set_display_id;
+mod xdg_output_listener;
 
 /// The handler for events from a Wayland display
 pub(in crate::window::display::linux::wayland) struct WaylandDisplayEventHandler<
@@ -24,6 +26,9 @@ pub(in crate::window::display::linux::wayland) struct WaylandDisplayEventHandler
 
     /// The rectangle that describes the entire display
     rect: Recti,
+
+    /// Has the position been given from XDG?
+    xdg_position: bool,
 
     /// Has the display move since the last `done` event?
     moved: bool,
@@ -43,8 +48,14 @@ pub(in crate::window::display::linux::wayland) struct WaylandDisplayEventHandler
     /// Has the refresh rate changed since the last `done` event?
     refresh_rate_changed: bool,
 
-    /// The DPI to use for UI scaling. 96 represents 100% scaling
-    dpi: u32,
+    /// The reported logical size of the display, used to calculate `content_scale`
+    logical_size: Vector2u,
+
+    /// The content scale factor of the display
+    content_scale: f32,
+
+    /// Has the content scale changed since the last `done` event?
+    content_scale_changed: bool,
 
     /// The physical size of the display, in millimeters
     physical_size: Option<Vector2u>,

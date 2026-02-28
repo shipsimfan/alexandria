@@ -28,10 +28,10 @@ impl<UserEvent: 'static + Send> DisplayInner<UserEvent> {
         }
     }
 
-    /// Get the DPI to use for UI scaling. 96 represents 100% scaling
-    pub fn dpi(&self) -> u32 {
+    /// Get the scale factor for UI
+    pub fn content_scale(&self) -> f32 {
         match self {
-            DisplayInner::Wayland(wayland) => wayland.dpi(),
+            DisplayInner::Wayland(wayland) => wayland.content_scale(),
             DisplayInner::X11 => todo!(),
         }
     }
@@ -73,6 +73,14 @@ impl<UserEvent: 'static + Send> DisplayInner<UserEvent> {
         match self {
             DisplayInner::Wayland(wayland) => wayland.id(),
             DisplayInner::X11 => todo!(),
+        }
+    }
+
+    /// Get the name of this display that the registry provided
+    pub(in crate::window) fn wayland_name(&self) -> Option<u32> {
+        match self {
+            DisplayInner::Wayland(wayland) => Some(wayland.wayland_name()),
+            DisplayInner::X11 => None,
         }
     }
 }

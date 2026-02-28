@@ -2,6 +2,7 @@ use crate::window::display::linux::wayland::{WlOutput, WlOutputListener};
 use std::ffi::{CStr, c_char, c_void};
 use wayland::{wl_output, wl_output_listener};
 
+#[allow(private_bounds)]
 impl<T: WlOutputListener> WlOutput<T> {
     /// The listeners for the registry
     pub(in crate::window::display::linux::wayland::wl_output::listener) const LISTENER:

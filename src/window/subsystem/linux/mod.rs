@@ -11,7 +11,7 @@ mod pump_events;
 mod wait_for_event;
 
 pub(in crate::window) use wayland::{
-    WaylandBind, WaylandFunctions, WaylandLibrary, WlDisplay, WlRegistryRef,
+    WaylandBind, WaylandFunctions, WaylandLibrary, WlDisplay, WlRegistryRef, XdgOutputManager,
 };
 
 /// The implementation of the [`WindowSubsystem`](crate::window::WindowSubsystem) for Linux

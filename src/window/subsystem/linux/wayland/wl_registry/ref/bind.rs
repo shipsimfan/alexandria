@@ -14,7 +14,7 @@ pub(in crate::window) trait WaylandBind {
     const INTERFACE: &wl_interface;
 
     /// Create this item from a handle and source display
-    fn from_handle(handle: *mut Self::Handle, connection: Rc<WlDisplay>) -> Self;
+    fn from_handle(handle: *mut Self::Handle, connection: Rc<WlDisplay>, name: u32) -> Self;
 }
 
 impl<'a> WlRegistryRef<'a> {
@@ -36,6 +36,6 @@ impl<'a> WlRegistryRef<'a> {
             )));
         }
 
-        Ok(T::from_handle(handle.cast(), self.connection.clone()))
+        Ok(T::from_handle(handle.cast(), self.connection.clone(), name))
     }
 }

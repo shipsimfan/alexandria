@@ -18,9 +18,8 @@ fn main() {
         );
         println!("  Refresh Rate: {:.02}Hz", display.refresh_rate().as_f32());
         println!(
-            "  DPI: {} ({}%)",
-            display.dpi(),
-            display.content_scale() * 100.0
+            "  Content Scale: {}%",
+            (display.content_scale() * 100.0).round()
         );
         if let Some(physical_size) = display.physical_size() {
             println!(

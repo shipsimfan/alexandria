@@ -20,23 +20,17 @@ impl<UserEvent: 'static + Send> WlOutputListener for WaylandDisplayEventHandler<
         model: &CStr,
         transform: wl_output_transform,
     ) {
+        // Update the physical size
         if physical_width > 0 && physical_height > 0 {
             self.physical_size = Some(Vector2u::new(physical_width as _, physical_height as _));
         }
 
+        // Update the name if no other name has been set yet
         if self.name.len() == 0 {
             self.name = format!("{} {}", make.to_string_lossy(), model.to_string_lossy());
         }
 
-        let new_position = Vector2i::new(x, y);
-        if self.rect.position != new_position {
-            self.rect.position = new_position;
-            self.moved = true;
-
-            self.work_area.position = new_position;
-            self.work_area_changed = true;
-        }
-
+        // Update the orientation
         let new_orientation = match transform {
             wl_output_transform::Normal | wl_output_transform::Flipped => {
                 DisplayOrientation::Landscape
@@ -56,22 +50,67 @@ impl<UserEvent: 'static + Send> WlOutputListener for WaylandDisplayEventHandler<
         if self.orientation != new_orientation {
             self.orientation = new_orientation;
             self.rotated = true;
+
+            // Rotate the work area if the display rotated
+            let new_work_area_size = new_orientation.rotate(self.rect.size);
+            if self.work_area.size != new_work_area_size {
+                self.work_area.size = new_work_area_size;
+                self.work_area_changed = true;
+            }
+
+            let new_content_scale = if self.logical_size.x > 0 && self.logical_size.y > 0 {
+                new_work_area_size.x as f32 / self.logical_size.x as f32
+            } else {
+                1.0
+            };
+            if self.content_scale != new_content_scale {
+                self.content_scale = new_content_scale;
+                self.content_scale_changed = true;
+            }
+        }
+
+        // Update the position
+        if self.xdg_position {
+            return;
+        }
+
+        let new_position = Vector2i::new(x, y);
+        if self.rect.position != new_position {
+            self.rect.position = new_position;
+            self.moved = true;
+
+            self.work_area.position = new_position;
+            self.work_area_changed = true;
         }
     }
 
     fn mode(&mut self, flags: i32, width: i32, height: i32, refresh: i32) {
-        // Check flags for current and set the display's size and refresh rate if it's the current mode
+        // Check flags for current
         if flags & (wl_output_mode::Current as i32) == 0 {
             return;
         }
 
+        // Set the display's size and refresh rate if it's the current mode
         let new_size = Vector2i::new(width, height);
         if self.rect.size != new_size {
             self.rect.size = new_size;
             self.resized = true;
 
-            self.work_area.size = new_size;
-            self.work_area_changed = true;
+            let new_work_area_size = self.orientation.rotate(new_size);
+            if self.work_area.size != new_work_area_size {
+                self.work_area.size = new_work_area_size;
+                self.work_area_changed = true;
+            }
+
+            let new_content_scale = if self.logical_size.x > 0 && self.logical_size.y > 0 {
+                new_work_area_size.x as f32 / self.logical_size.x as f32
+            } else {
+                1.0
+            };
+            if self.content_scale != new_content_scale {
+                self.content_scale = new_content_scale;
+                self.content_scale_changed = true;
+            }
         }
 
         let new_refresh_rate = Rational::new(refresh, NonZeroU32::new(1000).unwrap());
@@ -134,6 +173,19 @@ impl<UserEvent: 'static + Send> WlOutputListener for WaylandDisplayEventHandler<
             }
         }
 
+        if self.content_scale_changed {
+            self.content_scale_changed = false;
+
+            if self.events_enabled {
+                self.event_queue
+                    .push(EventKind::DisplayContentScaleChanged {
+                        id: self.display_id.unwrap(),
+                        new_content_scale: self.content_scale,
+                    })
+                    .unwrap(); // TODO: Add error handling
+            }
+        }
+
         if self.rotated {
             self.rotated = false;
 
@@ -157,9 +209,7 @@ impl<UserEvent: 'static + Send> WlOutputListener for WaylandDisplayEventHandler<
             self.name = name.to_string_lossy().into_owned();
         }
 
-        if self.id.len() == 0 {
-            self.id = name.to_string_lossy().into_owned();
-        }
+        self.id = name.to_string_lossy().into_owned();
     }
 
     fn description(&mut self, description: &CStr) {

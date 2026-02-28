@@ -5,7 +5,7 @@ use crate::{
         subsystem::linux::wayland::{WaylandGlobals, WlRegistryRef},
     },
 };
-use std::ffi::CStr;
+use std::{ffi::CStr, rc::Rc};
 
 impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
     /// Insert a new global into the globals list
@@ -16,20 +16,30 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
         interface: &CStr,
         version: u32,
     ) -> Result<()> {
-        if interface == self.wl_output_name {
-            let display =
-                DisplayInner::new_wayland(registry, name, version, self.event_queue.clone())?;
+        if interface == self.wl_output_manager_name {
+            let display = DisplayInner::new_wayland(
+                registry,
+                name,
+                version,
+                self.event_queue.clone(),
+                self.xdg_output_manager.as_ref(),
+            )?;
 
             let id = self.displays.insert(display);
             let cast_id = unsafe { id.cast() };
 
-            self.name_to_display_map.push((name, id));
             self.displays[id].set_display_id(cast_id);
 
             if self.events_enabled {
                 self.event_queue
                     .push(EventKind::DisplayAdded { id: cast_id })?;
             }
+        } else if interface == self.xdg_output_name {
+            let xdg_output_manager = Rc::new(registry.bind(name, version)?);
+            for display in &mut self.displays {
+                display.wayland_upgrade(&xdg_output_manager, self.events_enabled)?;
+            }
+            self.xdg_output_manager = Some(xdg_output_manager);
         }
 
         /*

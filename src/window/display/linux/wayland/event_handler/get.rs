@@ -19,9 +19,9 @@ impl<UserEvent: 'static + Send> WaylandDisplayEventHandler<UserEvent> {
         self.refresh_rate
     }
 
-    /// Get the DPI to use for UI scaling. 96 represents 100% scaling
-    pub fn dpi(&self) -> u32 {
-        self.dpi
+    /// Get the scale factor for UI
+    pub fn content_scale(&self) -> f32 {
+        self.content_scale
     }
 
     /// Get the physical of the display in millimeters

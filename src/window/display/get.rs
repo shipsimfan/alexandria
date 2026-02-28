@@ -79,14 +79,9 @@ impl<'a, UserEvent: 'static + Send> Display<'a, UserEvent> {
         self.inner().refresh_rate()
     }
 
-    /// Get the DPI to use for UI scaling. 96 represents 100% scaling
-    pub fn dpi(&self) -> u32 {
-        self.inner().dpi()
-    }
-
     /// Get the scale factor for UI
     pub fn content_scale(&self) -> f32 {
-        (self.dpi() as f32) / 96.0
+        self.inner().content_scale()
     }
 
     /// Get the physical size of this display, in millimeters

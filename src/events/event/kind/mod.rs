@@ -74,13 +74,13 @@ pub enum EventKind<UserEvent: 'static + Send> {
         new_orientation: DisplayOrientation,
     },
 
-    /// A [`Display`]'s DPI changed
-    DisplayDpiChanged {
+    /// A [`Display`]'s content scale changed
+    DisplayContentScaleChanged {
         /// The ID of the changed [`Display`]
         id: Id<Display<'static, UserEvent>>,
 
-        /// The new DPI of the [`Display`]
-        new_dpi: u32,
+        /// The new content scale of the [`Display`]
+        new_content_scale: f32,
     },
 
     /*

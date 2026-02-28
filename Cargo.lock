@@ -74,7 +74,7 @@ source = "git+https://github.com/shipsimfan/lib-vulkan#b40bc95c18f84898dd7511344
 [[package]]
 name = "wayland"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-wayland#4835f21ce20af7ced63a548f57b5036356f053eb"
+source = "git+https://github.com/shipsimfan/lib-wayland#f267e003a4fe9a97dde096f377475fcee7bb44fa"
 dependencies = [
  "linux",
 ]

@@ -1,13 +1,16 @@
 use crate::{
     Error, Result,
-    window::display::linux::wayland::{WlOutput, WlOutputListener},
+    window::{WlOutput, display::linux::wayland::WlOutputListener},
 };
 use std::ptr::NonNull;
 use wayland::wl_output_add_listener_dyn;
 
 impl WlOutput {
     /// Add a listener for output events
-    pub fn add_listener<T: WlOutputListener>(mut self, data: T) -> Result<WlOutput<T>> {
+    pub(in crate::window::display::linux::wayland) fn add_listener<T: WlOutputListener>(
+        mut self,
+        data: T,
+    ) -> Result<WlOutput<T>> {
         let mut data = Box::new(data);
 
         if unsafe {
@@ -28,6 +31,7 @@ impl WlOutput {
 
         Ok(WlOutput {
             handle: self.handle,
+            name: self.name,
             drop: true,
             listener_data: NonNull::new(Box::into_raw(data)),
             connection: self.connection.clone(),
