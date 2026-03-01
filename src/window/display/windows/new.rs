@@ -234,11 +234,10 @@ impl<UserEvent> DisplayInner<UserEvent> {
         // Create the display structure
         let mut display = DisplayInner {
             handle: output_desc.monitor,
-            device_name: output_desc.device_name,
             rect,
             work_area,
             refresh_rate,
-            dpi: 0,
+            content_scale: 1.0,
             physical_size,
             orientation,
             is_primary,
@@ -248,7 +247,7 @@ impl<UserEvent> DisplayInner<UserEvent> {
         };
 
         // Get the dpi
-        display.refresh_dpi()?;
+        display.refresh_content_scale()?;
 
         Ok(Some(display))
     }

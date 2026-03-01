@@ -63,10 +63,10 @@ pub(in crate::window::subsystem::windows::message_only_wnd_proc) fn re_enumerate
                 new_orientation: found_display.current_orientation(),
             })?;
         }
-        if display.dpi() != found_display.dpi() {
-            pump.push(EventKind::DisplayDpiChanged {
+        if display.content_scale() != found_display.content_scale() {
+            pump.push(EventKind::DisplayContentScaleChanged {
                 id: unsafe { id.cast() },
-                new_dpi: found_display.dpi(),
+                new_content_scale: found_display.content_scale(),
             })?;
         }
 

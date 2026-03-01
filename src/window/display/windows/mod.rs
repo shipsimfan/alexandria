@@ -4,22 +4,19 @@ use crate::{
 };
 use display_config::DisplayConfig;
 use std::marker::PhantomData;
-use win32::{CCHDEVICENAME, HMONITOR};
+use win32::HMONITOR;
 
 mod display_config;
 
 mod enumerate;
 mod get;
 mod new;
-mod refresh_dpi;
+mod refresh_content_scale;
 
 /// The implementation of [`Display`](crate::window::Display)s for Windows
 pub(in crate::window) struct DisplayInner<UserEvent> {
     /// The handle to the display
     handle: HMONITOR,
-
-    /// The GDI device name
-    device_name: [u16; CCHDEVICENAME],
 
     /// The rectangle that describes the entire display
     rect: Recti,
@@ -31,7 +28,7 @@ pub(in crate::window) struct DisplayInner<UserEvent> {
     refresh_rate: Rational,
 
     /// The DPI to use for UI scaling. 96 represents 100% scaling
-    dpi: u32,
+    content_scale: f32,
 
     /// The physical size of the display, in millimeters
     physical_size: Option<Vector2u>,

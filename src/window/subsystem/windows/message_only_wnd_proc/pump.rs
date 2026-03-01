@@ -26,12 +26,12 @@ impl MessageOnlyWndProc {
             self.refresh_dpi = false;
 
             for (id, display) in displays.key_value_iter_mut() {
-                let old_dpi = display.dpi();
-                display.refresh_dpi()?;
-                if display.dpi() != old_dpi {
-                    pump.push(EventKind::DisplayDpiChanged {
+                let old_content_scale = display.content_scale();
+                display.refresh_content_scale()?;
+                if display.content_scale() != old_content_scale {
+                    pump.push(EventKind::DisplayContentScaleChanged {
                         id: unsafe { id.cast() },
-                        new_dpi: display.dpi(),
+                        new_content_scale: display.content_scale(),
                     })?;
                 }
             }
