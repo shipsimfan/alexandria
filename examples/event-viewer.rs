@@ -119,6 +119,12 @@ fn handle_event(
                 .push(alexandria::EventKind::Quit)
                 .unwrap();
         }
+        alexandria::EventKind::WindowResized { id, new_size } => {
+            println!("[WINDOW][RESIZED] {} to {}x{}", id, new_size.x, new_size.y);
+        }
+        alexandria::EventKind::WindowMoved { id, new_position } => {
+            println!("[WINDOW][MOVED] {} to {}", id, new_position);
+        }
 
         alexandria::EventKind::User(_) => println!("[USER]"),
     }

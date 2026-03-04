@@ -4,6 +4,7 @@ use crate::{
     window::{Window, WindowStyle},
 };
 
+mod change_rect;
 mod get;
 mod init;
 mod new;
@@ -42,6 +43,11 @@ pub(in crate::window) struct StandardWndProc<UserEvent: 'static + Send> {
 
     /// Is this window currently fullscreen?
     is_fullscreen: bool,
+
+    /// Is the window currently being resized or moved by the user?
+    ///
+    /// Holds the current state of the window, before being coalesced
+    is_changing: Option<Recti>,
 
     /// The id of the window to push events with
     id: Option<Id<Window<UserEvent>>>,

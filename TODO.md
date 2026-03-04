@@ -4,25 +4,19 @@
    - Windows
  2. Re-add windows on Windows
    1. Add Window Events
-      - Moved
-      - Resized
-      - Minimized
-      - Maximized
-      - Restored
-      - Focus Gained
-      - Focus Lost
-      - Shown
-      - Hidden
-      - DPI Changed
-      - Enter Fullscreen
-      - Leave Fullscreen
-      - Destroyed
+     - Minimized
+     - Maximized
+     - Restored
+     - Focus Gained
+     - Focus Lost
+     - Shown
+     - Hidden
+     - Content Scale Changed
+     - Enter Fullscreen
+     - Leave Fullscreen
+     - Destroyed
    2. Window state tracking
      - Title
-     - Size
-     - Minimum Size
-     - Maximum Size
-     - Position
      - Maximized
      - Minimized
      - Focus
@@ -32,7 +26,7 @@
      - Is Resizing
      - Is Moving
      - Fullscreen + Fullscreen Display Mode
-     - DPI
+     - Content Scale
    3. Window state setting
      - Title
      - Size
@@ -62,20 +56,20 @@
      2. Window destruction
      3. Surface creation
      4. Add Window Events
-        - Close Requested
-        - Moved
-        - Resized
-        - Minimized
-        - Maximized
-        - Restored
-        - Focus Gained
-        - Focus Lost
-        - Shown
-        - Hidden
-        - DPI Changed
-        - Enter Fullscreen
-        - Leave Fullscreen
-        - Destroyed
+       - Close Requested
+       - Moved
+       - Resized
+       - Minimized
+       - Maximized
+       - Restored
+       - Focus Gained
+       - Focus Lost
+       - Shown
+       - Hidden
+       - Content Scale Changed
+       - Enter Fullscreen
+       - Leave Fullscreen
+       - Destroyed
      5. Window state tracking
        - Title
        - Size
@@ -91,7 +85,7 @@
        - Is Resizing
        - Is Moving
        - Fullscreen + Fullscreen Display Mode
-       - DPI
+       - Content Scale
      6. Window state setting
        - Title
        - Size
@@ -113,20 +107,20 @@
      5. Window destruction
      6. Surface creation
      7. Add Window Events
-        - Close Requested
-        - Moved
-        - Resized
-        - Minimized
-        - Maximized
-        - Restored
-        - Focus Gained
-        - Focus Lost
-        - Shown
-        - Hidden
-        - DPI Changed
-        - Enter Fullscreen
-        - Leave Fullscreen
-        - Destroyed
+       - Close Requested
+       - Moved
+       - Resized
+       - Minimized
+       - Maximized
+       - Restored
+       - Focus Gained
+       - Focus Lost
+       - Shown
+       - Hidden
+       - Content Scale Changed
+       - Enter Fullscreen
+       - Leave Fullscreen
+       - Destroyed
      8. Window state tracking
        - Title
        - Size
@@ -142,7 +136,7 @@
        - Is Resizing
        - Is Moving
        - Fullscreen + Fullscreen Display Mode
-       - DPI
+       - Content Scale
      9. Window state setting
        - Title
        - Size

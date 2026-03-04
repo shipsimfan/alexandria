@@ -9,15 +9,17 @@ mod from;
 /// A specific event kind that can pushed into an [`EventQueue`](crate::EventQueue)
 #[derive(Debug, Clone, PartialEq)]
 pub enum EventKind<UserEvent: 'static + Send> {
-    /*
+    /**
      *** GENERAL EVENTS ***
-     */
+     **/
+
     /// The process has been requested to be shutdown
     Quit,
 
-    /*
+    /**
      *** DISPLAY EVENTS ***
-     */
+     **/
+
     /// A new [`Display`] was added
     DisplayAdded {
         /// The ID of the newly added [`Display`]
@@ -83,18 +85,38 @@ pub enum EventKind<UserEvent: 'static + Send> {
         new_content_scale: f32,
     },
 
-    /*
+    /**
      *** WINDOW EVENTS ***
-     */
+     **/
+
     /// A [`Window`] was requested to be closed
     WindowCloseRequest {
         /// The ID of the [`Window`] that is requesting to be closed
         id: Id<Window<UserEvent>>,
     },
 
-    /*
+    /// A [`Window`] was resized
+    WindowResized {
+        /// The ID of the resized [`Window`]
+        id: Id<Window<UserEvent>>,
+
+        /// The new size of the [`Window`]
+        new_size: Vector2i,
+    },
+
+    /// A [`Window`] was moved
+    WindowMoved {
+        /// The ID of the moved [`Window`]
+        id: Id<Window<UserEvent>>,
+
+        /// The new position of the [`Window`]
+        new_position: Vector2i,
+    },
+
+    /**
      *** USER EVENT ***
-     */
+     **/
+
     /// An event defined by the user of Alexandria
     User(UserEvent),
 }

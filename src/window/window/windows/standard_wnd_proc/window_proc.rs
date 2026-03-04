@@ -1,8 +1,12 @@
 use crate::{
     EventKind,
+    math::{Recti, Vector2},
     window::{StandardWndProc, WindowProc},
 };
-use win32::{LPARAM, MINMAXINFO, UINT, WM_CLOSE, WM_GETMINMAXINFO, WPARAM};
+use win32::{
+    LPARAM, MINMAXINFO, UINT, WM_CLOSE, WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_GETMINMAXINFO,
+    WM_MOVE, WM_SIZE, WPARAM,
+};
 
 impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
     fn wnd_proc(this: Option<&mut Self>, msg: UINT, _: WPARAM, l_param: LPARAM) -> bool {
@@ -33,6 +37,53 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                 if let Some(maximum_size) = this.maximum_window_size {
                     min_max_info.max_track_size.x = maximum_size.x as _;
                     min_max_info.max_track_size.y = maximum_size.y as _;
+                }
+            }
+
+            // The user has begun moving or resizing the window
+            WM_ENTERSIZEMOVE => this.is_changing = Some(this.rect),
+
+            // The user has stopped moving or resizing the window
+            WM_EXITSIZEMOVE => {
+                if let Some(new_rect) = this.is_changing.take() {
+                    this.change_rect(new_rect).unwrap(); // TODO: Add error handling
+                }
+            }
+
+            // The window has changed size
+            WM_SIZE => {
+                let width = (l_param & 0xFFFF) as _;
+                let height = ((l_param >> 16) & 0xFFFF) as _;
+                if width != 0 && height != 0 {
+                    let size = Vector2::new(width, height);
+                    match &mut this.is_changing {
+                        Some(is_changing) => {
+                            is_changing.size = size;
+                        }
+                        None => this
+                            .change_rect(Recti {
+                                position: this.rect.position,
+                                size,
+                            })
+                            .unwrap(), // TODO: Add error handling
+                    }
+                }
+            }
+
+            WM_MOVE => {
+                let x = (l_param & 0xFFFF) as i16;
+                let y = ((l_param >> 16) & 0xFFFF) as i16;
+                let position = Vector2::new(x as _, y as _);
+                match &mut this.is_changing {
+                    Some(is_changing) => {
+                        is_changing.position = position;
+                    }
+                    None => this
+                        .change_rect(Recti {
+                            position,
+                            size: this.rect.size,
+                        })
+                        .unwrap(), // TODO: Add error handling
                 }
             }
             _ => return false,
