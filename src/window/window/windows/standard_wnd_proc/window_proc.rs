@@ -4,12 +4,18 @@ use crate::{
     window::{StandardWndProc, WindowProc},
 };
 use win32::{
-    LPARAM, MINMAXINFO, UINT, WM_CLOSE, WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_GETMINMAXINFO,
-    WM_MOVE, WM_SIZE, WPARAM,
+    HWND, IsIconic, LPARAM, MINMAXINFO, SIZE_MAXIMIZED, SIZE_MINIMIZED, UINT, WM_CLOSE,
+    WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_GETMINMAXINFO, WM_MOVE, WM_SIZE, WPARAM,
 };
 
 impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
-    fn wnd_proc(this: Option<&mut Self>, msg: UINT, _: WPARAM, l_param: LPARAM) -> bool {
+    fn wnd_proc(
+        this: Option<&mut Self>,
+        wnd: HWND,
+        msg: UINT,
+        w_param: WPARAM,
+        l_param: LPARAM,
+    ) -> bool {
         let this = match this {
             Some(this) => this,
             None => return false,
@@ -68,9 +74,35 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                             .unwrap(), // TODO: Add error handling
                     }
                 }
+
+                let old_maximized = this.is_maximized;
+                this.is_maximized = w_param & SIZE_MAXIMIZED != 0;
+                if this.is_maximized && !old_maximized {
+                    this.event_queue
+                        .push(EventKind::WindowMaximized { id })
+                        .unwrap(); // TODO: Add error handling
+                }
+
+                let old_minimized = this.is_minimized;
+                this.is_minimized = w_param & SIZE_MINIMIZED != 0;
+                if this.is_minimized && !old_minimized {
+                    this.event_queue
+                        .push(EventKind::WindowMinimized { id })
+                        .unwrap(); // TODO: Add error handling
+                }
+
+                if !this.is_maximized && !this.is_minimized && (old_maximized || old_minimized) {
+                    this.event_queue
+                        .push(EventKind::WindowRestored { id })
+                        .unwrap(); // TODO: Add error handling
+                }
             }
 
             WM_MOVE => {
+                if unsafe { IsIconic(wnd) } != 0 {
+                    return true;
+                }
+
                 let x = (l_param & 0xFFFF) as i16;
                 let y = ((l_param >> 16) & 0xFFFF) as i16;
                 let position = Vector2::new(x as _, y as _);

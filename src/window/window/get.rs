@@ -1,5 +1,5 @@
 use crate::{
-    math::{Recti, Vector2i},
+    math::{Recti, Vector2i, Vector2u},
     window::Window,
 };
 
@@ -109,6 +109,36 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
         self.height_opt().expect("window has been destroyed")
     }
 
+    /// Get the minimum size of the window's client area, in pixels
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn minimum_size_opt(&self) -> Option<Option<Vector2u>> {
+        self.with_inner(|inner| inner.minimum_size())
+    }
+
+    /// Get the minimum size of the window's client area, in pixels
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn minimum_size(&self) -> Option<Vector2u> {
+        self.minimum_size_opt().expect("window has been destroyed")
+    }
+
+    /// Get the maximum size of the window's client area, in pixels
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn maximum_size_opt(&self) -> Option<Option<Vector2u>> {
+        self.with_inner(|inner| inner.maximum_size())
+    }
+
+    /// Get the maximum size of the window's client area, in pixels
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn maximum_size(&self) -> Option<Vector2u> {
+        self.maximum_size_opt().expect("window has been destroyed")
+    }
+
     /// Is the window currently in fullscreen mode?
     ///
     /// Returns [`None`] if the window has been destroyed
@@ -122,5 +152,35 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     /// Panics if the window has been destroyed
     pub fn is_fullscreen(&self) -> bool {
         self.is_fullscreen_opt().expect("window has been destroyed")
+    }
+
+    /// Is the window currently maximized?
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn is_maximized_opt(&self) -> Option<bool> {
+        self.with_inner(|inner| inner.is_maximized())
+    }
+
+    /// Is the window currently maximized?
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn is_maximized(&self) -> bool {
+        self.is_maximized_opt().expect("window has been destroyed")
+    }
+
+    /// Is the window currently minimized?
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn is_minimized_opt(&self) -> Option<bool> {
+        self.with_inner(|inner| inner.is_minimized())
+    }
+
+    /// Is the window currently minimized?
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn is_minimized(&self) -> bool {
+        self.is_minimized_opt().expect("window has been destroyed")
     }
 }

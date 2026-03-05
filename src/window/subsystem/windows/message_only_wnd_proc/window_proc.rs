@@ -1,8 +1,8 @@
 use crate::window::{WindowProc, subsystem::windows::MessageOnlyWndProc};
-use win32::{LPARAM, UINT, WM_DEVICECHANGE, WM_DISPLAYCHANGE, WM_DPICHANGED, WPARAM};
+use win32::{HWND, LPARAM, UINT, WM_DEVICECHANGE, WM_DISPLAYCHANGE, WM_DPICHANGED, WPARAM};
 
 impl WindowProc for MessageOnlyWndProc {
-    fn wnd_proc(this: Option<&mut Self>, msg: UINT, _: WPARAM, _: LPARAM) -> bool {
+    fn wnd_proc(this: Option<&mut Self>, _: HWND, msg: UINT, _: WPARAM, _: LPARAM) -> bool {
         let this = match this {
             Some(this) => this,
             None => return false,

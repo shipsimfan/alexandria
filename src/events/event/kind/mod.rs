@@ -113,6 +113,24 @@ pub enum EventKind<UserEvent: 'static + Send> {
         new_position: Vector2i,
     },
 
+    /// A [`Window`] was minimized
+    WindowMinimized {
+        /// The ID of the minimized [`Window`]
+        id: Id<Window<UserEvent>>,
+    },
+
+    /// A [`Window`] was maximized
+    WindowMaximized {
+        /// The ID of the maximized [`Window`]
+        id: Id<Window<UserEvent>>,
+    },
+
+    /// A [`Window`] was restored
+    WindowRestored {
+        /// The ID of the restored [`Window`]
+        id: Id<Window<UserEvent>>,
+    },
+
     /**
      *** USER EVENT ***
      **/

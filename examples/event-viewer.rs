@@ -125,6 +125,15 @@ fn handle_event(
         alexandria::EventKind::WindowMoved { id, new_position } => {
             println!("[WINDOW][MOVED] {} to {}", id, new_position);
         }
+        alexandria::EventKind::WindowMinimized { id } => {
+            println!("[WINDOW][MINIMIZED] {}", id);
+        }
+        alexandria::EventKind::WindowMaximized { id } => {
+            println!("[WINDOW][MAXIMIZED] {}", id);
+        }
+        alexandria::EventKind::WindowRestored { id } => {
+            println!("[WINDOW][RESTORED] {}", id);
+        }
 
         alexandria::EventKind::User(_) => println!("[USER]"),
     }

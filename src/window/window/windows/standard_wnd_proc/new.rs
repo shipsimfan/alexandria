@@ -22,6 +22,8 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
             maximum_window_size: None,
 
             is_fullscreen: false,
+            is_maximized: false,
+            is_minimized: false,
             is_changing: None,
 
             id: None,

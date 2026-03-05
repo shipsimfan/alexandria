@@ -44,6 +44,12 @@ pub(in crate::window) struct StandardWndProc<UserEvent: 'static + Send> {
     /// Is this window currently fullscreen?
     is_fullscreen: bool,
 
+    /// Is this window currently maximized?
+    is_maximized: bool,
+
+    /// Is this window currently minimized?
+    is_minimized: bool,
+
     /// Is the window currently being resized or moved by the user?
     ///
     /// Holds the current state of the window, before being coalesced
