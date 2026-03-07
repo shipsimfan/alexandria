@@ -134,6 +134,12 @@ fn handle_event(
         alexandria::EventKind::WindowRestored { id } => {
             println!("[WINDOW][RESTORED] {}", id);
         }
+        alexandria::EventKind::WindowGainedFocus { id } => {
+            println!("[WINDOW][GAINED FOCUS] {}", id);
+        }
+        alexandria::EventKind::WindowLostFocus { id } => {
+            println!("[WINDOW][LOST FOCUS] {}", id);
+        }
 
         alexandria::EventKind::User(_) => println!("[USER]"),
     }

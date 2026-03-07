@@ -55,6 +55,9 @@ pub(in crate::window) struct StandardWndProc<UserEvent: 'static + Send> {
     /// Holds the current state of the window, before being coalesced
     is_changing: Option<Recti>,
 
+    /// Is this window currently focused?
+    is_focused: bool,
+
     /// The id of the window to push events with
     id: Option<Id<Window<UserEvent>>>,
 

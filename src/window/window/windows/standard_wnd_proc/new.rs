@@ -25,6 +25,7 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
             is_maximized: false,
             is_minimized: false,
             is_changing: None,
+            is_focused: true,
 
             id: None,
             event_queue,

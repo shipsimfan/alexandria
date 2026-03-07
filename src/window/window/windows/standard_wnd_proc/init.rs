@@ -11,6 +11,8 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         requested_position: Option<Vector2i>,
         requested_size: Option<Vector2i>,
         is_fullscreen: bool,
+        is_maximized: bool,
+        is_minimized: bool,
     ) {
         self.rect = current_rect;
         self.windowed_rect = Recti::new(
@@ -18,5 +20,8 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
             requested_size.unwrap_or(current_rect.size),
         );
         self.is_fullscreen = is_fullscreen;
+        self.is_maximized = is_maximized;
+        self.is_minimized = is_minimized;
+        self.is_focused = !is_minimized;
     }
 }

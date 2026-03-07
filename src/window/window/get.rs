@@ -183,4 +183,19 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     pub fn is_minimized(&self) -> bool {
         self.is_minimized_opt().expect("window has been destroyed")
     }
+
+    /// Is the window currently focused?
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn is_focused_opt(&self) -> Option<bool> {
+        self.with_inner(|inner| inner.is_focused())
+    }
+
+    /// Is the window currently focused?
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn is_focused(&self) -> bool {
+        self.is_focused_opt().expect("window has been destroyed")
+    }
 }

@@ -97,6 +97,8 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             builder.get_position(),
             builder_size,
             builder.is_fullscreen(),
+            builder.is_maximized() && !builder.is_fullscreen(),
+            builder.is_minimized() && !builder.is_fullscreen(),
         );
 
         window.set_minimum_size(builder.get_minimum_size())?;

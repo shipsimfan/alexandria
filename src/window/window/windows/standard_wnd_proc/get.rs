@@ -33,4 +33,9 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
     pub(in crate::window::window::windows) fn is_minimized(&self) -> bool {
         self.is_minimized
     }
+
+    /// Is the window currently focused?
+    pub(in crate::window::window::windows) fn is_focused(&self) -> bool {
+        self.is_focused
+    }
 }

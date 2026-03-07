@@ -131,6 +131,18 @@ pub enum EventKind<UserEvent: 'static + Send> {
         id: Id<Window<UserEvent>>,
     },
 
+    /// A [`Window`] gained focus
+    WindowGainedFocus {
+        /// The ID of the focused [`Window`]
+        id: Id<Window<UserEvent>>,
+    },
+
+    /// A [`Window`] lost focus
+    WindowLostFocus {
+        /// The ID of the unfocused [`Window`]
+        id: Id<Window<UserEvent>>,
+    },
+
     /**
      *** USER EVENT ***
      **/

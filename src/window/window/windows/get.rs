@@ -33,4 +33,9 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
     pub fn is_minimized(&self) -> bool {
         self.window.is_minimized()
     }
+
+    /// Is the window currently focused?
+    pub fn is_focused(&self) -> bool {
+        self.window.is_focused()
+    }
 }

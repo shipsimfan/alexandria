@@ -5,7 +5,8 @@ use crate::{
 };
 use win32::{
     HWND, IsIconic, LPARAM, MINMAXINFO, SIZE_MAXIMIZED, SIZE_MINIMIZED, UINT, WM_CLOSE,
-    WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_GETMINMAXINFO, WM_MOVE, WM_SIZE, WPARAM,
+    WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_GETMINMAXINFO, WM_KILLFOCUS, WM_MOVE, WM_SETFOCUS,
+    WM_SIZE, WPARAM,
 };
 
 impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
@@ -118,6 +119,21 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                         .unwrap(), // TODO: Add error handling
                 }
             }
+
+            WM_SETFOCUS => {
+                this.is_focused = true;
+                this.event_queue
+                    .push(EventKind::WindowGainedFocus { id })
+                    .unwrap(); // TODO: Add error handling
+            }
+
+            WM_KILLFOCUS => {
+                this.is_focused = false;
+                this.event_queue
+                    .push(EventKind::WindowLostFocus { id })
+                    .unwrap(); // TODO: Add error handling
+            }
+
             _ => return false,
         }
 

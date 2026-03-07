@@ -4,8 +4,6 @@
    - Windows
  2. Re-add windows on Windows
    1. Add Window Events
-     - Focus Gained
-     - Focus Lost
      - Shown
      - Hidden
      - Content Scale Changed
@@ -14,7 +12,6 @@
      - Destroyed
    2. Window state tracking
      - Title
-     - Focus
      - Hidden
      - Borderless
      - Resizable
