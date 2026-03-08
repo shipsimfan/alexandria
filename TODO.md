@@ -3,23 +3,7 @@
    - Linux
    - Windows
  2. Re-add windows on Windows
-   1. Add Window Events
-     - Shown
-     - Hidden
-     - Content Scale Changed
-     - Enter Fullscreen
-     - Leave Fullscreen
-     - Destroyed
-   2. Window state tracking
-     - Title
-     - Hidden
-     - Borderless
-     - Resizable
-     - Is Resizing
-     - Is Moving
-     - Fullscreen + Fullscreen Display Mode
-     - Content Scale
-   3. Window state setting
+   1. Window state setting
      - Title
      - Size
      - Minimum Size
@@ -31,7 +15,7 @@
      - Hidden
      - Borderless
      - Resizable
-     - Fullscreen + Fullscreen Display Mode
+     - Fullscreen
  3. Re-add surface creation on Windows
  4. Re-add device graphics items
 

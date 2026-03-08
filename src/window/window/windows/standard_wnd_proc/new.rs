@@ -21,11 +21,14 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
             maximum_client_size: None,
             maximum_window_size: None,
 
+            content_scale: 1.0,
+
             is_fullscreen: false,
             is_maximized: false,
             is_minimized: false,
             is_changing: None,
             is_focused: true,
+            is_visible: false,
 
             id: None,
             event_queue,

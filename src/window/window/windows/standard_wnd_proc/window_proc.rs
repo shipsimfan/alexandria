@@ -5,8 +5,8 @@ use crate::{
 };
 use win32::{
     HWND, IsIconic, LPARAM, MINMAXINFO, SIZE_MAXIMIZED, SIZE_MINIMIZED, UINT, WM_CLOSE,
-    WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_GETMINMAXINFO, WM_KILLFOCUS, WM_MOVE, WM_SETFOCUS,
-    WM_SIZE, WPARAM,
+    WM_DPICHANGED, WM_ENTERSIZEMOVE, WM_EXITSIZEMOVE, WM_GETMINMAXINFO, WM_KILLFOCUS, WM_MOVE,
+    WM_SETFOCUS, WM_SHOWWINDOW, WM_SIZE, WPARAM,
 };
 
 impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
@@ -132,6 +132,37 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                 this.event_queue
                     .push(EventKind::WindowLostFocus { id })
                     .unwrap(); // TODO: Add error handling
+            }
+
+            WM_SHOWWINDOW => {
+                let old_visible = this.is_visible;
+                this.is_visible = w_param != 0;
+                if this.is_visible != old_visible {
+                    if this.is_visible {
+                        this.event_queue
+                            .push(EventKind::WindowShown { id })
+                            .unwrap(); // TODO: Add error handling
+                    } else {
+                        this.event_queue
+                            .push(EventKind::WindowHidden { id })
+                            .unwrap(); // TODO: Add error handling
+                    }
+                }
+            }
+
+            WM_DPICHANGED => {
+                let new_content_scale = (w_param & 0xFFFF) as f32 / 96.0;
+                let old_content_scale = this.content_scale;
+                this.content_scale = new_content_scale;
+
+                if (new_content_scale - old_content_scale).abs() > 1e-4 {
+                    this.event_queue
+                        .push(EventKind::WindowContentScaleChanged {
+                            id,
+                            new_content_scale,
+                        })
+                        .unwrap(); // TODO: Add error handling
+                }
             }
 
             _ => return false,

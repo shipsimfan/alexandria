@@ -19,6 +19,11 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         self.maximum_client_size
     }
 
+    /// Get the current content scale factor of the window
+    pub(in crate::window::window::windows) fn content_scale(&self) -> f32 {
+        self.content_scale
+    }
+
     /// Is the window currently in fullscreen mode?
     pub(in crate::window::window::windows) fn is_fullscreen(&self) -> bool {
         self.is_fullscreen
@@ -37,5 +42,10 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
     /// Is the window currently focused?
     pub(in crate::window::window::windows) fn is_focused(&self) -> bool {
         self.is_focused
+    }
+
+    /// Is the window currently visible?
+    pub(in crate::window::window::windows) fn is_visible(&self) -> bool {
+        self.is_visible
     }
 }

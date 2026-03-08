@@ -143,6 +143,45 @@ pub enum EventKind<UserEvent: 'static + Send> {
         id: Id<Window<UserEvent>>,
     },
 
+    /// A [`Window`] has been shown
+    WindowShown {
+        /// The ID of the shown [`Window`]
+        id: Id<Window<UserEvent>>,
+    },
+
+    /// A [`Window`] has been hidden
+    WindowHidden {
+        /// The ID of the hidden [`Window`]
+        id: Id<Window<UserEvent>>,
+    },
+
+    /// A [`Window`]'s content scale changed
+    WindowContentScaleChanged {
+        /// The ID of the changed [`Window`]
+        id: Id<Window<UserEvent>>,
+
+        /// The new content scale of the [`Window`]
+        new_content_scale: f32,
+    },
+
+    /// A [`Window`] entered fullscreen mode
+    WindowEnteredFullscreen {
+        /// The ID of the [`Window`] that entered fullscreen mode
+        id: Id<Window<UserEvent>>,
+    },
+
+    /// A [`Window`] left fullscreen mode
+    WindowLeftFullscreen {
+        /// The ID of the [`Window`] that left fullscreen mode
+        id: Id<Window<UserEvent>>,
+    },
+
+    /// A [`Window`] was destroyed
+    WindowDestroyed {
+        /// The ID of the destroyed [`Window`]
+        id: Id<Window<UserEvent>>,
+    },
+
     /**
      *** USER EVENT ***
      **/

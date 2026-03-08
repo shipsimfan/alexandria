@@ -4,6 +4,21 @@ use crate::{
 };
 
 impl<UserEvent: 'static + Send> Window<UserEvent> {
+    /// Get the current title of the window
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn title_opt(&self) -> Option<String> {
+        self.with_inner(|inner| inner.title().to_string())
+    }
+
+    /// Get the current title of the window
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn title(&self) -> String {
+        self.title_opt().expect("window has been destroyed")
+    }
+
     /// Get the position and size of the window's client area, in screen coordinates
     ///
     /// Returns [`None`] if the window has been destroyed
@@ -139,6 +154,21 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
         self.maximum_size_opt().expect("window has been destroyed")
     }
 
+    /// Get the current content scale factor of the window
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn content_scale_opt(&self) -> Option<f32> {
+        self.with_inner(|inner| inner.content_scale())
+    }
+
+    /// Get the current content scale factor of the window
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn content_scale(&self) -> f32 {
+        self.content_scale_opt().expect("window has been destroyed")
+    }
+
     /// Is the window currently in fullscreen mode?
     ///
     /// Returns [`None`] if the window has been destroyed
@@ -197,5 +227,50 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     /// Panics if the window has been destroyed
     pub fn is_focused(&self) -> bool {
         self.is_focused_opt().expect("window has been destroyed")
+    }
+
+    /// Is the window currently visible?
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn is_visible_opt(&self) -> Option<bool> {
+        self.with_inner(|inner| inner.is_visible())
+    }
+
+    /// Is the window currently visible?
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn is_visible(&self) -> bool {
+        self.is_visible_opt().expect("window has been destroyed")
+    }
+
+    /// Is the window borderless?
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn is_borderless_opt(&self) -> Option<bool> {
+        self.with_inner(|inner| inner.is_borderless())
+    }
+
+    /// Is the window borderless?
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn is_borderless(&self) -> bool {
+        self.is_borderless_opt().expect("window has been destroyed")
+    }
+
+    /// Is the window resizable?
+    ///
+    /// Returns [`None`] if the window has been destroyed
+    pub fn is_resizable_opt(&self) -> Option<bool> {
+        self.with_inner(|inner| inner.is_resizable())
+    }
+
+    /// Is the window resizable?
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn is_resizable(&self) -> bool {
+        self.is_resizable_opt().expect("window has been destroyed")
     }
 }

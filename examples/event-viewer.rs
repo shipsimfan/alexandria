@@ -41,7 +41,7 @@ fn main() {
     }
 
     if let Some(window) = window {
-        window.destroy();
+        window.destroy().unwrap();
     }
 }
 
@@ -114,10 +114,7 @@ fn handle_event(
 
         alexandria::EventKind::WindowCloseRequest { id } => {
             println!("[WINDOW][CLOSE REQUEST] {}", id);
-            context
-                .event_queue()
-                .push(alexandria::EventKind::Quit)
-                .unwrap();
+            context.window().destroy_window(id).unwrap();
         }
         alexandria::EventKind::WindowResized { id, new_size } => {
             println!("[WINDOW][RESIZED] {} to {}x{}", id, new_size.x, new_size.y);
@@ -139,6 +136,35 @@ fn handle_event(
         }
         alexandria::EventKind::WindowLostFocus { id } => {
             println!("[WINDOW][LOST FOCUS] {}", id);
+        }
+        alexandria::EventKind::WindowShown { id } => {
+            println!("[WINDOW][SHOWN] {}", id);
+        }
+        alexandria::EventKind::WindowHidden { id } => {
+            println!("[WINDOW][HIDDEN] {}", id);
+        }
+        alexandria::EventKind::WindowContentScaleChanged {
+            id,
+            new_content_scale,
+        } => {
+            println!(
+                "[WINDOW][SCALE CHANGED] {} to ({}%)",
+                id,
+                (new_content_scale * 100.0).round(),
+            );
+        }
+        alexandria::EventKind::WindowEnteredFullscreen { id } => {
+            println!("[WINDOW][ENTERED FULLSCREEN] {}", id);
+        }
+        alexandria::EventKind::WindowLeftFullscreen { id } => {
+            println!("[WINDOW][LEFT FULLSCREEN] {}", id);
+        }
+        alexandria::EventKind::WindowDestroyed { id } => {
+            println!("[WINDOW][DESTROYED] {}", id);
+            context
+                .event_queue()
+                .push(alexandria::EventKind::Quit)
+                .unwrap();
         }
 
         alexandria::EventKind::User(_) => println!("[USER]"),

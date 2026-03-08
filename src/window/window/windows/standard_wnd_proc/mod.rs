@@ -41,6 +41,9 @@ pub(in crate::window) struct StandardWndProc<UserEvent: 'static + Send> {
     /// The requested maximum size of the window, in pixels
     maximum_window_size: Option<Vector2u>,
 
+    /// The current content scale factor of the window
+    content_scale: f32,
+
     /// Is this window currently fullscreen?
     is_fullscreen: bool,
 
@@ -57,6 +60,9 @@ pub(in crate::window) struct StandardWndProc<UserEvent: 'static + Send> {
 
     /// Is this window currently focused?
     is_focused: bool,
+
+    /// Is this window currently visible?
+    is_visible: bool,
 
     /// The id of the window to push events with
     id: Option<Id<Window<UserEvent>>>,

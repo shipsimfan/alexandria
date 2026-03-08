@@ -28,7 +28,7 @@ fn main() {
         }
     }
 
-    window.destroy();
+    window.destroy().unwrap();
 }
 
 fn handle_event(event: &alexandria::Event<()>, _: &alexandria::AlexandriaContext<()>) -> bool {

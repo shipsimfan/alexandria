@@ -16,4 +16,13 @@ pub(in crate::window) use win32::Win32Window;
 pub(in crate::window) struct WindowInner<UserEvent: 'static + Send> {
     /// The raw window
     window: Win32Window<StandardWndProc<UserEvent>>,
+
+    /// The current title of the window
+    title: String,
+
+    /// Is the window borderless?
+    is_borderless: bool,
+
+    /// Is the window resizable?
+    is_resizable: bool,
 }

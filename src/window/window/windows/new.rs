@@ -92,18 +92,26 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             .get_client_size()
             .map_err(|os| Error::new_with("unable to get window size", os))?;
 
+        let content_scale = window.get_content_scale();
         window.init(
             Recti::new(position, size),
             builder.get_position(),
             builder_size,
             builder.is_fullscreen(),
-            builder.is_maximized() && !builder.is_fullscreen(),
-            builder.is_minimized() && !builder.is_fullscreen(),
+            builder.is_maximized(),
+            builder.is_minimized(),
+            builder.is_hidden(),
+            content_scale,
         );
 
         window.set_minimum_size(builder.get_minimum_size())?;
         window.set_maximum_size(builder.get_maximum_size())?;
 
-        Ok(WindowInner { window })
+        Ok(WindowInner {
+            window,
+            title: builder.get_title().to_string(),
+            is_borderless: !builder.is_bordered(),
+            is_resizable: builder.is_resizable(),
+        })
     }
 }
