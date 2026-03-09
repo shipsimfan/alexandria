@@ -37,4 +37,16 @@ impl<UserEvent: 'static + Send> WindowSubsystem<UserEvent> {
     ) -> Option<R> {
         self.inner.borrow().windows().get(id).map(f)
     }
+
+    /// Get the [`WindowInner`] with `id` mutably
+    pub(in crate::window) fn with_window_inner_mut<
+        R,
+        F: FnOnce(&mut WindowInner<UserEvent>) -> R,
+    >(
+        &self,
+        id: Id<WindowInner<UserEvent>>,
+        f: F,
+    ) -> Option<R> {
+        self.inner.borrow_mut().windows_mut().get_mut(id).map(f)
+    }
 }

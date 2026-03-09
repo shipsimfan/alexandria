@@ -6,6 +6,7 @@ mod deref;
 mod drop;
 mod get;
 mod new;
+mod set;
 
 /// A raw Win32 window
 pub(in crate::window) struct Win32Window<T: WindowProc> {

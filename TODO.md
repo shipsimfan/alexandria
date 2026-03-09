@@ -4,7 +4,6 @@
    - Windows
  2. Re-add windows on Windows
    1. Window state setting
-     - Title
      - Size
      - Minimum Size
      - Maximum Size

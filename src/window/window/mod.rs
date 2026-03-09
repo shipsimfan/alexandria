@@ -12,6 +12,7 @@ mod destroy;
 mod get;
 mod inner;
 mod new;
+mod set;
 
 pub use builder::WindowBuilder;
 pub use iter::WindowIter;

@@ -1,10 +1,11 @@
 mod class;
-mod get;
 mod standard_wnd_proc;
 mod style;
 mod win32;
 
+mod get;
 mod new;
+mod set;
 mod set_id;
 
 pub(in crate::window) use class::{WindowClass, WindowProc};
