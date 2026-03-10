@@ -5,6 +5,7 @@ use crate::{
 };
 
 mod change_rect;
+mod close;
 mod get;
 mod init;
 mod new;

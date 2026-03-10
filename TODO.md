@@ -4,17 +4,17 @@
    - Windows
  2. Re-add windows on Windows
    1. Window state setting
-     - Size
-     - Minimum Size
-     - Maximum Size
-     - Position
-     - Request close
-     - Maximized
-     - Minimized
-     - Hidden
-     - Borderless
-     - Resizable
-     - Fullscreen
+     - Size (SetWindowPos)
+     - Minimum Size (directly)
+     - Maximum Size (directly)
+     - Position (SetWindowPos)
+     - Request close (directly)
+     - Maximized (ShowWindow)
+     - Minimized (ShowWindow)
+     - Hidden (ShowWindow)
+     - Borderless (SetWindowLongPtr + SetWindowPos)
+     - Resizable (SetWindowLongPtr + SetWindowPos)
+     - Fullscreen (SetWindowLongPtr + SetWindowPos)
  3. Re-add surface creation on Windows
  4. Re-add device graphics items
 

@@ -29,9 +29,7 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
 
         match msg {
             WM_CLOSE => {
-                this.event_queue
-                    .push(EventKind::WindowCloseRequest { id })
-                    .unwrap(); // TODO: Add error handling
+                this.close().unwrap(); // TODO: Add error handling
             }
             WM_GETMINMAXINFO => {
                 let min_max_info = unsafe { &mut *(l_param as *mut MINMAXINFO) };

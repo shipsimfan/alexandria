@@ -7,4 +7,9 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
         self.title = title.to_owned();
         Ok(())
     }
+
+    /// Send a close request to the window
+    pub fn close(&self) -> Result<()> {
+        self.window.close()
+    }
 }

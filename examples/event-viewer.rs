@@ -120,6 +120,10 @@ fn handle_event(
             println!("[WINDOW][RESIZED] {} to {}x{}", id, new_size.x, new_size.y);
         }
         alexandria::EventKind::WindowMoved { id, new_position } => {
+            if new_position.x < 50 && new_position.y < 50 {
+                context.window().window(id).unwrap().close().unwrap();
+            }
+
             println!("[WINDOW][MOVED] {} to {}", id, new_position);
         }
         alexandria::EventKind::WindowMinimized { id } => {

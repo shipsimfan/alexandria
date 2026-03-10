@@ -7,4 +7,11 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
             .transpose()
             .map(|_| ())
     }
+
+    /// Send a close request to the window
+    pub fn close(&self) -> Result<()> {
+        self.with_inner(|inner| inner.close())
+            .transpose()
+            .map(|_| ())
+    }
 }
