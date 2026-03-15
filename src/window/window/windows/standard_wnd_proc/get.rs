@@ -1,6 +1,6 @@
 use crate::{
     math::{Recti, Vector2u},
-    window::StandardWndProc,
+    window::{StandardWndProc, WindowStyle},
 };
 
 impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
@@ -47,5 +47,10 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
     /// Is the window currently visible?
     pub(in crate::window::window::windows) fn is_visible(&self) -> bool {
         self.is_visible
+    }
+
+    /// Get the current style of the window
+    pub(in crate::window::window::windows) fn style(&self) -> WindowStyle {
+        self.style
     }
 }

@@ -121,7 +121,12 @@ fn handle_event(
         }
         alexandria::EventKind::WindowMoved { id, new_position } => {
             if new_position.x < 50 && new_position.y < 50 {
-                context.window().window(id).unwrap().close().unwrap();
+                context
+                    .window()
+                    .window(id)
+                    .unwrap()
+                    .set_size(alexandria::math::Vector2::new(100, 100))
+                    .unwrap();
             }
 
             println!("[WINDOW][MOVED] {} to {}", id, new_position);
