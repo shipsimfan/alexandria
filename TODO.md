@@ -4,13 +4,6 @@
    - Windows
  2. Re-add windows on Windows
    1. Window state setting
-     - Minimum Size (directly)
-     - Maximum Size (directly)
-     - Position (SetWindowPos)
-     - Request close (directly)
-     - Maximized (ShowWindow)
-     - Minimized (ShowWindow)
-     - Hidden (ShowWindow)' 
      - Borderless (SetWindowLongPtr + SetWindowPos)
      - Resizable (SetWindowLongPtr + SetWindowPos)
      - Fullscreen (SetWindowLongPtr + SetWindowPos)

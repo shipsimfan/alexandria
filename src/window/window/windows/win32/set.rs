@@ -5,8 +5,8 @@ use crate::{
 };
 use std::ptr::null_mut;
 use win32::{
-    SWP_NOMOVE, SWP_NOOWNERZORDER, SWP_NOREPOSITION, SWP_NOZORDER, SetWindowPos, SetWindowText,
-    try_get_last_error,
+    SW_HIDE, SW_MAXIMIZE, SW_MINIMIZE, SW_SHOW, SWP_NOMOVE, SWP_NOOWNERZORDER, SWP_NOREPOSITION,
+    SWP_NOSIZE, SWP_NOZORDER, SetWindowPos, SetWindowText, ShowWindow, try_get_last_error,
 };
 
 impl<T: WindowProc> Win32Window<T> {
@@ -17,6 +17,21 @@ impl<T: WindowProc> Win32Window<T> {
         try_get_last_error!(SetWindowText(self.handle, title.as_ptr()))
             .map_err(|os| Error::new_with("unable to set window title", os))?;
         Ok(())
+    }
+
+    /// Sets the position of the window
+    pub fn set_position(&mut self, position: Vector2i) -> Result<()> {
+        try_get_last_error!(SetWindowPos(
+            self.handle,
+            null_mut(),
+            position.x,
+            position.y,
+            0,
+            0,
+            SWP_NOREPOSITION | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER
+        ))
+        .map_err(|os| Error::new_with("unable to set a window's position", os))
+        .map(|_| ())
     }
 
     /// Sets the size of the client area of the window
@@ -32,5 +47,33 @@ impl<T: WindowProc> Win32Window<T> {
         ))
         .map_err(|os| Error::new_with("unable to set a window's size", os))
         .map(|_| ())
+    }
+
+    /// Maximize the window
+    pub fn maximize(&mut self) -> Result<()> {
+        try_get_last_error!(ShowWindow(self.handle, SW_MAXIMIZE))
+            .map_err(|os| Error::new_with("unable to set the window maximized", os))
+            .map(|_| ())
+    }
+
+    /// Minimize the window
+    pub fn minimize(&mut self) -> Result<()> {
+        try_get_last_error!(ShowWindow(self.handle, SW_MINIMIZE))
+            .map_err(|os| Error::new_with("unable to set the window minized", os))
+            .map(|_| ())
+    }
+
+    /// Hide the window
+    pub fn hide(&mut self) -> Result<()> {
+        try_get_last_error!(ShowWindow(self.handle, SW_HIDE))
+            .map_err(|os| Error::new_with("unable to set the window hidden", os))
+            .map(|_| ())
+    }
+
+    /// Show the window
+    pub fn show(&mut self) -> Result<()> {
+        try_get_last_error!(ShowWindow(self.handle, SW_SHOW))
+            .map_err(|os| Error::new_with("unable to set the window shown", os))
+            .map(|_| ())
     }
 }
