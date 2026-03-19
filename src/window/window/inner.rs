@@ -1,4 +1,7 @@
-use crate::window::{Window, window::WindowInner};
+use crate::{
+    PackedMap,
+    window::{Window, display::DisplayInner, window::WindowInner},
+};
 
 impl<UserEvent: 'static + Send> Window<UserEvent> {
     /// Get the [`WindowInner`] this points to
@@ -12,7 +15,10 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
 
     /// Get the [`WindowInner`] this points to mutably
     #[inline]
-    pub(in crate::window) fn with_inner_mut<R, F: FnOnce(&mut WindowInner<UserEvent>) -> R>(
+    pub(in crate::window) fn with_inner_mut<
+        F: FnOnce(&mut WindowInner<UserEvent>, &PackedMap<DisplayInner<UserEvent>>) -> R,
+        R,
+    >(
         &mut self,
         f: F,
     ) -> Option<R> {

@@ -4,8 +4,6 @@
    - Windows
  2. Re-add windows on Windows
    1. Window state setting
-     - Borderless (SetWindowLongPtr + SetWindowPos)
-     - Resizable (SetWindowLongPtr + SetWindowPos)
      - Fullscreen (SetWindowLongPtr + SetWindowPos)
  3. Re-add surface creation on Windows
  4. Re-add device graphics items

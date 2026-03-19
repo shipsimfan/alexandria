@@ -9,9 +9,8 @@ mod close;
 mod get;
 mod init;
 mod new;
+mod set;
 mod set_id;
-mod set_maximum_size;
-mod set_minimum_size;
 mod window_proc;
 
 /// The window procedure for normal windows
@@ -54,6 +53,12 @@ pub(in crate::window) struct StandardWndProc<UserEvent: 'static + Send> {
     /// Is this window currently minimized?
     is_minimized: bool,
 
+    /// Is the window maximized when it is windowed?
+    is_maximized_when_windowed: bool,
+
+    /// Is the window minimized when it is windowed?
+    is_minimized_when_windowed: bool,
+
     /// Is the window currently being resized or moved by the user?
     ///
     /// Holds the current state of the window, before being coalesced
@@ -64,6 +69,12 @@ pub(in crate::window) struct StandardWndProc<UserEvent: 'static + Send> {
 
     /// Is this window currently visible?
     is_visible: bool,
+
+    /// Is the window borderless when it is windowed?
+    is_borderless: bool,
+
+    /// Is the window resizable when it is windowed?
+    is_resizable: bool,
 
     /// The id of the window to push events with
     id: Option<Id<Window<UserEvent>>>,

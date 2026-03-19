@@ -1,6 +1,6 @@
 use crate::{
     PackedMap,
-    window::{subsystem::WindowSubsystemInner, window::WindowInner},
+    window::{display::DisplayInner, subsystem::WindowSubsystemInner, window::WindowInner},
 };
 
 impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
@@ -9,8 +9,13 @@ impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
         &self.windows
     }
 
-    /// Get the set of currently active windows mutably
-    pub fn windows_mut(&mut self) -> &mut PackedMap<WindowInner<UserEvent>> {
-        &mut self.windows
+    /// Get the set of currently active windows mutably and the set of displays
+    pub fn windows_mut_and_displays(
+        &mut self,
+    ) -> (
+        &mut PackedMap<WindowInner<UserEvent>>,
+        &PackedMap<DisplayInner<UserEvent>>,
+    ) {
+        (&mut self.windows, &self.displays)
     }
 }

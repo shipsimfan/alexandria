@@ -14,6 +14,8 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         is_maximized: bool,
         is_minimized: bool,
         is_hidden: bool,
+        is_bordered: bool,
+        is_resizable: bool,
         content_scale: f32,
     ) {
         self.rect = current_rect;
@@ -30,6 +32,8 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         self.is_minimized = is_minimized;
         self.is_focused = !is_minimized;
         self.is_visible = !is_hidden;
+        self.is_borderless = !is_bordered;
+        self.is_resizable = is_resizable;
         self.content_scale = content_scale;
     }
 }

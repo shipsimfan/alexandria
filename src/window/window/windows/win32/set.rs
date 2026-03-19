@@ -1,12 +1,13 @@
 use crate::{
     Error, Result,
     math::Vector2i,
-    window::{Win32Window, WindowProc},
+    window::{Win32Window, WindowProc, WindowStyle},
 };
 use std::ptr::null_mut;
 use win32::{
-    SW_HIDE, SW_MAXIMIZE, SW_MINIMIZE, SW_SHOW, SWP_NOMOVE, SWP_NOOWNERZORDER, SWP_NOREPOSITION,
-    SWP_NOSIZE, SWP_NOZORDER, SetWindowPos, SetWindowText, ShowWindow, try_get_last_error,
+    GWL_EXSTYLE, GWL_STYLE, SW_HIDE, SW_MAXIMIZE, SW_MINIMIZE, SW_SHOW, SWP_FRAMECHANGED,
+    SWP_NOMOVE, SWP_NOOWNERZORDER, SWP_NOREPOSITION, SWP_NOSIZE, SWP_NOZORDER, SetWindowLong,
+    SetWindowPos, SetWindowText, ShowWindow, try_get_last_error,
 };
 
 impl<T: WindowProc> Win32Window<T> {
@@ -75,5 +76,25 @@ impl<T: WindowProc> Win32Window<T> {
         try_get_last_error!(ShowWindow(self.handle, SW_SHOW))
             .map_err(|os| Error::new_with("unable to set the window shown", os))
             .map(|_| ())
+    }
+
+    /// Set the style of the window
+    pub fn set_style(&mut self, style: WindowStyle) -> Result<()> {
+        try_get_last_error!(SetWindowLong(self.handle, GWL_STYLE, style.style as _))
+            .map_err(|os| Error::new_with("unable to set window border", os))?;
+        try_get_last_error!(SetWindowLong(self.handle, GWL_EXSTYLE, style.ex_style as _))
+            .map_err(|os| Error::new_with("unable to set window border", os))?;
+
+        try_get_last_error!(SetWindowPos(
+            self.handle,
+            null_mut(),
+            0,
+            0,
+            0,
+            0,
+            SWP_NOMOVE | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER | SWP_FRAMECHANGED
+        ))
+        .map_err(|os| Error::new_with("unable to set window border", os))
+        .map(|_| ())
     }
 }

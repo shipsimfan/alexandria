@@ -1,6 +1,6 @@
 use crate::{
-    Id,
-    window::{Window, WindowIter, WindowSubsystem, window::WindowInner},
+    Id, PackedMap,
+    window::{Window, WindowIter, WindowSubsystem, display::DisplayInner, window::WindowInner},
 };
 
 impl<UserEvent: 'static + Send> WindowSubsystem<UserEvent> {
@@ -40,13 +40,15 @@ impl<UserEvent: 'static + Send> WindowSubsystem<UserEvent> {
 
     /// Get the [`WindowInner`] with `id` mutably
     pub(in crate::window) fn with_window_inner_mut<
+        F: FnOnce(&mut WindowInner<UserEvent>, &PackedMap<DisplayInner<UserEvent>>) -> R,
         R,
-        F: FnOnce(&mut WindowInner<UserEvent>) -> R,
     >(
         &self,
         id: Id<WindowInner<UserEvent>>,
         f: F,
     ) -> Option<R> {
-        self.inner.borrow_mut().windows_mut().get_mut(id).map(f)
+        let mut inner = self.inner.borrow_mut();
+        let (windows, displays) = inner.windows_mut_and_displays();
+        windows.get_mut(id).map(|window| f(window, displays))
     }
 }

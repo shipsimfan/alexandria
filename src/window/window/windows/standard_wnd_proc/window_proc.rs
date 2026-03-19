@@ -76,6 +76,9 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
 
                 let old_maximized = this.is_maximized;
                 this.is_maximized = w_param & SIZE_MAXIMIZED != 0;
+                if !this.is_fullscreen {
+                    this.is_maximized_when_windowed = this.is_maximized;
+                }
                 if this.is_maximized && !old_maximized {
                     this.event_queue
                         .push(EventKind::WindowMaximized { id })
@@ -84,6 +87,9 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
 
                 let old_minimized = this.is_minimized;
                 this.is_minimized = w_param & SIZE_MINIMIZED != 0;
+                if !this.is_fullscreen {
+                    this.is_minimized_when_windowed = this.is_minimized;
+                }
                 if this.is_minimized && !old_minimized {
                     this.event_queue
                         .push(EventKind::WindowMinimized { id })

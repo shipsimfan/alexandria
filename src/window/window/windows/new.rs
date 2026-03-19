@@ -101,6 +101,8 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             builder.is_maximized(),
             builder.is_minimized(),
             builder.is_hidden(),
+            builder.is_bordered(),
+            builder.is_resizable(),
             content_scale,
         );
 
