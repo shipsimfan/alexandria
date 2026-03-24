@@ -2,11 +2,8 @@
  1. Add error handling for pushed events during event pumping
    - Linux
    - Windows
- 2. Re-add windows on Windows
-   1. Window state setting
-     - Fullscreen (SetWindowLongPtr + SetWindowPos)
- 3. Re-add surface creation on Windows
- 4. Re-add device graphics items
+ 2. Re-add surface creation on Windows
+ 3. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen

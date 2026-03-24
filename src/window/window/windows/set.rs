@@ -1,7 +1,7 @@
 use crate::{
     Error, PackedMap, Result,
     math::{Rect, Vector2, Vector2i, Vector2u},
-    window::{display::DisplayInner, window::WindowInner},
+    window::{WindowStyle, display::DisplayInner, window::WindowInner},
 };
 
 impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
@@ -142,5 +142,59 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             self.window.set_style(style)?;
         }
         Ok(())
+    }
+
+    /// Set if the window is fullscreen
+    pub fn set_fullscreen(
+        &mut self,
+        fullscreen: bool,
+        displays: &PackedMap<DisplayInner<UserEvent>>,
+    ) -> Result<()> {
+        if fullscreen == self.is_fullscreen() {
+            return Ok(());
+        }
+
+        self.window.set_fullscreen(fullscreen);
+
+        if fullscreen {
+            // Find a display to fullscreen on
+            let position = self.window.rect().position;
+            let mut found_display = None;
+            for display in displays {
+                if display.rect().contains_point(&position) {
+                    found_display = Some(display);
+                    break;
+                }
+            }
+            let display = found_display.unwrap_or_else(|| displays.at_index(0).1);
+
+            // Set the window style to fullscreen
+            self.window.set_style(WindowStyle::fullscreen())?;
+
+            // Set the window size and position to the display's
+            self.window.set_position(display.rect().position)?;
+            self.window.set_size(display.rect().size)
+        } else {
+            // Set the window style to windowed
+            let style = self.window.style();
+            self.window.set_style(style)?;
+
+            // Set the window size and position to the previous windowed size and position
+            let rect = style
+                .client_to_window(self.window.windowed_rect())
+                .map_err(|os| Error::new_with("unable to set a window's size", os))?;
+
+            self.window.set_position(rect.position)?;
+            self.window.set_size(rect.size)?;
+
+            // Set the window maximized or minimized state to the previous windowed maximized or minimized state
+            if self.window.is_maximized() {
+                self.window.maximize()?;
+            } else if self.window.is_minimized() {
+                self.window.minimize()?;
+            }
+
+            Ok(())
+        }
     }
 }

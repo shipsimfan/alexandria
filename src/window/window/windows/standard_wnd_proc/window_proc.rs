@@ -32,6 +32,10 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                 this.close().unwrap(); // TODO: Add error handling
             }
             WM_GETMINMAXINFO => {
+                if this.is_fullscreen {
+                    return true;
+                }
+
                 let min_max_info = unsafe { &mut *(l_param as *mut MINMAXINFO) };
 
                 if let Some(minimum_size) = this.minimum_window_size {

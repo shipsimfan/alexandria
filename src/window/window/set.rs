@@ -88,4 +88,11 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
             .transpose()
             .map(|_| ())
     }
+
+    /// Set this window to be fullscreen
+    pub fn set_fullscreen(&mut self, fullscreen: bool) -> Result<()> {
+        self.with_inner_mut(|inner, displays| inner.set_fullscreen(fullscreen, displays))
+            .transpose()
+            .map(|_| ())
+    }
 }

@@ -98,4 +98,9 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
             Some(self.style)
         }
     }
+
+    /// Set this window to be fullscreen
+    pub(in crate::window::window::windows) fn set_fullscreen(&mut self, fullscreen: bool) {
+        self.is_fullscreen = fullscreen;
+    }
 }

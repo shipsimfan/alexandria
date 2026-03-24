@@ -9,6 +9,11 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         self.rect
     }
 
+    /// Get the position and size of the window's client area when it is in windowed mode, in screen coordinates
+    pub(in crate::window::window::windows) fn windowed_rect(&self) -> Recti {
+        self.windowed_rect
+    }
+
     /// Get the minimum size of the window's client area, in pixels
     pub(in crate::window::window::windows) fn minimum_size(&self) -> Option<Vector2u> {
         self.minimum_client_size
