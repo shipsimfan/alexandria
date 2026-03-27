@@ -1,7 +1,9 @@
 use crate::{
     math::{Recti, Vector2u},
-    window::window::WindowInner,
+    window::window::{WindowInner, WindowSurfaceCreationHandle},
 };
+use std::ptr::null;
+use win32::GetModuleHandle;
 
 impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
     /// Get the current title of the window
@@ -62,5 +64,10 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
     /// Is the window resizable?
     pub fn is_resizable(&self) -> bool {
         self.is_resizable
+    }
+
+    /// Get the handle for creating a surface for this window
+    pub fn surface_creation_handle(&self) -> WindowSurfaceCreationHandle {
+        (unsafe { GetModuleHandle(null()) }, self.window.handle())
     }
 }

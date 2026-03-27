@@ -1,6 +1,6 @@
 use crate::{
     math::{Recti, Vector2i, Vector2u},
-    window::Window,
+    window::{Window, window::WindowSurfaceCreationHandle},
 };
 
 impl<UserEvent: 'static + Send> Window<UserEvent> {
@@ -272,5 +272,10 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     /// Panics if the window has been destroyed
     pub fn is_resizable(&self) -> bool {
         self.is_resizable_opt().expect("window has been destroyed")
+    }
+
+    /// Get the handle for creating a surface for this window
+    pub(crate) fn surface_creation_handle(&self) -> Option<WindowSurfaceCreationHandle> {
+        self.with_inner(|inner| inner.surface_creation_handle())
     }
 }

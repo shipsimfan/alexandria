@@ -9,10 +9,10 @@ mod message_severity;
 mod drop;
 mod new;
 
-pub use callback::VulkanDebugMessengerCallback;
-pub use message_severity::VulkanDebugMessageSeverity;
+pub use callback::*;
+pub use message_severity::*;
 
-pub(in crate::gpu::instance) use functions::VulkanDebugMessengerFunctions;
+pub(in crate::gpu::instance) use functions::*;
 
 /// An object which calls a callback when a debug message is emitted from Vulkan
 pub struct VulkanDebugMessenger<C: VulkanDebugMessengerCallback> {

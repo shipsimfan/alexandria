@@ -3,7 +3,7 @@ use vulkan::ext_debug_utils::{VkCreateDebugUtilsMessengerExt, VkDestroyDebugUtil
 
 mod load;
 
-/// Functions used by the debug messenger
+/// Functions used by debug messengers
 pub(in crate::gpu::instance) struct VulkanDebugMessengerFunctions {
     /// The function to create a new debug messenger
     pub create_debug_messenger: FunctionSymbol<VkCreateDebugUtilsMessengerExt>,

@@ -13,6 +13,6 @@ impl VulkanInstance {
         min_severity: VulkanDebugMessageSeverity,
         callback: C,
     ) -> Result<VulkanDebugMessenger<C>> {
-        VulkanDebugMessenger::new(self.clone(), min_severity, callback)
+        VulkanDebugMessenger::new(self, min_severity, callback)
     }
 }

@@ -21,10 +21,13 @@ vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
 [target.'cfg(windows)'.dependencies]
 win32 = { git = "https://github.com/shipsimfan/lib-win32", features = ["dxgi"] }
 
+vulkan = { git = "https://github.com/shipsimfan/lib-vulkan", features = [
+    "win32",
+] }
+
 [target.'cfg(target_os = "linux")'.dependencies]
 linux.git = "https://github.com/shipsimfan/lib-linux"
 wayland.git = "https://github.com/shipsimfan/lib-wayland"
-
 
 [[example]]
 name = "git-info"

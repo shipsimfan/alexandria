@@ -1,3 +1,5 @@
+use ::win32::{HINSTANCE, HWND};
+
 mod class;
 mod standard_wnd_proc;
 mod style;
@@ -12,6 +14,9 @@ pub(in crate::window) use class::{WindowClass, WindowProc};
 pub(in crate::window) use standard_wnd_proc::StandardWndProc;
 pub(in crate::window) use style::WindowStyle;
 pub(in crate::window) use win32::Win32Window;
+
+/// The handle used to create a surface for a window on Windows
+pub(crate) type WindowSurfaceCreationHandle = (HINSTANCE, HWND);
 
 /// The Windows-specific implementation of [`Window`](crate::window::Window)s
 pub(in crate::window) struct WindowInner<UserEvent: 'static + Send> {

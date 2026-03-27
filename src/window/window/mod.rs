@@ -22,6 +22,7 @@ pub(in crate::window) use linux::WindowInner;
 #[cfg(target_os = "windows")]
 pub(in crate::window) use windows::{
     StandardWndProc, Win32Window, WindowClass, WindowInner, WindowProc, WindowStyle,
+    WindowSurfaceCreationHandle,
 };
 
 /// A reference to a window for which can be rendered into

@@ -1,4 +1,7 @@
-use crate::gpu::{VulkanInstanceBuilder, VulkanInstanceExtension, VulkanVersion};
+use crate::{
+    gpu::{VulkanInstanceBuilder, VulkanInstanceExtension, VulkanVersion},
+    window::Window,
+};
 use std::borrow::Cow;
 
 impl<'a> VulkanInstanceBuilder<'a> {
@@ -61,13 +64,12 @@ impl<'a> VulkanInstanceBuilder<'a> {
         self
     }
 
-    /*
     /// Add the required extensions for create surfaces for `window`
     #[cfg(target_os = "windows")]
     #[allow(unused_variables)]
-    pub fn window_extensions<Callbacks: WindowEvents>(
+    pub fn window_extensions<UserEvent: 'static + Send>(
         &mut self,
-        window: &Window<Callbacks>,
+        window: &Window<UserEvent>,
     ) -> &mut VulkanInstanceBuilder<'a> {
         self.extensions([
             VulkanInstanceExtension::Surface,
@@ -78,17 +80,10 @@ impl<'a> VulkanInstanceBuilder<'a> {
     /// Add the required extensions for create surfaces for `window`
     #[cfg(target_os = "linux")]
     #[allow(unused_variables)]
-    pub fn window_extensions<Callbacks: WindowEvents>(
+    pub fn window_extensions<UserEvent: 'static + Send>(
         &mut self,
-        window: &Window<Callbacks>,
+        window: &Window<UserEvent>,
     ) -> &mut VulkanInstanceBuilder<'a> {
-        self.extensions([
-            VulkanInstanceExtension::Surface,
-            match window {
-                Window::Wayland(_) => VulkanInstanceExtension::WaylandSurface,
-                Window::X11(_) => todo!(),
-            },
-        ])
+        self.extensions([todo!()])
     }
-    */
 }

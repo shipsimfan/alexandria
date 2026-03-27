@@ -17,7 +17,7 @@ use vulkan::{
 impl<C: VulkanDebugMessengerCallback> VulkanDebugMessenger<C> {
     /// Create a new [`VulkanDebugMessenger`]
     pub(in crate::gpu::instance) fn new(
-        instance: VulkanInstance,
+        instance: &VulkanInstance,
         min_severity: VulkanDebugMessageSeverity,
         callback: C,
     ) -> Result<VulkanDebugMessenger<C>> {
@@ -49,7 +49,7 @@ impl<C: VulkanDebugMessengerCallback> VulkanDebugMessenger<C> {
         Ok(VulkanDebugMessenger {
             callback,
             handle,
-            instance,
+            instance: instance.clone(),
         })
     }
 }

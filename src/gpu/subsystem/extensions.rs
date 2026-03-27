@@ -5,10 +5,7 @@ use crate::{
 
 impl GpuSubsystem {
     /// Enumerate all Alexandria supported Vulkan extensions supported on this system
-    pub fn enumerate_extensions(
-        &self,
-        layer: Option<&VulkanLayer>,
-    ) -> Result<Vec<VulkanInstanceExtension>> {
+    pub fn extensions(&self, layer: Option<&VulkanLayer>) -> Result<Vec<VulkanInstanceExtension>> {
         Ok(self
             .all_extensions(layer)?
             .into_iter()

@@ -6,15 +6,18 @@ mod debug_messenger;
 mod extension;
 mod functions;
 mod inner;
+mod surface;
 
 mod create_debug_messenger;
+mod create_window_surface;
 mod enumerate_adapters;
 mod get;
 
 pub use adapter::*;
-pub use builder::VulkanInstanceBuilder;
+pub use builder::*;
 pub use debug_messenger::*;
-pub use extension::VulkanInstanceExtension;
+pub use extension::*;
+pub use surface::*;
 
 pub(in crate::gpu) use functions::VulkanInstanceFunctions;
 

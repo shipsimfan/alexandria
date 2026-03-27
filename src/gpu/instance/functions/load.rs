@@ -2,7 +2,7 @@ use crate::{
     Result,
     gpu::{
         GpuSubsystem, VulkanInstanceExtension, VulkanInstanceFunctions,
-        instance::{VulkanAdapterFunctions, VulkanDebugMessengerFunctions},
+        instance::{VulkanAdapterFunctions, VulkanDebugMessengerFunctions, VulkanSurfaceFunctions},
         load_instance_function,
     },
 };
@@ -19,10 +19,10 @@ impl VulkanInstanceFunctions {
         extensions: &[VulkanInstanceExtension],
     ) -> Result<VulkanInstanceFunctions> {
         let mut debug_messenger = None;
-        /*
         let mut surface = None;
         #[cfg(target_os = "windows")]
         let mut win32_surface = None;
+        /*
         #[cfg(target_os = "linux")]
         let mut wayland_surface = None;
         */
@@ -33,11 +33,13 @@ impl VulkanInstanceFunctions {
                     debug_messenger = Some(VulkanDebugMessengerFunctions::load(context, instance)?)
                 }
                 VulkanInstanceExtension::Surface => {
-                    //surface = Some(WindowSurfaceFunctions::load(context, instance)?)
+                    surface = Some(VulkanSurfaceFunctions::load(context, instance)?)
                 }
                 #[cfg(target_os = "windows")]
                 VulkanInstanceExtension::Win32Surface => {
-                    //win32_surface = Some(Win32WindowSurfaceFunctions::load(context, instance)?)
+                    use crate::gpu::instance::VulkanWin32SurfaceFunctions;
+
+                    win32_surface = Some(VulkanWin32SurfaceFunctions::load(context, instance)?)
                 }
                 #[cfg(target_os = "linux")]
                 VulkanInstanceExtension::WaylandSurface => {
@@ -49,6 +51,9 @@ impl VulkanInstanceFunctions {
         Ok(VulkanInstanceFunctions {
             adapter: VulkanAdapterFunctions::load(context, instance)?,
             debug_messenger,
+            surface,
+            #[cfg(target_os = "windows")]
+            win32_surface,
 
             enumerate_physical_devices: load_instance_function!(
                 context,
