@@ -4,6 +4,7 @@ use vulkan::khr_surface::VkSurfaceKhr;
 mod functions;
 
 mod drop;
+mod get;
 mod new;
 
 pub(in crate::gpu::instance) use functions::*;

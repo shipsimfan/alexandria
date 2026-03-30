@@ -8,7 +8,7 @@ impl VulkanInstance {
     }
 
     /// Get the instance level functions
-    pub(in crate::gpu::instance) fn functions(&self) -> &VulkanInstanceFunctions {
+    pub(in crate::gpu) fn functions(&self) -> &VulkanInstanceFunctions {
         self.inner.functions()
     }
 }

@@ -2,12 +2,12 @@
 macro_rules! load_device_function {
     ($instance: expr, $device: expr, $name: expr) => {{
         let name = $name;
-        unsafe { ($instance.functions.get_device_proc_addr)($device, name.as_ptr()) }
+        unsafe { ($instance.functions().get_device_proc_addr)($device, name.as_ptr()) }
             .map(|function| unsafe {
                 $crate::FunctionSymbol::new(
                     std::mem::transmute(function),
                     $instance
-                        .functions
+                        .functions()
                         .get_device_proc_addr
                         .shared_object()
                         .clone(),
