@@ -2,14 +2,17 @@ use crate::define_handle;
 
 mod builder;
 mod extension;
+mod image;
 mod inner;
 mod queue;
 mod swapchain;
 
+mod create_swapchain;
 mod get;
 
 pub use builder::*;
 pub use extension::*;
+pub use image::*;
 pub use queue::*;
 pub use swapchain::*;
 

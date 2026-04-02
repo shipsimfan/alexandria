@@ -1,8 +1,8 @@
-const SWAPCHAIN_FORMAT: alexandria::gpu::SwapchainFormat =
-    alexandria::gpu::SwapchainFormat::B8G8R8A8Srgb;
+const SWAPCHAIN_FORMAT: alexandria::gpu::VulkanSwapchainFormat =
+    alexandria::gpu::VulkanSwapchainFormat::B8G8R8A8Srgb;
 
-const SWAPCHAIN_PRESENT_MODE: alexandria::gpu::SwapchainPresentMode =
-    alexandria::gpu::SwapchainPresentMode::Fifo;
+const SWAPCHAIN_PRESENT_MODE: alexandria::gpu::VulkanSwapchainPresentMode =
+    alexandria::gpu::VulkanSwapchainPresentMode::Fifo;
 
 fn main() {
     // Create the Alexandria context with GPU and window support
@@ -54,6 +54,17 @@ fn main() {
 
     let queue = queues.swap_remove(0);
 
+    // Create swapchain
+    let swapchain = graphics_device
+        .create_swapchain(
+            3,
+            SWAPCHAIN_FORMAT,
+            window.size(),
+            SWAPCHAIN_PRESENT_MODE,
+            &surface,
+        )
+        .unwrap();
+
     // Run the main event loop
     let mut running = true;
     while running {
@@ -67,6 +78,8 @@ fn main() {
         }
     }
 
+    drop(swapchain);
+    drop(queue);
     window.destroy().expect("unable to destroy window");
 }
 

@@ -4,7 +4,7 @@ use vulkan::khr_swapchain::{VkCreateSwapchainKhr, VkDestroySwapchainKhr, VkGetSw
 mod load;
 
 /// The functions that are used by swapchains associated with a device
-pub(in crate::gpu::device) struct SwapchainFunctions {
+pub(in crate::gpu::device) struct VulkanSwapchainFunctions {
     /// The function to create a new swapchain
     pub create_swapchain: FunctionSymbol<VkCreateSwapchainKhr>,
 

@@ -2,7 +2,7 @@ use crate::{
     Result,
     gpu::{
         VulkanDeviceExtension, VulkanInstance,
-        device::{SwapchainFunctions, VulkanDeviceFunctions},
+        device::{VulkanDeviceFunctions, VulkanSwapchainFunctions},
         load_device_function,
     },
 };
@@ -20,7 +20,7 @@ impl VulkanDeviceFunctions {
         for extension in extensions {
             match *extension {
                 VulkanDeviceExtension::Swapchain => {
-                    swapchain = Some(SwapchainFunctions::load(instance, device)?);
+                    swapchain = Some(VulkanSwapchainFunctions::load(instance, device)?);
                 }
                 VulkanDeviceExtension::ExtendedDynamicState => {}
             }

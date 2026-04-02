@@ -3,7 +3,7 @@ mod into_vk;
 
 /// The type of presentation mode a swapchain can use
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum SwapchainPresentMode {
+pub enum VulkanSwapchainPresentMode {
     /// The presentation engine does not wait for a vertical blanking period to update the current
     /// image. This may result in tearing.
     Immediate,

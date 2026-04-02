@@ -5,7 +5,7 @@ mod new;
 
 /// A non-standard swapchain format
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct OtherSwapchainFormat {
+pub struct OtherVulkanSwapchainFormat {
     /// The actual Vulkan format
     format: VkFormat,
 }

@@ -1,9 +1,9 @@
-use crate::gpu::device::swapchain::format::OtherSwapchainFormat;
+use crate::gpu::device::swapchain::format::OtherVulkanSwapchainFormat;
 use vulkan::VkFormat;
 
-impl OtherSwapchainFormat {
+impl OtherVulkanSwapchainFormat {
     /// Create a new [`OtherSwapchainFormat`]
-    pub(in crate::gpu::device::swapchain::format) fn new(format: VkFormat) -> OtherSwapchainFormat {
-        OtherSwapchainFormat { format }
+    pub(in crate::gpu::device::swapchain::format) fn new(format: VkFormat) -> OtherVulkanSwapchainFormat {
+        OtherVulkanSwapchainFormat { format }
     }
 }

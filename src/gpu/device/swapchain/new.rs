@@ -1,12 +1,12 @@
 use crate::{
-    GpuImage, GraphicsError, Result, Swapchain, SwapchainFormat, SwapchainPresentMode,
-    WindowSurface, device::GraphicsDeviceInner,
+    Error, Result,
+    gpu::{
+        VulkanDevice, VulkanImage, VulkanSurface, VulkanSwapchain, VulkanSwapchainFormat,
+        VulkanSwapchainPresentMode,
+    },
+    math::Vector2i,
 };
-use alexandria_math::Vector2u;
-use std::{
-    ptr::{null, null_mut},
-    sync::Arc,
-};
+use std::ptr::{null, null_mut};
 use vulkan::{
     VK_TRUE, VkExtent2D, VkImageUsageFlag, VkSharingMode,
     khr_surface::{VkCompositeAlphaFlagKhr, VkSurfaceTransformFlagKhr},
@@ -14,17 +14,17 @@ use vulkan::{
     try_vulkan,
 };
 
-impl<'surface> Swapchain<'surface> {
-    /// Create a new [`Swapchain`]
-    pub(in crate::device) fn new(
+impl<'surface> VulkanSwapchain<'surface> {
+    /// Create a new [`VulkanSwapchain`]
+    pub(in crate::gpu::device) fn new(
         image_count: u32,
-        image_format: SwapchainFormat,
-        image_size: Vector2u,
-        present_mode: SwapchainPresentMode,
+        image_format: VulkanSwapchainFormat,
+        image_size: Vector2i,
+        present_mode: VulkanSwapchainPresentMode,
 
-        surface: &'surface WindowSurface,
-        device: Arc<GraphicsDeviceInner>,
-    ) -> Result<Swapchain<'surface>> {
+        surface: &'surface VulkanSurface,
+        device: VulkanDevice,
+    ) -> Result<VulkanSwapchain<'surface>> {
         // Create swapchain
         let (image_format, image_color_space) = image_format.into_vk();
 
@@ -34,8 +34,8 @@ impl<'surface> Swapchain<'surface> {
             image_format,
             image_color_space,
             image_extent: VkExtent2D {
-                width: image_size.x,
-                height: image_size.y,
+                width: image_size.x as _,
+                height: image_size.y as _,
             },
             image_array_layers: 1,
             image_usage: VkImageUsageFlag::ColorAttachmentBit.into(),
@@ -48,40 +48,40 @@ impl<'surface> Swapchain<'surface> {
         };
 
         let mut handle = VkSwapchainKhr::null();
-        try_vulkan!((device.functions.swapchain().create_swapchain)(
+        try_vulkan!((device.functions().swapchain().create_swapchain)(
             device.handle(),
             &create_info,
             null(),
             &mut handle
         ))
-        .map_err(|vk| GraphicsError::new_vk("unable to create a swapchain", vk))?;
+        .map_err(|vk| Error::new_with("unable to create a swapchain", vk))?;
 
         // Get images
         let mut image_count = 0;
-        try_vulkan!((device.functions.swapchain().get_swapchain_images)(
+        try_vulkan!((device.functions().swapchain().get_swapchain_images)(
             device.handle(),
             handle,
             &mut image_count,
             null_mut()
         ))
-        .map_err(|vk| GraphicsError::new_vk("unable to get swapchain image count", vk))?;
+        .map_err(|vk| Error::new_with("unable to get swapchain image count", vk))?;
 
         let mut images = Vec::with_capacity(image_count as _);
-        try_vulkan!((device.functions.swapchain().get_swapchain_images)(
+        try_vulkan!((device.functions().swapchain().get_swapchain_images)(
             device.handle(),
             handle,
             &mut image_count,
             images.as_mut_ptr()
         ))
-        .map_err(|vk| GraphicsError::new_vk("unable to get swapchain images", vk))?;
+        .map_err(|vk| Error::new_with("unable to get swapchain images", vk))?;
         unsafe { images.set_len(image_count as _) };
 
         let images = images
             .into_iter()
-            .map(|handle| GpuImage::new(handle, device.clone()))
+            .map(|handle| VulkanImage::new(handle, device.clone()))
             .collect();
 
-        Ok(Swapchain {
+        Ok(VulkanSwapchain {
             handle,
             images,
             _surface: surface,

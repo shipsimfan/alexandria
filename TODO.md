@@ -2,7 +2,6 @@
  1. Add error handling for pushed events during event pumping
    - Linux
    - Windows
- 2. Re-add device graphics items
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen

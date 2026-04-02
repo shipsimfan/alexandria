@@ -1,6 +1,6 @@
 use crate::{
     Result,
-    gpu::{VulkanInstance, device::SwapchainFunctions, load_device_function},
+    gpu::{VulkanInstance, device::VulkanSwapchainFunctions, load_device_function},
 };
 use vulkan::{
     VkDevice,
@@ -9,10 +9,10 @@ use vulkan::{
     },
 };
 
-impl SwapchainFunctions {
+impl VulkanSwapchainFunctions {
     /// Load all the required swapchain functions
-    pub fn load(instance: &VulkanInstance, device: VkDevice) -> Result<SwapchainFunctions> {
-        Ok(SwapchainFunctions {
+    pub fn load(instance: &VulkanInstance, device: VkDevice) -> Result<VulkanSwapchainFunctions> {
+        Ok(VulkanSwapchainFunctions {
             create_swapchain: load_device_function!(instance, device, VK_CREATE_SWAPCHAIN_KHR)?,
             destroy_swapchain: load_device_function!(instance, device, VK_DESTROY_SWAPCHAIN_KHR)?,
             get_swapchain_images: load_device_function!(
