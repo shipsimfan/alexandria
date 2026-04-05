@@ -2,7 +2,7 @@ use crate::{
     Result,
     gpu::{
         VulkanDeviceExtension, VulkanInstance,
-        device::{VulkanDeviceFunctions, VulkanSwapchainFunctions},
+        device::{VulkanDeviceFunctions, VulkanImageViewFunctions, VulkanSwapchainFunctions},
         load_device_function,
     },
 };
@@ -28,6 +28,7 @@ impl VulkanDeviceFunctions {
 
         Ok(VulkanDeviceFunctions {
             swapchain,
+            image_view: VulkanImageViewFunctions::load(instance, device)?,
 
             get_device_queue: load_device_function!(instance, device, VK_GET_DEVICE_QUEUE)?,
             destroy_device: load_device_function!(instance, device, VK_DESTROY_DEVICE)?,

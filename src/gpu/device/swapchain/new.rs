@@ -1,7 +1,7 @@
 use crate::{
     Error, Result,
     gpu::{
-        VulkanDevice, VulkanImage, VulkanSurface, VulkanSwapchain, VulkanSwapchainFormat,
+        VulkanDevice, VulkanFormat, VulkanImage, VulkanSurface, VulkanSwapchain,
         VulkanSwapchainPresentMode,
     },
     math::Vector2i,
@@ -18,7 +18,7 @@ impl<'surface> VulkanSwapchain<'surface> {
     /// Create a new [`VulkanSwapchain`]
     pub(in crate::gpu::device) fn new(
         image_count: u32,
-        image_format: VulkanSwapchainFormat,
+        image_format: VulkanFormat,
         image_size: Vector2i,
         present_mode: VulkanSwapchainPresentMode,
 
@@ -26,7 +26,7 @@ impl<'surface> VulkanSwapchain<'surface> {
         device: VulkanDevice,
     ) -> Result<VulkanSwapchain<'surface>> {
         // Create swapchain
-        let (image_format, image_color_space) = image_format.into_vk();
+        let (image_format, image_color_space) = image_format.into_vk_surface_format();
 
         let create_info = VkSwapchainCreateInfoKhr {
             surface: surface.handle(),

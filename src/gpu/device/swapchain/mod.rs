@@ -1,7 +1,6 @@
 use crate::gpu::{VulkanDevice, VulkanImage, VulkanSurface};
 use vulkan::khr_swapchain::VkSwapchainKhr;
 
-mod format;
 mod functions;
 mod present_mode;
 
@@ -9,7 +8,6 @@ mod drop;
 mod get;
 mod new;
 
-pub use format::*;
 pub use present_mode::*;
 
 pub(in crate::gpu::device) use functions::VulkanSwapchainFunctions;

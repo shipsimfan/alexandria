@@ -16,8 +16,8 @@ dependencies = [
 
 [[package]]
 name = "data-format"
-version = "1.0.1"
-source = "git+https://github.com/shipsimfan/lib-data-format#4369c0b0a4317c41baeae8f9eacff16afbf8da45"
+version = "1.1.1"
+source = "git+https://github.com/shipsimfan/lib-data-format#527fccd4e2f6fbc039824314478230b1346c8b43"
 dependencies = [
  "macros",
 ]
@@ -29,8 +29,8 @@ source = "git+https://github.com/shipsimfan/lib-linux#45d3b9e8ca5b92e9c769f6fae9
 
 [[package]]
 name = "macros"
-version = "1.0.1"
-source = "git+https://github.com/shipsimfan/lib-data-format#4369c0b0a4317c41baeae8f9eacff16afbf8da45"
+version = "1.1.1"
+source = "git+https://github.com/shipsimfan/lib-data-format#527fccd4e2f6fbc039824314478230b1346c8b43"
 dependencies = [
  "proc-macro-util",
 ]
@@ -69,7 +69,7 @@ dependencies = [
 [[package]]
 name = "vulkan"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-vulkan#b40bc95c18f84898dd7511344e005ea61d5b8243"
+source = "git+https://github.com/shipsimfan/lib-vulkan#5dbd6c33e6073f6edd3155b14ec46245678f83d9"
 dependencies = [
  "win32",
 ]

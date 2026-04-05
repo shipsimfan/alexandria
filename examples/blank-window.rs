@@ -1,5 +1,5 @@
-const SWAPCHAIN_FORMAT: alexandria::gpu::VulkanSwapchainFormat =
-    alexandria::gpu::VulkanSwapchainFormat::B8G8R8A8Srgb;
+const SWAPCHAIN_FORMAT: alexandria::gpu::VulkanFormat =
+    alexandria::gpu::VulkanFormat::B8G8R8A8UNorm;
 
 const SWAPCHAIN_PRESENT_MODE: alexandria::gpu::VulkanSwapchainPresentMode =
     alexandria::gpu::VulkanSwapchainPresentMode::Fifo;
@@ -64,6 +64,10 @@ fn main() {
             &surface,
         )
         .unwrap();
+    let mut image_views = Vec::with_capacity(swapchain.images().len());
+    for image in swapchain.images() {
+        image_views.push(image.create_image_view(SWAPCHAIN_FORMAT).unwrap());
+    }
 
     // Run the main event loop
     let mut running = true;

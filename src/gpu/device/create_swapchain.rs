@@ -1,7 +1,7 @@
 use crate::{
     Result,
     gpu::{
-        VulkanDevice, VulkanSurface, VulkanSwapchain, VulkanSwapchainFormat,
+        VulkanDevice, VulkanSurface, VulkanSwapchain, VulkanFormat,
         VulkanSwapchainPresentMode,
     },
     math::Vector2i,
@@ -12,7 +12,7 @@ impl VulkanDevice {
     pub fn create_swapchain<'surface>(
         &self,
         image_count: u32,
-        image_format: VulkanSwapchainFormat,
+        image_format: VulkanFormat,
         image_size: Vector2i,
         present_mode: VulkanSwapchainPresentMode,
 

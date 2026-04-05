@@ -1,13 +1,13 @@
-use crate::gpu::VulkanDevice;
-use vulkan::VkImage;
+use crate::define_handle;
+use inner::VulkanImageInner;
 
+mod inner;
+
+mod create_image_view;
+mod get;
 mod new;
 
-/// An image on the GPU
-pub struct VulkanImage {
-    /// The handle to the underlying image
-    handle: VkImage,
-
-    /// The device this image came from
-    device: VulkanDevice,
-}
+define_handle!(
+    /// An image on the GPU
+    pub VulkanImage -> VulkanImageInner
+);
