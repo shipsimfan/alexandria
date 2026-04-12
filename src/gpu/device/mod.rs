@@ -1,6 +1,7 @@
 use crate::define_handle;
 
 mod builder;
+mod command_pool;
 mod extension;
 mod image;
 mod image_view;
@@ -12,6 +13,7 @@ mod create_swapchain;
 mod get;
 
 pub use builder::*;
+pub use command_pool::*;
 pub use extension::*;
 pub use image::*;
 pub use image_view::*;
