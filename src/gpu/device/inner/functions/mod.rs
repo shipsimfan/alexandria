@@ -1,6 +1,9 @@
 use crate::{
     FunctionSymbol,
-    gpu::device::{VulkanImageViewFunctions, VulkanSwapchainFunctions},
+    gpu::device::{
+        VulkanCommandBufferFunctions, VulkanCommandPoolFunctions, VulkanImageViewFunctions,
+        VulkanSwapchainFunctions,
+    },
 };
 use vulkan::{VkDestroyDevice, VkGetDeviceQueue};
 
@@ -16,6 +19,12 @@ pub(in crate::gpu::device) struct VulkanDeviceFunctions {
 
     /// The functions used by image views
     pub image_view: VulkanImageViewFunctions,
+
+    /// The functions used by command pools
+    pub command_pool: VulkanCommandPoolFunctions,
+
+    /// The functions used by command buffers
+    pub command_buffer: VulkanCommandBufferFunctions,
 
     /** Individual Functions **/
 

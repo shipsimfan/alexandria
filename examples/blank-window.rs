@@ -69,6 +69,13 @@ fn main() {
         image_views.push(image.create_image_view(SWAPCHAIN_FORMAT).unwrap());
     }
 
+    // Create command pool
+    let command_pool = graphics_device
+        .create_command_pool(queue.queue_family())
+        .unwrap();
+
+    let command_buffer = command_pool.allocate_command_buffer().unwrap();
+
     // Run the main event loop
     let mut running = true;
     while running {
@@ -82,8 +89,8 @@ fn main() {
         }
     }
 
+    drop(command_buffer);
     drop(swapchain);
-    drop(queue);
     window.destroy().expect("unable to destroy window");
 }
 

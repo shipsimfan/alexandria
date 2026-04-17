@@ -5,11 +5,8 @@
 
 # After re-organization
  1. Implement renderer wrappers up to clearing the screen
-   1. `ImageView`
-   2. `CommandPool`
-   3. `CommandBuffer`
-   4. `Semaphore`
-   5. `Fence`
+   1. `Semaphore`
+   2. `Fence`
  2. Add Linux Windowing support
    1. Wayland
      1. Window creation
