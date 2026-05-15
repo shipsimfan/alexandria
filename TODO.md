@@ -1,5 +1,5 @@
 # ToDo
- 1. Add frames in flight support to blank-window
+ 1. Add minimize support to blank-window example
  2. Generalize rendering from blank-window to be used in other examples
  3. Improve current Vulkan wrappers to be closer to spec
  4. Fix borderless window issue on Windows

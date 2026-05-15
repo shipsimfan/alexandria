@@ -1,8 +1,38 @@
+use alexandria::math::Vector2;
+
 const SWAPCHAIN_FORMAT: alexandria::gpu::VulkanFormat =
     alexandria::gpu::VulkanFormat::B8G8R8A8UNorm;
 
 const SWAPCHAIN_PRESENT_MODE: alexandria::gpu::VulkanSwapchainPresentMode =
     alexandria::gpu::VulkanSwapchainPresentMode::Fifo;
+
+const MAX_FRAMES_IN_FLIGHT: usize = 2;
+
+struct FrameData {
+    command_buffer: alexandria::gpu::VulkanCommandBuffer,
+    render_complete_semaphore: alexandria::gpu::VulkanSemaphore,
+    present_complete_semaphore: alexandria::gpu::VulkanSemaphore,
+    draw_fence: alexandria::gpu::VulkanFence,
+}
+
+impl FrameData {
+    pub fn new(
+        graphics_device: &alexandria::gpu::VulkanDevice,
+        command_pool: &alexandria::gpu::VulkanCommandPool,
+    ) -> Self {
+        let command_buffer = command_pool.allocate_command_buffer().unwrap();
+        let render_complete_semaphore = graphics_device.create_semaphore().unwrap();
+        let present_complete_semaphore = graphics_device.create_semaphore().unwrap();
+        let draw_fence = graphics_device.create_fence(true).unwrap();
+
+        FrameData {
+            command_buffer,
+            render_complete_semaphore,
+            present_complete_semaphore,
+            draw_fence,
+        }
+    }
+}
 
 fn main() {
     // Create the Alexandria context with GPU and window support
@@ -16,6 +46,7 @@ fn main() {
     let window = context
         .window()
         .create_window("Blank Window")
+        .resizable()
         .create()
         .expect("unable to create window");
     println!(
@@ -61,94 +92,82 @@ fn main() {
     let mut queue = queues.swap_remove(0);
 
     // Create swapchain
-    let swapchain = graphics_device
-        .create_swapchain(
-            3,
-            SWAPCHAIN_FORMAT,
-            window.size(),
-            SWAPCHAIN_PRESENT_MODE,
-            &surface,
-        )
-        .unwrap();
-    let mut image_views = Vec::with_capacity(swapchain.images().len());
-    for image in swapchain.images() {
-        image_views.push(image.create_image_view(SWAPCHAIN_FORMAT).unwrap());
-    }
-
-    // Create synchronization primitives
-    let present_complete_semaphore = graphics_device.create_semaphore().unwrap();
-    let render_finished_semaphore = graphics_device.create_semaphore().unwrap();
-    let mut draw_fence = graphics_device.create_fence(true).unwrap();
+    let (mut swapchain, mut image_views) = create_swapchain(&graphics_device, &surface, &window);
 
     // Create command pool and buffer
     let command_pool = graphics_device
         .create_command_pool(queue.queue_family())
         .unwrap();
-    let mut command_buffer = command_pool.allocate_command_buffer().unwrap();
+
+    // Create per-frame data
+    let mut frames = Vec::with_capacity(MAX_FRAMES_IN_FLIGHT);
+    for _ in 0..MAX_FRAMES_IN_FLIGHT {
+        frames.push(FrameData::new(&graphics_device, &command_pool));
+    }
 
     // Run the main event loop
     let mut running = true;
+    let mut frame_index = 0;
+    let mut should_recreate_swapchain = false;
     while running {
+        let frame = &mut frames[frame_index];
+
         // Wait for the previous frame to finish
-        draw_fence.wait(u64::MAX).unwrap();
-        draw_fence.reset().unwrap();
+        frame.draw_fence.wait(u64::MAX).unwrap();
 
         // Get the next image from the swapchain
-        let image_index = swapchain
-            .acquire_next_image(u64::MAX, &present_complete_semaphore)
-            .unwrap();
+        should_recreate_swapchain |= if window.size() == Vector2::ZERO {
+            // Wait for the next event and handle it
+            let event = pump.wait().expect("unable to wait for event");
+            running &= handle_event(&event, &context);
 
-        // Render a blank frame
-        command_buffer.begin().unwrap();
+            true
+        } else {
+            match swapchain
+                .acquire_next_image(u64::MAX, &frame.present_complete_semaphore)
+                .unwrap()
+            {
+                Some(image_index) => {
+                    // Draw a blank frame
+                    render_frame(
+                        frame,
+                        image_index,
+                        &swapchain,
+                        &image_views,
+                        &mut queue,
+                        &window,
+                    );
 
-        command_buffer.cmd_pipeline_barrier2(
-            &swapchain.images()[image_index],
-            alexandria::gpu::VulkanImageLayout::Undefined,
-            alexandria::gpu::VulkanImageLayout::ColorAttachmentOptimal,
-            alexandria::gpu::VulkanAccessFlags::default(),
-            alexandria::gpu::VulkanAccessFlag::ColorAttachmentWrite,
-            alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
-            alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
-        );
+                    frame_index = (frame_index + 1) % MAX_FRAMES_IN_FLIGHT;
 
-        let clear_color =
-            alexandria::math::Color4f::<alexandria::math::Srgb>::new(1.0, 0.0, 1.0, 1.0);
+                    // Wait for the next event and handle it
+                    let event = pump.wait().expect("unable to wait for event");
+                    running &= handle_event(&event, &context);
 
-        command_buffer.cmd_begin_rendering(&image_views[image_index], window.size(), clear_color);
-        command_buffer.cmd_end_rendering();
-
-        command_buffer.cmd_pipeline_barrier2(
-            &swapchain.images()[image_index],
-            alexandria::gpu::VulkanImageLayout::ColorAttachmentOptimal,
-            alexandria::gpu::VulkanImageLayout::PresentSrcKhr,
-            alexandria::gpu::VulkanAccessFlag::ColorAttachmentWrite,
-            alexandria::gpu::VulkanAccessFlags::default(),
-            alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
-            alexandria::gpu::VulkanPipelineStageFlag::BottomOfPipe,
-        );
-
-        command_buffer.end().unwrap();
-
-        queue
-            .submit(
-                &command_buffer,
-                &present_complete_semaphore,
-                &render_finished_semaphore,
-                &mut draw_fence,
-            )
-            .unwrap();
-
-        queue
-            .present(&render_finished_semaphore, &swapchain, image_index as _)
-            .unwrap();
-
-        // Wait for the next event and handle it
-        let event = pump.wait().expect("unable to wait for event");
-        running &= handle_event(&event, &context);
+                    false
+                }
+                None => true,
+            }
+        };
 
         // Poll for any additional events that may have occurred while handling the previous event
         while let Some(event) = pump.poll().expect("unable to poll for event") {
             running &= handle_event(&event, &context);
+        }
+
+        if should_recreate_swapchain && window.size() != Vector2::ZERO {
+            should_recreate_swapchain = false;
+            graphics_device.wait_idle().unwrap();
+
+            drop(image_views);
+            drop(swapchain);
+            println!("Re-create window size: {}", window.size());
+            (swapchain, image_views) = create_swapchain(&graphics_device, &surface, &window);
+
+            for frame in &mut frames {
+                frame.present_complete_semaphore = graphics_device.create_semaphore().unwrap();
+                frame.render_complete_semaphore = graphics_device.create_semaphore().unwrap();
+            }
         }
     }
 
@@ -241,6 +260,91 @@ fn find_compatible_adapter<'instance>(
     }
 
     panic!("no compatible adapter found");
+}
+
+fn create_swapchain<'surface>(
+    graphics_device: &alexandria::gpu::VulkanDevice,
+    surface: &'surface alexandria::gpu::VulkanSurface,
+    window: &alexandria::window::Window<()>,
+) -> (
+    alexandria::gpu::VulkanSwapchain<'surface>,
+    Vec<alexandria::gpu::VulkanImageView>,
+) {
+    let swapchain = graphics_device
+        .create_swapchain(
+            3,
+            SWAPCHAIN_FORMAT,
+            window.size(),
+            SWAPCHAIN_PRESENT_MODE,
+            &surface,
+        )
+        .unwrap();
+    let mut image_views = Vec::with_capacity(swapchain.images().len());
+    for image in swapchain.images() {
+        image_views.push(image.create_image_view(SWAPCHAIN_FORMAT).unwrap());
+    }
+
+    (swapchain, image_views)
+}
+
+fn render_frame(
+    frame: &mut FrameData,
+    image_index: usize,
+    swapchain: &alexandria::gpu::VulkanSwapchain,
+    image_views: &[alexandria::gpu::VulkanImageView],
+    queue: &mut alexandria::gpu::VulkanQueue,
+    window: &alexandria::window::Window<()>,
+) {
+    frame.draw_fence.reset().unwrap();
+
+    frame.command_buffer.begin().unwrap();
+
+    frame.command_buffer.cmd_pipeline_barrier2(
+        &swapchain.images()[image_index],
+        alexandria::gpu::VulkanImageLayout::Undefined,
+        alexandria::gpu::VulkanImageLayout::ColorAttachmentOptimal,
+        alexandria::gpu::VulkanAccessFlags::default(),
+        alexandria::gpu::VulkanAccessFlag::ColorAttachmentWrite,
+        alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
+        alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
+    );
+
+    let clear_color = alexandria::math::Color4f::<alexandria::math::Srgb>::new(1.0, 0.0, 1.0, 1.0);
+
+    println!("Render window size: {}", window.size());
+    frame
+        .command_buffer
+        .cmd_begin_rendering(&image_views[image_index], window.size(), clear_color);
+    frame.command_buffer.cmd_end_rendering();
+
+    frame.command_buffer.cmd_pipeline_barrier2(
+        &swapchain.images()[image_index],
+        alexandria::gpu::VulkanImageLayout::ColorAttachmentOptimal,
+        alexandria::gpu::VulkanImageLayout::PresentSrcKhr,
+        alexandria::gpu::VulkanAccessFlag::ColorAttachmentWrite,
+        alexandria::gpu::VulkanAccessFlags::default(),
+        alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
+        alexandria::gpu::VulkanPipelineStageFlag::BottomOfPipe,
+    );
+
+    frame.command_buffer.end().unwrap();
+
+    queue
+        .submit(
+            &frame.command_buffer,
+            &frame.present_complete_semaphore,
+            &frame.render_complete_semaphore,
+            &mut frame.draw_fence,
+        )
+        .unwrap();
+
+    queue
+        .present(
+            &&frame.render_complete_semaphore,
+            &swapchain,
+            image_index as _,
+        )
+        .unwrap();
 }
 
 #[cfg(debug_assertions)]
