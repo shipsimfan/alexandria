@@ -6,6 +6,7 @@ use crate::{
 
 impl VulkanInstance {
     /// Create a new [`VulkanSurface`] for `window`
+    #[cfg(target_os = "windows")]
     pub fn create_window_surface<UserEvent: 'static + Send>(
         &self,
         window: &Window<UserEvent>,

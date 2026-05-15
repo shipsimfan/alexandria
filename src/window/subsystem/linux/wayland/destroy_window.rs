@@ -1,5 +1,5 @@
 use crate::{
-    Id,
+    Id, Result,
     window::{subsystem::linux::wayland::WaylandWindowSubsystem, window::WindowInner},
 };
 
@@ -8,7 +8,7 @@ impl<UserEvent: 'static + Send> WaylandWindowSubsystem<UserEvent> {
     pub(in crate::window::subsystem::linux) fn destroy_window(
         &mut self,
         id: Id<WindowInner<UserEvent>>,
-    ) {
+    ) -> Result<()> {
         todo!()
     }
 }

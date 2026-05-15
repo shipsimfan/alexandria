@@ -1,6 +1,8 @@
 mod family;
+mod paths;
 
 pub use family::OsFamily;
+pub use paths::*;
 
 #[cfg(target_os = "linux")]
 mod linux;
