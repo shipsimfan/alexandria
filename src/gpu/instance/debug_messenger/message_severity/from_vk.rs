@@ -7,11 +7,9 @@ impl VulkanDebugMessageSeverity {
         vk: VkDebugUtilsMessageSeverityFlagExt,
     ) -> VulkanDebugMessageSeverity {
         match vk {
-            VkDebugUtilsMessageSeverityFlagExt::ErrorBitExt => VulkanDebugMessageSeverity::Error,
-            VkDebugUtilsMessageSeverityFlagExt::WarningBitExt => {
-                VulkanDebugMessageSeverity::Warning
-            }
-            VkDebugUtilsMessageSeverityFlagExt::InfoBitExt => VulkanDebugMessageSeverity::Info,
+            VkDebugUtilsMessageSeverityFlagExt::ErrorExt => VulkanDebugMessageSeverity::Error,
+            VkDebugUtilsMessageSeverityFlagExt::WarningExt => VulkanDebugMessageSeverity::Warning,
+            VkDebugUtilsMessageSeverityFlagExt::InfoExt => VulkanDebugMessageSeverity::Info,
             _ => VulkanDebugMessageSeverity::Verbose,
         }
     }

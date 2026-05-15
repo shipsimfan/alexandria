@@ -49,10 +49,16 @@ fn main() {
             queue_family: queue_family_index,
             priorities: &[1.0],
         })
+        .extended_info(alexandria::gpu::VulkanDeviceFeatures::default())
+        .extended_info(
+            alexandria::gpu::VulkanDeviceVulkan13Features::default()
+                .synchronization2()
+                .dynamic_rendering(),
+        )
         .create()
         .unwrap();
 
-    let queue = queues.swap_remove(0);
+    let mut queue = queues.swap_remove(0);
 
     // Create swapchain
     let swapchain = graphics_device
@@ -69,16 +75,73 @@ fn main() {
         image_views.push(image.create_image_view(SWAPCHAIN_FORMAT).unwrap());
     }
 
-    // Create command pool
+    // Create synchronization primitives
+    let present_complete_semaphore = graphics_device.create_semaphore().unwrap();
+    let render_finished_semaphore = graphics_device.create_semaphore().unwrap();
+    let mut draw_fence = graphics_device.create_fence(true).unwrap();
+
+    // Create command pool and buffer
     let command_pool = graphics_device
         .create_command_pool(queue.queue_family())
         .unwrap();
-
-    let command_buffer = command_pool.allocate_command_buffer().unwrap();
+    let mut command_buffer = command_pool.allocate_command_buffer().unwrap();
 
     // Run the main event loop
     let mut running = true;
     while running {
+        // Wait for the previous frame to finish
+        draw_fence.wait(u64::MAX).unwrap();
+        draw_fence.reset().unwrap();
+
+        // Get the next image from the swapchain
+        let image_index = swapchain
+            .acquire_next_image(u64::MAX, &present_complete_semaphore)
+            .unwrap();
+
+        // Render a blank frame
+        command_buffer.begin().unwrap();
+
+        command_buffer.cmd_pipeline_barrier2(
+            &swapchain.images()[image_index],
+            alexandria::gpu::VulkanImageLayout::Undefined,
+            alexandria::gpu::VulkanImageLayout::ColorAttachmentOptimal,
+            alexandria::gpu::VulkanAccessFlags::default(),
+            alexandria::gpu::VulkanAccessFlag::ColorAttachmentWrite,
+            alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
+            alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
+        );
+
+        let clear_color =
+            alexandria::math::Color4f::<alexandria::math::Srgb>::new(1.0, 0.0, 1.0, 1.0);
+
+        command_buffer.cmd_begin_rendering(&image_views[image_index], window.size(), clear_color);
+        command_buffer.cmd_end_rendering();
+
+        command_buffer.cmd_pipeline_barrier2(
+            &swapchain.images()[image_index],
+            alexandria::gpu::VulkanImageLayout::ColorAttachmentOptimal,
+            alexandria::gpu::VulkanImageLayout::PresentSrcKhr,
+            alexandria::gpu::VulkanAccessFlag::ColorAttachmentWrite,
+            alexandria::gpu::VulkanAccessFlags::default(),
+            alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
+            alexandria::gpu::VulkanPipelineStageFlag::BottomOfPipe,
+        );
+
+        command_buffer.end().unwrap();
+
+        queue
+            .submit(
+                &command_buffer,
+                &present_complete_semaphore,
+                &render_finished_semaphore,
+                &mut draw_fence,
+            )
+            .unwrap();
+
+        queue
+            .present(&render_finished_semaphore, &swapchain, image_index as _)
+            .unwrap();
+
         // Wait for the next event and handle it
         let event = pump.wait().expect("unable to wait for event");
         running &= handle_event(&event, &context);
@@ -89,8 +152,8 @@ fn main() {
         }
     }
 
-    drop(command_buffer);
-    drop(swapchain);
+    graphics_device.wait_idle().unwrap();
+
     window.destroy().expect("unable to destroy window");
 }
 
@@ -137,6 +200,7 @@ fn create_vulkan_instance(
         .layers(layers.into_iter().copied())
         .extensions(debug_extensions.into_iter().copied())
         .window_extensions(&window)
+        .api_version(alexandria::gpu::VulkanVersion::VERSION_1_3)
         .create()
         .unwrap()
 }

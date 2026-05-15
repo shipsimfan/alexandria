@@ -24,9 +24,9 @@ impl<C: VulkanDebugMessengerCallback> VulkanDebugMessenger<C> {
         let callback = Box::new(callback);
 
         let mut create_info = VkDebugUtilsMessengerCreateInfoExt {
-            message_type: VkDebugUtilsMessageTypeFlagExt::GeneralBitExt
-                | VkDebugUtilsMessageTypeFlagExt::ValidationBitExt
-                | VkDebugUtilsMessageTypeFlagExt::PerformanceBitExt,
+            message_type: VkDebugUtilsMessageTypeFlagExt::GeneralExt
+                | VkDebugUtilsMessageTypeFlagExt::ValidationExt
+                | VkDebugUtilsMessageTypeFlagExt::PerformanceExt,
             user_callback: debug_message_trampoline::<C>,
             user_data: Box::as_ptr(&callback).cast_mut().cast(),
             ..Default::default()

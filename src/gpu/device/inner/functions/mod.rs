@@ -1,11 +1,12 @@
 use crate::{
     FunctionSymbol,
     gpu::device::{
-        VulkanCommandBufferFunctions, VulkanCommandPoolFunctions, VulkanImageViewFunctions,
+        VulkanCommandBufferFunctions, VulkanCommandPoolFunctions, VulkanFenceFunctions,
+        VulkanImageViewFunctions, VulkanQueueFunctions, VulkanSemaphoreFunctions,
         VulkanSwapchainFunctions,
     },
 };
-use vulkan::{VkDestroyDevice, VkGetDeviceQueue};
+use vulkan::{VkDestroyDevice, VkDeviceWaitIdle, VkGetDeviceQueue};
 
 mod get;
 mod load;
@@ -26,6 +27,15 @@ pub(in crate::gpu::device) struct VulkanDeviceFunctions {
     /// The functions used by command buffers
     pub command_buffer: VulkanCommandBufferFunctions,
 
+    /// The functions used by semaphores
+    pub semaphore: VulkanSemaphoreFunctions,
+
+    /// The functions used by fences
+    pub fence: VulkanFenceFunctions,
+
+    /// The functions used by queues
+    pub queue: VulkanQueueFunctions,
+
     /** Individual Functions **/
 
     /// The function to get a queue from the device
@@ -33,4 +43,7 @@ pub(in crate::gpu::device) struct VulkanDeviceFunctions {
 
     /// The function used to destroy the device
     pub destroy_device: FunctionSymbol<VkDestroyDevice>,
+
+    /// The function used to wait for the device to be idle
+    pub device_wait_idle: FunctionSymbol<VkDeviceWaitIdle>,
 }

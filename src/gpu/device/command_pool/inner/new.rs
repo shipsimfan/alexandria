@@ -3,13 +3,14 @@ use crate::{
     gpu::{VulkanDevice, device::command_pool::VulkanCommandPoolInner},
 };
 use std::ptr::null_mut;
-use vulkan::{VkCommandPool, VkCommandPoolCreateInfo, try_vulkan};
+use vulkan::{VkCommandPool, VkCommandPoolCreateFlag, VkCommandPoolCreateInfo, try_vulkan};
 
 impl VulkanCommandPoolInner {
     /// Create a new [`VulkanCommandPoolInner`]
     pub fn new(queue_family: u32, device: VulkanDevice) -> Result<VulkanCommandPoolInner> {
         let create_info = VkCommandPoolCreateInfo {
             queue_family_index: queue_family,
+            flags: VkCommandPoolCreateFlag::ResetCommandBuffer.into(),
             ..Default::default()
         };
 

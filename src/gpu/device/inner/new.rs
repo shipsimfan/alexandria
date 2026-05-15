@@ -25,10 +25,10 @@ impl VulkanDeviceInner {
 
         let next = if extended_info.len() > 0 {
             for i in 0..extended_info.len() - 1 {
-                let ptr = &extended_info[i + 1] as _;
-                extended_info[i].set_next(ptr);
+                let (left, right) = extended_info.split_at_mut(i + 1);
+                left[i].set_next(&mut right[0]);
             }
-            extended_info.as_ptr().cast()
+            extended_info[0].as_mut_ptr()
         } else {
             null()
         };

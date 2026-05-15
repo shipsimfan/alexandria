@@ -19,7 +19,7 @@ impl VulkanImageView {
             view_type: VkImageViewType::_2d,
             format: format.into_vk(),
             subresource_range: VkImageSubresourceRange {
-                aspect_mask: VkImageAspectFlag::ColorBit.into(),
+                aspect_mask: VkImageAspectFlag::Color.into(),
                 level_count: 1,
                 layer_count: 1,
                 ..Default::default()

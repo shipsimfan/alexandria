@@ -4,6 +4,7 @@ use vulkan::khr_swapchain::VkSwapchainKhr;
 mod functions;
 mod present_mode;
 
+mod acquire_next_image;
 mod drop;
 mod get;
 mod new;

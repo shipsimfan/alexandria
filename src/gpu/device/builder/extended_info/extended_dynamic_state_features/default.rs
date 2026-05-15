@@ -2,6 +2,8 @@ use crate::gpu::VulkanDeviceExtendedDynamicStateFeatures;
 
 impl Default for VulkanDeviceExtendedDynamicStateFeatures {
     fn default() -> Self {
-        VulkanDeviceExtendedDynamicStateFeatures {}
+        VulkanDeviceExtendedDynamicStateFeatures {
+            extended_dynamic_state: false,
+        }
     }
 }

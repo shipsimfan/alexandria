@@ -3,7 +3,13 @@ use vulkan::VkCommandBuffer;
 
 mod functions;
 
+mod begin;
+mod cmd_begin_rendering;
+mod cmd_end_rendering;
+mod cmd_pipeline_barrier2;
 mod drop;
+mod end;
+mod get;
 mod new;
 
 pub(in crate::gpu::device) use functions::*;

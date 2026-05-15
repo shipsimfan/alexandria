@@ -11,9 +11,9 @@ impl VulkanQueueFamilyInfo {
             return None;
         }
 
-        let graphics = info.queue_flags.contains(VkQueueFlag::GraphicsBit);
-        let compute = info.queue_flags.contains(VkQueueFlag::ComputeBit);
-        let transfer = info.queue_flags.contains(VkQueueFlag::TransferBit);
+        let graphics = info.queue_flags.contains(VkQueueFlag::Graphics);
+        let compute = info.queue_flags.contains(VkQueueFlag::Compute);
+        let transfer = info.queue_flags.contains(VkQueueFlag::Transfer);
 
         if !graphics && !compute && !transfer {
             return None;

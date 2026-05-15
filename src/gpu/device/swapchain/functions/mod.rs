@@ -1,5 +1,8 @@
 use crate::FunctionSymbol;
-use vulkan::khr_swapchain::{VkCreateSwapchainKhr, VkDestroySwapchainKhr, VkGetSwapchainImagesKhr};
+use vulkan::khr_swapchain::{
+    VkAcquireNextImageKhr, VkCreateSwapchainKhr, VkDestroySwapchainKhr, VkGetSwapchainImagesKhr,
+    VkQueuePresentKhr,
+};
 
 mod load;
 
@@ -13,4 +16,10 @@ pub(in crate::gpu::device) struct VulkanSwapchainFunctions {
 
     /// The function to get the images that make up a swapchain
     pub get_swapchain_images: FunctionSymbol<VkGetSwapchainImagesKhr>,
+
+    /// The function to acquire the next available image from a swapchain
+    pub acquire_next_image: FunctionSymbol<VkAcquireNextImageKhr>,
+
+    /// The function to present an image to the swapchain
+    pub queue_present: FunctionSymbol<VkQueuePresentKhr>,
 }

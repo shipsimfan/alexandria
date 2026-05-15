@@ -38,10 +38,10 @@ impl<'surface> VulkanSwapchain<'surface> {
                 height: image_size.y as _,
             },
             image_array_layers: 1,
-            image_usage: VkImageUsageFlag::ColorAttachmentBit.into(),
+            image_usage: VkImageUsageFlag::ColorAttachment.into(),
             image_sharing_mode: VkSharingMode::Exclusive,
-            pre_transform: VkSurfaceTransformFlagKhr::IdentityBitKhr.into(),
-            composite_alpha: VkCompositeAlphaFlagKhr::OpaqueBitKhr.into(),
+            pre_transform: VkSurfaceTransformFlagKhr::IdentityKhr.into(),
+            composite_alpha: VkCompositeAlphaFlagKhr::OpaqueKhr.into(),
             present_mode: present_mode.into_vk(),
             clipped: VK_TRUE,
             ..Default::default()

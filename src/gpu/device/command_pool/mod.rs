@@ -1,5 +1,5 @@
+use crate::define_handle;
 use inner::VulkanCommandPoolInner;
-use std::sync::{Arc, Mutex};
 
 mod functions;
 mod inner;
@@ -10,9 +10,7 @@ mod new;
 
 pub(in crate::gpu::device) use functions::*;
 
-/// A pool of command buffers for a Vulkan device
-#[derive(Clone)]
-pub struct VulkanCommandPool {
-    /// The inner command pool handle
-    inner: Arc<Mutex<VulkanCommandPoolInner>>,
-}
+define_handle!(
+    /// A pool of command buffers for a Vulkan device
+    pub VulkanCommandPool -> VulkanCommandPoolInner
+);

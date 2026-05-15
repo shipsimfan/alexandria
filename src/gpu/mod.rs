@@ -12,3 +12,9 @@ pub use device::*;
 pub use instance::*;
 pub use misc::*;
 pub use subsystem::GpuSubsystem;
+
+pub use vulkan::{
+    VkAccessFlag2 as VulkanAccessFlag, VkAccessFlags2 as VulkanAccessFlags,
+    VkImageLayout as VulkanImageLayout, VkPipelineStageFlag2 as VulkanPipelineStageFlag,
+    VkPipelineStageFlags2 as VulkanPipelineStageFlags,
+};

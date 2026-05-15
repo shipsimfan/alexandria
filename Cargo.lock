@@ -25,7 +25,7 @@ dependencies = [
 [[package]]
 name = "linux"
 version = "1.0.0"
-source = "git+https://github.com/shipsimfan/lib-linux#45d3b9e8ca5b92e9c769f6fae99fad8f54944975"
+source = "git+https://github.com/shipsimfan/lib-linux#bc7f21fb420d51ba1441901587d962fa467d5516"
 
 [[package]]
 name = "macros"
@@ -69,7 +69,7 @@ dependencies = [
 [[package]]
 name = "vulkan"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-vulkan#c8fefa488145332b1cb7244253a862d0c51cb3b9"
+source = "git+https://github.com/shipsimfan/lib-vulkan#87c4c8f99907c80cae8dab2baf123fb1bec9e76d"
 dependencies = [
  "win32",
 ]
@@ -85,4 +85,4 @@ dependencies = [
 [[package]]
 name = "win32"
 version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-win32#48a4ec9599f7eac9c84b2234122fdc0298850483"
+source = "git+https://github.com/shipsimfan/lib-win32#74e84a02bad6e36f9dedb3e4f6f7f0a39898e28b"

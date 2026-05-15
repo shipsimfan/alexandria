@@ -47,7 +47,7 @@ impl<'instance> VulkanAdapter<'instance> {
         let mut vram = 0;
         for i in 0..memory_information.memory_heap_count as usize {
             let heap = &memory_information.memory_heaps[i];
-            if heap.flags.contains(VkMemoryHeapFlag::DeviceLocalBit) {
+            if heap.flags.contains(VkMemoryHeapFlag::DeviceLocal) {
                 vram += heap.size;
             }
         }

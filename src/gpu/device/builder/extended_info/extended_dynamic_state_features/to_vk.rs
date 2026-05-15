@@ -6,6 +6,13 @@ impl VulkanDeviceExtendedDynamicStateFeatures {
     pub(in crate::gpu::device::builder::extended_info) fn to_vk(
         &self,
     ) -> VkPhysicalDeviceExtendedDynamicStateFeaturesExt {
-        VkPhysicalDeviceExtendedDynamicStateFeaturesExt::default()
+        VkPhysicalDeviceExtendedDynamicStateFeaturesExt {
+            extended_dynamic_state: if self.extended_dynamic_state {
+                vulkan::VK_TRUE
+            } else {
+                vulkan::VK_FALSE
+            },
+            ..Default::default()
+        }
     }
 }

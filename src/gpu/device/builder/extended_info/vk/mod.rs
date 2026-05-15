@@ -3,6 +3,7 @@ use vulkan::{
     ext_extended_dynamic_state::VkPhysicalDeviceExtendedDynamicStateFeaturesExt,
 };
 
+mod as_ptr;
 mod from;
 mod set_next;
 

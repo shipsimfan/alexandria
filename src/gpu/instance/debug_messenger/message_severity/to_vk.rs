@@ -10,22 +10,22 @@ impl VulkanDebugMessageSeverity {
     ) -> VkDebugUtilsMessageSeverityFlagsExt {
         match self {
             VulkanDebugMessageSeverity::Error => {
-                VkDebugUtilsMessageSeverityFlagExt::ErrorBitExt.into()
+                VkDebugUtilsMessageSeverityFlagExt::ErrorExt.into()
             }
             VulkanDebugMessageSeverity::Warning => {
-                VkDebugUtilsMessageSeverityFlagExt::ErrorBitExt
-                    | VkDebugUtilsMessageSeverityFlagExt::WarningBitExt
+                VkDebugUtilsMessageSeverityFlagExt::ErrorExt
+                    | VkDebugUtilsMessageSeverityFlagExt::WarningExt
             }
             VulkanDebugMessageSeverity::Info => {
-                VkDebugUtilsMessageSeverityFlagExt::ErrorBitExt
-                    | VkDebugUtilsMessageSeverityFlagExt::WarningBitExt
-                    | VkDebugUtilsMessageSeverityFlagExt::InfoBitExt
+                VkDebugUtilsMessageSeverityFlagExt::ErrorExt
+                    | VkDebugUtilsMessageSeverityFlagExt::WarningExt
+                    | VkDebugUtilsMessageSeverityFlagExt::InfoExt
             }
             VulkanDebugMessageSeverity::Verbose => {
-                VkDebugUtilsMessageSeverityFlagExt::ErrorBitExt
-                    | VkDebugUtilsMessageSeverityFlagExt::WarningBitExt
-                    | VkDebugUtilsMessageSeverityFlagExt::InfoBitExt
-                    | VkDebugUtilsMessageSeverityFlagExt::VerboseBitExt
+                VkDebugUtilsMessageSeverityFlagExt::ErrorExt
+                    | VkDebugUtilsMessageSeverityFlagExt::WarningExt
+                    | VkDebugUtilsMessageSeverityFlagExt::InfoExt
+                    | VkDebugUtilsMessageSeverityFlagExt::VerboseExt
             }
         }
     }
