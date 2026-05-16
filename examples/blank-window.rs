@@ -1,5 +1,3 @@
-use alexandria::math::Vector2;
-
 const SWAPCHAIN_FORMAT: alexandria::gpu::VulkanFormat =
     alexandria::gpu::VulkanFormat::B8G8R8A8UNorm;
 
@@ -93,6 +91,7 @@ fn main() {
 
     // Create swapchain
     let (mut swapchain, mut image_views) = create_swapchain(&graphics_device, &surface, &window);
+    let swapchain_size = window.size();
 
     // Create command pool and buffer
     let command_pool = graphics_device
@@ -116,7 +115,7 @@ fn main() {
         frame.draw_fence.wait(u64::MAX).unwrap();
 
         // Get the next image from the swapchain
-        should_recreate_swapchain |= if window.size() == Vector2::ZERO {
+        should_recreate_swapchain |= if window.is_minimized() {
             // Wait for the next event and handle it
             let event = pump.wait().expect("unable to wait for event");
             running &= handle_event(&event, &context);
@@ -155,13 +154,13 @@ fn main() {
             running &= handle_event(&event, &context);
         }
 
-        if should_recreate_swapchain && window.size() != Vector2::ZERO {
+        if (should_recreate_swapchain || window.size() != swapchain_size) && !window.is_minimized()
+        {
             should_recreate_swapchain = false;
             graphics_device.wait_idle().unwrap();
 
             drop(image_views);
             drop(swapchain);
-            println!("Re-create window size: {}", window.size());
             (swapchain, image_views) = create_swapchain(&graphics_device, &surface, &window);
 
             for frame in &mut frames {
@@ -311,7 +310,6 @@ fn render_frame(
 
     let clear_color = alexandria::math::Color4f::<alexandria::math::Srgb>::new(1.0, 0.0, 1.0, 1.0);
 
-    println!("Render window size: {}", window.size());
     frame
         .command_buffer
         .cmd_begin_rendering(&image_views[image_index], window.size(), clear_color);
