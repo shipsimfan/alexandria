@@ -7,7 +7,7 @@ use vulkan::{khr_swapchain::VkPresentInfoKhr, try_vulkan};
 impl VulkanQueue {
     /// Presents an image to a swapchain
     pub fn present(
-        &self,
+        &mut self,
         wait_semaphore: &VulkanSemaphore,
         swapchain: &VulkanSwapchain,
         image_index: u32,
