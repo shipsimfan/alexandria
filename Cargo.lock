@@ -25,7 +25,7 @@ dependencies = [
 [[package]]
 name = "linux"
 version = "1.0.0"
-source = "git+https://github.com/shipsimfan/lib-linux#bc7f21fb420d51ba1441901587d962fa467d5516"
+source = "git+https://github.com/shipsimfan/lib-linux#9febb23824004e1cd5f45088e7c474cccb1bac5c"
 
 [[package]]
 name = "macros"

@@ -1,10 +1,9 @@
 # ToDo
- 1. Fix borderless window issue on Windows
- 2. Improve current Vulkan wrappers to be closer to spec
- 3. Add error handling for pushed events during event pumping
+ 1. Improve current Vulkan wrappers to be closer to spec
+ 2. Add error handling for pushed events during event pumping
    - Linux
    - Windows
- 4. Add Linux Windowing support
+ 3. Add Linux Windowing support
    1. Wayland
      1. Window creation
      2. Window destruction
@@ -104,30 +103,7 @@
        - Borderless
        - Resizable
        - Fullscreen + Fullscreen Display Mode
- 5. Add functions for getting system paths
-   - Home
-     - Linux: `$HOME`, then `getpwuid(getuid())->pw_dir`
-   - Desktop 
-     - Linux: `$XDG_DESKTOP_DIR`, then `home()/Desktop`
-   - Game Data (take app name and company name as arguments)
-     - Linux: `$XDG_DATA_HOME/<app-name>`, then `home()/.local/share/<app-name>`
-   - Cache (take app name and company name as arguments)
-     - Linux: `$XDG_CACHE_HOME/<app-name>`, then `home()/.cache/<app-name>`
-   - Temp
-     - Linux: `$TMPDIR`, then `/tmp/`
-   - Downloads
-     - Linux: `$XDG_DOWNLOAD_DIR`, then `home()/Downloads/`
-   - Documents
-     - Linux: `$XDG_DOCUMENTS_DIR`, then `home()/Documents/`
-   - Pictures
-     - Linux: `$XDG_PICTURES_DIR`, then `home()/Pictures/`
-   - Screenshots
-     - Linux: `$XDG_PICTURES_DIR/Screenshots/`, then `home()/Pictures/Screenshots/`
-   - Music
-     - Linux: `$XDG_MUSIC_DIR`, then `home()/Music/`
-   - Videos
-      - Linux: `$XDG_VIDEOS_DIR`, then `home()/Videos/`
- 6. Input system
+ 4. Input system
    1. System
    2. Keyboard
      1. Windows
@@ -141,18 +117,17 @@
      1. Windows
      2. Wayland
      3. X11
- 7. Add min size support
-   - Windows (`WM_GETMINMAXINFO`)
+ 5. Add min size support
    - Wayland (`xdg_toplevel_set_min_size()`)
    - X11
- 8. Add renderer wrappers for triangle
- 9. Add renderer wrappers for multi-cube
- 10. Add model loading/parsing
+ 6. Add renderer wrappers for triangle
+ 7. Add renderer wrappers for multi-cube
+ 8. Add model loading/parsing
    1. obj
    2. fbx
    3. gltf/glb
    4. dae
- 11. Add texture loading/parsing
+ 9. Add texture loading/parsing
    1. qoi
    2. png
    3. jpg
@@ -161,26 +136,26 @@
    6. dds
    7. ktx2
    8. exr
- 12. Add window icons
+ 10. Add window icons
    1. Windows
    2. Wayland
    3. X11
- 13. Add audio wrappers (pull-style)
+ 11. Add audio wrappers (pull-style)
    1. WASAPI
    2. PipeWire
    3. PulseAudio
    4. ALSA
- 14. Add audio file loading/parsing
+ 12. Add audio file loading/parsing
    1. wav
    2. ogg
    3. mp3
    4. flac
    5. opus
- 15. Add more input types
+ 13. Add more input types
    1. X-Box controllers (Windows)
    2. General controllers
    3. Joysticks
    4. Steering Wheels, Pedals, Gear Shift
- 16. Add 2-d support to `Matrix3x3`
- 17. Add more external control to event queue
- 18. Add max capacity to event queue
+ 14. Add 2-d support to `Matrix3x3`
+ 15. Add more external control to event queue
+ 16. Add max capacity to event queue

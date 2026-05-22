@@ -13,4 +13,13 @@ impl VulkanInstance {
     ) -> Result<VulkanSurface> {
         VulkanSurface::new(self, window)
     }
+
+    /// Create a new [`VulkanSurface`] for `window`
+    #[cfg(target_os = "linux")]
+    pub fn create_window_surface<UserEvent: 'static + Send>(
+        &self,
+        window: &Window<UserEvent>,
+    ) -> Result<VulkanSurface> {
+        VulkanSurface::new(self, window)
+    }
 }

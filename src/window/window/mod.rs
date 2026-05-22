@@ -18,7 +18,7 @@ pub use builder::WindowBuilder;
 pub use iter::WindowIter;
 
 #[cfg(target_os = "linux")]
-pub(in crate::window) use linux::WindowInner;
+pub(in crate::window) use linux::{WindowInner, WindowSurfaceCreationHandle};
 #[cfg(target_os = "windows")]
 pub(in crate::window) use windows::{
     StandardWndProc, Win32Window, WindowClass, WindowInner, WindowProc, WindowStyle,
