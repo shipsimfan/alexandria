@@ -12,5 +12,6 @@ macro_rules! cargo_vulkan_version {
             env!("CARGO_PKG_VERSION_MINOR"),
             env!("CARGO_PKG_VERSION_PATCH"),
         )
+        .expect("invalid CARGO_PKG_VERSION environment variables")
     };
 }
