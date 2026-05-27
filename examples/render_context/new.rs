@@ -84,13 +84,12 @@ fn create_vulkan_instance(context: &AlexandriaContext<()>, window: &Window<()>) 
 
     context
         .gpu()
-        .instance_builder(VulkanVersion::VERSION_1_0)
+        .instance_builder(VulkanVersion::VERSION_1_3)
         .application(window.title(), VulkanVersion::new(0, 1, 0, 0))
         .engine("Alexandria", VulkanVersion::new(0, 1, 0, 0))
         .layers(layers.into_iter().copied())
         .extensions(debug_extensions.into_iter().copied())
         .window_extensions(&window)
-        .api_version(VulkanVersion::VERSION_1_3)
         .create()
         .unwrap()
 }
