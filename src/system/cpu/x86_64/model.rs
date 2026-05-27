@@ -24,7 +24,7 @@ pub fn cpu_model() -> String {
 
             length += 1;
         }
-        return String::from_utf8_lossy(&bytes[..length]).to_string();
+        return String::from_utf8_lossy(&bytes[..length]).trim().to_string();
     }
 
     // Pull extended brand name
@@ -66,7 +66,7 @@ pub fn cpu_model() -> String {
 
     // Convert the model name to an owned string
     match String::from_utf8_lossy(&bytes[..length]) {
-        Cow::Owned(owned) => owned,
-        Cow::Borrowed(borrowed) => borrowed.to_owned(),
+        Cow::Owned(owned) => owned.trim().to_string(),
+        Cow::Borrowed(borrowed) => borrowed.trim().to_owned(),
     }
 }
