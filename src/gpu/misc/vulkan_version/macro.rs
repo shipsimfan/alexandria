@@ -6,7 +6,7 @@ use crate::gpu::VulkanVersion;
 #[macro_export]
 macro_rules! cargo_vulkan_version {
     () => {
-        ::alexandria::gpu::VulkanVersion::from_strs(
+        $crate::gpu::VulkanVersion::from_strs(
             None,
             env!("CARGO_PKG_VERSION_MAJOR"),
             env!("CARGO_PKG_VERSION_MINOR"),

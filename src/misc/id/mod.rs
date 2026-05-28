@@ -22,3 +22,6 @@ pub struct Id<T> {
     /// The type the ID points to
     _type: PhantomData<T>,
 }
+
+unsafe impl<T> Send for Id<T> {}
+unsafe impl<T> Sync for Id<T> {}
