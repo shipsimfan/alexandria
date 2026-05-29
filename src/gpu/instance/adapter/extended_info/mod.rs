@@ -1,19 +1,20 @@
 mod extended_dynamic_state_features;
 mod features;
-mod vk;
 mod vulkan_1_3_features;
 
+mod as_ptr;
 mod from;
-mod to_vk;
+mod into;
+mod set_next;
 
 pub use extended_dynamic_state_features::*;
 pub use features::*;
 pub use vulkan_1_3_features::*;
 
-pub(in crate::gpu::device) use vk::VkVulkanDeviceExtendedCreateInfo;
-
-/// Extended information that can be provided when creating a graphics device
-pub enum VulkanDeviceExtendedCreateInfo {
+/// Extended information about a Vulkan adapter that can be provided when creating a graphics
+/// device
+#[derive(Clone)]
+pub enum VulkanExtendedAdapterInfo {
     /// The general device features
     Features(VulkanDeviceFeatures),
 

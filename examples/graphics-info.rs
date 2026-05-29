@@ -1,3 +1,7 @@
+use alexandria::gpu::{
+    VulkanDeviceExtendedDynamicStateFeatures, VulkanDeviceFeatures, VulkanDeviceVulkan13Features,
+};
+
 /// Prints out information about the graphics hardware on the system
 fn main() {
     let (context, _) = alexandria::AlexandriaContext::<()>::builder()
@@ -8,7 +12,8 @@ fn main() {
     println!("     --- Graphics Information ---");
 
     // Get Vulkan version
-    println!("Vulkan Version: {}", context.gpu().version().unwrap());
+    let version = context.gpu().version().unwrap();
+    println!("Vulkan Version: {}", version);
 
     // List graphics instance extensions
     let extensions = context.gpu().all_extensions(None).unwrap();
@@ -51,7 +56,7 @@ fn main() {
     // Create an instance for enumerating adapters
     let instance = context
         .gpu()
-        .instance_builder(alexandria::gpu::VulkanVersion::VERSION_1_0)
+        .instance_builder(version)
         .application(
             "Enumerate Adapters Example",
             alexandria::gpu::VulkanVersion::new(0, 1, 0, 0),
@@ -107,6 +112,33 @@ fn main() {
                     println!("     - {}", extension);
                 }
             }
+
+            println!("   - Extended Info:");
+            let mut extended_info = [
+                VulkanDeviceFeatures::default().into(),
+                VulkanDeviceVulkan13Features::default().into(),
+                VulkanDeviceExtendedDynamicStateFeatures::default().into(),
+            ];
+            adapter.get_extended_info(&mut extended_info);
+
+            print!("     - Vulkan 1.3 Features: ");
+            let vulkan_13_features = extended_info[1].as_vulkan_13_features().unwrap();
+            if vulkan_13_features.synchronization2() {
+                print!("synchronization2 ");
+            }
+            if vulkan_13_features.dynamic_rendering() {
+                print!("dynamic_rendering");
+            }
+            println!();
+
+            print!("     - Extended Dynamic State Features: ");
+            let extended_dynamic_state_features = extended_info[2]
+                .as_extended_dynamic_state_features()
+                .unwrap();
+            if extended_dynamic_state_features.extended_dynamic_state() {
+                print!("extended_dynamic_state");
+            }
+            println!();
         }
     }
 }

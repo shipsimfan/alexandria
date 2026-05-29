@@ -14,3 +14,6 @@ pub(in crate::shared_object) struct SharedObjectInner {
     /// The name of this shared object
     name: PathBuf,
 }
+
+unsafe impl Send for SharedObjectInner {}
+unsafe impl Sync for SharedObjectInner {}

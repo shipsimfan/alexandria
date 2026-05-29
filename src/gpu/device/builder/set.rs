@@ -1,11 +1,10 @@
 use crate::gpu::{
-    VulkanDeviceBuilder, VulkanDeviceExtendedCreateInfo, VulkanDeviceExtension,
-    VulkanQueueCreateInfo,
+    VulkanDeviceBuilder, VulkanDeviceExtension, VulkanExtendedAdapterInfo, VulkanQueueCreateInfo,
 };
 
 impl<'adapter, 'instance, 'a> VulkanDeviceBuilder<'adapter, 'instance, 'a> {
     /// Add a new element of extended information to adjust the device to be created
-    pub fn extended_info<E: Into<VulkanDeviceExtendedCreateInfo>>(
+    pub fn extended_info<E: Into<VulkanExtendedAdapterInfo>>(
         &mut self,
         info: E,
     ) -> &mut VulkanDeviceBuilder<'adapter, 'instance, 'a> {
@@ -14,7 +13,7 @@ impl<'adapter, 'instance, 'a> VulkanDeviceBuilder<'adapter, 'instance, 'a> {
     }
 
     /// Add new elements of extended information to adjust the device to be created
-    pub fn extended_infos<E: Into<VulkanDeviceExtendedCreateInfo>, I: IntoIterator<Item = E>>(
+    pub fn extended_infos<E: Into<VulkanExtendedAdapterInfo>, I: IntoIterator<Item = E>>(
         &mut self,
         infos: I,
     ) -> &mut VulkanDeviceBuilder<'adapter, 'instance, 'a> {

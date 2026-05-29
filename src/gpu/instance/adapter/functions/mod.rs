@@ -1,7 +1,8 @@
 use crate::FunctionSymbol;
 use vulkan::{
-    VkEnumerateDeviceExtensionProperties, VkGetPhysicalDeviceMemoryProperties,
-    VkGetPhysicalDeviceProperties, VkGetPhysicalDeviceQueueFamilyProperties,
+    VkEnumerateDeviceExtensionProperties, VkGetPhysicalDeviceFeatures2,
+    VkGetPhysicalDeviceMemoryProperties, VkGetPhysicalDeviceProperties,
+    VkGetPhysicalDeviceQueueFamilyProperties,
 };
 
 mod load;
@@ -20,4 +21,7 @@ pub(in crate::gpu::instance) struct VulkanAdapterFunctions {
 
     /// The function used the get the Vulkan extensions supported by an adapter
     pub enumerate_device_extension_properties: FunctionSymbol<VkEnumerateDeviceExtensionProperties>,
+
+    /// The function used to get extended information about an adapter
+    pub get_physical_device_features2: FunctionSymbol<VkGetPhysicalDeviceFeatures2>,
 }

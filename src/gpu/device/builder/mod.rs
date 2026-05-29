@@ -1,6 +1,5 @@
-use crate::gpu::{VulkanAdapter, VulkanDeviceExtension};
+use crate::gpu::{VulkanAdapter, VulkanDeviceExtension, VulkanExtendedAdapterInfo};
 
-mod extended_info;
 mod queue_info;
 
 mod create;
@@ -8,13 +7,12 @@ mod get;
 mod new;
 mod set;
 
-pub use extended_info::*;
 pub use queue_info::*;
 
 /// A builder for [`VulkanDevice`](crate::VulkanDevice)s
 pub struct VulkanDeviceBuilder<'adapter, 'instance, 'a> {
     /// Extended information that can adjusts the device that will be created
-    extended_info: Vec<VulkanDeviceExtendedCreateInfo>,
+    extended_info: Vec<VulkanExtendedAdapterInfo>,
 
     /// The information describing the queues to be created
     queues: Vec<VulkanQueueCreateInfo<'a>>,

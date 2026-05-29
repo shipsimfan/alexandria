@@ -38,11 +38,10 @@ impl RenderContext {
                 queue_family: queue_family_index,
                 priorities: &[1.0],
             })
-            .extended_info(VulkanDeviceFeatures::default())
             .extended_info(
                 VulkanDeviceVulkan13Features::default()
-                    .synchronization2()
-                    .dynamic_rendering(),
+                    .enable_synchronization2()
+                    .enable_dynamic_rendering(),
             )
             .create()
             .unwrap();
@@ -121,6 +120,16 @@ fn find_compatible_adapter<'instance>(
                 .expect("unable to get swapchain formats")
                 .contains(&SWAPCHAIN_FORMAT)
             {
+                continue;
+            }
+
+            let mut extended_info = [
+                VulkanDeviceFeatures::default().into(),
+                VulkanDeviceVulkan13Features::default().into(),
+            ];
+            adapter.get_extended_info(&mut extended_info);
+            let vk13_features = extended_info[1].as_vulkan_13_features().unwrap();
+            if !vk13_features.synchronization2() || !vk13_features.dynamic_rendering() {
                 continue;
             }
 

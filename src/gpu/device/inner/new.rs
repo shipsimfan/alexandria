@@ -1,8 +1,7 @@
 use crate::{
     Error, Result,
     gpu::{
-        VulkanAdapter, VulkanDeviceExtendedCreateInfo, VulkanDeviceExtension,
-        VulkanQueueCreateInfo,
+        VulkanAdapter, VulkanDeviceExtension, VulkanExtendedAdapterInfo, VulkanQueueCreateInfo,
         device::{VulkanDeviceFunctions, VulkanDeviceInner},
     },
 };
@@ -12,26 +11,13 @@ use vulkan::{VkDevice, VkDeviceCreateInfo, try_vulkan};
 impl VulkanDeviceInner {
     /// Create a new [`VulkanDeviceInner`]
     pub fn new(
-        extended_info: &[VulkanDeviceExtendedCreateInfo],
+        extended_info: &mut [VulkanExtendedAdapterInfo],
         queues: &[VulkanQueueCreateInfo],
         extensions: &[VulkanDeviceExtension],
         adapter: &VulkanAdapter,
     ) -> Result<VulkanDeviceInner> {
-        // Convert extended info to Vulkan
-        let mut extended_info: Vec<_> = extended_info
-            .into_iter()
-            .map(|extended_info| extended_info.to_vk())
-            .collect();
-
-        let next = if extended_info.len() > 0 {
-            for i in 0..extended_info.len() - 1 {
-                let (left, right) = extended_info.split_at_mut(i + 1);
-                left[i].set_next(&mut right[0]);
-            }
-            extended_info[0].as_mut_ptr()
-        } else {
-            null()
-        };
+        // Setup the next chain for extended information
+        let next = VulkanExtendedAdapterInfo::set_next_chain(extended_info);
 
         // Convert queues to Vulkan
         let queues: Vec<_> = queues.into_iter().map(|queue| queue.to_vk()).collect();

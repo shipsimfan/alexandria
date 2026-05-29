@@ -6,10 +6,10 @@ use std::sync::Arc;
 
 impl<'adapter, 'instance, 'a> VulkanDeviceBuilder<'adapter, 'instance, 'a> {
     /// Create a new [`VulkanDevice`] with the provided settings
-    pub fn create(&self) -> Result<(VulkanDevice, Vec<VulkanQueue>)> {
+    pub fn create(&mut self) -> Result<(VulkanDevice, Vec<VulkanQueue>)> {
         let device = VulkanDevice {
             inner: Arc::new(VulkanDeviceInner::new(
-                &self.extended_info,
+                &mut self.extended_info,
                 &self.queues,
                 &self.extensions,
                 self.adapter,
