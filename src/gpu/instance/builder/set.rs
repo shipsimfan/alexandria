@@ -65,25 +65,10 @@ impl<'a> VulkanInstanceBuilder<'a> {
     }
 
     /// Add the required extensions for create surfaces for `window`
-    #[cfg(target_os = "windows")]
-    #[allow(unused_variables)]
     pub fn window_extensions<UserEvent: 'static + Send>(
         &mut self,
         window: &Window<UserEvent>,
     ) -> &mut VulkanInstanceBuilder<'a> {
-        self.extensions([
-            VulkanInstanceExtension::Surface,
-            VulkanInstanceExtension::Win32Surface,
-        ])
-    }
-
-    /// Add the required extensions for create surfaces for `window`
-    #[cfg(target_os = "linux")]
-    #[allow(unused_variables)]
-    pub fn window_extensions<UserEvent: 'static + Send>(
-        &mut self,
-        window: &Window<UserEvent>,
-    ) -> &mut VulkanInstanceBuilder<'a> {
-        self.extensions([todo!()])
+        self.extensions(window.vulkan_extensions())
     }
 }

@@ -1,4 +1,5 @@
 use crate::{
+    gpu::VulkanInstanceExtension,
     math::{Recti, Vector2u},
     window::window::{WindowInner, WindowSurfaceCreationHandle},
 };
@@ -61,6 +62,11 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
 
     /// Is the window resizable?
     pub fn is_resizable(&self) -> bool {
+        todo!()
+    }
+
+    /// Get the required extensions for creating surfaces for this window
+    pub fn vulkan_extensions(&self) -> [VulkanInstanceExtension; 2] {
         todo!()
     }
 

@@ -1,4 +1,5 @@
 use crate::{
+    gpu::VulkanInstanceExtension,
     math::{Recti, Vector2i, Vector2u},
     window::{Window, window::WindowSurfaceCreationHandle},
 };
@@ -272,6 +273,20 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     /// Panics if the window has been destroyed
     pub fn is_resizable(&self) -> bool {
         self.is_resizable_opt().expect("window has been destroyed")
+    }
+
+    /// Get the required extensions for creating surfaces for this window
+    pub fn vulkan_extensions_opt(&self) -> Option<[VulkanInstanceExtension; 2]> {
+        self.with_inner(|inner| inner.vulkan_extensions())
+    }
+
+    /// Get the required extensions for creating surfaces for this window
+    ///
+    /// # Panics
+    /// Panics if the window has been destroyed
+    pub fn vulkan_extensions(&self) -> [VulkanInstanceExtension; 2] {
+        self.vulkan_extensions_opt()
+            .expect("window has been destroyed")
     }
 
     /// Get the handle for creating a surface for this window
