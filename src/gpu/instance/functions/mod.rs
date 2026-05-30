@@ -1,3 +1,5 @@
+#[cfg(target_os = "linux")]
+use crate::gpu::instance::VulkanWaylandSurfaceFunctions;
 #[cfg(target_os = "windows")]
 use crate::gpu::instance::VulkanWin32SurfaceFunctions;
 use crate::{
@@ -27,6 +29,10 @@ pub(in crate::gpu) struct VulkanInstanceFunctions {
     /// The functions used by Win32 surfaces
     #[cfg(target_os = "windows")]
     win32_surface: Option<VulkanWin32SurfaceFunctions>,
+
+    /// The functions used by Wayland surfaces
+    #[cfg(target_os = "linux")]
+    wayland_surface: Option<VulkanWaylandSurfaceFunctions>,
 
     /** Specific Functions **/
 

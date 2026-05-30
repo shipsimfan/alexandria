@@ -6,6 +6,7 @@ mod cancel_read;
 mod dispatch_pending;
 mod drop;
 mod flush;
+mod get;
 mod get_fd;
 mod get_registry;
 mod prepare_read;

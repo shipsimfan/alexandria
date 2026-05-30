@@ -1,8 +1,7 @@
 use crate::{
     EventKind, Result,
     window::{
-        display::DisplayInner,
-        subsystem::linux::wayland::{WaylandGlobals, WlRegistryRef},
+        WaylandGlobals, XdgWmBase, display::DisplayInner, subsystem::linux::wayland::WlRegistryRef,
     },
 };
 use std::{ffi::CStr, rc::Rc};
@@ -40,19 +39,13 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
                 display.wayland_upgrade(&xdg_output_manager, self.events_enabled)?;
             }
             self.xdg_output_manager = Some(xdg_output_manager);
-        }
-
-        /*
-        else if self.compositor.is_none() && interface == self.compositor_name {
-             self.compositor = Some( registry.bind(name, version)? )
+        } else if self.compositor.is_none() && interface == self.compositor_name {
+            self.compositor = Some(registry.bind(name, version)?)
         } else if self.xdg_wm_base.is_none() && interface == self.xdg_wm_base_name {
-             self.xdg_wm_base = Some(Rc::new(
-                registry
-                    .bind::<XdgWmBase>(name, version)?
-                    .register_ping_handler()?
-             ));
+            let wm_base = registry.bind::<XdgWmBase>(name, version)?;
+            wm_base.register_ping_handler()?;
+            self.xdg_wm_base = Some(Rc::new(wm_base));
         }
-        */
 
         Ok(())
     }

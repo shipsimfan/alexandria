@@ -1,6 +1,8 @@
 use crate::{
     Result,
-    window::{Window, WindowBuilder, subsystem::linux::wayland::WaylandWindowSubsystem},
+    window::{
+        WaylandWindow, Window, WindowBuilder, subsystem::linux::wayland::WaylandWindowSubsystem,
+    },
 };
 
 impl<UserEvent: 'static + Send> WaylandWindowSubsystem<UserEvent> {
@@ -9,6 +11,15 @@ impl<UserEvent: 'static + Send> WaylandWindowSubsystem<UserEvent> {
         &mut self,
         builder: &WindowBuilder<UserEvent>,
     ) -> Result<Window<UserEvent>> {
-        todo!()
+        let inner = WaylandWindow::new(builder, &self.event_queue, &mut self.registry)?;
+
+        let id = self.windows.insert(inner);
+        let cast_id = unsafe { id.cast() };
+
+        self.windows[id].set_id(cast_id);
+
+        self.connection.roundtrip()?;
+
+        Ok(Window::new(cast_id, builder.get_context().clone()))
     }
 }

@@ -18,12 +18,15 @@ pub use builder::WindowBuilder;
 pub use iter::WindowIter;
 
 #[cfg(target_os = "linux")]
-pub(in crate::window) use linux::{WindowInner, WindowSurfaceCreationHandle};
+pub(in crate::window) use linux::{WaylandWindow, WindowInner};
 #[cfg(target_os = "windows")]
 pub(in crate::window) use windows::{
     StandardWndProc, Win32Window, WindowClass, WindowInner, WindowProc, WindowStyle,
     WindowSurfaceCreationHandle,
 };
+
+#[cfg(target_os = "linux")]
+pub(crate) use linux::WindowSurfaceCreationHandle;
 
 /// A reference to a window for which can be rendered into
 #[derive(Clone)]

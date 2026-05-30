@@ -1,4 +1,4 @@
-use crate::window::subsystem::linux::wayland::WaylandGlobals;
+use crate::window::WaylandGlobals;
 
 impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
     /// Enable events for this set of [`WaylandGlobals`]

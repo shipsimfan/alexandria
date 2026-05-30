@@ -4,8 +4,12 @@
 use display::{WlOutput, XdgOutput, XdgOutputListener};
 #[cfg(target_os = "linux")]
 use subsystem::{
-    WaylandBind, WaylandFunctions, WaylandLibrary, WlDisplay, WlRegistryRef, XdgOutputManager,
+    WaylandBind, WaylandFunctions, WaylandGlobals, WaylandLibrary, WlCompositor, WlDisplay,
+    WlRegistryRef, WlSurface, XdgOutputManager, XdgSurface, XdgSurfaceListener, XdgSurfaceRef,
+    XdgTopLevel, XdgTopLevelListener, XdgWmBase,
 };
+#[cfg(target_os = "linux")]
+use window::WaylandWindow;
 #[cfg(target_os = "windows")]
 use window::{StandardWndProc, Win32Window, WindowClass, WindowProc, WindowStyle};
 
@@ -16,3 +20,6 @@ mod window;
 pub use display::{Display, DisplayIter, DisplayOrientation};
 pub use subsystem::WindowSubsystem;
 pub use window::{Window, WindowBuilder, WindowIter};
+
+#[cfg(target_os = "linux")]
+pub(crate) use window::WindowSurfaceCreationHandle;

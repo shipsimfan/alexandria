@@ -1,5 +1,5 @@
 use crate::{
-    Id, Result,
+    EventKind, Id, Result,
     window::{subsystem::linux::wayland::WaylandWindowSubsystem, window::WindowInner},
 };
 
@@ -9,6 +9,12 @@ impl<UserEvent: 'static + Send> WaylandWindowSubsystem<UserEvent> {
         &mut self,
         id: Id<WindowInner<UserEvent>>,
     ) -> Result<()> {
-        todo!()
+        if self.windows.remove(id).is_some() {
+            self.event_queue.push(EventKind::WindowDestroyed {
+                id: unsafe { id.cast() },
+            })?;
+        }
+
+        Ok(())
     }
 }

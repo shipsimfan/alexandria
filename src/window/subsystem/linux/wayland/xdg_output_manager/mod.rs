@@ -7,6 +7,7 @@ mod drop;
 mod get;
 mod get_xdg_output;
 
+/// A wrapper around the `zxdg_output_manager_v1` global
 pub(in crate::window) struct XdgOutputManager {
     /// The raw handle to the `zxdg_output_manager_v1` global
     handle: *mut zxdg_output_manager_v1,

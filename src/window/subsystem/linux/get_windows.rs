@@ -6,7 +6,10 @@ use crate::{
 impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
     /// Get the set of currently active windows
     pub fn windows(&self) -> &PackedMap<WindowInner<UserEvent>> {
-        todo!()
+        match self {
+            WindowSubsystemInner::Wayland(subsystem) => subsystem.windows(),
+            WindowSubsystemInner::X11 => todo!(),
+        }
     }
 
     /// Get the set of currently active windows mutably and the set of displays

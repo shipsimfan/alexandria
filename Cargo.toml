@@ -29,6 +29,10 @@ vulkan = { git = "https://github.com/shipsimfan/lib-vulkan", features = [
 linux.git = "https://github.com/shipsimfan/lib-linux"
 wayland.git = "https://github.com/shipsimfan/lib-wayland"
 
+vulkan = { git = "https://github.com/shipsimfan/lib-vulkan", features = [
+    "wayland",
+] }
+
 [[example]]
 name = "git-info"
 required-features = ["git"]

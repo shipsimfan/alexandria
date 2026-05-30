@@ -1,4 +1,4 @@
-use crate::{EventKind, Result, window::subsystem::linux::wayland::WaylandGlobals};
+use crate::{Error, EventKind, Result, window::WaylandGlobals};
 
 impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
     /// Removes a global from the list of globals
@@ -30,7 +30,20 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
             }
         }
 
-        // TODO: Check if a required global is removed
+        // Check if a required global is removed
+        if let Some(compositor) = &self.compositor {
+            if name == compositor.name() {
+                self.compositor = None;
+                return Err(Error::new("required compositor global was removed"));
+            }
+        }
+
+        if let Some(xdg_wm_base) = &self.xdg_wm_base {
+            if name == xdg_wm_base.name() {
+                self.xdg_wm_base = None;
+                return Err(Error::new("required XDG window manager global was removed"));
+            }
+        }
 
         Ok(())
     }

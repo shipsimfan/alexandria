@@ -1,15 +1,9 @@
 # ToDo
  1. Improve current Vulkan wrappers to be closer to spec
- 2. Add error handling for pushed events during event pumping
-   - Linux
-   - Windows
- 3. Add Linux Windowing support
+   - Command pools (include flag)
+ 2. Add Linux Windowing support
    1. Wayland
-     1. Window creation
-     2. Window destruction
-     3. Surface creation
-     4. Add Window Events
-       - Close Requested
+     1. Add Window Events
        - Moved
        - Resized
        - Minimized
@@ -22,10 +16,7 @@
        - Content Scale Changed
        - Enter Fullscreen
        - Leave Fullscreen
-       - Destroyed
-     5. Window state tracking
-       - Title
-       - Size
+     2. Window state tracking
        - Minimum Size
        - Maximum Size
        - Position
@@ -39,7 +30,7 @@
        - Is Moving
        - Fullscreen + Fullscreen Display Mode
        - Content Scale
-     6. Window state setting
+     3. Window state setting
        - Title
        - Size
        - Minimum Size
@@ -103,7 +94,11 @@
        - Borderless
        - Resizable
        - Fullscreen + Fullscreen Display Mode
- 4. Input system
+ 3. Add `ColorHsv` and `ColorHsva`
+ 4. Add error handling for pushed events during event pumping
+   - Linux
+   - Windows
+ 5. Input system
    1. System
    2. Keyboard
      1. Windows
@@ -117,9 +112,6 @@
      1. Windows
      2. Wayland
      3. X11
- 5. Add min size support
-   - Wayland (`xdg_toplevel_set_min_size()`)
-   - X11
  6. Add renderer wrappers for triangle
  7. Add renderer wrappers for multi-cube
  8. Add model loading/parsing

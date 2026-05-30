@@ -1,6 +1,5 @@
-use wayland::xdg_output::zxdg_output_manager_v1_destroy_dyn;
-
 use crate::window::XdgOutputManager;
+use wayland::xdg_output::zxdg_output_manager_v1_destroy_dyn;
 
 impl Drop for XdgOutputManager {
     fn drop(&mut self) {

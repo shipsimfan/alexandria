@@ -1,5 +1,5 @@
 use crate::{
-    EventQueue, Result,
+    Error, EventQueue, PackedMap, Result,
     window::subsystem::linux::{
         WaylandWindowSubsystem,
         wayland::{WaylandGlobals, WlDisplay},
@@ -28,18 +28,18 @@ impl<UserEvent: Send> WaylandWindowSubsystem<UserEvent> {
             return Err(error);
         }
 
-        /*
         if registry.data().compositor().is_none() {
             return Err(Error::new("no Wayland compositor available"));
         }
         if registry.data().xdg_wm_base().is_none() {
             return Err(Error::new("no XDG window manager available"));
         }
-        */
 
         Ok(WaylandWindowSubsystem {
             registry,
             connection,
+            event_queue,
+            windows: PackedMap::new(),
         })
     }
 }

@@ -1,4 +1,7 @@
-use crate::window::subsystem::linux::wayland::{WaylandGlobals, WlRegistryListener, WlRegistryRef};
+use crate::window::{
+    WaylandGlobals,
+    subsystem::linux::wayland::{WlRegistryListener, WlRegistryRef},
+};
 use std::ffi::CStr;
 
 impl<UserEvent: 'static + Send> WlRegistryListener for WaylandGlobals<UserEvent> {
