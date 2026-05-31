@@ -1,10 +1,10 @@
-use crate::render_context::{MAX_FRAMES_IN_FLIGHT, RenderContext, Swapchain};
+use crate::render_context::{RenderContext, Swapchain};
 
 impl<'surface> Swapchain<'surface> {
     /// Render a single frame
     pub fn render_frame(&mut self, render_context: &mut RenderContext) -> bool {
         let frame = &mut self.frame_data[self.frame_index];
-        self.frame_index = (self.frame_index + 1) % MAX_FRAMES_IN_FLIGHT;
+        self.frame_index = (self.frame_index + 1) % self.image_views.len();
 
         // Wait for the previous frame to finish
         frame.draw_fence.wait(u64::MAX).unwrap();

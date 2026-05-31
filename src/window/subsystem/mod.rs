@@ -17,8 +17,9 @@ mod wait_for_event;
 #[cfg(target_os = "linux")]
 pub(in crate::window) use linux::{
     WaylandBind, WaylandFunctions, WaylandGlobals, WaylandLibrary, WindowSubsystemInner,
-    WlCompositor, WlDisplay, WlRegistryRef, WlSurface, XdgOutputManager, XdgSurface,
-    XdgSurfaceListener, XdgSurfaceRef, XdgTopLevel, XdgTopLevelListener, XdgWmBase,
+    WlCompositor, WlDisplay, WlRegistryRef, WlSurface, XdgDecorationManager, XdgOutputManager,
+    XdgSurface, XdgSurfaceListener, XdgSurfaceRef, XdgTopLevel, XdgTopLevelDecoration,
+    XdgTopLevelDecorationListener, XdgTopLevelListener, XdgWmBase,
 };
 #[cfg(target_os = "windows")]
 pub(in crate::window) use windows::WindowSubsystemInner;

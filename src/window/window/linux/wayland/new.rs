@@ -1,13 +1,13 @@
-use std::{ffi::CString, str::FromStr};
-
 use crate::{
     EventQueue, Result,
-    math::Vector2u,
+    math::{Vector2i, Vector2u},
     window::{
         WaylandGlobals, WaylandWindow, WindowBuilder,
+        display::DisplayInner,
         window::{WindowInner, linux::wayland::WaylandEventHandler},
     },
 };
+use std::{ffi::CString, str::FromStr};
 
 /// The default size of a window, in pixels
 ///
@@ -36,11 +36,49 @@ impl<UserEvent: 'static + Send> WaylandWindow<UserEvent> {
             ))?;
 
         // Get the toplevel for this surface
-        let window = xdg_surface.get_top_level()?;
+        let xdg_top_level = xdg_surface.get_top_level()?;
+
+        // Get the toplevel decoration for this surface
+        let mut window = globals
+            .xdg_decoration_manager()
+            .unwrap()
+            .get_top_level_decoration(xdg_top_level)?;
 
         // Set the title of the window
         let title = CString::from_str(builder.get_title()).unwrap();
         window.set_title(&title);
+
+        // Setup other properties of the window
+        if builder.is_maximized() {
+            window.set_maximized();
+        }
+
+        if builder.is_minimized() {
+            window.set_minimized();
+        }
+
+        window.set_decorations(builder.is_bordered());
+        window.set_max_size(builder.get_maximum_size().unwrap_or(Vector2u::ZERO));
+        window.set_min_size(builder.get_minimum_size().unwrap_or(Vector2u::ZERO));
+
+        // Set fullscreen if needed
+        if builder.is_fullscreen() {
+            let position = builder.get_position().unwrap_or(Vector2i::ZERO);
+            let mut found_display = None;
+            for display in globals.displays() {
+                let display = match display {
+                    DisplayInner::Wayland(display) => display,
+                    _ => continue,
+                };
+
+                if display.rect().contains_point(&position) {
+                    found_display = Some(display);
+                    break;
+                }
+            }
+
+            window.set_fullscreen(found_display.map(|display| display.wl_output()));
+        }
 
         // Commit the initial state of the window to the compositor
         window.commit();
@@ -48,6 +86,8 @@ impl<UserEvent: 'static + Send> WaylandWindow<UserEvent> {
         Ok(WindowInner::Wayland(WaylandWindow {
             window,
             title: builder.get_title().to_string(),
+            minimum_size: builder.get_minimum_size(),
+            maximum_size: builder.get_maximum_size(),
         }))
     }
 }

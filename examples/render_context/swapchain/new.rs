@@ -1,5 +1,6 @@
 use crate::render_context::{
-    RenderContext, SWAPCHAIN_FORMAT, SWAPCHAIN_PRESENT_MODE, Swapchain, frame_data::FrameData,
+    MAX_FRAMES_IN_FLIGHT, RenderContext, SWAPCHAIN_FORMAT, SWAPCHAIN_PRESENT_MODE, Swapchain,
+    frame_data::FrameData,
 };
 use alexandria::{gpu::VulkanSurface, window::Window};
 
@@ -13,7 +14,7 @@ impl<'surface> Swapchain<'surface> {
         let swapchain = render_context
             .device
             .create_swapchain(
-                3,
+                MAX_FRAMES_IN_FLIGHT as _,
                 SWAPCHAIN_FORMAT,
                 window.size(),
                 SWAPCHAIN_PRESENT_MODE,
@@ -21,15 +22,14 @@ impl<'surface> Swapchain<'surface> {
             )
             .unwrap();
         let mut image_views = Vec::with_capacity(swapchain.images().len());
+        let mut frame_data = Vec::with_capacity(swapchain.images().len());
         for image in swapchain.images() {
             image_views.push(image.create_image_view(SWAPCHAIN_FORMAT).unwrap());
+            frame_data.push(FrameData::new(
+                &render_context.device,
+                &render_context.command_pool,
+            ));
         }
-
-        // Create per-frame data
-        let frame_data = [
-            FrameData::new(&render_context.device, &render_context.command_pool),
-            FrameData::new(&render_context.device, &render_context.command_pool),
-        ];
 
         Swapchain {
             swapchain,

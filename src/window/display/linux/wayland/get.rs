@@ -1,14 +1,14 @@
 use crate::{
     math::{Rational, Recti, Vector2u},
     window::{
-        DisplayOrientation,
+        DisplayOrientation, WlOutput,
         display::linux::{WaylandDisplay, wayland::WaylandDisplayEventHandler},
     },
 };
 
 impl<UserEvent: 'static + Send> WaylandDisplay<UserEvent> {
     /// Get the rectangle describing the area of this display covers
-    pub(in crate::window::display::linux) fn rect(&self) -> Recti {
+    pub fn rect(&self) -> Recti {
         self.data().rect()
     }
 
@@ -77,6 +77,14 @@ impl<UserEvent: 'static + Send> WaylandDisplay<UserEvent> {
         match self {
             WaylandDisplay::Wl(output) => output.data_mut(),
             WaylandDisplay::Xdg(output) => output.data_mut(),
+        }
+    }
+
+    /// Get the underlying `wl_output` of this display
+    pub fn wl_output(&self) -> &WlOutput<WaylandDisplayEventHandler<UserEvent>> {
+        match self {
+            WaylandDisplay::Wl(output) => output,
+            WaylandDisplay::Xdg(output) => output.wl_output(),
         }
     }
 }

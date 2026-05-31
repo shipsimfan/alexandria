@@ -4,13 +4,18 @@ use wayland::xdg_shell::xdg_toplevel;
 
 mod listener;
 
-mod commit;
 mod data;
 mod deref;
 mod drop;
 mod get;
 mod new;
+mod set_fullscreen;
+mod set_max_size;
+mod set_maximized;
+mod set_min_size;
+mod set_minimized;
 mod set_title;
+mod unset_fullscreen;
 
 pub(in crate::window) use listener::XdgTopLevelListener;
 

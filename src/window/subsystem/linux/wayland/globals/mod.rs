@@ -1,6 +1,8 @@
 use crate::{
     EventQueue, PackedMap, Result,
-    window::{WlCompositor, XdgOutputManager, XdgWmBase, display::DisplayInner},
+    window::{
+        WlCompositor, XdgDecorationManager, XdgOutputManager, XdgWmBase, display::DisplayInner,
+    },
 };
 use std::{ffi::CStr, rc::Rc};
 
@@ -34,6 +36,9 @@ pub(in crate::window) struct WaylandGlobals<UserEvent: 'static + Send> {
     /// A reference to the XDG window manager
     xdg_wm_base: Option<Rc<XdgWmBase>>,
 
+    /// A reference to the XDG decoration manager
+    xdg_decoration_manager: Option<Rc<XdgDecorationManager>>,
+
     /// The name of the `wl_output_manager` interface
     wl_output_manager_name: &'static CStr,
 
@@ -45,4 +50,7 @@ pub(in crate::window) struct WaylandGlobals<UserEvent: 'static + Send> {
 
     /// The name of the `compositor` interface
     xdg_wm_base_name: &'static CStr,
+
+    /// The name of the `xdg_decoration_manager` interface
+    xdg_decoration_manager_name: &'static CStr,
 }

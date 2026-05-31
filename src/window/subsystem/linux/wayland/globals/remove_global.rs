@@ -45,6 +45,15 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
             }
         }
 
+        if let Some(xdg_decoration_manager) = &self.xdg_decoration_manager {
+            if name == xdg_decoration_manager.name() {
+                self.xdg_decoration_manager = None;
+                return Err(Error::new(
+                    "required XDG decoration manager global was removed",
+                ));
+            }
+        }
+
         Ok(())
     }
 }

@@ -16,8 +16,13 @@ impl<UserEvent: 'static + Send> WaylandEventHandler<UserEvent> {
         self.is_maximized
     }
 
-    /// Is the window currently minimized?
-    pub fn is_minimized(&self) -> bool {
-        self.is_minimized
+    /// Is the window currently focused?
+    pub fn is_focused(&self) -> bool {
+        self.is_focused
+    }
+
+    /// Is the window borderless?
+    pub fn is_borderless(&self) -> bool {
+        self.is_borderless
     }
 }

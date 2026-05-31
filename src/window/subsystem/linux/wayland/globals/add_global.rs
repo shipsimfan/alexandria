@@ -45,6 +45,10 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
             let wm_base = registry.bind::<XdgWmBase>(name, version)?;
             wm_base.register_ping_handler()?;
             self.xdg_wm_base = Some(Rc::new(wm_base));
+        } else if self.xdg_decoration_manager.is_none()
+            && interface == self.xdg_decoration_manager_name
+        {
+            self.xdg_decoration_manager = Some(Rc::new(registry.bind(name, version)?));
         }
 
         Ok(())

@@ -1,4 +1,4 @@
-use crate::render_context::{FrameData, MAX_FRAMES_IN_FLIGHT};
+use crate::render_context::FrameData;
 use alexandria::{
     gpu::{VulkanImageView, VulkanSwapchain},
     math::Vector2i,
@@ -19,7 +19,7 @@ pub struct Swapchain<'surface> {
     image_views: Vec<VulkanImageView>,
 
     /// The frame data for the each frame in flight
-    frame_data: [FrameData; MAX_FRAMES_IN_FLIGHT],
+    frame_data: Vec<FrameData>,
 
     /// The index of the next frame data element to use
     frame_index: usize,

@@ -12,13 +12,12 @@ impl<UserEvent: 'static + Send> WaylandWindowSubsystem<UserEvent> {
         builder: &WindowBuilder<UserEvent>,
     ) -> Result<Window<UserEvent>> {
         let inner = WaylandWindow::new(builder, &self.event_queue, &mut self.registry)?;
+        self.connection.roundtrip()?;
 
         let id = self.windows.insert(inner);
         let cast_id = unsafe { id.cast() };
 
         self.windows[id].set_id(cast_id);
-
-        self.connection.roundtrip()?;
 
         Ok(Window::new(cast_id, builder.get_context().clone()))
     }

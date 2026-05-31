@@ -12,9 +12,7 @@ mod set_display_id;
 mod xdg_output_listener;
 
 /// The handler for events from a Wayland display
-pub(in crate::window::display::linux::wayland) struct WaylandDisplayEventHandler<
-    UserEvent: 'static + Send,
-> {
+pub(in crate::window) struct WaylandDisplayEventHandler<UserEvent: 'static + Send> {
     /// The queue to push events into
     event_queue: EventQueue<UserEvent>,
 

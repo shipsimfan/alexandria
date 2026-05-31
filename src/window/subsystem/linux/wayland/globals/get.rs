@@ -1,6 +1,8 @@
 use crate::{
     PackedMap, Result,
-    window::{WaylandGlobals, WlCompositor, XdgWmBase, display::DisplayInner},
+    window::{
+        WaylandGlobals, WlCompositor, XdgDecorationManager, XdgWmBase, display::DisplayInner,
+    },
 };
 use std::rc::Rc;
 
@@ -27,6 +29,11 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
     /// Get a reference to the XDG window manager
     pub fn xdg_wm_base(&self) -> Option<&Rc<XdgWmBase>> {
         self.xdg_wm_base.as_ref()
+    }
+
+    /// Get a reference to the XDG decoration manager
+    pub fn xdg_decoration_manager(&self) -> Option<&Rc<XdgDecorationManager>> {
+        self.xdg_decoration_manager.as_ref()
     }
 
     /// Get a mutable reference to the global compositor

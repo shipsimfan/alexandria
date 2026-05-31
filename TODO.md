@@ -3,46 +3,10 @@
    - Command pools (include flag)
  2. Add Linux Windowing support
    1. Wayland
-     1. Add Window Events
-       - Moved
-       - Resized
-       - Minimized
-       - Maximized
-       - Restored
-       - Focus Gained
-       - Focus Lost
-       - Shown
-       - Hidden
+     1. Add extra window Events
        - Content Scale Changed
-       - Enter Fullscreen
-       - Leave Fullscreen
-     2. Window state tracking
-       - Minimum Size
-       - Maximum Size
-       - Position
-       - Maximized
-       - Minimized
-       - Focus
-       - Hidden
-       - Borderless
-       - Resizable
-       - Is Resizing
-       - Is Moving
-       - Fullscreen + Fullscreen Display Mode
+     2. Add extra state tracking
        - Content Scale
-     3. Window state setting
-       - Title
-       - Size
-       - Minimum Size
-       - Maximum Size
-       - Position
-       - Request close
-       - Maximized
-       - Minimized
-       - Hidden
-       - Borderless
-       - Resizable
-       - Fullscreen + Fullscreen Display Mode
    2. X11
      1. Connection
      2. `pump_events` + `wait_for_event` functions

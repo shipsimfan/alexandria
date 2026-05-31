@@ -7,7 +7,7 @@ impl<T> XdgOutput<T> {
     }
 
     /// Get a reference to the output this XDG output is associated with
-    pub(in crate::window::display::linux::wayland::xdg_output) fn wl_output(&self) -> &WlOutput<T> {
+    pub(in crate::window::display::linux::wayland) fn wl_output(&self) -> &WlOutput<T> {
         self.wl_output.as_ref().unwrap()
     }
 
