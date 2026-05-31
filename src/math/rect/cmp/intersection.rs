@@ -1,4 +1,7 @@
-use crate::math::Rect;
+use crate::math::{
+    Rect,
+    number::{Max, Min},
+};
 use std::{
     marker::Destruct,
     ops::{Add, Sub},
@@ -10,6 +13,8 @@ impl<T> Rect<T> {
     where
         T: [const] Add<Output = T>
             + [const] Sub<Output = T>
+            + [const] Min
+            + [const] Max
             + [const] PartialOrd
             + [const] Clone
             + [const] Destruct,

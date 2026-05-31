@@ -1,11 +1,11 @@
-use crate::math::{Color4, ColorSpace};
+use crate::math::{Color4, ColorSpace, number::Max};
 use std::marker::Destruct;
 
 impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     /// Set all channels to be at least `max`
     pub const fn max(self, max: T) -> Color4<T, Space>
     where
-        T: [const] Ord + [const] Clone + [const] Destruct,
+        T: [const] Max + [const] Clone + [const] Destruct,
     {
         self.max_c(Color4::new(max.clone(), max.clone(), max.clone(), max))
     }
@@ -13,13 +13,19 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     /// Set all channels to be at least `max` channel-wise
     pub const fn max_c(self, max: Color4<T, Space>) -> Color4<T, Space>
     where
-        T: [const] Ord + [const] Destruct,
+        T: [const] Max + [const] Destruct,
     {
         Color4::new(
-            std::cmp::max(self.r, max.r),
-            std::cmp::max(self.g, max.g),
-            std::cmp::max(self.b, max.b),
-            std::cmp::max(self.a, max.a),
+            self.r.max(max.r),
+            self.g.max(max.g),
+            self.b.max(max.b),
+            self.a.max(max.a),
         )
+    }
+}
+
+impl<T: [const] Max + [const] Destruct, Space: ColorSpace<T>> const Max for Color4<T, Space> {
+    fn max(self, other: Self) -> Self {
+        self.max_c(other)
     }
 }

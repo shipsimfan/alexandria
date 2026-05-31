@@ -1,24 +1,20 @@
-use crate::math::Vector4;
+use crate::math::{Vector4, number::Max};
 use std::marker::Destruct;
-
-const fn component_max<T: [const] PartialOrd + [const] Destruct>(a: T, b: T) -> T {
-    if a >= b { a } else { b }
-}
 
 impl<T> Vector4<T> {
     /// Get the component-wise maximum between this and `max`
-    pub const fn max(self, max: T) -> Self
+    pub const fn max_v(self, max: Self) -> Self
     where
-        T: [const] Clone + [const] PartialOrd + [const] Destruct,
+        T: [const] Max + [const] Destruct,
     {
-        self.max_v(Vector4::splat(max))
+        self.zip(max, Max::max)
     }
 
     /// Get the component-wise maximum between this and `max`
-    pub const fn max_v(self, max: Self) -> Self
+    pub const fn max(self, max: T) -> Self
     where
-        T: [const] PartialOrd + [const] Destruct,
+        T: [const] Clone + [const] Max + [const] Destruct,
     {
-        self.zip(max, component_max)
+        self.max_v(Vector4::splat(max))
     }
 }

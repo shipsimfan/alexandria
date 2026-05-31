@@ -1,7 +1,42 @@
 # ToDo
- 1. Improve current Vulkan wrappers to be closer to spec
+ 1. Input system
+   1. System
+   2. Keyboard
+     1. Windows
+     2. Wayland
+     3. X11
+   3. Mouse
+     1. Windows
+     2. Wayland
+     3. X11
+   4. Cursor lock to center
+     1. Windows
+     2. Wayland
+     3. X11
+ 2. Add error handling for pushed events during event pumping
+   - Linux
+   - Windows
+ 3. Improve current Vulkan wrappers to be closer to spec
    - Command pools (include flag)
- 2. Add Linux Windowing support
+   - cmd_pipeline_parrier2
+   - cmd_begin_rendering
+ 4. Add renderer wrappers for triangle
+ 5. Add renderer wrappers for multi-cube
+ 6. Add model loading/parsing
+   1. obj
+   2. fbx
+   3. gltf/glb
+   4. dae
+ 7. Add texture loading/parsing
+   1. qoi
+   2. png
+   3. jpg
+   4. tga
+   5. bmp
+   6. dds
+   7. ktx2
+   8. exr
+ 8. Finish adding Linux Windowing support
    1. Wayland
      1. Add extra window Events
        - Content Scale Changed
@@ -58,60 +93,26 @@
        - Borderless
        - Resizable
        - Fullscreen + Fullscreen Display Mode
- 3. Add `ColorHsv` and `ColorHsva`
- 4. Add error handling for pushed events during event pumping
-   - Linux
-   - Windows
- 5. Input system
-   1. System
-   2. Keyboard
-     1. Windows
-     2. Wayland
-     3. X11
-   3. Mouse
-     1. Windows
-     2. Wayland
-     3. X11
-   4. Cursor lock to center
-     1. Windows
-     2. Wayland
-     3. X11
- 6. Add renderer wrappers for triangle
- 7. Add renderer wrappers for multi-cube
- 8. Add model loading/parsing
-   1. obj
-   2. fbx
-   3. gltf/glb
-   4. dae
- 9. Add texture loading/parsing
-   1. qoi
-   2. png
-   3. jpg
-   4. tga
-   5. bmp
-   6. dds
-   7. ktx2
-   8. exr
- 10. Add window icons
+ 9. Add window icons
    1. Windows
    2. Wayland
    3. X11
- 11. Add audio wrappers (pull-style)
+ 10. Add audio wrappers (pull-style)
    1. WASAPI
    2. PipeWire
    3. PulseAudio
    4. ALSA
- 12. Add audio file loading/parsing
+ 11. Add audio file loading/parsing
    1. wav
    2. ogg
    3. mp3
    4. flac
    5. opus
- 13. Add more input types
+ 12. Add more input types
    1. X-Box controllers (Windows)
    2. General controllers
    3. Joysticks
    4. Steering Wheels, Pedals, Gear Shift
- 14. Add 2-d support to `Matrix3x3`
- 15. Add more external control to event queue
- 16. Add max capacity to event queue
+ 13. Add 2-d support to `Matrix3x3`
+ 14. Add more external control to event queue
+ 15. Add max capacity to event queue
