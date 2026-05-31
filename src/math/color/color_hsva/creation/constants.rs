@@ -29,14 +29,10 @@ impl<T: Zero + One, Space: ColorSpace<T>> One for ColorHsva<T, Space> {
 
 impl<T: Zero + One, Space: ColorSpace<T>> ColorHsva<T, Space> {
     /// A color with the red channel set to max
-    pub const RED: ColorHsva<T, Space> =
-        ColorHsva::new(T::NORMALIZED_ONE, T::ZERO, T::ZERO, T::NORMALIZED_ONE);
-
-    /// A color with the green channel set to max
-    pub const GREEN: ColorHsva<T, Space> =
-        ColorHsva::new(T::ZERO, T::NORMALIZED_ONE, T::ZERO, T::NORMALIZED_ONE);
-
-    /// A color with the blue channel set to max
-    pub const BLUE: ColorHsva<T, Space> =
-        ColorHsva::new(T::ZERO, T::ZERO, T::NORMALIZED_ONE, T::NORMALIZED_ONE);
+    pub const RED: ColorHsva<T, Space> = ColorHsva::new(
+        T::NORMALIZED_ONE,
+        T::NORMALIZED_ONE,
+        T::NORMALIZED_ONE,
+        T::NORMALIZED_ONE,
+    );
 }
