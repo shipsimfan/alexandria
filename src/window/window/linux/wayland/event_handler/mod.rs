@@ -46,9 +46,4 @@ pub(in crate::window::window::linux::wayland) struct WaylandEventHandler<UserEve
 
     /// Is the window borderless?
     is_borderless: bool,
-
-    /// Is the window currently being resized by the user?
-    ///
-    /// Holds the current size of the window, before being coalesced
-    is_resizing: Option<Vector2i>,
 }

@@ -22,7 +22,6 @@ impl<UserEvent: 'static + Send> WaylandEventHandler<UserEvent> {
             is_maximized: false,
             is_focused: false,
             is_borderless: true,
-            is_resizing: None,
         }
     }
 }
