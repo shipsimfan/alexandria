@@ -6,12 +6,20 @@ version = 4
 name = "alexandria"
 version = "0.3.0"
 dependencies = [
+ "alexandria-macros",
  "data-format",
  "linux",
  "time",
  "vulkan",
  "wayland",
  "win32",
+]
+
+[[package]]
+name = "alexandria-macros"
+version = "0.3.0"
+dependencies = [
+ "proc-macro-util",
 ]
 
 [[package]]

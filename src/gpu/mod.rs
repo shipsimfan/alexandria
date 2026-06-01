@@ -13,6 +13,7 @@ pub use instance::*;
 pub use misc::*;
 pub use subsystem::GpuSubsystem;
 
+pub use alexandria_macros::compile_shader;
 pub use vulkan::{
     VkAccessFlag2 as VulkanAccessFlag, VkAccessFlags2 as VulkanAccessFlags,
     VkImageLayout as VulkanImageLayout, VkPipelineStageFlag2 as VulkanPipelineStageFlag,

@@ -1,8 +1,14 @@
 use crate::render_context::{RenderContext, Swapchain};
+use alexandria::math::{Color3f, Linear};
 
 impl<'surface> Swapchain<'surface> {
     /// Render a single frame
-    pub fn render_frame(&mut self, render_context: &mut RenderContext) -> bool {
+    pub fn render_frame<F: FnOnce()>(
+        &mut self,
+        render_context: &mut RenderContext,
+        clear_color: Color3f<Linear>,
+        render: F,
+    ) -> bool {
         let frame = &mut self.frame_data[self.frame_index];
         self.frame_index = (self.frame_index + 1) % self.image_views.len();
 
@@ -33,14 +39,14 @@ impl<'surface> Swapchain<'surface> {
             alexandria::gpu::VulkanPipelineStageFlag::ColorAttachmentOutput,
         );
 
-        let clear_color =
-            alexandria::math::Color4f::<alexandria::math::Srgb>::new(1.0, 0.0, 1.0, 1.0);
-
         frame.command_buffer.cmd_begin_rendering(
             &self.image_views[image_index],
             self.size,
-            clear_color,
+            clear_color.with_alpha(1.0),
         );
+
+        render();
+
         frame.command_buffer.cmd_end_rendering();
 
         frame.command_buffer.cmd_pipeline_barrier2(

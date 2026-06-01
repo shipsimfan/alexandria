@@ -1,6 +1,4 @@
-[package]
-name = "alexandria"
-description = "Platform wrapper for various game APIs"
+[workspace.package]
 version = "0.3.0"
 authors = ["Lance Hart <me@lancehart.ca>"]
 edition = "2024"
@@ -8,11 +6,28 @@ repository = "https://github.com/shipsimfan/alexandria"
 license = "GPL-3.0-or-later"
 publish = false
 
+[workspace.dependencies]
+alexandria-macros.path = "macros"
+
+
+[package]
+name = "alexandria"
+description = "Platform wrapper for various game APIs"
+
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+publish.workspace = true
+
 [features]
 data-format = ["dep:data-format"]
 git = []
 
 [dependencies]
+alexandria-macros.workspace = true
+
 data-format = { git = "https://github.com/shipsimfan/lib-data-format", optional = true }
 time.git = "https://github.com/shipsimfan/lib-time"
 

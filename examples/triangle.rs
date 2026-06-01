@@ -2,6 +2,8 @@ use render_context::{RenderContext, Swapchain};
 
 mod render_context;
 
+const SHADER: &[u8] = alexandria::gpu::compile_shader!("triangle.slang", vert_main, frag_main);
+
 fn main() {
     // Create the Alexandria context with GPU and window support
     let (context, mut pump) = alexandria::AlexandriaContext::<()>::builder()
@@ -38,7 +40,7 @@ fn main() {
         let rendered = if !window.is_minimized() {
             let rendered = swapchain.render_frame(
                 &mut render_context,
-                alexandria::math::Color3f::<alexandria::math::Linear>::new(1.0, 0.5, 0.5),
+                alexandria::math::Color3f::<alexandria::math::Linear>::new(0.0, 0.0, 0.0),
                 || {},
             );
             if !rendered {

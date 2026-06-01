@@ -53,7 +53,11 @@ fn main() {
     while running {
         let rendered = if let Some(swapchain) = &mut swapchain {
             if !window.as_ref().unwrap().is_minimized() {
-                let rendered = swapchain.render_frame(render_context.as_mut().unwrap());
+                let rendered = swapchain.render_frame(
+                    render_context.as_mut().unwrap(),
+                    alexandria::math::Color3f::<alexandria::math::Linear>::new(1.0, 1.0, 0.0),
+                    || {},
+                );
                 if !rendered {
                     should_recreate_swapchain = true;
                 }
