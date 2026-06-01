@@ -1,5 +1,6 @@
 use crate::{
     Id,
+    input::{KeyCode, KeyMod},
     math::{Rational, Recti, Vector2i},
     window::{Display, DisplayOrientation, Window},
 };
@@ -180,6 +181,43 @@ pub enum EventKind<UserEvent: 'static + Send> {
     WindowDestroyed {
         /// The ID of the destroyed [`Window`]
         id: Id<Window<UserEvent>>,
+    },
+
+    /**
+     *** KEYBOARD EVENTS ***
+     **/
+
+    /// A key was pressed
+    KeyDown {
+        /// The ID of the [`Window`] that received the key event, if any
+        window_id: Id<Window<UserEvent>>,
+
+        /// The state of the modifier keys when the key was pressed
+        key_mod: KeyMod,
+
+        /// The key that was pressed
+        key_code: KeyCode,
+
+        /// The raw scan code of the key that was pressed
+        scan_code: u16,
+
+        /// Whether this is a repeat event (i.e. the key is being held down)
+        is_repeat: bool,
+    },
+
+    /// A key was released
+    KeyUp {
+        /// The ID of the [`Window`] that received the key event, if any
+        window_id: Id<Window<UserEvent>>,
+
+        /// The state of the modifier keys when the key was pressed
+        key_mod: KeyMod,
+
+        /// The key that was released
+        key_code: KeyCode,
+
+        /// The raw scan code of the key that was released
+        scan_code: u16,
     },
 
     /**

@@ -1,12 +1,13 @@
 use crate::{
     EventQueue,
+    input::KeyMod,
     math::Recti,
     window::{StandardWndProc, WindowStyle},
 };
 
 impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
     /// Create a new [`StandardWndProc`]
-    pub(in crate::window::window::windows) const fn new(
+    pub(in crate::window::window::windows) fn new(
         style: WindowStyle,
         event_queue: EventQueue<UserEvent>,
     ) -> StandardWndProc<UserEvent> {
@@ -36,6 +37,8 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
 
             id: None,
             event_queue,
+
+            key_mod: KeyMod::default(),
         }
     }
 }

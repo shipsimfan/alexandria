@@ -1,15 +1,13 @@
 # ToDo
  1. Input system
-   1. System
-   2. Keyboard
+   1. Keyboard
+     1. Wayland
+     2. X11
+   2. Mouse
      1. Windows
      2. Wayland
      3. X11
-   3. Mouse
-     1. Windows
-     2. Wayland
-     3. X11
-   4. Cursor lock to center
+   3. Cursor lock to center
      1. Windows
      2. Wayland
      3. X11
@@ -108,11 +106,19 @@
    3. mp3
    4. flac
    5. opus
- 12. Add more input types
+ 12. Add support for multiple keyboards
+   1. Windows
+   2. Wayland
+   3. X11
+ 13. Add support for multiple mice
+   1. Windows
+   2. Wayland
+   3. X11
+ 14. Add more input types
    1. X-Box controllers (Windows)
    2. General controllers
    3. Joysticks
    4. Steering Wheels, Pedals, Gear Shift
- 13. Add 2-d support to `Matrix3x3`
- 14. Add more external control to event queue
- 15. Add max capacity to event queue
+ 15. Add 2-d support to `Matrix3x3`
+ 16. Add more external control to event queue
+ 17. Add max capacity to event queue

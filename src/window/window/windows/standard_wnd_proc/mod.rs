@@ -1,5 +1,6 @@
 use crate::{
     EventQueue, Id,
+    input::KeyMod,
     math::{Recti, Vector2u},
     window::{Window, WindowStyle},
 };
@@ -81,4 +82,7 @@ pub(in crate::window) struct StandardWndProc<UserEvent: 'static + Send> {
 
     /// The event queue to which events should be sent
     event_queue: EventQueue<UserEvent>,
+
+    /// The state of the modifier keys
+    key_mod: KeyMod,
 }

@@ -219,6 +219,30 @@ fn handle_event(
                 .unwrap();
         }
 
+        alexandria::EventKind::KeyDown {
+            window_id,
+            key_code,
+            scan_code,
+            is_repeat,
+            ..
+        } => {
+            println!(
+                "[KEY DOWN] {} (window: {}, scan code: {}, repeat: {})",
+                key_code, window_id, scan_code, is_repeat
+            );
+        }
+        alexandria::EventKind::KeyUp {
+            window_id,
+            key_code,
+            scan_code,
+            ..
+        } => {
+            println!(
+                "[KEY UP] {} (window: {}, scan code: {})",
+                key_code, window_id, scan_code
+            );
+        }
+
         alexandria::EventKind::User(_) => println!("[USER]"),
     }
 

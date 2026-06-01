@@ -32,6 +32,7 @@ mod notify;
 mod shared_object;
 
 pub mod gpu;
+pub mod input;
 pub mod math;
 pub mod system;
 pub mod window;
