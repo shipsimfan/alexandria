@@ -85,12 +85,14 @@ impl const NormalizedWrappingAdd for isize {
 
 impl const NormalizedWrappingAdd for f32 {
     fn normalized_wrapping_add(self, other: Self) -> Self {
-        (self + other).fract()
+        let fract = (self + other).fract();
+        if fract < 0.0 { fract + 1.0 } else { fract }
     }
 }
 
 impl const NormalizedWrappingAdd for f64 {
     fn normalized_wrapping_add(self, other: Self) -> Self {
-        (self + other).fract()
+        let fract = (self + other).fract();
+        if fract < 0.0 { fract + 1.0 } else { fract }
     }
 }
