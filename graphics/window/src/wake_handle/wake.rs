@@ -1,8 +1,0 @@
-use crate::{Result, WindowWakeHandle};
-
-impl WindowWakeHandle {
-    /// Wake the window thread if it is blocking
-    pub fn wake(&self) -> Result<()> {
-        self.inner.wake()
-    }
-}
