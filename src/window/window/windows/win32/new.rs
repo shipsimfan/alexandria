@@ -1,5 +1,5 @@
 use crate::{
-    math::{Recti, Vector2i},
+    math::{Recti, Vector2i, Vector2u},
     window::{Win32Window, WindowClass, WindowProc, WindowStyle},
 };
 use std::{
@@ -18,7 +18,7 @@ impl<T: WindowProc> Win32Window<T> {
     pub fn new(
         title: Option<&str>,
         position: Option<Vector2i>,
-        size: Option<Vector2i>,
+        size: Option<Vector2u>,
         style: WindowStyle,
         class: Rc<WindowClass<T>>,
         user_data: T,
@@ -26,14 +26,20 @@ impl<T: WindowProc> Win32Window<T> {
         let title: Option<Vec<_>> = title.map(|title| title.encode_utf16().chain([0]).collect());
 
         let window_rect = match (position, size) {
-            (Some(position), Some(size)) => style.client_to_window(Recti::new(position, size))?,
+            (Some(position), Some(size)) => style.client_to_window(Recti::new(
+                position,
+                Vector2i::new(size.x as _, size.y as _),
+            ))?,
             (Some(position), None) => {
                 let mut rect = style.client_to_window(Recti::new(position, Vector2i::ONE))?;
                 rect.size = VEC_CW_USEDEFAULT;
                 rect
             }
             (None, Some(size)) => {
-                let mut rect = style.client_to_window(Recti::new(Vector2i::ZERO, size))?;
+                let mut rect = style.client_to_window(Recti::new(
+                    Vector2i::ZERO,
+                    Vector2i::new(size.x as _, size.y as _),
+                ))?;
                 rect.position = VEC_CW_USEDEFAULT;
                 rect
             }

@@ -1,6 +1,6 @@
 use crate::{
     Error, Result,
-    math::Vector2i,
+    math::{Vector2i, Vector2u},
     window::{Win32Window, WindowProc, WindowStyle},
 };
 use std::ptr::null_mut;
@@ -36,14 +36,14 @@ impl<T: WindowProc> Win32Window<T> {
     }
 
     /// Sets the size of the client area of the window
-    pub fn set_size(&mut self, size: Vector2i) -> Result<()> {
+    pub fn set_size(&mut self, size: Vector2u) -> Result<()> {
         try_get_last_error!(SetWindowPos(
             self.handle,
             null_mut(),
             0,
             0,
-            size.x,
-            size.y,
+            size.x as _,
+            size.y as _,
             SWP_NOREPOSITION | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER
         ))
         .map_err(|os| Error::new_with("unable to set a window's size", os))

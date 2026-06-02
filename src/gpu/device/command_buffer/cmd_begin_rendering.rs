@@ -1,6 +1,6 @@
 use crate::{
     gpu::{VulkanCommandBuffer, VulkanImageLayout, VulkanImageView},
-    math::{Color4f, ColorSpace, Vector2i},
+    math::{Color4f, ColorSpace, Vector2u},
 };
 use vulkan::{
     VkAttachmentLoadOp, VkAttachmentStoreOp, VkClearColorValue, VkClearValue, VkExtent2D,
@@ -12,7 +12,7 @@ impl VulkanCommandBuffer {
     pub fn cmd_begin_rendering<Space: ColorSpace<f32>>(
         &mut self,
         image_view: &VulkanImageView,
-        render_area: Vector2i,
+        render_area: Vector2u,
         clear_color: Color4f<Space>,
     ) {
         let clear_value = VkClearValue {
@@ -34,8 +34,8 @@ impl VulkanCommandBuffer {
             render_area: VkRect2D {
                 offset: VkOffset2D::default(),
                 extent: VkExtent2D {
-                    width: render_area.x as _,
-                    height: render_area.y as _,
+                    width: render_area.x,
+                    height: render_area.y,
                 },
             },
             layer_count: 1,

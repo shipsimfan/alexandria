@@ -83,22 +83,23 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     /// Get the size of the window's client area
     ///
     /// Returns [`None`] if the window has been destroyed
-    pub fn size_opt(&self) -> Option<Vector2i> {
-        self.rect_opt().map(|rect| rect.size)
+    pub fn size_opt(&self) -> Option<Vector2u> {
+        self.rect_opt()
+            .map(|rect| Vector2u::new(rect.size.x as _, rect.size.y as _))
     }
 
     /// Get the size of the window's client area
     ///
     /// # Panics
     /// Panics if the window has been destroyed
-    pub fn size(&self) -> Vector2i {
+    pub fn size(&self) -> Vector2u {
         self.size_opt().expect("window has been destroyed")
     }
 
     /// Get the width of the window's client area
     ///
     /// Returns [`None`] if the window has been destroyed
-    pub fn width_opt(&self) -> Option<i32> {
+    pub fn width_opt(&self) -> Option<u32> {
         self.size_opt().map(|size| size.x)
     }
 
@@ -106,14 +107,14 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     ///
     /// # Panics
     /// Panics if the window has been destroyed
-    pub fn width(&self) -> i32 {
+    pub fn width(&self) -> u32 {
         self.width_opt().expect("window has been destroyed")
     }
 
     /// Get the height of the window's client area
     ///
     /// Returns [`None`] if the window has been destroyed
-    pub fn height_opt(&self) -> Option<i32> {
+    pub fn height_opt(&self) -> Option<u32> {
         self.size_opt().map(|size| size.y)
     }
 
@@ -121,7 +122,7 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     ///
     /// # Panics
     /// Panics if the window has been destroyed
-    pub fn height(&self) -> i32 {
+    pub fn height(&self) -> u32 {
         self.height_opt().expect("window has been destroyed")
     }
 

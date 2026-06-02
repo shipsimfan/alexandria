@@ -4,7 +4,7 @@ use crate::{
         VulkanDevice, VulkanFormat, VulkanImage, VulkanSurface, VulkanSwapchain,
         VulkanSwapchainPresentMode,
     },
-    math::Vector2i,
+    math::Vector2u,
 };
 use std::ptr::{null, null_mut};
 use vulkan::{
@@ -19,7 +19,7 @@ impl<'surface> VulkanSwapchain<'surface> {
     pub(in crate::gpu::device) fn new(
         image_count: u32,
         image_format: VulkanFormat,
-        image_size: Vector2i,
+        image_size: Vector2u,
         present_mode: VulkanSwapchainPresentMode,
 
         surface: &'surface VulkanSurface,
@@ -34,8 +34,8 @@ impl<'surface> VulkanSwapchain<'surface> {
             image_format,
             image_color_space,
             image_extent: VkExtent2D {
-                width: image_size.x as _,
-                height: image_size.y as _,
+                width: image_size.x,
+                height: image_size.y,
             },
             image_array_layers: 1,
             image_usage: VkImageUsageFlag::ColorAttachment.into(),

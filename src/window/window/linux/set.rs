@@ -28,7 +28,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
     /// Set the size of the client area of the window
     pub fn set_size(
         &mut self,
-        size: Vector2i,
+        size: Vector2u,
         displays: &PackedMap<DisplayInner<UserEvent>>,
     ) -> Result<()> {
         match self {

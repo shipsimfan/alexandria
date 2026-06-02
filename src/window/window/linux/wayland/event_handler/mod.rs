@@ -1,6 +1,6 @@
 use crate::{
     EventQueue, Id,
-    math::{Recti, Vector2i},
+    math::{Recti, Vector2u},
     window::Window,
 };
 
@@ -33,7 +33,7 @@ pub(in crate::window::window::linux::wayland) struct WaylandEventHandler<UserEve
     windowed_rect: Recti,
 
     /// The size requested by Wayland for the window's client area, in screen coordinates
-    requested_size: Vector2i,
+    requested_size: Vector2u,
 
     /// Is this window currently fullscreen?
     is_fullscreen: bool,

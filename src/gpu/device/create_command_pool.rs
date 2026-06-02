@@ -5,7 +5,11 @@ use crate::{
 
 impl VulkanDevice {
     /// Create a new [`VulkanCommandPool`]
-    pub fn create_command_pool(&self, queue_family: u32) -> Result<VulkanCommandPool> {
-        VulkanCommandPool::new(queue_family, self.clone())
+    pub fn create_command_pool(
+        &self,
+        queue_family: u32,
+        reset_command_buffer: bool,
+    ) -> Result<VulkanCommandPool> {
+        VulkanCommandPool::new(queue_family, reset_command_buffer, self.clone())
     }
 }

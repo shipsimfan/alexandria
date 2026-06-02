@@ -49,7 +49,9 @@ impl RenderContext {
         let queue = queues.swap_remove(0);
 
         // Create command pool and buffer
-        let command_pool = device.create_command_pool(queue.queue_family()).unwrap();
+        let command_pool = device
+            .create_command_pool(queue.queue_family(), true)
+            .unwrap();
 
         (
             RenderContext {

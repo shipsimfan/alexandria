@@ -11,8 +11,8 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
     }
 
     /// Set the size of this window when it is windowed
-    pub(in crate::window::window::windows) fn set_windowed_size(&mut self, size: Vector2i) {
-        self.windowed_rect.size = size;
+    pub(in crate::window::window::windows) fn set_windowed_size(&mut self, size: Vector2u) {
+        self.windowed_rect.size = Vector2i::new(size.x as _, size.y as _);
     }
 
     /// Set the maximum size of the window, in pixels

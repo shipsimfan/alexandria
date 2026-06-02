@@ -1,7 +1,7 @@
 use crate::render_context::FrameData;
 use alexandria::{
     gpu::{VulkanImageView, VulkanSwapchain},
-    math::Vector2i,
+    math::Vector2u,
 };
 
 mod new;
@@ -13,7 +13,7 @@ pub struct Swapchain<'surface> {
     swapchain: VulkanSwapchain<'surface>,
 
     /// The size of the swapchain
-    size: Vector2i,
+    size: Vector2u,
 
     /// The image views for the swapchain images
     image_views: Vec<VulkanImageView>,

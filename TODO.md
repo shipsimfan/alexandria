@@ -15,7 +15,6 @@
    - Linux
    - Windows
  3. Improve current Vulkan wrappers to be closer to spec
-   - Command pools (include flag)
    - cmd_pipeline_parrier2
    - cmd_begin_rendering
  4. Add renderer wrappers for triangle

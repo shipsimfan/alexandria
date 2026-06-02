@@ -1,5 +1,5 @@
 use crate::{
-    math::{Recti, Vector2i},
+    math::{Recti, Vector2i, Vector2u},
     window::StandardWndProc,
 };
 
@@ -9,7 +9,7 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         &mut self,
         current_rect: Recti,
         requested_position: Option<Vector2i>,
-        requested_size: Option<Vector2i>,
+        requested_size: Option<Vector2u>,
         is_fullscreen: bool,
         is_maximized: bool,
         is_minimized: bool,
@@ -18,11 +18,16 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         is_resizable: bool,
         content_scale: f32,
     ) {
+        let requested_size = requested_size.unwrap_or(Vector2u::new(
+            current_rect.size.x as u32,
+            current_rect.size.y as u32,
+        ));
+
         self.rect = current_rect;
         self.windowed_rect = if is_fullscreen {
             Recti::new(
                 requested_position.unwrap_or(current_rect.position),
-                requested_size.unwrap_or(current_rect.size),
+                Vector2i::new(requested_size.x as i32, requested_size.y as i32),
             )
         } else {
             current_rect

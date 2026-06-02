@@ -25,18 +25,19 @@ impl<'a, UserEvent: 'static + Send> Display<'a, UserEvent> {
     }
 
     /// Get the size of this display
-    pub fn size(&self) -> Vector2i {
-        self.inner().rect().size
+    pub fn size(&self) -> Vector2u {
+        let size = self.inner().rect().size;
+        Vector2u::new(size.x as _, size.y as _)
     }
 
     /// Get the width of this display
-    pub fn width(&self) -> i32 {
-        self.inner().rect().size.x
+    pub fn width(&self) -> u32 {
+        self.inner().rect().size.x as _
     }
 
     /// Get the height of this display
-    pub fn height(&self) -> i32 {
-        self.inner().rect().size.y
+    pub fn height(&self) -> u32 {
+        self.inner().rect().size.y as _
     }
 
     /// Get the rectangle describing the work area of this display
@@ -60,18 +61,19 @@ impl<'a, UserEvent: 'static + Send> Display<'a, UserEvent> {
     }
 
     /// Get the size of the work area of this display
-    pub fn work_area_size(&self) -> Vector2i {
-        self.inner().work_area().size
+    pub fn work_area_size(&self) -> Vector2u {
+        let size = self.inner().work_area().size;
+        Vector2u::new(size.x as _, size.y as _)
     }
 
     /// Get the width of the work area of this display
-    pub fn work_area_width(&self) -> i32 {
-        self.inner().work_area().size.x
+    pub fn work_area_width(&self) -> u32 {
+        self.inner().work_area().size.x as _
     }
 
     /// Get the height of the work area of this display
-    pub fn work_area_height(&self) -> i32 {
-        self.inner().work_area().size.y
+    pub fn work_area_height(&self) -> u32 {
+        self.inner().work_area().size.y as _
     }
 
     /// Get the current refresh rate

@@ -1,5 +1,5 @@
 use crate::{
-    math::Vector2i,
+    math::{Vector2i, Vector2u},
     window::{Win32Window, WindowProc},
 };
 use win32::{
@@ -8,10 +8,14 @@ use win32::{
 
 impl<T: WindowProc> Win32Window<T> {
     /// Get the size of the client area of the window
-    pub fn get_client_size(&self) -> win32::Result<Vector2i> {
+    pub fn get_client_size(&self) -> win32::Result<Vector2u> {
         let mut rect = RECT::default();
-        try_get_last_error!(GetClientRect(self.handle, &mut rect))
-            .map(|_| Vector2i::new(rect.right - rect.left, rect.bottom - rect.top))
+        try_get_last_error!(GetClientRect(self.handle, &mut rect)).map(|_| {
+            Vector2u::new(
+                (rect.right - rect.left) as u32,
+                (rect.bottom - rect.top) as u32,
+            )
+        })
     }
 
     /// Get the position of the top-left corner of the client area of the window

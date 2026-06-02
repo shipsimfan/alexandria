@@ -1,10 +1,7 @@
 use crate::{
     Result,
-    gpu::{
-        VulkanDevice, VulkanSurface, VulkanSwapchain, VulkanFormat,
-        VulkanSwapchainPresentMode,
-    },
-    math::Vector2i,
+    gpu::{VulkanDevice, VulkanFormat, VulkanSurface, VulkanSwapchain, VulkanSwapchainPresentMode},
+    math::Vector2u,
 };
 
 impl VulkanDevice {
@@ -13,7 +10,7 @@ impl VulkanDevice {
         &self,
         image_count: u32,
         image_format: VulkanFormat,
-        image_size: Vector2i,
+        image_size: Vector2u,
         present_mode: VulkanSwapchainPresentMode,
 
         surface: &'surface VulkanSurface,

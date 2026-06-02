@@ -7,8 +7,10 @@ impl VulkanCommandPool {
     /// Create a new [`VulkanCommandPool`]
     pub(in crate::gpu::device) fn new(
         queue_family: u32,
+        reset_command_buffer: bool,
         device: VulkanDevice,
     ) -> Result<VulkanCommandPool> {
-        VulkanCommandPoolInner::new(queue_family, device).map(VulkanCommandPool::from_inner)
+        VulkanCommandPoolInner::new(queue_family, reset_command_buffer, device)
+            .map(VulkanCommandPool::from_inner)
     }
 }

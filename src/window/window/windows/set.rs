@@ -1,6 +1,6 @@
 use crate::{
     Error, PackedMap, Result,
-    math::{Rect, Vector2, Vector2i, Vector2u},
+    math::{Rect, Vector2i, Vector2u},
     window::{WindowStyle, display::DisplayInner, window::WindowInner},
 };
 
@@ -50,7 +50,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
     /// Set the size of the client area of the window
     pub fn set_size(
         &mut self,
-        size: Vector2i,
+        size: Vector2u,
         displays: &PackedMap<DisplayInner<UserEvent>>,
     ) -> Result<()> {
         let size = if self.window.is_fullscreen() {
@@ -59,7 +59,10 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             let mut set_size = None;
             for display in displays {
                 if display.rect().contains_point(&self.window.rect().position) {
-                    set_size = Some(display.rect().size);
+                    set_size = Some(Vector2u::new(
+                        display.rect().size.x as _,
+                        display.rect().size.y as _,
+                    ));
                     break;
                 }
             }
@@ -75,11 +78,15 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
         let size = self
             .window
             .style()
-            .client_to_window(Rect::new(Vector2::ZERO, size))
+            .client_to_window(Rect::new(
+                Vector2i::ZERO,
+                Vector2i::new(size.x as _, size.y as _),
+            ))
             .map_err(|error| Error::new_with("unable to set a window's size", error))?
             .size;
 
-        self.window.set_size(size)?;
+        self.window
+            .set_size(Vector2u::new(size.x as _, size.y as _))?;
         Ok(())
     }
 
@@ -173,7 +180,10 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
 
             // Set the window size and position to the display's
             self.window.set_position(display.rect().position)?;
-            self.window.set_size(display.rect().size)
+            self.window.set_size(Vector2u::new(
+                display.rect().size.x as _,
+                display.rect().size.y as _,
+            ))
         } else {
             // Set the window style to windowed
             let style = self.window.style();
@@ -185,7 +195,8 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
                 .map_err(|os| Error::new_with("unable to set a window's size", os))?;
 
             self.window.set_position(rect.position)?;
-            self.window.set_size(rect.size)?;
+            self.window
+                .set_size(Vector2u::new(rect.size.x as _, rect.size.y as _))?;
 
             // Set the window maximized or minimized state to the previous windowed maximized or minimized state
             if self.window.is_maximized() {

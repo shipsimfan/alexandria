@@ -20,7 +20,7 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     }
 
     /// Set the size of the client area of the window
-    pub fn set_size(&mut self, size: Vector2i) -> Result<()> {
+    pub fn set_size(&mut self, size: Vector2u) -> Result<()> {
         self.with_inner_mut(|inner, displays| inner.set_size(size, displays))
             .transpose()
             .map(|_| ())

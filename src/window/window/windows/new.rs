@@ -1,6 +1,6 @@
 use crate::{
     Error, EventQueue, PackedMap, Result,
-    math::{Recti, Vector2},
+    math::{Recti, Vector2, Vector2i, Vector2u},
     window::{
         Win32Window, WindowBuilder, WindowClass, WindowStyle,
         display::DisplayInner,
@@ -46,7 +46,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
                 size = size.min_v(maximum_size);
             }
 
-            Vector2::new(size.x as _, size.y as _)
+            size
         });
 
         // Prepare for fullscreen
@@ -65,7 +65,10 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
                 Some(display) => {
                     // Update the position and size to the display's directly
                     let rect = display.get_rect()?;
-                    (Some(rect.size), Some(rect.position))
+                    (
+                        Some(Vector2u::new(rect.size.x as _, rect.size.y as _)),
+                        Some(rect.position),
+                    )
                 }
                 None => (None, None),
             }
@@ -94,7 +97,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
 
         let content_scale = window.get_content_scale();
         window.init(
-            Recti::new(position, size),
+            Recti::new(position, Vector2i::new(size.x as _, size.y as _)),
             builder.get_position(),
             builder_size,
             builder.is_fullscreen(),

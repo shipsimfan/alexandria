@@ -10,13 +10,13 @@ impl<UserEvent: 'static + Send> WaylandEventHandler<UserEvent> {
         event_queue: EventQueue<UserEvent>,
         size: Vector2u,
     ) -> Self {
-        let size = Vector2i::new(size.x as i32, size.y as i32);
+        let size_i = Vector2i::new(size.x as i32, size.y as i32);
 
         WaylandEventHandler {
             id: None,
             event_queue,
-            rect: Recti::new(Vector2i::ZERO, size),
-            windowed_rect: Recti::new(Vector2i::ZERO, size),
+            rect: Recti::new(Vector2i::ZERO, size_i),
+            windowed_rect: Recti::new(Vector2i::ZERO, size_i),
             requested_size: size,
             is_fullscreen: false,
             is_maximized: false,

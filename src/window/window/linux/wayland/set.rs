@@ -25,7 +25,7 @@ impl<UserEvent: 'static + Send> WaylandWindow<UserEvent> {
     /// Set the size of the client area of the window
     pub(in crate::window::window::linux) fn set_size(
         &mut self,
-        _: Vector2i,
+        _: Vector2u,
         _: &PackedMap<DisplayInner<UserEvent>>,
     ) -> Result<()> {
         Ok(()) // Size cannot be controlled on Wayland except at initialization, so we just ignore this request
