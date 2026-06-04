@@ -1,6 +1,6 @@
 use crate::{
     MemorySize, Uuid,
-    gpu::{VulkanAdapter, VulkanAdapterKind, VulkanInstance, VulkanQueueFamilyInfo, VulkanVersion},
+    gpu::{VulkanAdapter, VulkanInstance, VulkanQueueFamilyProperties, VulkanVersion},
 };
 use std::{borrow::Cow, ffi::CStr, ptr::null_mut};
 use vulkan::{
@@ -24,7 +24,7 @@ impl<'instance> VulkanAdapter<'instance> {
         let api_version = unsafe { VulkanVersion::new_raw(properties.api_version) };
         let driver_version = unsafe { VulkanVersion::new_raw(properties.driver_version) };
 
-        let kind = VulkanAdapterKind::from_vk(properties.device_type);
+        let kind = properties.device_type;
 
         let name_c = unsafe { CStr::from_ptr(properties.device_name.as_ptr()) };
         let name = match name_c.to_string_lossy() {
@@ -81,7 +81,7 @@ impl<'instance> VulkanAdapter<'instance> {
         let queue_families = queue_families
             .into_iter()
             .enumerate()
-            .filter_map(|(index, info)| VulkanQueueFamilyInfo::new(index as _, info))
+            .map(|(index, info)| VulkanQueueFamilyProperties::new(index as _, info))
             .collect();
 
         VulkanAdapter {

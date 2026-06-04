@@ -1,29 +1,27 @@
 use crate::{
     MemorySize, Uuid,
-    gpu::{VulkanInstance, VulkanVersion},
+    gpu::{VulkanAdapterKind, VulkanInstance, VulkanVersion},
 };
 use vulkan::VkPhysicalDevice;
 
-mod extended_info;
+mod features;
 mod functions;
-mod kind;
-mod queue_family_info;
+mod queue_family_properties;
 
 mod device_builder;
 mod enumerate_all_extensions;
 mod enumerate_extensions;
 mod eq;
 mod get;
-mod get_extended_info;
+mod get_features;
 mod new;
 mod ord;
 mod supports_surface;
 mod surface_present_modes;
 mod swapchain_formats;
 
-pub use extended_info::*;
-pub use kind::*;
-pub use queue_family_info::*;
+pub use features::*;
+pub use queue_family_properties::*;
 
 pub(in crate::gpu::instance) use functions::VulkanAdapterFunctions;
 
@@ -51,7 +49,7 @@ pub struct VulkanAdapter<'instance> {
     vram: MemorySize,
 
     /// The supported queue families on this device
-    queue_families: Vec<VulkanQueueFamilyInfo>,
+    queue_families: Vec<VulkanQueueFamilyProperties>,
 
     /// The instance this adapter comes from
     instance: &'instance VulkanInstance,

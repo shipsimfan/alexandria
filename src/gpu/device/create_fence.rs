@@ -1,11 +1,11 @@
 use crate::{
     Result,
-    gpu::{VulkanDevice, VulkanFence},
+    gpu::{VulkanDevice, VulkanFence, VulkanFenceCreateFlags},
 };
 
 impl VulkanDevice {
     /// Create a new [`VulkanFence`]
-    pub fn create_fence(&self, signalled: bool) -> Result<VulkanFence> {
-        VulkanFence::new(self.clone(), signalled)
+    pub fn create_fence<F: Into<VulkanFenceCreateFlags>>(&self, flags: F) -> Result<VulkanFence> {
+        VulkanFence::new(flags.into(), self.clone())
     }
 }

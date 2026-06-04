@@ -1,6 +1,5 @@
-use render_context::RenderContext;
-
 use crate::render_context::Swapchain;
+use render_context::RenderContext;
 
 mod render_context;
 
@@ -22,7 +21,7 @@ fn main() {
         .create()
         .unwrap();
 
-    let (window, mut render_context, surface) = if create_window {
+    let (window, mut render_context, mut surface) = if create_window {
         let window = context
             .window()
             .create_window("Event Viewer")
@@ -40,8 +39,8 @@ fn main() {
 
     let mut swapchain = if let Some(window) = &window {
         Some(Swapchain::new(
-            render_context.as_ref().unwrap(),
-            surface.as_ref().unwrap(),
+            render_context.as_mut().unwrap(),
+            surface.as_mut().unwrap(),
             window,
         ))
     } else {
@@ -86,8 +85,8 @@ fn main() {
 
             drop(swapchain);
             swapchain = Some(Swapchain::new(
-                render_context.as_ref().unwrap(),
-                surface.as_ref().unwrap(),
+                render_context.as_mut().unwrap(),
+                surface.as_mut().unwrap(),
                 window.as_ref().unwrap(),
             ));
         }

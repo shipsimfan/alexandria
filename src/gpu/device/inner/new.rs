@@ -1,26 +1,23 @@
 use crate::{
     Error, Result,
     gpu::{
-        VulkanAdapter, VulkanDeviceExtension, VulkanExtendedAdapterInfo, VulkanQueueCreateInfo,
+        VulkanAdapter, VulkanAdapterFeature, VulkanDeviceExtension, VulkanQueueCreateInfo,
         device::{VulkanDeviceFunctions, VulkanDeviceInner},
     },
 };
 use std::ptr::null;
-use vulkan::{VkDevice, VkDeviceCreateInfo, try_vulkan};
+use vulkan::{VkDevice, VkDeviceCreateInfo, try_vulkan, util::create_next_chain_mut};
 
 impl VulkanDeviceInner {
     /// Create a new [`VulkanDeviceInner`]
     pub fn new(
-        extended_info: &mut [VulkanExtendedAdapterInfo],
+        features: &mut [&mut dyn VulkanAdapterFeature],
         queues: &[VulkanQueueCreateInfo],
         extensions: &[VulkanDeviceExtension],
         adapter: &VulkanAdapter,
     ) -> Result<VulkanDeviceInner> {
-        // Setup the next chain for extended information
-        let next = VulkanExtendedAdapterInfo::set_next_chain(extended_info);
-
-        // Convert queues to Vulkan
-        let queues: Vec<_> = queues.into_iter().map(|queue| queue.to_vk()).collect();
+        // Setup the next chain for features
+        let next = create_next_chain_mut(features.into_iter().map(|feature| *feature as _));
 
         // Convert extensions to C strings
         let mut extension_ptrs = Vec::with_capacity(extensions.len());
@@ -31,7 +28,7 @@ impl VulkanDeviceInner {
         let create_info = VkDeviceCreateInfo {
             next,
             queue_create_info_count: queues.len() as _,
-            queue_create_infos: queues.as_ptr(),
+            queue_create_infos: queues.as_ptr().cast(),
             enabled_extension_count: extension_ptrs.len() as _,
             enabled_extension_names: extension_ptrs.as_ptr(),
             ..Default::default()

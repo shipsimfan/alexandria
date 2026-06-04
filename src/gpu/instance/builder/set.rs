@@ -1,10 +1,30 @@
 use crate::{
-    gpu::{VulkanInstanceBuilder, VulkanInstanceExtension, VulkanVersion},
+    gpu::{
+        VulkanInstanceBuilder, VulkanInstanceCreateFlags, VulkanInstanceExtension, VulkanVersion,
+    },
     window::Window,
 };
-use std::borrow::Cow;
+use std::{borrow::Cow, ops::BitOrAssign};
 
 impl<'a> VulkanInstanceBuilder<'a> {
+    /// Set the flags to use when creating the instance
+    pub fn flags<F: Into<VulkanInstanceCreateFlags>>(
+        &mut self,
+        flags: F,
+    ) -> &mut VulkanInstanceBuilder<'a> {
+        self.flags = flags.into();
+        self
+    }
+
+    /// Add flags to use when creating the instance
+    pub fn add_flags<F>(&mut self, flags: F) -> &mut VulkanInstanceBuilder<'a>
+    where
+        VulkanInstanceCreateFlags: BitOrAssign<F>,
+    {
+        self.flags |= flags;
+        self
+    }
+
     /// Set the version of Vulkan to use
     pub fn api_version(&mut self, api_version: VulkanVersion) -> &mut VulkanInstanceBuilder<'a> {
         self.api_version = api_version;

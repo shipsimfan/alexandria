@@ -1,14 +1,16 @@
+use std::marker::PhantomData;
+use vulkan::VkDeviceQueueCreateInfo;
+
+mod get;
 mod new;
-mod to_vk;
+mod set;
 
 /// The information describing a queue to create
+#[repr(transparent)]
 pub struct VulkanQueueCreateInfo<'a> {
-    /// The queue family to create the queues from
-    pub queue_family: u32,
+    /// The inner Vulkan structure
+    inner: VkDeviceQueueCreateInfo,
 
-    /// The priorities of the queues to create. The count of priorities is the number of queues
-    /// that will be created from the queue family.
-    ///
-    /// Values should be between 0.0 and 1.0.
-    pub priorities: &'a [f32],
+    /// A marker for the lifetime of the priorities
+    _priorities: PhantomData<&'a ()>,
 }

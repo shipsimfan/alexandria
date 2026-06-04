@@ -1,6 +1,9 @@
 use crate::{
     MemorySize, Uuid,
-    gpu::{VulkanAdapter, VulkanAdapterKind, VulkanInstance, VulkanQueueFamilyInfo, VulkanVersion},
+    gpu::{
+        VulkanAdapter, VulkanAdapterKind, VulkanInstance, VulkanQueueFamilyProperties,
+        VulkanVersion,
+    },
 };
 use vulkan::VkPhysicalDevice;
 
@@ -36,7 +39,7 @@ impl<'instance> VulkanAdapter<'instance> {
     }
 
     /// Get the queue families on the adapter
-    pub fn queue_families(&self) -> &[VulkanQueueFamilyInfo] {
+    pub fn queue_families(&self) -> &[VulkanQueueFamilyProperties] {
         &self.queue_families
     }
 

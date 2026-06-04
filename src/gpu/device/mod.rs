@@ -1,5 +1,6 @@
 use crate::define_handle;
 
+mod buffer;
 mod builder;
 mod command_buffer;
 mod command_pool;
@@ -19,6 +20,7 @@ mod create_swapchain;
 mod get;
 mod wait_idle;
 
+pub use buffer::*;
 pub use builder::*;
 pub use command_buffer::*;
 pub use command_pool::*;

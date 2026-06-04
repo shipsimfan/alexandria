@@ -1,12 +1,13 @@
 use crate::{
     RenderContext,
-    render_context::{SWAPCHAIN_FORMAT, debug_messenger},
+    render_context::{SWAPCHAIN_COLOR_SPACE, SWAPCHAIN_FORMAT, debug_messenger},
 };
 use alexandria::{
     AlexandriaContext,
     gpu::{
-        VulkanAdapter, VulkanDeviceExtension, VulkanDeviceFeatures, VulkanDeviceVulkan13Features,
-        VulkanInstance, VulkanQueueCreateInfo, VulkanSurface, VulkanVersion,
+        VulkanAdapter, VulkanCommandPoolCreateFlag, VulkanDeviceExtension, VulkanDeviceFeatures,
+        VulkanDeviceVulkan13Features, VulkanInstance, VulkanQueueCreateInfo, VulkanSurface,
+        VulkanSurfaceFormat, VulkanVersion,
     },
     window::Window,
 };
@@ -34,12 +35,9 @@ impl RenderContext {
         let (device, mut queues) = adapter
             .device_builder()
             .extension(VulkanDeviceExtension::Swapchain)
-            .queue(VulkanQueueCreateInfo {
-                queue_family: queue_family_index,
-                priorities: &[1.0],
-            })
-            .extended_info(
-                VulkanDeviceVulkan13Features::default()
+            .queue(VulkanQueueCreateInfo::new(queue_family_index, &[1.0]))
+            .feature(
+                &mut VulkanDeviceVulkan13Features::default()
                     .enable_synchronization2()
                     .enable_dynamic_rendering(),
             )
@@ -50,7 +48,10 @@ impl RenderContext {
 
         // Create command pool and buffer
         let command_pool = device
-            .create_command_pool(queue.queue_family(), true)
+            .create_command_pool(
+                queue.queue_family(),
+                VulkanCommandPoolCreateFlag::ResetCommandBuffer,
+            )
             .unwrap();
 
         (
@@ -59,6 +60,7 @@ impl RenderContext {
                 device,
                 queue,
                 command_pool,
+                command_buffers: Vec::new(),
             },
             surface,
         )
@@ -120,18 +122,18 @@ fn find_compatible_adapter<'instance>(
             if !adapter
                 .swapchain_formats(surface)
                 .expect("unable to get swapchain formats")
-                .contains(&SWAPCHAIN_FORMAT)
+                .contains(&VulkanSurfaceFormat {
+                    format: SWAPCHAIN_FORMAT,
+                    color_space: SWAPCHAIN_COLOR_SPACE,
+                })
             {
                 continue;
             }
 
-            let mut extended_info = [
-                VulkanDeviceFeatures::default().into(),
-                VulkanDeviceVulkan13Features::default().into(),
-            ];
-            adapter.get_extended_info(&mut extended_info);
-            let vk13_features = extended_info[1].as_vulkan_13_features().unwrap();
-            if !vk13_features.synchronization2() || !vk13_features.dynamic_rendering() {
+            let mut features = VulkanDeviceFeatures::default();
+            let mut vulkan_13_features = VulkanDeviceVulkan13Features::default();
+            adapter.get_features([&mut features as &mut _, &mut vulkan_13_features as _]);
+            if !vulkan_13_features.synchronization2() || !vulkan_13_features.dynamic_rendering() {
                 continue;
             }
 

@@ -1,28 +1,39 @@
 use crate::{
     Error, Result,
-    gpu::{VulkanFormat, VulkanImage, VulkanImageView},
+    gpu::{
+        VulkanComponentMapping, VulkanFormat, VulkanImage, VulkanImageAspectFlags, VulkanImageView,
+        VulkanImageViewCreateFlags, VulkanImageViewType,
+    },
 };
 use std::ptr::null;
-use vulkan::{
-    VkImageAspectFlag, VkImageSubresourceRange, VkImageView, VkImageViewCreateInfo,
-    VkImageViewType, try_vulkan,
-};
+use vulkan::{VkImageSubresourceRange, VkImageView, VkImageViewCreateInfo, try_vulkan};
 
 impl VulkanImageView {
     /// Create a new [`VulkanImageView`] for the given image and format
     pub(in crate::gpu::device) fn new(
+        flags: VulkanImageViewCreateFlags,
         image: &VulkanImage,
+        view_type: VulkanImageViewType,
         format: VulkanFormat,
+        components: VulkanComponentMapping,
+        aspect_mask: VulkanImageAspectFlags,
+        base_mip_level: u32,
+        level_count: u32,
+        base_array_layer: u32,
+        layer_count: u32,
     ) -> Result<VulkanImageView> {
         let creation_info = VkImageViewCreateInfo {
+            flags,
             image: image.handle(),
-            view_type: VkImageViewType::_2d,
-            format: format.into_vk(),
+            view_type,
+            format,
+            components,
             subresource_range: VkImageSubresourceRange {
-                aspect_mask: VkImageAspectFlag::Color.into(),
-                level_count: 1,
-                layer_count: 1,
-                ..Default::default()
+                aspect_mask,
+                base_mip_level,
+                level_count,
+                base_array_layer,
+                layer_count,
             },
             ..Default::default()
         };

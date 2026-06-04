@@ -1,4 +1,6 @@
 use crate::gpu::VulkanQueueCreateInfo;
+use std::marker::PhantomData;
+use vulkan::VkDeviceQueueCreateInfo;
 
 impl<'a> VulkanQueueCreateInfo<'a> {
     /// Create a new [`VulkanQueueCreateInfo`]
@@ -6,8 +8,13 @@ impl<'a> VulkanQueueCreateInfo<'a> {
         assert!(priorities.len() > 0);
 
         VulkanQueueCreateInfo {
-            queue_family,
-            priorities,
+            inner: VkDeviceQueueCreateInfo {
+                queue_family_index: queue_family,
+                queue_count: priorities.len() as _,
+                queue_priorities: priorities.as_ptr(),
+                ..Default::default()
+            },
+            _priorities: PhantomData,
         }
     }
 }

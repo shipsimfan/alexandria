@@ -1,22 +1,18 @@
 use crate::{
     Error, Result,
-    gpu::{VulkanDevice, VulkanFence},
+    gpu::{VulkanDevice, VulkanFence, VulkanFenceCreateFlags},
 };
 use std::ptr::null;
-use vulkan::{VkFence, VkFenceCreateFlag, VkFenceCreateFlags, VkFenceCreateInfo, try_vulkan};
+use vulkan::{VkFence, VkFenceCreateInfo, try_vulkan};
 
 impl VulkanFence {
     /// Create a new [`VulkanFence`]
     pub(in crate::gpu::device) fn new(
+        flags: VulkanFenceCreateFlags,
         device: VulkanDevice,
-        signalled: bool,
     ) -> Result<VulkanFence> {
         let create_info = VkFenceCreateInfo {
-            flags: if signalled {
-                VkFenceCreateFlag::Signalled.into()
-            } else {
-                VkFenceCreateFlags::default()
-            },
+            flags,
             ..Default::default()
         };
 

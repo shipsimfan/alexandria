@@ -10,6 +10,7 @@ impl<'a> VulkanInstanceBuilder<'a> {
         Ok(VulkanInstance {
             inner: Arc::new(VulkanInstanceInner::new(
                 &self.context,
+                self.flags,
                 self.api_version,
                 self.application.as_ref().map(|(s, v)| (s.as_ref(), *v)),
                 self.engine.as_ref().map(|(s, v)| (s.as_ref(), *v)),

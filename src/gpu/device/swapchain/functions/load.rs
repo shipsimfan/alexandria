@@ -5,7 +5,7 @@ use crate::{
 use vulkan::{
     VkDevice,
     khr_swapchain::{
-        VK_ACQUIRE_NEXT_IMAGE_KHR, VK_CREATE_SWAPCHAIN_KHR, VK_DESTROY_SWAPCHAIN_KHR,
+        VK_ACQUIRE_NEXT_IMAGE2_KHR, VK_CREATE_SWAPCHAIN_KHR, VK_DESTROY_SWAPCHAIN_KHR,
         VK_GET_SWAPCHAIN_IMAGES_KHR, VK_QUEUE_PRESENT_KHR,
     },
 };
@@ -21,7 +21,11 @@ impl VulkanSwapchainFunctions {
                 device,
                 VK_GET_SWAPCHAIN_IMAGES_KHR
             )?,
-            acquire_next_image: load_device_function!(instance, device, VK_ACQUIRE_NEXT_IMAGE_KHR)?,
+            acquire_next_image2: load_device_function!(
+                instance,
+                device,
+                VK_ACQUIRE_NEXT_IMAGE2_KHR
+            )?,
             queue_present: load_device_function!(instance, device, VK_QUEUE_PRESENT_KHR)?,
         })
     }

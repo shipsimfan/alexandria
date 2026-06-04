@@ -1,13 +1,13 @@
 use crate::{
     Error, Result,
-    gpu::{VulkanAdapter, VulkanFormat, VulkanSurface},
+    gpu::{VulkanAdapter, VulkanSurface, VulkanSurfaceFormat},
 };
 use std::ptr::null_mut;
 use vulkan::try_vulkan;
 
 impl<'instance> VulkanAdapter<'instance> {
     /// Get the [`SwapchainFormat`]s that this adapter supports on `surface`
-    pub fn swapchain_formats(&self, surface: &VulkanSurface) -> Result<Vec<VulkanFormat>> {
+    pub fn swapchain_formats(&self, surface: &VulkanSurface) -> Result<Vec<VulkanSurfaceFormat>> {
         let mut count = 0;
         try_vulkan!((self
             .instance
@@ -40,9 +40,6 @@ impl<'instance> VulkanAdapter<'instance> {
 
         unsafe { formats.set_len(count as _) };
 
-        Ok(formats
-            .into_iter()
-            .filter_map(VulkanFormat::from_vk_surface_format)
-            .collect())
+        Ok(formats)
     }
 }

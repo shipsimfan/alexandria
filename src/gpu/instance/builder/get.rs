@@ -1,7 +1,14 @@
-use crate::gpu::{VulkanInstanceBuilder, VulkanInstanceExtension, VulkanVersion};
+use crate::gpu::{
+    VulkanInstanceBuilder, VulkanInstanceCreateFlags, VulkanInstanceExtension, VulkanVersion,
+};
 use std::borrow::Cow;
 
 impl<'a> VulkanInstanceBuilder<'a> {
+    /// Get the flags to use when creating the instance
+    pub fn get_flags(&self) -> VulkanInstanceCreateFlags {
+        self.flags
+    }
+
     /// Get the requested Vulkan version
     pub fn get_api_version(&self) -> VulkanVersion {
         self.api_version

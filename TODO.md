@@ -14,17 +14,14 @@
  2. Add error handling for pushed events during event pumping
    - Linux
    - Windows
- 3. Improve current Vulkan wrappers to be closer to spec
-   - cmd_pipeline_parrier2
-   - cmd_begin_rendering
- 4. Add renderer wrappers for triangle
- 5. Add renderer wrappers for multi-cube
- 6. Add model loading/parsing
+ 3. Add renderer wrappers for triangle
+ 4. Add renderer wrappers for multi-cube
+ 5. Add model loading/parsing
    1. obj
    2. fbx
    3. gltf/glb
    4. dae
- 7. Add texture loading/parsing
+ 6. Add texture loading/parsing
    1. qoi
    2. png
    3. jpg
@@ -33,7 +30,7 @@
    6. dds
    7. ktx2
    8. exr
- 8. Finish adding Linux Windowing support
+ 7. Finish adding Linux Windowing support
    1. Wayland
      1. Add extra window Events
        - Content Scale Changed
@@ -90,34 +87,34 @@
        - Borderless
        - Resizable
        - Fullscreen + Fullscreen Display Mode
- 9. Add window icons
+ 8. Add window icons
    1. Windows
    2. Wayland
    3. X11
- 10. Add audio wrappers (pull-style)
+ 9. Add audio wrappers (pull-style)
    1. WASAPI
    2. PipeWire
    3. PulseAudio
    4. ALSA
- 11. Add audio file loading/parsing
+ 10. Add audio file loading/parsing
    1. wav
    2. ogg
    3. mp3
    4. flac
    5. opus
- 12. Add support for multiple keyboards
+ 11. Add support for multiple keyboards
    1. Windows
    2. Wayland
    3. X11
- 13. Add support for multiple mice
+ 12. Add support for multiple mice
    1. Windows
    2. Wayland
    3. X11
- 14. Add more input types
+ 13. Add more input types
    1. X-Box controllers (Windows)
    2. General controllers
    3. Joysticks
    4. Steering Wheels, Pedals, Gear Shift
- 15. Add 2-d support to `Matrix3x3`
- 16. Add more external control to event queue
- 17. Add max capacity to event queue
+ 14. Add 2-d support to `Matrix3x3`
+ 15. Add more external control to event queue
+ 16. Add max capacity to event queue

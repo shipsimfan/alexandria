@@ -1,8 +1,8 @@
 use crate::{
     Error, Result,
     gpu::{
-        GpuSubsystem, VulkanInstanceExtension, VulkanInstanceFunctions, VulkanVersion,
-        instance::VulkanInstanceInner,
+        GpuSubsystem, VulkanInstanceCreateFlags, VulkanInstanceExtension, VulkanInstanceFunctions,
+        VulkanVersion, instance::VulkanInstanceInner,
     },
 };
 use std::{borrow::Cow, ffi::CString, ptr::null, str::FromStr};
@@ -12,6 +12,7 @@ impl VulkanInstanceInner {
     /// Create a new [`VulkanInstanceInner`]
     pub fn new(
         context: &GpuSubsystem,
+        flags: VulkanInstanceCreateFlags,
         api_version: VulkanVersion,
         application: Option<(&str, VulkanVersion)>,
         engine: Option<(&str, VulkanVersion)>,
@@ -40,6 +41,7 @@ impl VulkanInstanceInner {
 
         // Create the creation info
         let mut create_info = VkInstanceCreateInfo {
+            flags,
             application_info: &application_info,
             ..Default::default()
         };

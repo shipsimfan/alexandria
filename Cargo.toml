@@ -9,6 +9,7 @@ publish = false
 [workspace.dependencies]
 alexandria-macros.path = "macros"
 
+vulkan.path = "../lib-vulkan" #.git = "https://github.com/shipsimfan/lib-vulkan"
 
 [package]
 name = "alexandria"
@@ -31,22 +32,16 @@ alexandria-macros.workspace = true
 data-format = { git = "https://github.com/shipsimfan/lib-data-format", optional = true }
 time.git = "https://github.com/shipsimfan/lib-time"
 
-vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
-
 [target.'cfg(windows)'.dependencies]
 win32 = { git = "https://github.com/shipsimfan/lib-win32", features = ["dxgi"] }
 
-vulkan = { git = "https://github.com/shipsimfan/lib-vulkan", features = [
-    "win32",
-] }
+vulkan = { workspace = true, features = ["win32"] }
 
 [target.'cfg(target_os = "linux")'.dependencies]
 linux.git = "https://github.com/shipsimfan/lib-linux"
 wayland.git = "https://github.com/shipsimfan/lib-wayland"
 
-vulkan = { git = "https://github.com/shipsimfan/lib-vulkan", features = [
-    "wayland",
-] }
+vulkan = { workspace = true, features = ["wayland"] }
 
 [[example]]
 name = "git-info"

@@ -1,16 +1,18 @@
 use crate::{
     Error, Result,
-    gpu::{VulkanCommandBuffer, VulkanCommandPool},
+    gpu::{VulkanCommandBuffer, VulkanCommandBufferLevel, VulkanCommandPool},
 };
 use vulkan::{VkCommandBuffer, VkCommandBufferAllocateInfo, try_vulkan};
 
 impl VulkanCommandBuffer {
     /// Create a new [`VulkanCommandBuffer`]
     pub(in crate::gpu::device) fn new(
-        command_pool: VulkanCommandPool,
+        command_pool: &mut VulkanCommandPool,
+        level: VulkanCommandBufferLevel,
     ) -> Result<VulkanCommandBuffer> {
         let allocate_info = VkCommandBufferAllocateInfo {
             command_pool: command_pool.handle(),
+            level,
             command_buffer_count: 1,
             ..Default::default()
         };
@@ -29,7 +31,7 @@ impl VulkanCommandBuffer {
 
         Ok(VulkanCommandBuffer {
             handle,
-            command_pool,
+            device: command_pool.device().clone(),
         })
     }
 }

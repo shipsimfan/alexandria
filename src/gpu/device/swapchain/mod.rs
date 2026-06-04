@@ -2,14 +2,11 @@ use crate::gpu::{VulkanDevice, VulkanImage, VulkanSurface};
 use vulkan::khr_swapchain::VkSwapchainKhr;
 
 mod functions;
-mod present_mode;
 
 mod acquire_next_image;
 mod drop;
 mod get;
 mod new;
-
-pub use present_mode::*;
 
 pub(in crate::gpu::device) use functions::VulkanSwapchainFunctions;
 
@@ -22,7 +19,7 @@ pub struct VulkanSwapchain<'surface> {
     images: Vec<VulkanImage>,
 
     /// The surface this swapchain was created for
-    _surface: &'surface VulkanSurface,
+    _surface: &'surface mut VulkanSurface,
 
     /// The device that created this swapchain
     device: VulkanDevice,

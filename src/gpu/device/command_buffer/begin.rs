@@ -9,8 +9,7 @@ impl VulkanCommandBuffer {
         };
 
         try_vulkan!((self
-            .command_pool
-            .device()
+            .device
             .functions()
             .command_buffer
             .begin_command_buffer)(self.handle, &begin_info))

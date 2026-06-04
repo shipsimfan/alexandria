@@ -1,4 +1,4 @@
-use crate::gpu::{GpuSubsystem, VulkanInstanceBuilder, VulkanVersion};
+use crate::gpu::{GpuSubsystem, VulkanInstanceBuilder, VulkanInstanceCreateFlags, VulkanVersion};
 
 impl<'a> VulkanInstanceBuilder<'a> {
     /// Create a new [`VulkanInstanceBuilder`]
@@ -8,6 +8,7 @@ impl<'a> VulkanInstanceBuilder<'a> {
     ) -> VulkanInstanceBuilder<'a> {
         VulkanInstanceBuilder {
             context,
+            flags: VulkanInstanceCreateFlags::empty(),
             api_version,
             application: None,
             engine: None,

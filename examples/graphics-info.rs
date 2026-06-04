@@ -73,7 +73,7 @@ fn main() {
         println!();
         for adapter in adapters {
             println!(" - {}", adapter.name());
-            println!("   - Kind: {}", adapter.kind());
+            println!("   - Kind: {:?}", adapter.kind());
             println!("   - Memory: {}", adapter.vram());
             println!("   - UUID: {}", adapter.uuid());
             println!("   - Vulkan Version: v{}", adapter.api_version());
@@ -103,7 +103,7 @@ fn main() {
                 println!(")");
             }
 
-            let extensions = adapter.enumerate_all_extensions().unwrap();
+            let extensions = adapter.enumerate_all_extensions(None).unwrap();
             if extensions.len() == 0 {
                 println!("   - No extensions");
             } else {
@@ -113,28 +113,66 @@ fn main() {
                 }
             }
 
-            println!("   - Extended Info:");
-            let mut extended_info = [
-                VulkanDeviceFeatures::default().into(),
-                VulkanDeviceVulkan13Features::default().into(),
-                VulkanDeviceExtendedDynamicStateFeatures::default().into(),
-            ];
-            adapter.get_extended_info(&mut extended_info);
+            println!("   - Features:");
+            let mut features = VulkanDeviceFeatures::default();
+            let mut vulkan_13_features = VulkanDeviceVulkan13Features::default();
+            let mut extended_dynamic_state_features =
+                VulkanDeviceExtendedDynamicStateFeatures::default();
+            adapter.get_features([
+                &mut features as &mut _,
+                &mut vulkan_13_features as _,
+                &mut extended_dynamic_state_features as _,
+            ]);
 
             print!("     - Vulkan 1.3 Features: ");
-            let vulkan_13_features = extended_info[1].as_vulkan_13_features().unwrap();
+            if vulkan_13_features.robust_image_access() {
+                print!("robust_image_access ");
+            }
+            if vulkan_13_features.inline_uniform_block() {
+                print!("inline_uniform_block ");
+            }
+            if vulkan_13_features.descriptor_binding_inline_uniform_block_update_after_bind() {
+                print!("descriptor_binding_inline_uniform_block_update_after_bind ");
+            }
+            if vulkan_13_features.pipeline_creation_cache_control() {
+                print!("pipeline_creation_cache_control ");
+            }
+            if vulkan_13_features.private_data() {
+                print!("private_data ");
+            }
+            if vulkan_13_features.shader_demote_to_helper_invocation() {
+                print!("shader_demote_to_helper_invocation ");
+            }
+            if vulkan_13_features.shader_terminate_invocation() {
+                print!("shader_terminate_invocation ");
+            }
+            if vulkan_13_features.subgroup_size_control() {
+                print!("subgroup_size_control ");
+            }
+            if vulkan_13_features.compute_full_subgroups() {
+                print!("compute_full_subgroups ");
+            }
             if vulkan_13_features.synchronization2() {
                 print!("synchronization2 ");
             }
+            if vulkan_13_features.texture_compression_astc_hdr() {
+                print!("texture_compression_astc_hdr ");
+            }
+            if vulkan_13_features.shader_zero_initialize_workgroup_memory() {
+                print!("shader_zero_initialize_workgroup_memory ");
+            }
             if vulkan_13_features.dynamic_rendering() {
-                print!("dynamic_rendering");
+                print!("dynamic_rendering ");
+            }
+            if vulkan_13_features.shader_integer_dot_product() {
+                print!("shader_integer_dot_product ");
+            }
+            if vulkan_13_features.maintenance4() {
+                print!("maintenance4");
             }
             println!();
 
             print!("     - Extended Dynamic State Features: ");
-            let extended_dynamic_state_features = extended_info[2]
-                .as_extended_dynamic_state_features()
-                .unwrap();
             if extended_dynamic_state_features.extended_dynamic_state() {
                 print!("extended_dynamic_state");
             }

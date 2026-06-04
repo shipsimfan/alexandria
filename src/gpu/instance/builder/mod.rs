@@ -1,4 +1,4 @@
-use crate::gpu::{GpuSubsystem, VulkanInstanceExtension, VulkanVersion};
+use crate::gpu::{GpuSubsystem, VulkanInstanceCreateFlags, VulkanInstanceExtension, VulkanVersion};
 use std::borrow::Cow;
 
 mod create;
@@ -10,6 +10,9 @@ mod set;
 pub struct VulkanInstanceBuilder<'a> {
     /// The context to use to build the instance
     context: GpuSubsystem,
+
+    /// The flags to use when creating the instance
+    flags: VulkanInstanceCreateFlags,
 
     /// The requested version of Vulkan to use
     api_version: VulkanVersion,

@@ -4,13 +4,11 @@ use vulkan::ext_debug_utils::VkDebugUtilsMessengerExt;
 
 mod callback;
 mod functions;
-mod message_severity;
 
 mod drop;
 mod new;
 
 pub use callback::*;
-pub use message_severity::*;
 
 pub(in crate::gpu::instance) use functions::*;
 

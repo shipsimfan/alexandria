@@ -1,16 +1,14 @@
 use crate::{
     Error, Result,
     gpu::{
-        VulkanDebugMessageSeverity, VulkanDebugMessenger, VulkanDebugMessengerCallback,
-        VulkanInstance, instance::debug_messenger::debug_message_trampoline,
+        VulkanDebugMessageSeverityFlags, VulkanDebugMessageTypeFlags, VulkanDebugMessenger,
+        VulkanDebugMessengerCallback, VulkanInstance,
+        instance::debug_messenger::debug_message_trampoline,
     },
 };
 use std::ptr::null;
 use vulkan::{
-    ext_debug_utils::{
-        VkDebugUtilsMessageTypeFlagExt, VkDebugUtilsMessengerCreateInfoExt,
-        VkDebugUtilsMessengerExt,
-    },
+    ext_debug_utils::{VkDebugUtilsMessengerCreateInfoExt, VkDebugUtilsMessengerExt},
     try_vulkan,
 };
 
@@ -18,21 +16,19 @@ impl<C: VulkanDebugMessengerCallback> VulkanDebugMessenger<C> {
     /// Create a new [`VulkanDebugMessenger`]
     pub(in crate::gpu::instance) fn new(
         instance: &VulkanInstance,
-        min_severity: VulkanDebugMessageSeverity,
+        message_severity: VulkanDebugMessageSeverityFlags,
+        message_type: VulkanDebugMessageTypeFlags,
         callback: C,
     ) -> Result<VulkanDebugMessenger<C>> {
         let callback = Box::new(callback);
 
-        let mut create_info = VkDebugUtilsMessengerCreateInfoExt {
-            message_type: VkDebugUtilsMessageTypeFlagExt::GeneralExt
-                | VkDebugUtilsMessageTypeFlagExt::ValidationExt
-                | VkDebugUtilsMessageTypeFlagExt::PerformanceExt,
+        let create_info = VkDebugUtilsMessengerCreateInfoExt {
+            message_severity: message_severity.into(),
+            message_type: message_type.into(),
             user_callback: debug_message_trampoline::<C>,
             user_data: Box::as_ptr(&callback).cast_mut().cast(),
             ..Default::default()
         };
-
-        create_info.message_severity = min_severity.to_vk();
 
         let mut handle = VkDebugUtilsMessengerExt::null();
         try_vulkan!((instance

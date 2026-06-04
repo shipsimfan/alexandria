@@ -1,8 +1,9 @@
 #[cfg(debug_assertions)]
 mod debug_messenger {
     use alexandria::gpu::{
-        GpuSubsystem, VulkanDebugMessageSeverity, VulkanDebugMessenger,
-        VulkanDebugMessengerCallback, VulkanInstance, VulkanInstanceExtension,
+        GpuSubsystem, VulkanDebugMessageSeverityFlag, VulkanDebugMessageTypeFlag,
+        VulkanDebugMessageTypeFlags, VulkanDebugMessenger, VulkanDebugMessengerCallback,
+        VulkanInstance, VulkanInstanceExtension,
     };
 
     pub struct DebugCallback;
@@ -10,8 +11,13 @@ mod debug_messenger {
     pub type DebugMessenger = VulkanDebugMessenger<DebugCallback>;
 
     impl VulkanDebugMessengerCallback for DebugCallback {
-        fn message(&self, message: &str, severity: VulkanDebugMessageSeverity) {
-            println!("[{}] {}", severity, message);
+        fn message(
+            &self,
+            message: &str,
+            severity: VulkanDebugMessageSeverityFlag,
+            _: VulkanDebugMessageTypeFlags,
+        ) {
+            println!("[{:?}] {}", severity, message);
         }
     }
 
@@ -40,7 +46,17 @@ mod debug_messenger {
     /// Create a new debug messenger
     pub fn create(instance: &VulkanInstance) -> VulkanDebugMessenger<DebugCallback> {
         instance
-            .create_debug_messenger(VulkanDebugMessageSeverity::Verbose, DebugCallback)
+            .create_debug_messenger(
+                VulkanDebugMessageSeverityFlag::ErrorExt
+                    | VulkanDebugMessageSeverityFlag::WarningExt
+                    | VulkanDebugMessageSeverityFlag::InfoExt
+                    | VulkanDebugMessageSeverityFlag::VerboseExt,
+                VulkanDebugMessageTypeFlag::AddressBindingExt
+                    | VulkanDebugMessageTypeFlag::GeneralExt
+                    | VulkanDebugMessageTypeFlag::PerformanceExt
+                    | VulkanDebugMessageTypeFlag::ValidationExt,
+                DebugCallback,
+            )
             .expect("unable to create debug messenger")
     }
 }

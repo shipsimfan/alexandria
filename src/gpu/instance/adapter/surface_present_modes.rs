@@ -1,16 +1,13 @@
 use crate::{
     Error, Result,
-    gpu::{VulkanAdapter, VulkanSurface, VulkanSwapchainPresentMode},
+    gpu::{VulkanAdapter, VulkanPresentMode, VulkanSurface},
 };
 use std::ptr::null_mut;
 use vulkan::try_vulkan;
 
 impl<'instance> VulkanAdapter<'instance> {
     /// Get the [`SwapchainPresentMode`]s this adapter supports on `surface`
-    pub fn surface_present_modes(
-        &self,
-        surface: &VulkanSurface,
-    ) -> Result<Vec<VulkanSwapchainPresentMode>> {
+    pub fn surface_present_modes(&self, surface: &VulkanSurface) -> Result<Vec<VulkanPresentMode>> {
         let mut count = 0;
         try_vulkan!((self
             .instance
@@ -43,9 +40,6 @@ impl<'instance> VulkanAdapter<'instance> {
 
         unsafe { present_modes.set_len(count as _) };
 
-        Ok(present_modes
-            .into_iter()
-            .filter_map(VulkanSwapchainPresentMode::from_vk)
-            .collect())
+        Ok(present_modes.into_iter().collect())
     }
 }

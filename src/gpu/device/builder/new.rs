@@ -6,7 +6,7 @@ impl<'adapter, 'instance, 'a> VulkanDeviceBuilder<'adapter, 'instance, 'a> {
         adapter: &'adapter VulkanAdapter<'instance>,
     ) -> VulkanDeviceBuilder<'adapter, 'instance, 'a> {
         VulkanDeviceBuilder {
-            extended_info: Vec::new(),
+            features: Vec::new(),
             queues: Vec::new(),
             extensions: Vec::new(),
             adapter,

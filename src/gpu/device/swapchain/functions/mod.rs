@@ -1,6 +1,6 @@
 use crate::FunctionSymbol;
 use vulkan::khr_swapchain::{
-    VkAcquireNextImageKhr, VkCreateSwapchainKhr, VkDestroySwapchainKhr, VkGetSwapchainImagesKhr,
+    VkAcquireNextImage2Khr, VkCreateSwapchainKhr, VkDestroySwapchainKhr, VkGetSwapchainImagesKhr,
     VkQueuePresentKhr,
 };
 
@@ -18,7 +18,7 @@ pub(in crate::gpu::device) struct VulkanSwapchainFunctions {
     pub get_swapchain_images: FunctionSymbol<VkGetSwapchainImagesKhr>,
 
     /// The function to acquire the next available image from a swapchain
-    pub acquire_next_image: FunctionSymbol<VkAcquireNextImageKhr>,
+    pub acquire_next_image2: FunctionSymbol<VkAcquireNextImage2Khr>,
 
     /// The function to present an image to the swapchain
     pub queue_present: FunctionSymbol<VkQueuePresentKhr>,

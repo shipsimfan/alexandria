@@ -1,24 +1,32 @@
 use crate::{
     Error, Result,
-    gpu::{VulkanSemaphore, VulkanSwapchain},
+    gpu::{VulkanFence, VulkanSemaphore, VulkanSwapchain},
 };
-use vulkan::{VkFence, VkResult};
+use vulkan::{VkFence, VkResult, VkSemaphore, khr_swapchain::VkAcquireNextImageInfoKhr};
 
 impl<'surface> VulkanSwapchain<'surface> {
     /// Acquires the next available image from the swapchain
     pub fn acquire_next_image(
-        &self,
+        &mut self,
         timeout: u64,
-        semaphore: &VulkanSemaphore,
+        semaphore: Option<&mut VulkanSemaphore>,
+        fence: Option<&mut VulkanFence>,
+        device_mask: u32,
     ) -> Result<Option<usize>> {
+        let acquire_info = VkAcquireNextImageInfoKhr {
+            swapchain: self.handle,
+            timeout,
+            semaphore: semaphore.map_or(VkSemaphore::null(), |s| s.handle()),
+            fence: fence.map_or(VkFence::null(), |f| f.handle()),
+            device_mask,
+            ..Default::default()
+        };
+
         let mut image_index = 0;
         match unsafe {
-            (self.device.functions().swapchain().acquire_next_image)(
+            (self.device.functions().swapchain().acquire_next_image2)(
                 self.device.handle(),
-                self.handle,
-                timeout,
-                semaphore.handle(),
-                VkFence::null(),
+                &acquire_info,
                 &mut image_index,
             )
         } {

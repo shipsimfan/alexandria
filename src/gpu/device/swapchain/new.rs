@@ -1,15 +1,15 @@
 use crate::{
     Error, Result,
     gpu::{
-        VulkanDevice, VulkanFormat, VulkanImage, VulkanSurface, VulkanSwapchain,
-        VulkanSwapchainPresentMode,
+        VulkanColorSpace, VulkanCompositeAlphaFlag, VulkanDevice, VulkanFormat, VulkanImage,
+        VulkanImageUsageFlags, VulkanPresentMode, VulkanSharingMode, VulkanSurface,
+        VulkanSurfaceTransformFlag, VulkanSwapchain, VulkanSwapchainCreateFlags,
     },
     math::Vector2u,
 };
 use std::ptr::{null, null_mut};
 use vulkan::{
-    VK_TRUE, VkExtent2D, VkImageUsageFlag, VkSharingMode,
-    khr_surface::{VkCompositeAlphaFlagKhr, VkSurfaceTransformFlagKhr},
+    VK_FALSE, VK_TRUE,
     khr_swapchain::{VkSwapchainCreateInfoKhr, VkSwapchainKhr},
     try_vulkan,
 };
@@ -17,33 +17,46 @@ use vulkan::{
 impl<'surface> VulkanSwapchain<'surface> {
     /// Create a new [`VulkanSwapchain`]
     pub(in crate::gpu::device) fn new(
-        image_count: u32,
-        image_format: VulkanFormat,
-        image_size: Vector2u,
-        present_mode: VulkanSwapchainPresentMode,
+        flags: VulkanSwapchainCreateFlags,
+        surface: &'surface mut VulkanSurface,
 
-        surface: &'surface VulkanSurface,
+        min_image_count: u32,
+        image_format: VulkanFormat,
+        image_color_space: VulkanColorSpace,
+        image_size: Vector2u,
+        image_array_layers: u32,
+        image_usage: VulkanImageUsageFlags,
+        image_sharing_mode: VulkanSharingMode,
+
+        queue_family_indices: &[u32],
+
+        pre_transform: VulkanSurfaceTransformFlag,
+        composite_alpha: VulkanCompositeAlphaFlag,
+        present_mode: VulkanPresentMode,
+        clipped: bool,
+
+        old_swapchain: Option<&mut VulkanSwapchain>,
+
         device: VulkanDevice,
     ) -> Result<VulkanSwapchain<'surface>> {
         // Create swapchain
-        let (image_format, image_color_space) = image_format.into_vk_surface_format();
-
         let create_info = VkSwapchainCreateInfoKhr {
+            flags: flags.into(),
             surface: surface.handle(),
-            min_image_count: image_count,
+            min_image_count,
             image_format,
             image_color_space,
-            image_extent: VkExtent2D {
-                width: image_size.x,
-                height: image_size.y,
-            },
-            image_array_layers: 1,
-            image_usage: VkImageUsageFlag::ColorAttachment.into(),
-            image_sharing_mode: VkSharingMode::Exclusive,
-            pre_transform: VkSurfaceTransformFlagKhr::IdentityKhr.into(),
-            composite_alpha: VkCompositeAlphaFlagKhr::OpaqueKhr.into(),
-            present_mode: present_mode.into_vk(),
-            clipped: VK_TRUE,
+            image_extent: image_size.into(),
+            image_array_layers,
+            image_usage: image_usage.into(),
+            image_sharing_mode,
+            queue_family_index_count: queue_family_indices.len() as _,
+            queue_family_indices: queue_family_indices.as_ptr(),
+            pre_transform: pre_transform.into(),
+            composite_alpha: composite_alpha.into(),
+            present_mode,
+            clipped: if clipped { VK_TRUE } else { VK_FALSE },
+            old_swapchain: old_swapchain.map_or(VkSwapchainKhr::null(), |s| s.handle()),
             ..Default::default()
         };
 
@@ -78,7 +91,7 @@ impl<'surface> VulkanSwapchain<'surface> {
 
         let images = images
             .into_iter()
-            .map(|handle| VulkanImage::new(handle, device.clone()))
+            .map(|handle| VulkanImage::from_handle(handle, device.clone()))
             .collect();
 
         Ok(VulkanSwapchain {

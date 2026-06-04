@@ -2,13 +2,23 @@ use crate::{
     Error, Result,
     gpu::{VulkanAdapter, VulkanExtension},
 };
-use std::ptr::{null, null_mut};
+use std::{
+    ffi::CString,
+    ptr::{null, null_mut},
+};
 use vulkan::try_vulkan;
 
 impl<'instance> VulkanAdapter<'instance> {
     /// Enumerate all Vulkan extensions supported by this adapter, even if Alexandria doesn't
     /// support them
-    pub fn enumerate_all_extensions(&self) -> Result<Vec<VulkanExtension>> {
+    pub fn enumerate_all_extensions(&self, layer: Option<&str>) -> Result<Vec<VulkanExtension>> {
+        let layer = match layer {
+            Some(layer) => {
+                Some(CString::new(layer).map_err(|_| Error::new("layer name contains null byte"))?)
+            }
+            None => None,
+        };
+
         // Get the number of extensions supported
         let mut extension_count = 0;
         try_vulkan!((self
@@ -17,7 +27,7 @@ impl<'instance> VulkanAdapter<'instance> {
             .adapter
             .enumerate_device_extension_properties)(
             self.handle,
-            null(),
+            layer.as_ref().map_or(null(), |layer| layer.as_ptr()),
             &mut extension_count,
             null_mut()
         ))
@@ -34,7 +44,7 @@ impl<'instance> VulkanAdapter<'instance> {
             .adapter
             .enumerate_device_extension_properties)(
             self.handle,
-            null(),
+            layer.as_ref().map_or(null(), |layer| layer.as_ptr()),
             &mut extension_count,
             extensions.as_mut_ptr()
         ))

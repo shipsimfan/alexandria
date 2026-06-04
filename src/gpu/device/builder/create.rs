@@ -9,7 +9,7 @@ impl<'adapter, 'instance, 'a> VulkanDeviceBuilder<'adapter, 'instance, 'a> {
     pub fn create(&mut self) -> Result<(VulkanDevice, Vec<VulkanQueue>)> {
         let device = VulkanDevice {
             inner: Arc::new(VulkanDeviceInner::new(
-                &mut self.extended_info,
+                &mut self.features,
                 &self.queues,
                 &self.extensions,
                 self.adapter,
@@ -17,13 +17,13 @@ impl<'adapter, 'instance, 'a> VulkanDeviceBuilder<'adapter, 'instance, 'a> {
         };
 
         let mut queues = Vec::new();
-        for (queue_family_index, queue_family) in self.queues.iter().enumerate() {
-            for queue in 0..queue_family.priorities.len() {
+        for queue_family in self.queues.iter() {
+            for queue in 0..queue_family.queue_count() {
                 queues.push(VulkanQueue::new(
                     &device,
-                    queue_family_index as _,
-                    queue as _,
-                ));
+                    queue_family.queue_family(),
+                    queue,
+                )?);
             }
         }
 

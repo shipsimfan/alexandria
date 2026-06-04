@@ -1,15 +1,15 @@
 use crate::{
     Result,
-    gpu::{VulkanCommandPool, VulkanDevice},
+    gpu::{VulkanCommandPool, VulkanCommandPoolCreateFlags, VulkanDevice},
 };
 
 impl VulkanDevice {
     /// Create a new [`VulkanCommandPool`]
-    pub fn create_command_pool(
+    pub fn create_command_pool<F: Into<VulkanCommandPoolCreateFlags>>(
         &self,
         queue_family: u32,
-        reset_command_buffer: bool,
+        flags: F,
     ) -> Result<VulkanCommandPool> {
-        VulkanCommandPool::new(queue_family, reset_command_buffer, self.clone())
+        VulkanCommandPool::new(queue_family, flags.into(), self.clone())
     }
 }

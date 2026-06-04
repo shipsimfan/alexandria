@@ -25,10 +25,10 @@ fn main() {
     );
 
     // Create the render context
-    let (mut render_context, surface) = RenderContext::new(&context, &window);
+    let (mut render_context, mut surface) = RenderContext::new(&context, &window);
 
     // Create the swapchain and image views
-    let mut swapchain = Swapchain::new(&render_context, &surface, &window);
+    let mut swapchain = Swapchain::new(&mut render_context, &mut surface, &window);
 
     // Run the main event loop
     let mut running = true;
@@ -67,7 +67,7 @@ fn main() {
             render_context.wait_idle();
 
             drop(swapchain);
-            swapchain = Swapchain::new(&render_context, &surface, &window);
+            swapchain = Swapchain::new(&mut render_context, &mut surface, &window);
         }
     }
 
