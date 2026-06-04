@@ -39,6 +39,8 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
             event_queue,
 
             key_mod: KeyMod::default(),
+
+            result: Ok(()),
         }
     }
 }

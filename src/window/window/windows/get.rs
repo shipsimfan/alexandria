@@ -1,4 +1,5 @@
 use crate::{
+    Result,
     gpu::VulkanInstanceExtension,
     math::{Recti, Vector2u},
     window::window::{WindowInner, WindowSurfaceCreationHandle},
@@ -78,5 +79,10 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
     /// Get the handle for creating a surface for this window
     pub fn surface_creation_handle(&self) -> WindowSurfaceCreationHandle {
         (unsafe { GetModuleHandle(null()) }, self.window.handle())
+    }
+
+    /// Get the result of the last window procedure call
+    pub fn result(&mut self) -> Result<()> {
+        self.window.result()
     }
 }

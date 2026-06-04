@@ -1,4 +1,5 @@
 use crate::{
+    Result,
     math::{Recti, Vector2u},
     window::{StandardWndProc, WindowStyle},
 };
@@ -57,5 +58,12 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
     /// Get the current style of the window
     pub(in crate::window::window::windows) fn style(&self) -> WindowStyle {
         self.style
+    }
+
+    /// Get the result of the last window procedure call
+    pub(in crate::window::window::windows) fn result(&mut self) -> Result<()> {
+        let mut result = Ok(());
+        std::mem::swap(&mut result, &mut self.result);
+        result
     }
 }

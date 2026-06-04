@@ -30,7 +30,7 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
 
         match msg {
             WM_CLOSE => {
-                this.close().unwrap(); // TODO: Add error handling
+                this.result = this.close();
             }
             WM_GETMINMAXINFO => {
                 if this.is_fullscreen {
@@ -56,7 +56,7 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
             // The user has stopped moving or resizing the window
             WM_EXITSIZEMOVE => {
                 if let Some(new_rect) = this.is_changing.take() {
-                    this.change_rect(new_rect).unwrap(); // TODO: Add error handling
+                    this.result = this.change_rect(new_rect);
                 }
             }
 
@@ -70,12 +70,12 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                         Some(is_changing) => {
                             is_changing.size = size;
                         }
-                        None => this
-                            .change_rect(Recti {
+                        None => {
+                            this.result = this.change_rect(Recti {
                                 position: this.rect.position,
                                 size,
                             })
-                            .unwrap(), // TODO: Add error handling
+                        }
                     }
                 }
 
@@ -85,9 +85,7 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                     this.is_maximized_when_windowed = this.is_maximized;
                 }
                 if this.is_maximized && !old_maximized {
-                    this.event_queue
-                        .push(EventKind::WindowMaximized { id })
-                        .unwrap(); // TODO: Add error handling
+                    this.result = this.event_queue.push(EventKind::WindowMaximized { id });
                 }
 
                 let old_minimized = this.is_minimized;
@@ -96,15 +94,11 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                     this.is_minimized_when_windowed = this.is_minimized;
                 }
                 if this.is_minimized && !old_minimized {
-                    this.event_queue
-                        .push(EventKind::WindowMinimized { id })
-                        .unwrap(); // TODO: Add error handling
+                    this.result = this.event_queue.push(EventKind::WindowMinimized { id });
                 }
 
                 if !this.is_maximized && !this.is_minimized && (old_maximized || old_minimized) {
-                    this.event_queue
-                        .push(EventKind::WindowRestored { id })
-                        .unwrap(); // TODO: Add error handling
+                    this.result = this.event_queue.push(EventKind::WindowRestored { id });
                 }
             }
 
@@ -120,27 +114,23 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                     Some(is_changing) => {
                         is_changing.position = position;
                     }
-                    None => this
-                        .change_rect(Recti {
+                    None => {
+                        this.result = this.change_rect(Recti {
                             position,
                             size: this.rect.size,
                         })
-                        .unwrap(), // TODO: Add error handling
+                    }
                 }
             }
 
             WM_SETFOCUS => {
                 this.is_focused = true;
-                this.event_queue
-                    .push(EventKind::WindowGainedFocus { id })
-                    .unwrap(); // TODO: Add error handling
+                this.result = this.event_queue.push(EventKind::WindowGainedFocus { id });
             }
 
             WM_KILLFOCUS => {
                 this.is_focused = false;
-                this.event_queue
-                    .push(EventKind::WindowLostFocus { id })
-                    .unwrap(); // TODO: Add error handling
+                this.result = this.event_queue.push(EventKind::WindowLostFocus { id });
             }
 
             WM_SHOWWINDOW => {
@@ -148,13 +138,9 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                 this.is_visible = w_param != 0;
                 if this.is_visible != old_visible {
                     if this.is_visible {
-                        this.event_queue
-                            .push(EventKind::WindowShown { id })
-                            .unwrap(); // TODO: Add error handling
+                        this.result = this.event_queue.push(EventKind::WindowShown { id });
                     } else {
-                        this.event_queue
-                            .push(EventKind::WindowHidden { id })
-                            .unwrap(); // TODO: Add error handling
+                        this.result = this.event_queue.push(EventKind::WindowHidden { id });
                     }
                 }
             }
@@ -165,12 +151,10 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                 this.content_scale = new_content_scale;
 
                 if (new_content_scale - old_content_scale).abs() > 1e-4 {
-                    this.event_queue
-                        .push(EventKind::WindowContentScaleChanged {
-                            id,
-                            new_content_scale,
-                        })
-                        .unwrap(); // TODO: Add error handling
+                    this.result = this.event_queue.push(EventKind::WindowContentScaleChanged {
+                        id,
+                        new_content_scale,
+                    });
                 }
             }
 
@@ -182,29 +166,25 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                     this.key_mod.apply_key_down(key_code);
                 }
 
-                this.event_queue
-                    .push(EventKind::KeyDown {
-                        window_id: id,
-                        key_code,
-                        scan_code,
-                        is_repeat,
-                        key_mod: this.key_mod,
-                    })
-                    .unwrap()
+                this.result = this.event_queue.push(EventKind::KeyDown {
+                    window_id: id,
+                    key_code,
+                    scan_code,
+                    is_repeat,
+                    key_mod: this.key_mod,
+                });
             }
             WM_KEYUP | WM_SYSKEYUP => {
                 let scan_code = scan_code_from_lparam(l_param);
                 let key_code = keycode_from_vk(w_param, scan_code);
                 this.key_mod.apply_key_up(key_code);
 
-                this.event_queue
-                    .push(EventKind::KeyUp {
-                        window_id: id,
-                        key_code,
-                        scan_code,
-                        key_mod: this.key_mod,
-                    })
-                    .unwrap()
+                this.result = this.event_queue.push(EventKind::KeyUp {
+                    window_id: id,
+                    key_code,
+                    scan_code,
+                    key_mod: this.key_mod,
+                });
             }
 
             _ => return false,
@@ -374,6 +354,7 @@ fn keycode_from_vk(vk: WPARAM, scan_code: u16) -> KeyCode {
         0x5D => KeyCode::Menu,
 
         _ => {
+            #[cfg(debug_assertions)]
             println!("unknown virtual key code: {}", vk);
             KeyCode::Unknown
         }

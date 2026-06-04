@@ -13,7 +13,6 @@
      3. X11
  2. Add error handling for pushed events during event pumping
    - Linux
-   - Windows
  3. Add renderer wrappers for triangle
  4. Add renderer wrappers for multi-cube
  5. Add model loading/parsing

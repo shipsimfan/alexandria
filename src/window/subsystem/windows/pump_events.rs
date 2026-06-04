@@ -12,6 +12,11 @@ impl<UserEvent: 'static + Send> WindowSubsystemInner<UserEvent> {
             unsafe { DispatchMessage(&msg) };
         }
 
+        // Check for errors in the message pump
+        for window in &mut self.windows {
+            window.result()?;
+        }
+
         // Handle global events
         self.message_window.pump_events(
             &self.event_queue,
