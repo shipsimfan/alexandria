@@ -7,6 +7,7 @@ mod acquire_next_image;
 mod drop;
 mod get;
 mod new;
+mod unwrap_surface;
 
 pub(in crate::gpu::device) use functions::VulkanSwapchainFunctions;
 
@@ -19,7 +20,7 @@ pub struct VulkanSwapchain<'surface> {
     images: Vec<VulkanImage>,
 
     /// The surface this swapchain was created for
-    _surface: &'surface mut VulkanSurface,
+    surface: Option<&'surface mut VulkanSurface>,
 
     /// The device that created this swapchain
     device: VulkanDevice,

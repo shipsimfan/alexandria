@@ -97,7 +97,7 @@ impl<'surface> VulkanSwapchain<'surface> {
         Ok(VulkanSwapchain {
             handle,
             images,
-            _surface: surface,
+            surface: Some(surface),
             device,
         })
     }
