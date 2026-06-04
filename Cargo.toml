@@ -9,7 +9,7 @@ publish = false
 [workspace.dependencies]
 alexandria-macros.path = "macros"
 
-vulkan.path = "../lib-vulkan" #.git = "https://github.com/shipsimfan/lib-vulkan"
+vulkan.git = "https://github.com/shipsimfan/lib-vulkan"
 
 [package]
 name = "alexandria"
