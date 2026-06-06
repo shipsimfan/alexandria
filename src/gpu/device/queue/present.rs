@@ -2,8 +2,7 @@ use crate::{
     Error, Result,
     gpu::{VulkanQueue, VulkanSemaphore, VulkanSwapchain},
 };
-use std::ptr::null;
-use vulkan::{khr_swapchain::VkPresentInfoKhr, try_vulkan};
+use vulkan::{VkSemaphore, khr_swapchain::VkPresentInfoKhr, try_vulkan};
 
 impl VulkanQueue {
     /// Presents an image to a swapchain
@@ -13,11 +12,13 @@ impl VulkanQueue {
         swapchain: &VulkanSwapchain,
         image_index: u32,
     ) -> Result<()> {
+        let (wait_semaphore, wait_semaphore_count) = wait_semaphore
+            .map(|semaphore| (semaphore.handle(), 1))
+            .unwrap_or((VkSemaphore::null(), 0));
+
         let present_info = VkPresentInfoKhr {
-            wait_semaphore_count: 1,
-            wait_semaphores: wait_semaphore
-                .map(|semaphore| &semaphore.handle() as *const _)
-                .unwrap_or(null()),
+            wait_semaphore_count,
+            wait_semaphores: &wait_semaphore,
             swapchain_count: 1,
             swapchains: &swapchain.handle(),
             image_indices: &image_index,
