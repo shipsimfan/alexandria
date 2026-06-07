@@ -39,11 +39,11 @@ impl<'a> Parse<'a> for CompileShader {
 
         let output = command
             .output()
-            .map_err(|error| parser.error(format!("Failed to execute shader compiler: {error}")))?;
+            .map_err(|error| parser.error(format!("Failed to execute \"slangc\" - {error}")))?;
 
         if !output.status.success() {
             return Err(parser.error(format!(
-                "Shader compiler returned an error:\n{}",
+                "Shader compiler returned an error\n{}",
                 String::from_utf8_lossy(&output.stderr)
             )));
         }

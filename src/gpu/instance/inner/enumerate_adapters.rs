@@ -38,7 +38,7 @@ impl VulkanInstanceInner {
             .into_iter()
             .map(|handle| VulkanAdapter::new(instance, handle))
             .collect();
-        adapters.sort_by(|a, b| b.cmp(a));
+        adapters.sort();
         Ok(adapters)
     }
 }
