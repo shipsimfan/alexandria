@@ -21,19 +21,13 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
         let style = if builder.is_fullscreen() {
             WindowStyle::fullscreen()
         } else {
-            let mut style = WindowStyle::normal(builder.is_bordered(), builder.is_resizable());
-
-            if builder.is_maximized() {
-                style.maximize();
-            }
-            if builder.is_minimized() {
-                style.minimize();
-            }
-            if !builder.is_hidden() {
-                style.show();
-            }
-
-            style
+            WindowStyle::normal(
+                builder.is_bordered(),
+                builder.is_resizable(),
+                builder.is_maximized(),
+                builder.is_minimized(),
+                !builder.is_hidden(),
+            )
         };
 
         // Normalize window size
@@ -83,7 +77,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             size,
             style,
             class,
-            StandardWndProc::new(style, event_queue.clone()),
+            StandardWndProc::new(event_queue.clone()),
         )
         .map_err(|os| Error::new_with("unable to create a window", os))?;
 

@@ -1,19 +1,11 @@
-use crate::{
-    EventQueue,
-    input::KeyMod,
-    math::Recti,
-    window::{StandardWndProc, WindowStyle},
-};
+use crate::{EventQueue, input::KeyMod, math::Recti, window::StandardWndProc};
 
 impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
     /// Create a new [`StandardWndProc`]
     pub(in crate::window::window::windows) fn new(
-        style: WindowStyle,
         event_queue: EventQueue<UserEvent>,
     ) -> StandardWndProc<UserEvent> {
         StandardWndProc {
-            style,
-
             rect: Recti::default(),
             windowed_rect: Recti::default(),
 

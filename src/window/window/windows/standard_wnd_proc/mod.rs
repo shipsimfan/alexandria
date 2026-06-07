@@ -2,7 +2,7 @@ use crate::{
     EventQueue, Id, Result,
     input::KeyMod,
     math::{Recti, Vector2u},
-    window::{Window, WindowStyle},
+    window::Window,
 };
 
 mod change_rect;
@@ -16,9 +16,6 @@ mod window_proc;
 
 /// The window procedure for normal windows
 pub(in crate::window) struct StandardWndProc<UserEvent: 'static + Send> {
-    /// The currently applied window style
-    style: WindowStyle,
-
     /// The current position and size of the window's client area, in screen coordinates
     rect: Recti,
 

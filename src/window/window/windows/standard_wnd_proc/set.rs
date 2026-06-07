@@ -23,7 +23,7 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         self.maximum_client_size = maximum_size;
         self.maximum_window_size = match maximum_size {
             Some(maximum_size) => Some(
-                self.style
+                self.style()
                     .client_to_window(Recti::new(
                         Vector2i::new(0, 0),
                         maximum_size.map(|v| v as _),
@@ -45,7 +45,7 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         self.minimum_client_size = minimum_size;
         self.minimum_window_size = match minimum_size {
             Some(minimum_size) => Some(
-                self.style
+                self.style()
                     .client_to_window(Recti::new(
                         Vector2i::new(0, 0),
                         minimum_size.map(|v| v as _),
@@ -61,14 +61,16 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
 
     /// Set that this window will be maximized when it is windowed
     pub(in crate::window::window::windows) fn set_maximized(&mut self) {
-        self.is_maximized_when_windowed = true;
-        self.is_minimized_when_windowed = false;
+        if !self.is_fullscreen {
+            self.is_maximized_when_windowed = true;
+        }
     }
 
     /// Set that this window will be minimized when it is windowed
     pub(in crate::window::window::windows) fn set_minimized(&mut self) {
-        self.is_maximized_when_windowed = false;
-        self.is_minimized_when_windowed = true;
+        if !self.is_fullscreen {
+            self.is_minimized_when_windowed = true;
+        }
     }
 
     /// Set this window to be borderless, returning the new style if it needs to be updated
@@ -80,8 +82,7 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         if self.is_fullscreen {
             None
         } else {
-            self.style = WindowStyle::normal(!self.is_borderless, self.is_resizable);
-            Some(self.style)
+            Some(self.style())
         }
     }
 
@@ -94,8 +95,7 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         if self.is_fullscreen {
             None
         } else {
-            self.style = WindowStyle::normal(!self.is_borderless, self.is_resizable);
-            Some(self.style)
+            Some(self.style())
         }
     }
 

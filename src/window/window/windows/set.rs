@@ -189,19 +189,21 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             let style = self.window.style();
             self.window.set_style(style)?;
 
-            // Set the window size and position to the previous windowed size and position
-            let rect = style
-                .client_to_window(self.window.windowed_rect())
-                .map_err(|os| Error::new_with("unable to set a window's size", os))?;
-
-            self.window.set_position(rect.position)?;
-            self.window
-                .set_size(Vector2u::new(rect.size.x as _, rect.size.y as _))?;
-
             // Set the window maximized or minimized state to the previous windowed maximized or minimized state
-            if self.window.is_maximized() {
+            if self.window.is_maximized_when_windowed() {
                 self.window.maximize()?;
-            } else if self.window.is_minimized() {
+            } else {
+                // Set the window size and position to the previous windowed size and position
+                let rect = style
+                    .client_to_window(self.window.windowed_rect())
+                    .map_err(|os| Error::new_with("unable to set a window's size", os))?;
+
+                self.window.set_position(rect.position)?;
+                self.window
+                    .set_size(Vector2u::new(rect.size.x as _, rect.size.y as _))?;
+            }
+
+            if self.window.is_minimized_when_windowed() {
                 self.window.minimize()?;
             }
 

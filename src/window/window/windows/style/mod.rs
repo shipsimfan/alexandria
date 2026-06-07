@@ -4,7 +4,6 @@ mod client_to_window;
 mod default;
 mod fullscreen;
 mod normal;
-mod set;
 
 /// The style that can be applied to a window
 #[derive(Clone, Copy)]

@@ -40,9 +40,19 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         self.is_maximized
     }
 
+    /// Is the window maximized when it is windowed?
+    pub(in crate::window::window::windows) fn is_maximized_when_windowed(&self) -> bool {
+        self.is_maximized_when_windowed
+    }
+
     /// Is the window currently minimized?
     pub(in crate::window::window::windows) fn is_minimized(&self) -> bool {
         self.is_minimized
+    }
+
+    /// Is the window minimized when it is windowed?
+    pub(in crate::window::window::windows) fn is_minimized_when_windowed(&self) -> bool {
+        self.is_minimized_when_windowed
     }
 
     /// Is the window currently focused?
@@ -57,7 +67,13 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
 
     /// Get the current style of the window
     pub(in crate::window::window::windows) fn style(&self) -> WindowStyle {
-        self.style
+        WindowStyle::normal(
+            !self.is_borderless,
+            self.is_resizable,
+            self.is_maximized_when_windowed,
+            self.is_minimized_when_windowed,
+            self.is_visible,
+        )
     }
 
     /// Get the result of the last window procedure call

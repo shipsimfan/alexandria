@@ -34,7 +34,9 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         };
         self.is_fullscreen = is_fullscreen;
         self.is_maximized = is_maximized;
+        self.is_maximized_when_windowed = is_maximized;
         self.is_minimized = is_minimized;
+        self.is_minimized_when_windowed = is_minimized;
         self.is_focused = !is_minimized;
         self.is_visible = !is_hidden;
         self.is_borderless = !is_bordered;
