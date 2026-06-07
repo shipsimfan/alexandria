@@ -1,5 +1,5 @@
 use crate::{
-    Error, Result,
+    Error, EventKind, Result,
     math::{Recti, Vector2i, Vector2u},
     window::{StandardWndProc, WindowStyle},
 };
@@ -100,7 +100,19 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
     }
 
     /// Set this window to be fullscreen
-    pub(in crate::window::window::windows) fn set_fullscreen(&mut self, fullscreen: bool) {
+    pub(in crate::window::window::windows) fn set_fullscreen(
+        &mut self,
+        fullscreen: bool,
+    ) -> Result<()> {
         self.is_fullscreen = fullscreen;
+
+        if let Some(id) = self.id {
+            self.event_queue.push(if fullscreen {
+                EventKind::WindowEnteredFullscreen { id }
+            } else {
+                EventKind::WindowLeftFullscreen { id }
+            })?;
+        }
+        Ok(())
     }
 }

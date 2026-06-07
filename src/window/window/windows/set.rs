@@ -161,9 +161,9 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             return Ok(());
         }
 
-        self.window.set_fullscreen(fullscreen);
-
         if fullscreen {
+            self.window.set_fullscreen(fullscreen)?;
+
             // Find a display to fullscreen on
             let position = self.window.rect().position;
             let mut found_display = None;
@@ -205,7 +205,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
                 self.window.minimize()?;
             }
 
-            Ok(())
+            self.window.set_fullscreen(fullscreen)
         }
     }
 }
