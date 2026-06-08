@@ -1,7 +1,9 @@
 use crate::{
     EventKind, Result,
     window::{
-        WaylandGlobals, XdgWmBase, display::DisplayInner, subsystem::linux::wayland::WlRegistryRef,
+        WaylandGlobals, WlSeat, XdgWmBase,
+        display::DisplayInner,
+        subsystem::linux::wayland::{SeatListener, WlRegistryRef},
     },
 };
 use std::{ffi::CStr, rc::Rc};
@@ -49,6 +51,10 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
             && interface == self.xdg_decoration_manager_name
         {
             self.xdg_decoration_manager = Some(Rc::new(registry.bind(name, version)?));
+        } else if self.wl_seat_name == interface {
+            let wl_seat = registry.bind::<WlSeat>(name, version)?;
+            self.seats
+                .push(wl_seat.add_listener(SeatListener::new(self.event_queue.clone()))?);
         }
 
         Ok(())

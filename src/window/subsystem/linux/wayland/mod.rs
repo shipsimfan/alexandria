@@ -1,12 +1,15 @@
 use crate::{EventQueue, PackedMap, window::window::WindowInner};
+use seat_listener::SeatListener;
 use std::rc::Rc;
 use wl_registry::{WlRegistry, WlRegistryListener};
 
 mod globals;
 mod library;
+mod seat_listener;
 mod wl_compositor;
 mod wl_display;
 mod wl_registry;
+mod wl_seat;
 mod wl_surface;
 mod xdg_decoration_manager;
 mod xdg_output_manager;
@@ -20,13 +23,16 @@ mod get;
 mod new;
 mod pump_events;
 mod wait_for_event;
+mod wl_keyboard;
 mod xdg_top_level_decoration;
 
 pub(in crate::window) use globals::WaylandGlobals;
 pub(in crate::window) use library::{WaylandFunctions, WaylandLibrary};
 pub(in crate::window) use wl_compositor::WlCompositor;
 pub(in crate::window) use wl_display::WlDisplay;
+pub(in crate::window) use wl_keyboard::{WlKeyboard, WlKeyboardListener};
 pub(in crate::window) use wl_registry::{WaylandBind, WlRegistryRef};
+pub(in crate::window) use wl_seat::{WlSeat, WlSeatListener, WlSeatRef};
 pub(in crate::window) use wl_surface::WlSurface;
 pub(in crate::window) use xdg_decoration_manager::XdgDecorationManager;
 pub(in crate::window) use xdg_output_manager::XdgOutputManager;

@@ -12,9 +12,10 @@ mod wait_for_event;
 
 pub(in crate::window) use wayland::{
     WaylandBind, WaylandFunctions, WaylandGlobals, WaylandLibrary, WlCompositor, WlDisplay,
-    WlRegistryRef, WlSurface, XdgDecorationManager, XdgOutputManager, XdgSurface,
-    XdgSurfaceListener, XdgSurfaceRef, XdgTopLevel, XdgTopLevelDecoration,
-    XdgTopLevelDecorationListener, XdgTopLevelListener, XdgWmBase,
+    WlKeyboard, WlKeyboardListener, WlRegistryRef, WlSeat, WlSeatListener, WlSeatRef, WlSurface,
+    XdgDecorationManager, XdgOutputManager, XdgSurface, XdgSurfaceListener, XdgSurfaceRef,
+    XdgTopLevel, XdgTopLevelDecoration, XdgTopLevelDecorationListener, XdgTopLevelListener,
+    XdgWmBase,
 };
 
 /// The implementation of the [`WindowSubsystem`](crate::window::WindowSubsystem) for Linux

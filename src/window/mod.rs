@@ -5,9 +5,10 @@ use display::{WlOutput, XdgOutput, XdgOutputListener};
 #[cfg(target_os = "linux")]
 use subsystem::{
     WaylandBind, WaylandFunctions, WaylandGlobals, WaylandLibrary, WlCompositor, WlDisplay,
-    WlRegistryRef, WlSurface, XdgDecorationManager, XdgOutputManager, XdgSurface,
-    XdgSurfaceListener, XdgSurfaceRef, XdgTopLevel, XdgTopLevelDecoration,
-    XdgTopLevelDecorationListener, XdgTopLevelListener, XdgWmBase,
+    WlKeyboard, WlKeyboardListener, WlRegistryRef, WlSeat, WlSeatListener, WlSeatRef, WlSurface,
+    XdgDecorationManager, XdgOutputManager, XdgSurface, XdgSurfaceListener, XdgSurfaceRef,
+    XdgTopLevel, XdgTopLevelDecoration, XdgTopLevelDecorationListener, XdgTopLevelListener,
+    XdgWmBase,
 };
 #[cfg(target_os = "linux")]
 use window::WaylandWindow;
