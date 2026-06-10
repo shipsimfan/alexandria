@@ -18,7 +18,7 @@ pub(in crate::gpu) struct VulkanInstanceFunctions {
     /** Function Groups **/
 
     /// The functions used by adapters
-    pub(in crate::gpu::instance) adapter: VulkanAdapterFunctions,
+    pub adapter: VulkanAdapterFunctions,
 
     /// The functions used by debug messengers
     debug_messenger: Option<VulkanDebugMessengerFunctions>,

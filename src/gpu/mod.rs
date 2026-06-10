@@ -46,8 +46,10 @@ pub use vulkan::{
     },
     khr_surface::{
         VkColorSpaceKhr as VulkanColorSpace, VkCompositeAlphaFlagKhr as VulkanCompositeAlphaFlag,
+        VkCompositeAlphaFlagsKhr as VulkanCompositeAlphaFlags,
         VkPresentModeKhr as VulkanPresentMode, VkSurfaceFormatKhr as VulkanSurfaceFormat,
         VkSurfaceTransformFlagKhr as VulkanSurfaceTransformFlag,
+        VkSurfaceTransformFlagsKhr as VulkanSurfaceTransformFlags,
     },
     khr_swapchain::{
         VkSwapchainCreateFlagKhr as VulkanSwapchainCreateFlag,

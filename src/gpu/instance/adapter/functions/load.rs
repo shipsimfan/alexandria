@@ -6,6 +6,7 @@ use vulkan::{
     VK_ENUMERATE_DEVICE_EXTENSION_PROPERTIES, VK_GET_PHYSICAL_DEVICE_FEATURES2,
     VK_GET_PHYSICAL_DEVICE_MEMORY_PROPERTIES, VK_GET_PHYSICAL_DEVICE_PROPERTIES,
     VK_GET_PHYSICAL_DEVICE_QUEUE_FAMILY_PROPERTIES, VkInstance,
+    khr_surface::VK_GET_PHYSICAL_DEVICE_SURFACE_CAPABILITIES_KHR,
 };
 
 impl VulkanAdapterFunctions {
@@ -36,6 +37,11 @@ impl VulkanAdapterFunctions {
                 context,
                 instance,
                 VK_GET_PHYSICAL_DEVICE_FEATURES2
+            )?,
+            get_physical_device_surface_capabilities_khr: load_instance_function!(
+                context,
+                instance,
+                VK_GET_PHYSICAL_DEVICE_SURFACE_CAPABILITIES_KHR
             )?,
         })
     }

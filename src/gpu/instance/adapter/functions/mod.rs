@@ -3,12 +3,13 @@ use vulkan::{
     VkEnumerateDeviceExtensionProperties, VkGetPhysicalDeviceFeatures2,
     VkGetPhysicalDeviceMemoryProperties, VkGetPhysicalDeviceProperties,
     VkGetPhysicalDeviceQueueFamilyProperties,
+    khr_surface::VkGetPhysicalDeviceSurfaceCapabilitiesKhr,
 };
 
 mod load;
 
 /// The functions that are used by adapters associated with an instance
-pub(in crate::gpu::instance) struct VulkanAdapterFunctions {
+pub(in crate::gpu) struct VulkanAdapterFunctions {
     /// The function used to get information about an adapter
     pub get_physical_device_properties: FunctionSymbol<VkGetPhysicalDeviceProperties>,
 
@@ -24,4 +25,8 @@ pub(in crate::gpu::instance) struct VulkanAdapterFunctions {
 
     /// The function used to get extended information about an adapter
     pub get_physical_device_features2: FunctionSymbol<VkGetPhysicalDeviceFeatures2>,
+
+    /// The function used to get information about the surface capabilities of an adapter
+    pub get_physical_device_surface_capabilities_khr:
+        FunctionSymbol<VkGetPhysicalDeviceSurfaceCapabilitiesKhr>,
 }

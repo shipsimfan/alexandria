@@ -47,7 +47,8 @@ impl VulkanDeviceInner {
 
         Ok(VulkanDeviceInner {
             handle,
-            _instance: adapter.instance().clone(),
+            physical_device: adapter.handle(),
+            instance: adapter.instance().clone(),
             functions,
         })
     }

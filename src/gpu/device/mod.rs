@@ -18,6 +18,7 @@ mod create_fence;
 mod create_semaphore;
 mod create_swapchain;
 mod get;
+mod surface_capabilities;
 mod wait_idle;
 
 pub use buffer::*;
