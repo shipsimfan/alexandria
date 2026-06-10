@@ -9,6 +9,7 @@ impl<UserEvent: 'static + Send> WlSeatListener for SeatListener<UserEvent> {
             self.keyboard = seat.get_keyboard().ok();
         } else if self.keyboard.is_some() && !has_keyboard {
             self.keyboard = None;
+            self.keymap = None;
         }
     }
 

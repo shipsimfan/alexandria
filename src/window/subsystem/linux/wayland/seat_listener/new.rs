@@ -6,6 +6,7 @@ impl<UserEvent: 'static + Send> SeatListener<UserEvent> {
         SeatListener {
             event_queue,
             keyboard: None,
+            keymap: None,
         }
     }
 }

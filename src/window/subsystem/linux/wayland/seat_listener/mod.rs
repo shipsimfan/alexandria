@@ -1,4 +1,7 @@
 use crate::{EventQueue, window::WlKeyboard};
+use mmap_region::MMapRegion;
+
+mod mmap_region;
 
 mod keyboard_listener;
 mod new;
@@ -11,4 +14,7 @@ pub(in crate::window::subsystem::linux::wayland) struct SeatListener<UserEvent: 
 
     /// The keyboard, if it is present
     keyboard: Option<WlKeyboard<Self>>,
+
+    /// The keymap, if it is present
+    keymap: Option<MMapRegion>,
 }
