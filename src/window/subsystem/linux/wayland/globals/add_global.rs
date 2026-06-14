@@ -54,7 +54,7 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
         } else if self.wl_seat_name == interface {
             let wl_seat = registry.bind::<WlSeat>(name, version)?;
             self.seats
-                .push(wl_seat.add_listener(SeatListener::new(self.event_queue.clone()))?);
+                .push(wl_seat.add_listener(SeatListener::new(self.event_queue.clone())?)?);
         }
 
         Ok(())

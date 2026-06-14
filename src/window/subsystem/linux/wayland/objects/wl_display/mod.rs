@@ -1,0 +1,24 @@
+use crate::window::WaylandLibrary;
+use std::cell::RefCell;
+use wayland::wl_display;
+
+mod cancel_read;
+mod dispatch_pending;
+mod drop;
+mod flush;
+mod get;
+mod get_fd;
+mod get_registry;
+mod prepare_read;
+mod read_events;
+mod roundtrip;
+mod try_connect;
+
+/// The main connection to Wayland
+pub(in crate::window) struct WlDisplay {
+    /// The handle to the display
+    handle: RefCell<*mut wl_display>,
+
+    /// The reference to the client library
+    pub library: WaylandLibrary,
+}

@@ -1,7 +1,13 @@
-use crate::{EventQueue, window::WlKeyboard};
+use crate::EventQueue;
+use keyboard::Keyboard;
 use mmap_region::MMapRegion;
+use xkb_context::XkbContext;
+use xkb_state::XkbState;
 
+mod keyboard;
 mod mmap_region;
+mod xkb_context;
+mod xkb_state;
 
 mod keyboard_listener;
 mod new;
@@ -12,9 +18,9 @@ pub(in crate::window::subsystem::linux::wayland) struct SeatListener<UserEvent: 
     /// The queue to push events to
     event_queue: EventQueue<UserEvent>,
 
-    /// The keyboard, if it is present
-    keyboard: Option<WlKeyboard<Self>>,
+    /// The context for xkbcommon
+    xkb_context: XkbContext,
 
-    /// The keymap, if it is present
-    keymap: Option<MMapRegion>,
+    /// The keyboard, if it is present
+    keyboard: Option<Keyboard<UserEvent>>,
 }
