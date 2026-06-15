@@ -167,9 +167,9 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                 }
 
                 this.result = this.event_queue.push(EventKind::KeyDown {
-                    window_id: id,
+                    window_id: Some(id),
                     key_code,
-                    scan_code,
+                    scan_code: scan_code as _,
                     is_repeat,
                     key_mod: this.key_mod,
                 });
@@ -180,9 +180,9 @@ impl<UserEvent: 'static + Send> WindowProc for StandardWndProc<UserEvent> {
                 this.key_mod.apply_key_up(key_code);
 
                 this.result = this.event_queue.push(EventKind::KeyUp {
-                    window_id: id,
+                    window_id: Some(id),
                     key_code,
-                    scan_code,
+                    scan_code: scan_code as _,
                     key_mod: this.key_mod,
                 });
             }
