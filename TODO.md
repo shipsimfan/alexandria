@@ -1,26 +1,14 @@
 # ToDo
- 1. Input system
-   1. Keyboard
-     1. Wayland
-     2. X11
-   2. Mouse
-     1. Windows
-     2. Wayland
-     3. X11
-   3. Cursor lock to center
-     1. Windows
-     2. Wayland
-     3. X11
- 2. Add error handling for pushed events during event pumping
-   - Linux
- 3. Add renderer wrappers for triangle
- 4. Add renderer wrappers for multi-cube
- 5. Add model loading/parsing
+ 1. Add renderer wrappers for triangle
+ 2. Add error handling for keyboard events during event pumping
+   - Wayland
+ 3. Add renderer wrappers for multi-cube
+ 4. Add model loading/parsing
    1. obj
    2. fbx
    3. gltf/glb
    4. dae
- 6. Add texture loading/parsing
+ 5. Add texture loading/parsing
    1. qoi
    2. png
    3. jpg
@@ -29,7 +17,7 @@
    6. dds
    7. ktx2
    8. exr
- 7. Finish adding Linux Windowing support
+ 6. Finish adding Linux Windowing support
    1. Wayland
      1. Add extra window Events
        - Content Scale Changed
@@ -86,6 +74,18 @@
        - Borderless
        - Resizable
        - Fullscreen + Fullscreen Display Mode
+ 7. Input system
+   1. Keyboard
+     1. Add window tracking to Wayland
+     2. X11
+   2. Mouse
+     1. Windows
+     2. Wayland
+     3. X11
+   3. Cursor lock to center
+     1. Windows
+     2. Wayland
+     3. X11
  8. Add window icons
    1. Windows
    2. Wayland
@@ -101,19 +101,23 @@
    3. mp3
    4. flac
    5. opus
- 11. Add support for multiple keyboards
+ 11. Add text input support
    1. Windows
    2. Wayland
    3. X11
- 12. Add support for multiple mice
+ 12. Add support for multiple keyboards
    1. Windows
    2. Wayland
    3. X11
- 13. Add more input types
+ 13. Add support for multiple mice
+   1. Windows
+   2. Wayland
+   3. X11
+ 14. Add more input types
    1. X-Box controllers (Windows)
    2. General controllers
    3. Joysticks
    4. Steering Wheels, Pedals, Gear Shift
- 14. Add 2-d support to `Matrix3x3`
- 15. Add more external control to event queue
- 16. Add max capacity to event queue
+ 15. Add 2-d support to `Matrix3x3`
+ 16. Add more external control to event queue
+ 17. Add max capacity to event queue

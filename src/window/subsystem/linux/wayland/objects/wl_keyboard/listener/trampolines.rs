@@ -70,13 +70,17 @@ unsafe extern "C" fn key_trampoline<T: WlKeyboardListener>(
 /// Trampoline for responding to a modifiers event from the keyboard
 unsafe extern "C" fn modifiers_trampoline<T: WlKeyboardListener>(
     data: *mut c_void,
-    seat: *mut wl_seat,
+    _: *mut wl_seat,
     serial: u32,
     mods_depressed: u32,
     mods_latched: u32,
     mods_locked: u32,
     group: u32,
 ) {
+    let data: &mut (T, Rc<WlDisplay>) = unsafe { &mut *data.cast() };
+
+    data.0
+        .modifiers(serial, mods_depressed, mods_latched, mods_locked, group);
 }
 
 /// Trampoline for responding to a repeat info event from the keyboard

@@ -1,7 +1,6 @@
 use crate::window::{WlKeyboardListener, subsystem::linux::wayland::SeatListener};
 use linux::unistd::close;
 use wayland::{wl_keyboard_key_state, wl_keyboard_keymap_format};
-use xkbcommon::XKB_KEY_NO_SYMBOL;
 
 impl<UserData: 'static + Send> WlKeyboardListener for SeatListener<UserData> {
     fn keymap(&mut self, format: wl_keyboard_keymap_format, fd: i32, size: u32) {
@@ -15,18 +14,25 @@ impl<UserData: 'static + Send> WlKeyboardListener for SeatListener<UserData> {
     }
 
     fn key(&mut self, _: u32, _: u32, key: u32, state: u32) {
-        let keysym = if let Some(keyboard) = &mut self.keyboard {
-            keyboard.key(key)
-        } else {
-            XKB_KEY_NO_SYMBOL
-        };
+        if let Some(keyboard) = &mut self.keyboard {
+            let pressed = state & wl_keyboard_key_state::Pressed as u32 != 0;
+            let is_repeat = state & wl_keyboard_key_state::Repeated as u32 != 0;
+            self.event_queue
+                .push(keyboard.key(key, pressed | is_repeat, is_repeat))
+                .unwrap();
+        }
+    }
 
-        let pressed = state & wl_keyboard_key_state::Pressed as u32 != 0;
-
-        if pressed {
-            println!("{} pressed", keysym);
-        } else {
-            println!("{} released", keysym);
+    fn modifiers(
+        &mut self,
+        _: u32,
+        mods_depressed: u32,
+        mods_latched: u32,
+        mods_locked: u32,
+        group: u32,
+    ) {
+        if let Some(keyboard) = &mut self.keyboard {
+            keyboard.modifiers(mods_depressed, mods_latched, mods_locked, group);
         }
     }
 }

@@ -2,6 +2,7 @@ use crate::window::subsystem::linux::wayland::seat_listener::MMapRegion;
 
 mod drop;
 mod key;
+mod modifier;
 mod new;
 
 /// The state of a single xkbcommon keymap

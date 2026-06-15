@@ -1,6 +1,9 @@
-use crate::window::{
-    WlKeyboard,
-    subsystem::linux::wayland::{SeatListener, seat_listener::Keyboard},
+use crate::{
+    input::KeyMod,
+    window::{
+        WlKeyboard,
+        subsystem::linux::wayland::{SeatListener, seat_listener::Keyboard},
+    },
 };
 
 impl<UserEvent: 'static + Send> Keyboard<UserEvent> {
@@ -9,6 +12,7 @@ impl<UserEvent: 'static + Send> Keyboard<UserEvent> {
         Keyboard {
             _handle: handle,
             keymap: None,
+            modifiers: KeyMod::default(),
         }
     }
 }

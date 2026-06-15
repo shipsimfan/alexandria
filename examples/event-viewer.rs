@@ -229,10 +229,12 @@ fn handle_event(
             is_repeat,
             ..
         } => {
-            println!(
-                "[KEY DOWN] {} (window: {}, scan code: {}, repeat: {})",
-                key_code, window_id, scan_code, is_repeat
-            );
+            print!("[KEY DOWN] {} (window: ", key_code);
+            match window_id {
+                Some(id) => print!("{}", id),
+                None => print!("None"),
+            }
+            println!(", scan code: {}, repeat: {})", scan_code, is_repeat)
         }
         alexandria::EventKind::KeyUp {
             window_id,
@@ -240,10 +242,12 @@ fn handle_event(
             scan_code,
             ..
         } => {
-            println!(
-                "[KEY UP] {} (window: {}, scan code: {})",
-                key_code, window_id, scan_code
-            );
+            print!("[KEY UP] {} (window: ", key_code);
+            match window_id {
+                Some(id) => print!("{}", id),
+                None => print!("None"),
+            }
+            println!(", scan code: {})", scan_code);
         }
 
         alexandria::EventKind::User(_) => println!("[USER]"),
