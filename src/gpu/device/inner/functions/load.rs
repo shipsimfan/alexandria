@@ -5,7 +5,7 @@ use crate::{
         device::{
             VulkanCommandBufferFunctions, VulkanCommandPoolFunctions, VulkanDeviceFunctions,
             VulkanFenceFunctions, VulkanImageViewFunctions, VulkanQueueFunctions,
-            VulkanSemaphoreFunctions, VulkanSwapchainFunctions,
+            VulkanSemaphoreFunctions, VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
         },
         load_device_function,
     },
@@ -38,6 +38,7 @@ impl VulkanDeviceFunctions {
             semaphore: VulkanSemaphoreFunctions::load(instance, device)?,
             fence: VulkanFenceFunctions::load(instance, device)?,
             queue: VulkanQueueFunctions::load(instance, device)?,
+            shader_module: VulkanShaderModuleFunctions::load(instance, device)?,
 
             get_device_queue: load_device_function!(instance, device, VK_GET_DEVICE_QUEUE)?,
             destroy_device: load_device_function!(instance, device, VK_DESTROY_DEVICE)?,

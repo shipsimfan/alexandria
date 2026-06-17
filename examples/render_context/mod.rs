@@ -12,6 +12,7 @@ mod debug_messenger;
 mod frame_data;
 mod swapchain;
 
+mod create_shader_module;
 mod new;
 mod wait_idle;
 

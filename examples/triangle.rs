@@ -2,7 +2,7 @@ use render_context::{RenderContext, Swapchain};
 
 mod render_context;
 
-const SHADER: &[u8] = alexandria::gpu::compile_shader!("triangle.slang", vert_main, frag_main);
+alexandria::gpu::compile_shader!(const SHADER = "triangle.slang", vert_main, frag_main);
 
 fn main() {
     // Create the Alexandria context with GPU and window support
@@ -28,6 +28,9 @@ fn main() {
 
     // Create the render context
     let (mut render_context, mut surface) = RenderContext::new(&context, &window);
+
+    // Create the shader
+    let shader = render_context.create_shader_module(&SHADER);
 
     // Create the swapchain and image views
     let mut swapchain = Swapchain::new(&mut render_context, &mut surface, &window);
@@ -74,6 +77,7 @@ fn main() {
     }
 
     render_context.wait_idle();
+    drop(shader);
 
     window.destroy().expect("unable to destroy window");
 }

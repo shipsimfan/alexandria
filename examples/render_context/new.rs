@@ -5,7 +5,8 @@ use crate::{
 use alexandria::{
     AlexandriaContext,
     gpu::{
-        VulkanAdapter, VulkanCommandPoolCreateFlag, VulkanDeviceExtension, VulkanDeviceFeatures,
+        VulkanAdapter, VulkanCommandPoolCreateFlag, VulkanDeviceExtendedDynamicStateFeatures,
+        VulkanDeviceExtension, VulkanDeviceFeatures, VulkanDeviceVulkan11Features,
         VulkanDeviceVulkan13Features, VulkanInstance, VulkanQueueCreateInfo, VulkanSurface,
         VulkanSurfaceFormat, VulkanVersion,
     },
@@ -36,10 +37,15 @@ impl RenderContext {
             .device_builder()
             .extension(VulkanDeviceExtension::Swapchain)
             .queue(VulkanQueueCreateInfo::new(queue_family_index, &[1.0]))
+            .feature(&mut VulkanDeviceVulkan11Features::default().enable_shader_draw_parameters())
             .feature(
                 &mut VulkanDeviceVulkan13Features::default()
                     .enable_synchronization2()
                     .enable_dynamic_rendering(),
+            )
+            .feature(
+                &mut VulkanDeviceExtendedDynamicStateFeatures::default()
+                    .enable_extended_dynamic_state(),
             )
             .create()
             .unwrap();
@@ -131,9 +137,20 @@ fn find_compatible_adapter<'instance>(
             }
 
             let mut features = VulkanDeviceFeatures::default();
+            let mut vulkan_11_features = VulkanDeviceVulkan11Features::default();
             let mut vulkan_13_features = VulkanDeviceVulkan13Features::default();
-            adapter.get_features([&mut features as &mut _, &mut vulkan_13_features as _]);
-            if !vulkan_13_features.synchronization2() || !vulkan_13_features.dynamic_rendering() {
+            let mut extended_dynamic_state = VulkanDeviceExtendedDynamicStateFeatures::default();
+            adapter.get_features([
+                &mut features as &mut _,
+                &mut vulkan_11_features as _,
+                &mut vulkan_13_features as _,
+                &mut extended_dynamic_state as _,
+            ]);
+            if !vulkan_11_features.shader_draw_parameters()
+                || !vulkan_13_features.synchronization2()
+                || !vulkan_13_features.dynamic_rendering()
+                || !extended_dynamic_state.extended_dynamic_state()
+            {
                 continue;
             }
 

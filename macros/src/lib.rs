@@ -13,15 +13,20 @@ proc_macro_util::proc_macro_function!(
     /// Compiles a shader at compile time and embeds the resulting SPIR-V binary into the compiled
     /// crate
     ///
-    /// The first argument is the path to the shader source file, relative to the crate root. The
-    /// remaining arguments are the entry point names to compile. If no entry points are specified,
-    /// the macro will attempt to compile a shader with an entry point named `main`.
+    /// The first argument is the definition of the constant, with its type excluded and the path
+    /// to the shader file set as its value. The remaining arguments are the entry point names to
+    /// compile.
     ///
     /// # Examples
     /// ```rust
     /// use alexandria_macros::compile_shader;
     ///
-    /// const VERT_SHADER: &[u8] = compile_shader!("shader.slang", vert_main, frag_main);
+    /// compile_shader!(
+    ///     /// Docs about the shader
+    ///     pub const SHADER = "shader.slang",
+    ///     vert_main,
+    ///     frag_main
+    /// );
     /// ```
     compile_shader -> compile_shader::CompileShader
 );

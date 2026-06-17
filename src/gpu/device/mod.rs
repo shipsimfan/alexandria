@@ -12,11 +12,13 @@ mod inner;
 mod pipeline;
 mod queue;
 mod semaphore;
+mod shader_module;
 mod swapchain;
 
 mod create_command_pool;
 mod create_fence;
 mod create_semaphore;
+mod create_shader_module;
 mod create_swapchain;
 mod get;
 mod surface_capabilities;
@@ -33,6 +35,7 @@ pub use image_view::*;
 pub use pipeline::*;
 pub use queue::*;
 pub use semaphore::*;
+pub use shader_module::*;
 pub use swapchain::*;
 
 pub(in crate::gpu::device) use inner::*;

@@ -1,8 +1,21 @@
 use crate::compile_shader::CompileShader;
-use proc_macro_util::{Generator, ToTokens};
+use proc_macro_util::{Generator, ToTokens, to_tokens};
 
-impl ToTokens for CompileShader {
+impl<'a> ToTokens for CompileShader<'a> {
     fn to_tokens(self, generator: &mut Generator) {
-        self.data.to_tokens(generator);
+        let CompileShader {
+            attributes,
+            visibility,
+            identifier,
+            data,
+            length,
+            entry_points,
+        } = self;
+
+        to_tokens! { generator
+            #attributes
+            #visibility const #identifier: ::alexandria::gpu::VulkanShaderModuleCode<#length> =
+                ::alexandria::gpu::VulkanShaderModuleCode::new(*#data, &[#entry_points]);
+        }
     }
 }

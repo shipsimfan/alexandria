@@ -3,7 +3,7 @@ use crate::{
     gpu::device::{
         VulkanCommandBufferFunctions, VulkanCommandPoolFunctions, VulkanFenceFunctions,
         VulkanImageViewFunctions, VulkanQueueFunctions, VulkanSemaphoreFunctions,
-        VulkanSwapchainFunctions,
+        VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
     },
 };
 use vulkan::{VkDestroyDevice, VkDeviceWaitIdle, VkGetDeviceQueue};
@@ -35,6 +35,9 @@ pub(in crate::gpu::device) struct VulkanDeviceFunctions {
 
     /// The functions used by queues
     pub queue: VulkanQueueFunctions,
+
+    /// The functions used by shader modules
+    pub shader_module: VulkanShaderModuleFunctions,
 
     /** Individual Functions **/
 

@@ -3,6 +3,12 @@ use proc_macro_util::{Parse, Parser, Result, Token};
 
 impl<'a> Parse<'a> for CompileShaderInput<'a> {
     fn parse(parser: &mut Parser<'a>) -> Result<Self> {
+        let attributes = parser.parse()?;
+        let visibility = parser.parse()?;
+        parser.parse::<Token![const]>()?;
+        let identifier = parser.parse()?;
+        parser.parse::<Token![=]>()?;
+
         let path = parser.parse()?;
 
         let mut entry_points = Vec::new();
@@ -11,6 +17,16 @@ impl<'a> Parse<'a> for CompileShaderInput<'a> {
             entry_points.push(parser.parse()?);
         }
 
-        Ok(CompileShaderInput { path, entry_points })
+        if entry_points.len() == 0 {
+            parser.error("at least one entry point must be specified");
+        }
+
+        Ok(CompileShaderInput {
+            attributes,
+            visibility,
+            identifier,
+            path,
+            entry_points,
+        })
     }
 }
