@@ -10,3 +10,12 @@ impl<T> Vector2<T> {
         self.map(Round::round)
     }
 }
+
+impl<T> const Round for Vector2<T>
+where
+    T: [const] Round + [const] Destruct,
+{
+    fn round(self) -> Self {
+        self.round()
+    }
+}

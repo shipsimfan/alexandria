@@ -18,3 +18,12 @@ impl<T> Vector2<T> {
         self.min_v(Vector2::splat(min))
     }
 }
+
+impl<T> const Min for Vector2<T>
+where
+    T: [const] Min + [const] Destruct,
+{
+    fn min(self, min: Vector2<T>) -> Vector2<T> {
+        self.min_v(min)
+    }
+}

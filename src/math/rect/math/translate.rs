@@ -1,11 +1,12 @@
 use crate::math::{Rect, Vector2};
 use std::{marker::Destruct, ops::Add};
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Translate this [`Rect`] by `translation`
-    pub const fn translate(self, translation: Vector2<T>) -> Rect<T>
+    pub const fn translate(self, translation: Vector2<P>) -> Rect<P, S>
     where
-        T: [const] Add<Output = T> + [const] Destruct,
+        P: [const] Add<Output = P> + [const] Destruct,
+        S: [const] Destruct,
     {
         Rect::new(self.position + translation, self.size)
     }

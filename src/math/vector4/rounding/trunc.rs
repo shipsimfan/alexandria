@@ -11,3 +11,12 @@ impl<T> Vector4<T> {
         self.map(Trunc::trunc)
     }
 }
+
+impl<T> const Trunc for Vector4<T>
+where
+    T: [const] Trunc + [const] Destruct,
+{
+    fn trunc(self) -> Self {
+        self.trunc()
+    }
+}

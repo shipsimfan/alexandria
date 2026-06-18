@@ -8,11 +8,10 @@ impl<UserEvent: 'static + Send> XdgSurfaceListener for WaylandEventHandler<UserE
     fn configure(&mut self, mut surface: XdgSurfaceRef, serial: u32) {
         surface.ack_configure(serial);
 
-        let requested_size = Vector2i::new(self.requested_size.x as _, self.requested_size.y as _);
-        if requested_size != self.rect.size || self.id.is_none() {
-            self.rect.size = requested_size;
+        if self.requested_size != self.rect.size || self.id.is_none() {
+            self.rect.size = self.requested_size;
             if !self.is_fullscreen {
-                self.windowed_rect.size = requested_size;
+                self.windowed_rect.size = self.requested_size;
             }
 
             surface.set_window_geometry(0, 0, self.rect.size.x, self.rect.size.y);

@@ -9,3 +9,12 @@ impl<T> Vector4<T> {
         self.x.is_nan() || self.y.is_nan() || self.z.is_nan() || self.w.is_nan()
     }
 }
+
+impl<T> const IsNaN for Vector4<T>
+where
+    T: [const] IsNaN,
+{
+    fn is_nan(&self) -> bool {
+        self.is_nan()
+    }
+}

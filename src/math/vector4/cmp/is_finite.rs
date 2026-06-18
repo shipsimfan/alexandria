@@ -9,3 +9,12 @@ impl<T> Vector4<T> {
         self.x.is_finite() && self.y.is_finite() && self.z.is_finite() && self.w.is_finite()
     }
 }
+
+impl<T> const IsFinite for Vector4<T>
+where
+    T: [const] IsFinite,
+{
+    fn is_finite(&self) -> bool {
+        self.is_finite()
+    }
+}

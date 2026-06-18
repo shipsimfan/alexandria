@@ -18,3 +18,12 @@ impl<T> Vector2<T> {
         self.max_v(Vector2::splat(max))
     }
 }
+
+impl<T> const Max for Vector2<T>
+where
+    T: [const] Max + [const] Destruct,
+{
+    fn max(self, max: Vector2<T>) -> Vector2<T> {
+        self.max_v(max)
+    }
+}

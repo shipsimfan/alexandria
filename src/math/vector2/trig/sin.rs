@@ -6,3 +6,9 @@ impl<T: Sin> Vector2<T> {
         self.map(Sin::sin)
     }
 }
+
+impl<T: Sin> Sin for Vector2<T> {
+    fn sin(self) -> Self {
+        self.sin()
+    }
+}

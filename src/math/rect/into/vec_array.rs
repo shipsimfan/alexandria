@@ -1,18 +1,23 @@
-use crate::math::{Rect, Vector2};
+use crate::math::{Rect, Vector2, number::IntoSigned};
 use std::marker::Destruct;
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Convert this [`Rect`] into an array of `[position, size]`
-    pub const fn into_vec_array(self) -> [Vector2<T>; 2]
+    pub const fn into_vec_array(self) -> [Vector2<P>; 2]
     where
-        T: [const] Destruct,
+        P: [const] Destruct,
+        S: [const] IntoSigned<P> + [const] Destruct,
     {
-        [self.position, self.size]
+        [self.position, self.size.into_signed()]
     }
 }
 
-impl<T: [const] Destruct> const Into<[Vector2<T>; 2]> for Rect<T> {
-    fn into(self) -> [Vector2<T>; 2] {
+impl<P, S> const Into<[Vector2<P>; 2]> for Rect<P, S>
+where
+    P: [const] Destruct,
+    S: [const] IntoSigned<P> + [const] Destruct,
+{
+    fn into(self) -> [Vector2<P>; 2] {
         self.into_vec_array()
     }
 }

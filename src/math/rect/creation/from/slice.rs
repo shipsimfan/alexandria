@@ -1,24 +1,38 @@
-use crate::math::Rect;
+use crate::math::{Rect, number::FromSigned};
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Create a new [`Rect`] from a slice of values
-    pub const fn from_slice(s: &[T]) -> Rect<T>
+    pub const fn from_slice(s: &[P]) -> Rect<P, S>
     where
-        T: [const] Clone,
+        P: [const] Clone,
+        S: [const] FromSigned<P>,
     {
         assert!(s.len() >= 4);
-        Rect::from_xywh(s[0].clone(), s[1].clone(), s[2].clone(), s[3].clone())
+        Rect::from_xywh(
+            s[0].clone(),
+            s[1].clone(),
+            S::from_signed(s[2].clone()),
+            S::from_signed(s[3].clone()),
+        )
     }
 }
 
-impl<T: [const] Clone> const From<&[T]> for Rect<T> {
-    fn from(slice: &[T]) -> Self {
+impl<P, S> const From<&[P]> for Rect<P, S>
+where
+    P: [const] Clone,
+    S: [const] FromSigned<P>,
+{
+    fn from(slice: &[P]) -> Self {
         Rect::from_slice(slice)
     }
 }
 
-impl<T: [const] Clone> const From<&[T; 4]> for Rect<T> {
-    fn from(slice: &[T; 4]) -> Self {
+impl<P, S> const From<&[P; 4]> for Rect<P, S>
+where
+    P: [const] Clone,
+    S: [const] FromSigned<P>,
+{
+    fn from(slice: &[P; 4]) -> Self {
         Rect::from_slice(slice)
     }
 }

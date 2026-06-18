@@ -6,3 +6,9 @@ impl<T: Asinh> Vector2<T> {
         self.map(Asinh::asinh)
     }
 }
+
+impl<T: Asinh> Asinh for Vector2<T> {
+    fn asinh(self) -> Self {
+        self.asinh()
+    }
+}

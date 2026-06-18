@@ -18,3 +18,12 @@ impl<T> Matrix3x3<T> {
         self.max_m(Matrix3x3::splat(max))
     }
 }
+
+impl<T> const Max for Matrix3x3<T>
+where
+    T: [const] Max + [const] Destruct,
+{
+    fn max(self, other: Self) -> Self {
+        self.max_m(other)
+    }
+}

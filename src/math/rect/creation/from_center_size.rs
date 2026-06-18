@@ -1,19 +1,23 @@
-use crate::math::{Rect, Vector2, number::FromF32};
+use crate::math::{
+    Rect, Vector2,
+    number::{FromF32, IntoSigned},
+};
 use std::{
     marker::Destruct,
     ops::{Div, Sub},
 };
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Create a new [`Rect`] centered on `center` and with `size`
-    pub const fn from_center_size(center: Vector2<T>, size: Vector2<T>) -> Rect<T>
+    pub const fn from_center_size(center: Vector2<P>, size: Vector2<S>) -> Rect<P, S>
     where
-        T: [const] Sub<Output = T>
-            + [const] Div<Output = T>
-            + [const] Clone
+        P: [const] Sub<Output = P>
+            + [const] Div<Output = P>
             + [const] FromF32
+            + [const] Clone
             + [const] Destruct,
+        S: [const] IntoSigned<P> + [const] Clone + [const] Destruct,
     {
-        Rect::from_position_size(center - size.clone() / T::from_f32(2.0), size)
+        Rect::from_position_size(center - size.clone().into_signed() / P::from_f32(2.0), size)
     }
 }

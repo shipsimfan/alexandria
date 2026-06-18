@@ -1,7 +1,7 @@
 use crate::{
     Id,
     input::{KeyCode, KeyMod},
-    math::{Rational, Recti, Vector2i},
+    math::{Rational, Recti, Vector2i, Vector2u},
     window::{Display, DisplayOrientation, Window},
 };
 
@@ -47,7 +47,7 @@ pub enum EventKind<UserEvent: 'static + Send> {
         /// The ID of the resized [`Display`]
         id: Id<Display<'static, UserEvent>>,
         /// The new size of the [`Display`]
-        new_size: Vector2i,
+        new_size: Vector2u,
     },
 
     /// A [`Display`]'s work area changed
@@ -102,7 +102,7 @@ pub enum EventKind<UserEvent: 'static + Send> {
         id: Id<Window<UserEvent>>,
 
         /// The new size of the [`Window`]
-        new_size: Vector2i,
+        new_size: Vector2u,
     },
 
     /// A [`Window`] was moved

@@ -7,3 +7,9 @@ impl<T: Atan2> Vector4<T> {
         self.zip(other, Atan2::atan2)
     }
 }
+
+impl<T: Atan2> Atan2 for Vector4<T> {
+    fn atan2(self, other: Self) -> Self {
+        self.atan2(other)
+    }
+}

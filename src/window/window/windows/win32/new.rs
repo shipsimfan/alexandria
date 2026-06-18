@@ -1,5 +1,5 @@
 use crate::{
-    math::{Recti, Vector2i, Vector2u},
+    math::{Recti, Vector2i, Vector2u, number::IntoSigned},
     window::{Win32Window, WindowClass, WindowProc, WindowStyle},
 };
 use std::{
@@ -26,24 +26,18 @@ impl<T: WindowProc> Win32Window<T> {
         let title: Option<Vec<_>> = title.map(|title| title.encode_utf16().chain([0]).collect());
 
         let window_rect = match (position, size) {
-            (Some(position), Some(size)) => style.client_to_window(Recti::new(
-                position,
-                Vector2i::new(size.x as _, size.y as _),
-            ))?,
+            (Some(position), Some(size)) => style.client_to_window(Recti::new(position, size))?,
             (Some(position), None) => {
-                let mut rect = style.client_to_window(Recti::new(position, Vector2i::ONE))?;
-                rect.size = VEC_CW_USEDEFAULT;
+                let mut rect = style.client_to_window(Recti::new(position, Vector2u::ONE))?;
+                rect.size = VEC_CW_USEDEFAULT.into_signed();
                 rect
             }
             (None, Some(size)) => {
-                let mut rect = style.client_to_window(Recti::new(
-                    Vector2i::ZERO,
-                    Vector2i::new(size.x as _, size.y as _),
-                ))?;
+                let mut rect = style.client_to_window(Recti::new(Vector2i::ZERO, size))?;
                 rect.position = VEC_CW_USEDEFAULT;
                 rect
             }
-            (None, None) => Recti::new(VEC_CW_USEDEFAULT, VEC_CW_USEDEFAULT),
+            (None, None) => Recti::new(VEC_CW_USEDEFAULT, VEC_CW_USEDEFAULT.into_signed()),
         };
 
         let handle = unsafe {
@@ -54,8 +48,8 @@ impl<T: WindowProc> Win32Window<T> {
                 style.style,
                 window_rect.position.x,
                 window_rect.position.y,
-                window_rect.size.x,
-                window_rect.size.y,
+                window_rect.size.x as _,
+                window_rect.size.y as _,
                 null_mut(),
                 null_mut(),
                 GetModuleHandle(null_mut()),

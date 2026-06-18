@@ -9,3 +9,12 @@ impl<T> Vector2<T> {
         self.x.is_finite() && self.y.is_finite()
     }
 }
+
+impl<T> const IsFinite for Vector2<T>
+where
+    T: [const] IsFinite,
+{
+    fn is_finite(&self) -> bool {
+        self.is_finite()
+    }
+}

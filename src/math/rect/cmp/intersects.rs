@@ -1,11 +1,12 @@
-use crate::math::Rect;
+use crate::math::{Rect, number::IntoSigned};
 use std::{marker::Destruct, ops::Add};
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Does this [`Rect`] intersect `other`? - Justin was here :)
-    pub const fn intersects(self, other: Rect<T>) -> bool
+    pub const fn intersects(self, other: Rect<P, S>) -> bool
     where
-        T: [const] Add<Output = T> + [const] PartialOrd + [const] Clone + [const] Destruct,
+        P: [const] Add<Output = P> + [const] PartialOrd + [const] Clone + [const] Destruct,
+        S: [const] IntoSigned<P> + [const] Clone + [const] Destruct,
     {
         let self_top_left = self.clone().top_left();
         let other_top_left = other.clone().top_left();

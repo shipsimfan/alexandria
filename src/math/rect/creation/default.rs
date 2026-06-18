@@ -1,6 +1,10 @@
 use crate::math::{Rect, Vector2};
 
-impl<T: [const] Default> const Default for Rect<T> {
+impl<P, S> const Default for Rect<P, S>
+where
+    P: [const] Default,
+    S: [const] Default,
+{
     fn default() -> Self {
         Rect {
             position: Vector2::default(),

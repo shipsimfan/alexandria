@@ -18,16 +18,11 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         is_resizable: bool,
         content_scale: f32,
     ) {
-        let requested_size = requested_size.unwrap_or(Vector2u::new(
-            current_rect.size.x as u32,
-            current_rect.size.y as u32,
-        ));
-
         self.rect = current_rect;
         self.windowed_rect = if is_fullscreen {
             Recti::new(
                 requested_position.unwrap_or(current_rect.position),
-                Vector2i::new(requested_size.x as i32, requested_size.y as i32),
+                requested_size.unwrap_or(current_rect.size),
             )
         } else {
             current_rect

@@ -59,10 +59,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
             let mut set_size = None;
             for display in displays {
                 if display.rect().contains_point(&self.window.rect().position) {
-                    set_size = Some(Vector2u::new(
-                        display.rect().size.x as _,
-                        display.rect().size.y as _,
-                    ));
+                    set_size = Some(display.rect().size);
                     break;
                 }
             }
@@ -78,15 +75,11 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
         let size = self
             .window
             .style()
-            .client_to_window(Rect::new(
-                Vector2i::ZERO,
-                Vector2i::new(size.x as _, size.y as _),
-            ))
+            .client_to_window(Rect::new(Vector2i::ZERO, size))
             .map_err(|error| Error::new_with("unable to set a window's size", error))?
             .size;
 
-        self.window
-            .set_size(Vector2u::new(size.x as _, size.y as _))?;
+        self.window.set_size(size)?;
         Ok(())
     }
 
@@ -180,10 +173,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
 
             // Set the window size and position to the display's
             self.window.set_position(display.rect().position)?;
-            self.window.set_size(Vector2u::new(
-                display.rect().size.x as _,
-                display.rect().size.y as _,
-            ))
+            self.window.set_size(display.rect().size)
         } else {
             // Set the window style to windowed
             let style = self.window.style();
@@ -199,8 +189,7 @@ impl<UserEvent: 'static + Send> WindowInner<UserEvent> {
                     .map_err(|os| Error::new_with("unable to set a window's size", os))?;
 
                 self.window.set_position(rect.position)?;
-                self.window
-                    .set_size(Vector2u::new(rect.size.x as _, rect.size.y as _))?;
+                self.window.set_size(rect.size)?;
             }
 
             if self.window.is_minimized_when_windowed() {

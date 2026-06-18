@@ -12,7 +12,7 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
 
     /// Set the size of this window when it is windowed
     pub(in crate::window::window::windows) fn set_windowed_size(&mut self, size: Vector2u) {
-        self.windowed_rect.size = Vector2i::new(size.x as _, size.y as _);
+        self.windowed_rect.size = size;
     }
 
     /// Set the maximum size of the window, in pixels
@@ -24,13 +24,9 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         self.maximum_window_size = match maximum_size {
             Some(maximum_size) => Some(
                 self.style()
-                    .client_to_window(Recti::new(
-                        Vector2i::new(0, 0),
-                        maximum_size.map(|v| v as _),
-                    ))
+                    .client_to_window(Recti::new(Vector2i::ZERO, maximum_size))
                     .map_err(|os| Error::new_with("unable to set maximum window size", os))?
-                    .size
-                    .map(|v| v as _),
+                    .size,
             ),
             None => None,
         };
@@ -46,13 +42,9 @@ impl<UserEvent: 'static + Send> StandardWndProc<UserEvent> {
         self.minimum_window_size = match minimum_size {
             Some(minimum_size) => Some(
                 self.style()
-                    .client_to_window(Recti::new(
-                        Vector2i::new(0, 0),
-                        minimum_size.map(|v| v as _),
-                    ))
+                    .client_to_window(Recti::new(Vector2i::ZERO, minimum_size))
                     .map_err(|os| Error::new_with("unable to set minimum window size", os))?
-                    .size
-                    .map(|v| v as _),
+                    .size,
             ),
             None => None,
         };

@@ -6,3 +6,9 @@ impl<T: Sinh> Vector4<T> {
         self.map(Sinh::sinh)
     }
 }
+
+impl<T: Sinh> Sinh for Vector4<T> {
+    fn sinh(self) -> Self {
+        self.sinh()
+    }
+}

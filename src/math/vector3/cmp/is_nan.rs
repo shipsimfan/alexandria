@@ -9,3 +9,12 @@ impl<T> Vector3<T> {
         self.x.is_nan() || self.y.is_nan() || self.z.is_nan()
     }
 }
+
+impl<T> const IsNaN for Vector3<T>
+where
+    T: [const] IsNaN,
+{
+    fn is_nan(&self) -> bool {
+        self.is_nan()
+    }
+}

@@ -1,11 +1,12 @@
 use crate::math::{Rect, Vector2};
 use std::{marker::Destruct, ops::Mul};
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Scale this [`Rect`] by `scale`
-    pub const fn scale(self, scale: Vector2<T>) -> Rect<T>
+    pub const fn scale(self, scale: Vector2<S>) -> Rect<P, S>
     where
-        T: [const] Mul<Output = T> + [const] Destruct,
+        P: [const] Destruct,
+        S: [const] Mul<Output = S> + [const] Destruct,
     {
         Rect::new(self.position, self.size * scale)
     }

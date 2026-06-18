@@ -1,12 +1,12 @@
 use crate::math::{Rect, number::Zero};
 use std::marker::Destruct;
 
-impl<T: Zero> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Is this a valid [`Rect`]?
     pub const fn is_valid(&self) -> bool
     where
-        T: [const] PartialOrd + [const] Destruct,
+        S: [const] PartialOrd + [const] Destruct + Zero,
     {
-        self.size.x > T::ZERO && self.size.y > T::ZERO
+        self.size.x > S::ZERO && self.size.y > S::ZERO
     }
 }

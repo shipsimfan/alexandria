@@ -6,3 +6,9 @@ impl<T: Acosh> Vector3<T> {
         self.map(Acosh::acosh)
     }
 }
+
+impl<T: Acosh> Acosh for Vector3<T> {
+    fn acosh(self) -> Self {
+        self.acosh()
+    }
+}

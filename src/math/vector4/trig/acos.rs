@@ -6,3 +6,9 @@ impl<T: Acos> Vector4<T> {
         self.map(Acos::acos)
     }
 }
+
+impl<T: Acos> Acos for Vector4<T> {
+    fn acos(self) -> Self {
+        self.acos()
+    }
+}

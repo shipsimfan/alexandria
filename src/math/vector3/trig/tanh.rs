@@ -6,3 +6,9 @@ impl<T: Tanh> Vector3<T> {
         self.map(Tanh::tanh)
     }
 }
+
+impl<T: Tanh> Tanh for Vector3<T> {
+    fn tanh(self) -> Self {
+        self.tanh()
+    }
+}

@@ -6,3 +6,9 @@ impl<T: Cos> Vector3<T> {
         self.map(Cos::cos)
     }
 }
+
+impl<T: Cos> Cos for Vector3<T> {
+    fn cos(self) -> Self {
+        self.cos()
+    }
+}
