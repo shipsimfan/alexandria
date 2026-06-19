@@ -11,7 +11,7 @@ mod math;
 mod rounding;
 
 /// The description of a rectangular area
-
+#[repr(C)]
 #[cfg_attr(
     feature = "data-format",
     derive(data_format::Deserialize, data_format::Serialize)
