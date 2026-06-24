@@ -91,7 +91,11 @@ impl<UserEvent: 'static + Send> WlOutputListener for WaylandDisplayEventHandler<
         }
 
         // Set the display's size and refresh rate if it's the current mode
-        let new_size = Vector2i::new(width, height);
+        if width <= 0 || height <= 0 {
+            return;
+        }
+
+        let new_size = Vector2u::new(width as _, height as _);
         if self.rect.size != new_size {
             self.rect.size = new_size;
             self.resized = true;

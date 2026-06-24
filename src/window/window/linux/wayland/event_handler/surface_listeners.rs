@@ -1,6 +1,5 @@
 use crate::{
     EventKind,
-    math::Vector2i,
     window::{XdgSurfaceListener, XdgSurfaceRef, window::linux::wayland::WaylandEventHandler},
 };
 
@@ -14,7 +13,7 @@ impl<UserEvent: 'static + Send> XdgSurfaceListener for WaylandEventHandler<UserE
                 self.windowed_rect.size = self.requested_size;
             }
 
-            surface.set_window_geometry(0, 0, self.rect.size.x, self.rect.size.y);
+            surface.set_window_geometry(0, 0, self.rect.size.x as _, self.rect.size.y as _);
 
             if let Some(id) = self.id {
                 self.event_queue

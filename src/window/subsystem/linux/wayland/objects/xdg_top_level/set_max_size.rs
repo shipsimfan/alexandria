@@ -7,8 +7,8 @@ impl<T> XdgTopLevel<T> {
         unsafe {
             xdg_toplevel_set_max_size_dyn(
                 self.handle,
-                size.x,
-                size.y,
+                size.x as _,
+                size.y as _,
                 *self.wm.library().f.proxy_marshal_flags,
                 *self.wm.library().f.proxy_get_version,
             );
