@@ -8,7 +8,7 @@ use vulkan::{VkShaderModule, VkShaderModuleCreateInfo, try_vulkan};
 impl VulkanShaderModule {
     /// Create a new [`VulkanShaderModule`]
     pub(in crate::gpu::device) fn new<const N: usize>(
-        device: VulkanDevice,
+        device: &VulkanDevice,
         code: &VulkanShaderModuleCode<N>,
     ) -> Result<VulkanShaderModule> {
         let code = code.code();
@@ -27,6 +27,9 @@ impl VulkanShaderModule {
         ))
         .map_err(|error| Error::new_with("unable to create a shader module", error))?;
 
-        Ok(VulkanShaderModule { handle, device })
+        Ok(VulkanShaderModule {
+            handle,
+            device: device.clone(),
+        })
     }
 }

@@ -12,13 +12,12 @@ mod debug_messenger;
 mod frame_data;
 mod swapchain;
 
-mod create_shader_module;
+mod deref;
 mod new;
-mod wait_idle;
 
 pub use swapchain::Swapchain;
 
-const SWAPCHAIN_FORMAT: VulkanFormat = VulkanFormat::B8G8R8A8Srgb;
+pub const SWAPCHAIN_FORMAT: VulkanFormat = VulkanFormat::B8G8R8A8Srgb;
 const SWAPCHAIN_COLOR_SPACE: VulkanColorSpace = VulkanColorSpace::SRGBNonlinearKhr;
 const SWAPCHAIN_PRESENT_MODE: VulkanPresentMode = VulkanPresentMode::FIFOKhr;
 const MAX_FRAMES_IN_FLIGHT: usize = 2;

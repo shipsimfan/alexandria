@@ -52,10 +52,9 @@ fn main() {
     while running {
         let rendered = if let Some(swapchain) = &mut swapchain {
             if !window.as_ref().unwrap().is_minimized() {
-                let rendered = swapchain.render_frame(
+                let rendered = swapchain.render_blank_frame(
                     render_context.as_mut().unwrap(),
                     alexandria::math::Color3f::<alexandria::math::Linear>::new(1.0, 1.0, 0.0),
-                    || {},
                 );
                 if !rendered {
                     should_recreate_swapchain = true;
@@ -81,7 +80,7 @@ fn main() {
         if should_recreate_swapchain && !window.as_ref().unwrap().is_minimized() {
             should_recreate_swapchain = false;
 
-            render_context.as_mut().unwrap().wait_idle();
+            render_context.as_mut().unwrap().wait_idle().unwrap();
 
             drop(swapchain);
             swapchain = Some(Swapchain::new(
@@ -93,7 +92,7 @@ fn main() {
     }
 
     if let Some(window) = window {
-        render_context.as_mut().unwrap().wait_idle();
+        render_context.as_mut().unwrap().wait_idle().unwrap();
         window.destroy().unwrap();
     }
 }

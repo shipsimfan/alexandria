@@ -9,6 +9,6 @@ impl VulkanDevice {
         &self,
         code: &VulkanShaderModuleCode<N>,
     ) -> Result<VulkanShaderModule> {
-        VulkanShaderModule::new(self.clone(), code)
+        VulkanShaderModule::new(self, code)
     }
 }

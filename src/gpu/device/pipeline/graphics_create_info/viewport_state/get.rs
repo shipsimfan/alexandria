@@ -11,8 +11,15 @@ impl<'a> VulkanPipelineViewportStateCreateInfo<'a> {
 
     /// Get the viewports
     pub fn viewports(&self) -> &'a [VulkanViewport] {
-        unsafe {
-            std::slice::from_raw_parts(self.inner.viewports.cast(), self.inner.viewport_count as _)
+        if self.inner.viewports.is_null() {
+            &[]
+        } else {
+            unsafe {
+                std::slice::from_raw_parts(
+                    self.inner.viewports.cast(),
+                    self.inner.viewport_count as _,
+                )
+            }
         }
     }
 
@@ -23,8 +30,15 @@ impl<'a> VulkanPipelineViewportStateCreateInfo<'a> {
 
     /// Get the scissors
     pub fn scissors(&self) -> &'a [Recti] {
-        unsafe {
-            std::slice::from_raw_parts(self.inner.scissors.cast(), self.inner.scissor_count as _)
+        if self.inner.scissors.is_null() {
+            &[]
+        } else {
+            unsafe {
+                std::slice::from_raw_parts(
+                    self.inner.scissors.cast(),
+                    self.inner.scissor_count as _,
+                )
+            }
         }
     }
 }

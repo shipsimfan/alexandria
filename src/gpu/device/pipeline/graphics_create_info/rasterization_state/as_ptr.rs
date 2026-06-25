@@ -1,9 +1,9 @@
-use crate::gpu::VulkanPipelineRasterizerStateCreateInfo;
+use crate::gpu::VulkanPipelineRasterizationStateCreateInfo;
 use vulkan::VkPipelineRasterizationStateCreateInfo;
 
-impl VulkanPipelineRasterizerStateCreateInfo {
+impl VulkanPipelineRasterizationStateCreateInfo {
     /// Get a pointer to the inner Vulkan pipeline rasterization state create info
-    pub(in crate::gpu::device::pipeline::graphics_create_info) fn as_ptr(
+    pub(in crate::gpu::device::pipeline) fn as_ptr(
         &self,
     ) -> *const VkPipelineRasterizationStateCreateInfo {
         &self.inner

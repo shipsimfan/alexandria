@@ -1,10 +1,10 @@
 use crate::gpu::{
-    VulkanCullModeFlags, VulkanFrontFace, VulkanPipelineRasterizerStateCreateInfo,
+    VulkanCullModeFlags, VulkanFrontFace, VulkanPipelineRasterizationStateCreateInfo,
     VulkanPolygonMode,
 };
 use vulkan::VK_TRUE;
 
-impl VulkanPipelineRasterizerStateCreateInfo {
+impl VulkanPipelineRasterizationStateCreateInfo {
     /// Get if depth clamping is enabled
     pub fn depth_clamp_enable(&self) -> bool {
         self.inner.depth_clamp_enable == VK_TRUE

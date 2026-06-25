@@ -36,10 +36,9 @@ fn main() {
     while running {
         // Render a frame if possible
         let rendered = if !window.is_minimized() {
-            let rendered = swapchain.render_frame(
+            let rendered = swapchain.render_blank_frame(
                 &mut render_context,
                 alexandria::math::Color3f::<alexandria::math::Linear>::new(1.0, 0.5, 0.5),
-                || {},
             );
             if !rendered {
                 should_recreate_swapchain = true;
@@ -64,14 +63,14 @@ fn main() {
         if should_recreate_swapchain && !window.is_minimized() {
             should_recreate_swapchain = false;
 
-            render_context.wait_idle();
+            render_context.wait_idle().unwrap();
 
             drop(swapchain);
             swapchain = Swapchain::new(&mut render_context, &mut surface, &window);
         }
     }
 
-    render_context.wait_idle();
+    render_context.wait_idle().unwrap();
 
     window.destroy().expect("unable to destroy window");
 }

@@ -5,8 +5,8 @@ impl VulkanImage {
     /// Create a new [`VulkanImage`] from a Vulkan image handle
     pub(in crate::gpu::device) fn from_handle(
         handle: VkImage,
-        device: VulkanDevice,
+        device: &VulkanDevice,
     ) -> VulkanImage {
-        VulkanImage::from_inner(VulkanImageInner::from_handle(handle, device))
+        VulkanImage::from_inner(VulkanImageInner::from_handle(handle, device.clone()))
     }
 }

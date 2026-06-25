@@ -9,7 +9,7 @@ impl VulkanFence {
     /// Create a new [`VulkanFence`]
     pub(in crate::gpu::device) fn new(
         flags: VulkanFenceCreateFlags,
-        device: VulkanDevice,
+        device: &VulkanDevice,
     ) -> Result<VulkanFence> {
         let create_info = VkFenceCreateInfo {
             flags,
@@ -25,6 +25,9 @@ impl VulkanFence {
         ))
         .map_err(|vk| Error::new_with("unable to create a fence", vk))?;
 
-        Ok(VulkanFence { handle, device })
+        Ok(VulkanFence {
+            handle,
+            device: device.clone(),
+        })
     }
 }

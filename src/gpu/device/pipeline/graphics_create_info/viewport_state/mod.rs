@@ -6,6 +6,7 @@ mod viewport;
 mod as_ptr;
 mod get;
 mod new;
+mod new_dynamic;
 mod set;
 
 pub use viewport::*;

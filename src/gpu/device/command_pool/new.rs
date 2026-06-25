@@ -10,7 +10,7 @@ impl VulkanCommandPool {
     pub(in crate::gpu::device) fn new(
         queue_family: u32,
         flags: VulkanCommandPoolCreateFlags,
-        device: VulkanDevice,
+        device: &VulkanDevice,
     ) -> Result<VulkanCommandPool> {
         let create_info = VkCommandPoolCreateInfo {
             flags,
@@ -30,7 +30,7 @@ impl VulkanCommandPool {
         Ok(VulkanCommandPool {
             handle,
             command_buffers: PackedMap::new(),
-            device,
+            device: device.clone(),
         })
     }
 }

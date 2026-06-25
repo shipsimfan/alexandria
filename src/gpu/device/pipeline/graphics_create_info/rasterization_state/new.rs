@@ -1,11 +1,11 @@
 use crate::gpu::{
-    VulkanCullModeFlags, VulkanFrontFace, VulkanPipelineRasterizerStateCreateInfo,
+    VulkanCullModeFlags, VulkanFrontFace, VulkanPipelineRasterizationStateCreateInfo,
     VulkanPolygonMode,
 };
 use vulkan::{VK_FALSE, VK_TRUE, VkPipelineRasterizationStateCreateInfo};
 
-impl VulkanPipelineRasterizerStateCreateInfo {
-    /// Create a new [`VulkanPipelineRasterizerStateCreateInfo`]
+impl VulkanPipelineRasterizationStateCreateInfo {
+    /// Create a new [`VulkanPipelineRasterizationStateCreateInfo`]
     pub fn new<F: Into<VulkanCullModeFlags>>(
         depth_clamp_enable: bool,
         rasterizer_discard_enable: bool,
@@ -17,8 +17,8 @@ impl VulkanPipelineRasterizerStateCreateInfo {
         depth_bias_clamp: f32,
         depth_bias_slope_factor: f32,
         line_width: f32,
-    ) -> VulkanPipelineRasterizerStateCreateInfo {
-        VulkanPipelineRasterizerStateCreateInfo {
+    ) -> VulkanPipelineRasterizationStateCreateInfo {
+        VulkanPipelineRasterizationStateCreateInfo {
             inner: VkPipelineRasterizationStateCreateInfo {
                 depth_clamp_enable: if depth_clamp_enable {
                     VK_TRUE
