@@ -117,3 +117,4 @@
  14. Add 2-d support to `Matrix3x3`
  15. Add more external control to event queue
  16. Add max capacity to event queue
+ 17. Make fullscreen look for display with greatest overlap
