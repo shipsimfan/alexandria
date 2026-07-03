@@ -84,8 +84,7 @@ impl<UserEvent: 'static + Send> Window<UserEvent> {
     ///
     /// Returns [`None`] if the window has been destroyed
     pub fn size_opt(&self) -> Option<Vector2u> {
-        self.rect_opt()
-            .map(|rect| Vector2u::new(rect.size.x as _, rect.size.y as _))
+        self.rect_opt().map(|rect| rect.size)
     }
 
     /// Get the size of the window's client area

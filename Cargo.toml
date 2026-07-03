@@ -39,6 +39,7 @@ vulkan = { workspace = true, features = ["win32"] }
 
 [target.'cfg(target_os = "linux")'.dependencies]
 linux.git = "https://github.com/shipsimfan/lib-linux"
+xkbcommon.git = "https://github.com/shipsimfan/lib-xkbcommon"
 wayland.git = "https://github.com/shipsimfan/lib-wayland"
 
 vulkan = { workspace = true, features = ["wayland"] }

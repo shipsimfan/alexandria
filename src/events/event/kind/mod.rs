@@ -1,7 +1,7 @@
 use crate::{
     Id,
     input::{KeyCode, KeyMod},
-    math::{Rational, Recti, Vector2i},
+    math::{Rational, Recti, Vector2i, Vector2u},
     window::{Display, DisplayOrientation, Window},
 };
 
@@ -47,7 +47,7 @@ pub enum EventKind<UserEvent: 'static + Send> {
         /// The ID of the resized [`Display`]
         id: Id<Display<'static, UserEvent>>,
         /// The new size of the [`Display`]
-        new_size: Vector2i,
+        new_size: Vector2u,
     },
 
     /// A [`Display`]'s work area changed
@@ -102,7 +102,7 @@ pub enum EventKind<UserEvent: 'static + Send> {
         id: Id<Window<UserEvent>>,
 
         /// The new size of the [`Window`]
-        new_size: Vector2i,
+        new_size: Vector2u,
     },
 
     /// A [`Window`] was moved
@@ -190,7 +190,7 @@ pub enum EventKind<UserEvent: 'static + Send> {
     /// A key was pressed
     KeyDown {
         /// The ID of the [`Window`] that received the key event, if any
-        window_id: Id<Window<UserEvent>>,
+        window_id: Option<Id<Window<UserEvent>>>,
 
         /// The state of the modifier keys when the key was pressed
         key_mod: KeyMod,
@@ -199,7 +199,7 @@ pub enum EventKind<UserEvent: 'static + Send> {
         key_code: KeyCode,
 
         /// The raw scan code of the key that was pressed
-        scan_code: u16,
+        scan_code: u32,
 
         /// Whether this is a repeat event (i.e. the key is being held down)
         is_repeat: bool,
@@ -208,7 +208,7 @@ pub enum EventKind<UserEvent: 'static + Send> {
     /// A key was released
     KeyUp {
         /// The ID of the [`Window`] that received the key event, if any
-        window_id: Id<Window<UserEvent>>,
+        window_id: Option<Id<Window<UserEvent>>>,
 
         /// The state of the modifier keys when the key was pressed
         key_mod: KeyMod,
@@ -217,7 +217,7 @@ pub enum EventKind<UserEvent: 'static + Send> {
         key_code: KeyCode,
 
         /// The raw scan code of the key that was released
-        scan_code: u16,
+        scan_code: u32,
     },
 
     /**

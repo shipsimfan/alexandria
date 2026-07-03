@@ -10,3 +10,12 @@ impl<T> Vector2<T> {
         self.map(Ceil::ceil)
     }
 }
+
+impl<T> const Ceil for Vector2<T>
+where
+    T: [const] Ceil + [const] Destruct,
+{
+    fn ceil(self) -> Self {
+        self.ceil()
+    }
+}

@@ -9,3 +9,12 @@ impl<T> Matrix3x3<T> {
         self.r0.is_nan() || self.r1.is_nan() || self.r2.is_nan()
     }
 }
+
+impl<T> const IsNaN for Matrix3x3<T>
+where
+    T: [const] IsNaN,
+{
+    fn is_nan(&self) -> bool {
+        self.is_nan()
+    }
+}

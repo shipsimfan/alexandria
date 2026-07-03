@@ -10,6 +10,6 @@ impl VulkanDevice {
         queue_family: u32,
         flags: F,
     ) -> Result<VulkanCommandPool> {
-        VulkanCommandPool::new(queue_family, flags.into(), self.clone())
+        VulkanCommandPool::new(queue_family, flags.into(), self)
     }
 }

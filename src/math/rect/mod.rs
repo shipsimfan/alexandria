@@ -11,27 +11,27 @@ mod math;
 mod rounding;
 
 /// The description of a rectangular area
-
+#[repr(C)]
 #[cfg_attr(
     feature = "data-format",
     derive(data_format::Deserialize, data_format::Serialize)
 )]
-pub struct Rect<T> {
+pub struct Rect<P, S> {
     /// The position of the top-left point of the rectangle
-    pub position: Vector2<T>,
+    pub position: Vector2<P>,
 
     /// The size of the rectangle
-    pub size: Vector2<T>,
+    pub size: Vector2<S>,
 }
 
 /// A [`Rect`] made up of [`f32`]s
-pub type Rectf = Rect<f32>;
+pub type Rectf = Rect<f32, f32>;
 
 /// A [`Rect`] made up of [`f64`]s
-pub type Rectd = Rect<f64>;
+pub type Rectd = Rect<f64, f64>;
 
 /// A [`Rect`] made up of [`u32`]s
-pub type Rectu = Rect<u32>;
+pub type Rectu = Rect<u32, u32>;
 
 /// A [`Rect`] made up of [`i32`]s
-pub type Recti = Rect<i32>;
+pub type Recti = Rect<i32, u32>;

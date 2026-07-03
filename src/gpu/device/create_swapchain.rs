@@ -53,7 +53,7 @@ impl VulkanDevice {
             present_mode,
             clipped,
             old_swapchain,
-            self.clone(),
+            self,
         )
     }
 }

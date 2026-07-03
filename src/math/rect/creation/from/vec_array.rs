@@ -1,18 +1,23 @@
-use crate::math::{Rect, Vector2};
+use crate::math::{Rect, Vector2, number::FromSigned};
 use std::marker::Destruct;
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Create a new [`Rect`] from an array of vectors
-    pub const fn from_vec_array([position, size]: [Vector2<T>; 2]) -> Rect<T>
+    pub const fn from_vec_array([position, size]: [Vector2<P>; 2]) -> Rect<P, S>
     where
-        T: [const] Destruct,
+        P: [const] Destruct,
+        S: [const] FromSigned<P>,
     {
-        Rect::from_position_size(position, size)
+        Rect::from_position_size(position, Vector2::from_signed(size))
     }
 }
 
-impl<T: [const] Destruct> const From<[Vector2<T>; 2]> for Rect<T> {
-    fn from(array: [Vector2<T>; 2]) -> Self {
+impl<P, S> const From<[Vector2<P>; 2]> for Rect<P, S>
+where
+    P: [const] Destruct,
+    S: [const] FromSigned<P>,
+{
+    fn from(array: [Vector2<P>; 2]) -> Self {
         Rect::from_vec_array(array)
     }
 }

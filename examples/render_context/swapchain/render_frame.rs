@@ -2,16 +2,27 @@ use crate::render_context::{RenderContext, Swapchain};
 use alexandria::{
     gpu::{
         VK_QUEUE_FAMILY_IGNORED, VulkanAccessFlag, VulkanAttachmentLoadOp, VulkanAttachmentStoreOp,
-        VulkanCommandBufferSubmitInfo, VulkanImageAspectFlag, VulkanImageLayout,
-        VulkanImageMemoryBarrier, VulkanPipelineStageFlag, VulkanRenderingAttachmentInfo,
-        VulkanResolveModeFlag, VulkanSemaphoreSubmitInfo, VulkanSubmitInfo,
+        VulkanCommandBuffer, VulkanCommandBufferSubmitInfo, VulkanImageAspectFlag,
+        VulkanImageLayout, VulkanImageMemoryBarrier, VulkanPipelineStageFlag,
+        VulkanRenderingAttachmentInfo, VulkanResolveModeFlag, VulkanSemaphoreSubmitInfo,
+        VulkanSubmitInfo,
     },
-    math::{Color3f, Linear, Vector2i},
+    math::{Color3f, Linear, Vector2i, Vector2u},
 };
 
 impl<'surface> Swapchain<'surface> {
+    /// Render a single blank frame
+    #[allow(unused)]
+    pub fn render_blank_frame(
+        &mut self,
+        render_context: &mut RenderContext,
+        clear_color: Color3f<Linear>,
+    ) -> bool {
+        self.render_frame(render_context, clear_color, |_, _| {})
+    }
+
     /// Render a single frame
-    pub fn render_frame<F: FnOnce()>(
+    pub fn render_frame<F: FnOnce(Vector2u, &mut VulkanCommandBuffer)>(
         &mut self,
         render_context: &mut RenderContext,
         clear_color: Color3f<Linear>,
@@ -78,7 +89,7 @@ impl<'surface> Swapchain<'surface> {
             None,
         );
 
-        render();
+        render(self.size, command_buffer);
 
         command_buffer.cmd_end_rendering();
 

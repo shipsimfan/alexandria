@@ -1,20 +1,25 @@
-use crate::math::Rect;
+use crate::math::{Rect, number::IntoSigned};
 use std::{
     marker::Destruct,
     ops::{Add, Sub},
 };
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Create a new [`Rect`] from this one with the giving padding
-    pub const fn pad(self, left: T, right: T, top: T, bottom: T) -> Rect<T>
+    pub const fn pad(self, left: P, right: P, top: P, bottom: P) -> Rect<P, S>
     where
-        T: [const] Add<Output = T> + [const] Sub<Output = T> + [const] Clone + [const] Destruct,
+        P: [const] Add<Output = P>
+            + [const] Sub<Output = P>
+            + [const] IntoSigned<S>
+            + [const] Clone
+            + [const] Destruct,
+        S: [const] Sub<Output = S> + [const] Destruct,
     {
         Rect::from_xywh(
             self.position.x + left.clone(),
             self.position.y + top.clone(),
-            self.size.x - left - right,
-            self.size.y - top - bottom,
+            self.size.x - (left - right).into_signed(),
+            self.size.y - (top - bottom).into_signed(),
         )
     }
 }

@@ -4,12 +4,13 @@ use std::{
     ops::{Add, Mul},
 };
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Calculate the perimeter of this [`Rect`]
-    pub const fn perimeter(self) -> T
+    pub const fn perimeter(self) -> S
     where
-        T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] FromF32 + [const] Destruct,
+        P: [const] Destruct,
+        S: [const] Add<Output = S> + [const] Mul<Output = S> + [const] FromF32 + [const] Destruct,
     {
-        self.size.x * T::from_f32(2.0) + self.size.y * T::from_f32(2.0)
+        self.size.x * S::from_f32(2.0) + self.size.y * S::from_f32(2.0)
     }
 }

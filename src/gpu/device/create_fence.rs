@@ -6,6 +6,6 @@ use crate::{
 impl VulkanDevice {
     /// Create a new [`VulkanFence`]
     pub fn create_fence<F: Into<VulkanFenceCreateFlags>>(&self, flags: F) -> Result<VulkanFence> {
-        VulkanFence::new(flags.into(), self.clone())
+        VulkanFence::new(flags.into(), self)
     }
 }

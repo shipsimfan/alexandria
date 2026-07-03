@@ -1,8 +1,8 @@
 use crate::math::{Rect, Vector2};
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Create a new [`Rect`]
-    pub const fn new(position: Vector2<T>, size: Vector2<T>) -> Rect<T> {
+    pub const fn new(position: Vector2<P>, size: Vector2<S>) -> Rect<P, S> {
         Rect { position, size }
     }
 }

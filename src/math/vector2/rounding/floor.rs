@@ -10,3 +10,12 @@ impl<T> Vector2<T> {
         self.map(Floor::floor)
     }
 }
+
+impl<T> const Floor for Vector2<T>
+where
+    T: [const] Floor + [const] Destruct,
+{
+    fn floor(self) -> Self {
+        self.floor()
+    }
+}

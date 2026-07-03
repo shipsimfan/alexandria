@@ -7,7 +7,7 @@ use vulkan::{VkSemaphore, VkSemaphoreCreateInfo, try_vulkan};
 
 impl VulkanSemaphore {
     /// Create a new [`VulkanSemaphore`]
-    pub(in crate::gpu::device) fn new(device: VulkanDevice) -> Result<VulkanSemaphore> {
+    pub(in crate::gpu::device) fn new(device: &VulkanDevice) -> Result<VulkanSemaphore> {
         let create_info = VkSemaphoreCreateInfo::default();
 
         let mut handle = VkSemaphore::null();
@@ -19,6 +19,9 @@ impl VulkanSemaphore {
         ))
         .map_err(|vk| Error::new_with("unable to create a semaphore", vk))?;
 
-        Ok(VulkanSemaphore { handle, device })
+        Ok(VulkanSemaphore {
+            handle,
+            device: device.clone(),
+        })
     }
 }

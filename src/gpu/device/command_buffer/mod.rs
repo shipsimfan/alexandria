@@ -5,8 +5,12 @@ mod functions;
 
 mod begin;
 mod cmd_begin_rendering;
+mod cmd_bind_pipeline;
+mod cmd_draw;
 mod cmd_end_rendering;
 mod cmd_pipeline_barrier2;
+mod cmd_set_scissor;
+mod cmd_set_viewport;
 mod end;
 mod get;
 mod new;

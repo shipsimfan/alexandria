@@ -1,36 +1,40 @@
-use crate::math::Rect;
+use crate::math::{Rect, number::IntoSigned};
 use std::{marker::Destruct, ops::Add};
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Get the position of the left side of this [`Rect`]
-    pub const fn left(self) -> T
+    pub const fn left(self) -> P
     where
-        T: [const] Destruct,
+        P: [const] Destruct,
+        S: [const] Destruct,
     {
         self.position.x
     }
 
     /// Get the position of the right side of this [`Rect`]
-    pub const fn right(self) -> T
+    pub const fn right(self) -> P
     where
-        T: [const] Add<Output = T> + [const] Destruct,
+        P: [const] Add<Output = P> + [const] Destruct,
+        S: [const] IntoSigned<P> + [const] Destruct,
     {
-        self.position.x + self.size.x
+        self.position.x + self.size.x.into_signed()
     }
 
     /// Get the position of the top side of this [`Rect`]
-    pub const fn top(self) -> T
+    pub const fn top(self) -> P
     where
-        T: [const] Destruct,
+        P: [const] Destruct,
+        S: [const] Destruct,
     {
         self.position.y
     }
 
     /// Get the position of the bottom side of this [`Rect`]
-    pub const fn bottom(self) -> T
+    pub const fn bottom(self) -> P
     where
-        T: [const] Add<Output = T> + [const] Destruct,
+        P: [const] Add<Output = P> + [const] Destruct,
+        S: [const] IntoSigned<P> + [const] Destruct,
     {
-        self.position.y + self.size.y
+        self.position.y + self.size.y.into_signed()
     }
 }

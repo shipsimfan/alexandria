@@ -7,6 +7,7 @@ use vulkan::VkPhysicalDevice;
 mod features;
 mod functions;
 mod queue_family_properties;
+mod surface_capabilities;
 
 mod device_builder;
 mod enumerate_all_extensions;
@@ -22,6 +23,7 @@ mod swapchain_formats;
 
 pub use features::*;
 pub use queue_family_properties::*;
+pub use surface_capabilities::*;
 
 pub(in crate::gpu::instance) use functions::VulkanAdapterFunctions;
 

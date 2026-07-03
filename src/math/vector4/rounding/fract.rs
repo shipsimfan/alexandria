@@ -11,3 +11,12 @@ impl<T> Vector4<T> {
         self.map(Fract::fract)
     }
 }
+
+impl<T> const Fract for Vector4<T>
+where
+    T: [const] Fract + [const] Destruct,
+{
+    fn fract(self) -> Self {
+        self.fract()
+    }
+}

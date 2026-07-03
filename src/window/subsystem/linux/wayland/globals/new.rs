@@ -1,7 +1,7 @@
 use crate::{EventQueue, PackedMap, window::WaylandGlobals};
 use std::ffi::CStr;
 use wayland::{
-    wl_compositor_interface, wl_output_interface,
+    wl_compositor_interface, wl_output_interface, wl_seat_interface,
     xdg_decoration::zxdg_decoration_manager_v1_interface,
     xdg_output::zxdg_output_manager_v1_interface, xdg_shell::xdg_wm_base_interface,
 };
@@ -22,6 +22,8 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
             xdg_wm_base: None,
             xdg_decoration_manager: None,
 
+            seats: Vec::new(),
+
             wl_output_manager_name: unsafe { CStr::from_ptr(wl_output_interface.name) },
             xdg_output_name: unsafe { CStr::from_ptr(zxdg_output_manager_v1_interface.name) },
 
@@ -30,6 +32,8 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
             xdg_decoration_manager_name: unsafe {
                 CStr::from_ptr(zxdg_decoration_manager_v1_interface.name)
             },
+
+            wl_seat_name: unsafe { CStr::from_ptr(wl_seat_interface.name) },
         }
     }
 }

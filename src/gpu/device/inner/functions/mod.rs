@@ -2,7 +2,8 @@ use crate::{
     FunctionSymbol,
     gpu::device::{
         VulkanCommandBufferFunctions, VulkanCommandPoolFunctions, VulkanFenceFunctions,
-        VulkanImageViewFunctions, VulkanQueueFunctions, VulkanSemaphoreFunctions,
+        VulkanImageViewFunctions, VulkanPipelineFunctions, VulkanPipelineLayoutFunctions,
+        VulkanQueueFunctions, VulkanSemaphoreFunctions, VulkanShaderModuleFunctions,
         VulkanSwapchainFunctions,
     },
 };
@@ -35,6 +36,15 @@ pub(in crate::gpu::device) struct VulkanDeviceFunctions {
 
     /// The functions used by queues
     pub queue: VulkanQueueFunctions,
+
+    /// The functions used by shader modules
+    pub shader_module: VulkanShaderModuleFunctions,
+
+    /// The functions used by pipelines
+    pub pipeline: VulkanPipelineFunctions,
+
+    /// The functions used by pipeline layouts
+    pub pipeline_layout: VulkanPipelineLayoutFunctions,
 
     /** Individual Functions **/
 

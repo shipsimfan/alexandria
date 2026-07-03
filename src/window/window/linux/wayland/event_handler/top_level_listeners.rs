@@ -62,11 +62,11 @@ impl<UserEvent: 'static + Send> XdgTopLevelListener for WaylandEventHandler<User
         }
 
         if width > 0 {
-            self.requested_size.x = width;
+            self.requested_size.x = width as _;
         }
 
         if height > 0 {
-            self.requested_size.y = height;
+            self.requested_size.y = height as _;
         }
     }
 

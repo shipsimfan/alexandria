@@ -1,12 +1,13 @@
-use crate::math::{Rect, number::IntoF32};
+use crate::math::{Rect, Rectf, number::IntoF32};
 use std::marker::Destruct;
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Convert this [`Rect`]'s elements into [`f32`]s
-    pub const fn into_f32(self) -> Rect<f32>
+    pub const fn into_f32(self) -> Rectf
     where
-        T: [const] IntoF32 + [const] Destruct,
+        P: [const] IntoF32 + [const] Destruct,
+        S: [const] IntoF32 + [const] Destruct,
     {
-        self.map(IntoF32::into_f32)
+        self.map(IntoF32::into_f32, IntoF32::into_f32)
     }
 }

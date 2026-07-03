@@ -1,66 +1,102 @@
 use crate::math::{
     Rect,
-    number::{Abs, Atan2, Cos, FromF32, One, Sin, Sqrt, Zero},
+    number::{Abs, Atan2, Cos, FromF32, FromSigned, One, Sin, Sqrt, Zero},
 };
 use std::ops::{Add, Div, DivAssign, Mul, Neg, Rem, Sub};
 
-impl<
-    T: Mul<Output = T>
-        + Sub<Output = T>
-        + Add<Output = T>
-        + Div<Output = T>
-        + Neg<Output = T>
-        + Rem<Output = T>
-        + DivAssign
-        + Atan2
-        + Sin
-        + Cos
-        + Sqrt
-        + Abs
-        + Clone
-        + PartialOrd
-        + Zero
-        + One
-        + FromF32,
-> Rect<T>
-{
+impl<P, S> Rect<P, S> {
     /// Interpolates spherically between two vectors
-    pub fn slerp_unclamped(self, other: Rect<T>, t: T) -> Rect<T> {
+    pub fn slerp_unclamped(self, other: Rect<P, S>, t: P) -> Rect<P, S>
+    where
+        P: Mul<Output = P>
+            + Sub<Output = P>
+            + Add<Output = P>
+            + Div<Output = P>
+            + Neg<Output = P>
+            + Rem<Output = P>
+            + DivAssign
+            + Atan2
+            + Sin
+            + Cos
+            + Sqrt
+            + Abs
+            + Clone
+            + PartialOrd
+            + Zero
+            + One
+            + FromF32,
+        S: Mul<Output = S>
+            + Sub<Output = S>
+            + Add<Output = S>
+            + Div<Output = S>
+            + Neg<Output = S>
+            + Rem<Output = S>
+            + FromSigned<P>
+            + DivAssign
+            + Atan2
+            + Sin
+            + Cos
+            + Sqrt
+            + Abs
+            + Clone
+            + PartialOrd
+            + Zero
+            + One
+            + FromF32,
+    {
         Rect::new(
             self.position.slerp_unclamped(other.position, t.clone()),
-            self.size.slerp_unclamped(other.size, t),
+            self.size.slerp_unclamped(other.size, S::from_signed(t)),
         )
     }
 }
 
-impl<
-    T: Mul<Output = T>
-        + Sub<Output = T>
-        + Add<Output = T>
-        + Div<Output = T>
-        + Neg<Output = T>
-        + Rem<Output = T>
-        + DivAssign
-        + Atan2
-        + Sin
-        + Cos
-        + Sqrt
-        + Abs
-        + Clone
-        + PartialOrd
-        + Zero
-        + One
-        + FromF32,
-> Rect<T>
-{
+impl<P, S> Rect<P, S> {
     /// Interpolates spherically between two vectors, clamping `t` between 0 and 1
-    pub fn slerp(self, other: Rect<T>, t: T) -> Rect<T> {
+    pub fn slerp(self, other: Rect<P, S>, t: P) -> Rect<P, S>
+    where
+        P: Mul<Output = P>
+            + Sub<Output = P>
+            + Add<Output = P>
+            + Div<Output = P>
+            + Neg<Output = P>
+            + Rem<Output = P>
+            + DivAssign
+            + Atan2
+            + Sin
+            + Cos
+            + Sqrt
+            + Abs
+            + Clone
+            + PartialOrd
+            + Zero
+            + One
+            + FromF32,
+        S: Mul<Output = S>
+            + Sub<Output = S>
+            + Add<Output = S>
+            + Div<Output = S>
+            + Neg<Output = S>
+            + Rem<Output = S>
+            + FromSigned<P>
+            + DivAssign
+            + Atan2
+            + Sin
+            + Cos
+            + Sqrt
+            + Abs
+            + Clone
+            + PartialOrd
+            + Zero
+            + One
+            + FromF32,
+    {
         self.slerp_unclamped(
             other,
-            if t < T::ZERO {
-                T::ZERO
-            } else if t > T::ONE {
-                T::ONE
+            if t < P::ZERO {
+                P::ZERO
+            } else if t > P::ONE {
+                P::ONE
             } else {
                 t
             },

@@ -30,6 +30,13 @@ impl<UserEvent: 'static + Send> WaylandGlobals<UserEvent> {
             }
         }
 
+        for i in 0..self.seats.len() {
+            if self.seats[i].name() == name {
+                self.seats.swap_remove(i);
+                return Ok(());
+            }
+        }
+
         // Check if a required global is removed
         if let Some(compositor) = &self.compositor {
             if name == compositor.name() {

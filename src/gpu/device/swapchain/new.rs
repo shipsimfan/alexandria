@@ -37,7 +37,7 @@ impl<'surface> VulkanSwapchain<'surface> {
 
         old_swapchain: Option<&mut VulkanSwapchain>,
 
-        device: VulkanDevice,
+        device: &VulkanDevice,
     ) -> Result<VulkanSwapchain<'surface>> {
         // Create swapchain
         let create_info = VkSwapchainCreateInfoKhr {
@@ -91,14 +91,14 @@ impl<'surface> VulkanSwapchain<'surface> {
 
         let images = images
             .into_iter()
-            .map(|handle| VulkanImage::from_handle(handle, device.clone()))
+            .map(|handle| VulkanImage::from_handle(handle, device))
             .collect();
 
         Ok(VulkanSwapchain {
             handle,
             images,
             surface: Some(surface),
-            device,
+            device: device.clone(),
         })
     }
 }

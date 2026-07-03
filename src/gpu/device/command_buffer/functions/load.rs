@@ -4,7 +4,8 @@ use crate::{
 };
 use vulkan::{
     VK_ALLOCATE_COMMAND_BUFFERS, VK_BEGIN_COMMAND_BUFFER, VK_CMD_BEGIN_RENDERING,
-    VK_CMD_END_RENDERING, VK_CMD_PIPELINE_BARRIER2, VK_END_COMMAND_BUFFER, VK_FREE_COMMAND_BUFFERS,
+    VK_CMD_BIND_PIPELINE, VK_CMD_DRAW, VK_CMD_END_RENDERING, VK_CMD_PIPELINE_BARRIER2,
+    VK_CMD_SET_SCISSOR, VK_CMD_SET_VIEWPORT, VK_END_COMMAND_BUFFER, VK_FREE_COMMAND_BUFFERS,
     VkDevice,
 };
 
@@ -31,6 +32,10 @@ impl VulkanCommandBufferFunctions {
             )?,
             cmd_begin_rendering: load_device_function!(instance, device, VK_CMD_BEGIN_RENDERING)?,
             cmd_end_rendering: load_device_function!(instance, device, VK_CMD_END_RENDERING)?,
+            cmd_bind_pipeline: load_device_function!(instance, device, VK_CMD_BIND_PIPELINE)?,
+            cmd_set_viewport: load_device_function!(instance, device, VK_CMD_SET_VIEWPORT)?,
+            cmd_set_scissor: load_device_function!(instance, device, VK_CMD_SET_SCISSOR)?,
+            cmd_draw: load_device_function!(instance, device, VK_CMD_DRAW)?,
         })
     }
 }

@@ -1,14 +1,19 @@
-use crate::math::Rect;
+use crate::math::{Rect, number::IntoSigned};
 use std::{
     marker::Destruct,
     ops::{Add, Sub},
 };
 
-impl<T> Rect<T> {
+impl<P, S> Rect<P, S> {
     /// Create a new [`Rect`] from this one with the giving `inset`
-    pub const fn inset(self, inset: T) -> Rect<T>
+    pub const fn inset(self, inset: P) -> Rect<P, S>
     where
-        T: [const] Add<Output = T> + [const] Sub<Output = T> + [const] Clone + [const] Destruct,
+        P: [const] Add<Output = P>
+            + [const] Sub<Output = P>
+            + [const] IntoSigned<S>
+            + [const] Clone
+            + [const] Destruct,
+        S: [const] Sub<Output = S> + [const] Destruct,
     {
         self.pad(inset.clone(), inset.clone(), inset.clone(), inset)
     }

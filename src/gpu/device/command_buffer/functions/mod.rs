@@ -1,7 +1,8 @@
 use crate::FunctionSymbol;
 use vulkan::{
-    VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdEndRendering,
-    VkCmdPipelineBarrier2, VkEndCommandBuffer, VkFreeCommandBuffers,
+    VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdBindPipeline,
+    VkCmdDraw, VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdSetScissor, VkCmdSetViewport,
+    VkEndCommandBuffer, VkFreeCommandBuffers,
 };
 
 mod load;
@@ -28,4 +29,16 @@ pub(in crate::gpu::device) struct VulkanCommandBufferFunctions {
 
     /// The function to end a dynamic rendering pass
     pub cmd_end_rendering: FunctionSymbol<VkCmdEndRendering>,
+
+    /// The function to bind a graphics or compute pipeline to a command buffer
+    pub cmd_bind_pipeline: FunctionSymbol<VkCmdBindPipeline>,
+
+    /// The function to set the viewport for subsequent draw calls in a command buffer
+    pub cmd_set_viewport: FunctionSymbol<VkCmdSetViewport>,
+
+    /// The function to set the scissor rectangle for subsequent draw calls in a command buffer
+    pub cmd_set_scissor: FunctionSymbol<VkCmdSetScissor>,
+
+    /// The function to draw some vertices in a command buffer
+    pub cmd_draw: FunctionSymbol<VkCmdDraw>,
 }

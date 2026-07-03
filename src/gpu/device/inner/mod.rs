@@ -1,5 +1,5 @@
 use crate::gpu::VulkanInstance;
-use vulkan::VkDevice;
+use vulkan::{VkDevice, VkPhysicalDevice};
 
 mod functions;
 
@@ -14,8 +14,11 @@ pub(in crate::gpu::device) struct VulkanDeviceInner {
     /// A handle to the underlying graphics device
     handle: VkDevice,
 
+    /// A handle to the physical device that this logical device represents
+    physical_device: VkPhysicalDevice,
+
     /// A reference to the instance that produced this device
-    _instance: VulkanInstance,
+    instance: VulkanInstance,
 
     /// The functions loaded for this device
     pub(in crate::gpu::device) functions: VulkanDeviceFunctions,

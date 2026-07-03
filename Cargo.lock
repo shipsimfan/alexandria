@@ -13,6 +13,7 @@ dependencies = [
  "vulkan",
  "wayland",
  "win32",
+ "xkbcommon",
 ]
 
 [[package]]
@@ -32,8 +33,8 @@ dependencies = [
 
 [[package]]
 name = "linux"
-version = "1.0.0"
-source = "git+https://github.com/shipsimfan/lib-linux#9febb23824004e1cd5f45088e7c474cccb1bac5c"
+version = "1.1.1"
+source = "git+https://github.com/shipsimfan/lib-linux#7a460a8976840718d4ba695c411aecaec9fcfc3e"
 
 [[package]]
 name = "macros"
@@ -76,8 +77,8 @@ dependencies = [
 
 [[package]]
 name = "vulkan"
-version = "0.1.0"
-source = "git+https://github.com/shipsimfan/lib-vulkan#23c22788b6f6496c588425925c670d38eb7cb2a5"
+version = "0.1.1"
+source = "git+https://github.com/shipsimfan/lib-vulkan#44005881e1413db83bce27b2950860a60dd2a1eb"
 dependencies = [
  "wayland",
  "win32",
@@ -85,8 +86,8 @@ dependencies = [
 
 [[package]]
 name = "wayland"
-version = "1.2.0"
-source = "git+https://github.com/shipsimfan/lib-wayland#87810cc436c19911355b1808090ba4003e979397"
+version = "1.3.0"
+source = "git+https://github.com/shipsimfan/lib-wayland#7fd6e258410c37a0a731dc49c065d252a7c95d73"
 dependencies = [
  "linux",
 ]
@@ -95,3 +96,8 @@ dependencies = [
 name = "win32"
 version = "0.1.0"
 source = "git+https://github.com/shipsimfan/lib-win32#380593b381b659a55901a788edb151e070f3e029"
+
+[[package]]
+name = "xkbcommon"
+version = "1.0.1"
+source = "git+https://github.com/shipsimfan/lib-xkbcommon#5eaab52acfbeab63570d5bb3b87c2578a57cd5d4"
