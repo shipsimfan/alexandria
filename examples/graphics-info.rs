@@ -81,13 +81,43 @@ fn main() {
             println!("   - Vulkan Version: v{}", properties.api_version());
             println!("   - Driver Version: v{}", properties.driver_version());
 
+            println!("   - Memory Heaps:");
+            let memory_properties = adapter.get_memory_properties();
+            for (index, memory_type) in memory_properties.memory_types().into_iter().enumerate() {
+                let heap = memory_properties
+                    .memory_heap(memory_type.heap_index())
+                    .unwrap();
+                print!("      {}. {} bytes (", index, heap.size());
+
+                let mut first = true;
+                if memory_type.device_local() {
+                    first = false;
+                    print!("device_local");
+                }
+                if memory_type.host_visible() {
+                    if first {
+                        first = false;
+                    } else {
+                        print!(", ");
+                    }
+                    print!("host_visible");
+                }
+                if memory_type.host_coherent() {
+                    if !first {
+                        print!(", ");
+                    }
+                    print!("host_coherent");
+                }
+                println!(")");
+            }
+
             println!("   - Queues Families:");
             for (index, queue) in adapter
                 .get_queue_family_properties()
                 .into_iter()
                 .enumerate()
             {
-                print!("     {}. {} queues (", index, queue.count());
+                print!("      {}. {} queues (", index, queue.count());
                 let mut first = true;
                 if queue.graphics() {
                     print!("graphics");

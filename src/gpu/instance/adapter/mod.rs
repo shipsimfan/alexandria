@@ -13,6 +13,7 @@ mod enumerate_all_extensions;
 mod enumerate_extensions;
 mod get;
 mod get_features;
+mod get_memory_properties;
 mod get_properties;
 mod get_queue_family_properties;
 mod new;
