@@ -19,6 +19,7 @@ mod semaphore;
 mod shader_module;
 mod swapchain;
 
+mod create_buffer;
 mod create_command_pool;
 mod create_fence;
 mod create_graphics_pipeline;

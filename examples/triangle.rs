@@ -1,10 +1,23 @@
-use render_context::{RenderContext, Swapchain};
-
-use crate::render_context::SWAPCHAIN_FORMAT;
+use render_context::{RenderContext, SWAPCHAIN_FORMAT, Swapchain};
 
 mod render_context;
 
 alexandria::gpu::compile_shader!(const SHADER = "triangle.slang", vert_main, frag_main);
+
+const VERTICES: &[Vertex] = &[
+    Vertex {
+        position: alexandria::math::Vector2f::new(0.0, -0.5),
+        color: alexandria::math::Color3f::<alexandria::math::Linear>::new(1.0, 0.0, 0.0),
+    },
+    Vertex {
+        position: alexandria::math::Vector2f::new(0.5, 0.5),
+        color: alexandria::math::Color3f::<alexandria::math::Linear>::new(0.0, 1.0, 0.0),
+    },
+    Vertex {
+        position: alexandria::math::Vector2f::new(-0.5, 0.5),
+        color: alexandria::math::Color3f::<alexandria::math::Linear>::new(0.0, 0.0, 1.0),
+    },
+];
 
 fn main() {
     // Create the Alexandria context with GPU and window support
@@ -39,6 +52,9 @@ fn main() {
 
     // Create the graphics pipeline
     let graphics_pipeline = create_graphics_pipeline(&render_context, &pipeline_layout, &shader);
+
+    // Create the vertex buffer
+    let vertex_buffer = create_vertex_buffer(&render_context);
 
     // Create the swapchain and image views
     let mut swapchain = Swapchain::new(&mut render_context, &mut surface, &window);
@@ -107,7 +123,7 @@ fn main() {
 
     render_context.wait_idle().unwrap();
 
-    drop(graphics_pipeline);
+    drop(vertex_buffer);
 
     window.destroy().expect("unable to destroy window");
 }
@@ -151,8 +167,12 @@ fn create_graphics_pipeline(
         alexandria::gpu::VulkanDynamicState::Scissor,
     ]);
 
-    let vertex_input_state =
-        alexandria::gpu::VulkanPipelineVertexInputStateCreateInfo::new(&[], &[]);
+    let attribute_descriptions = Vertex::attribute_descriptions();
+    let binding_descriptions = Vertex::binding_descriptions();
+    let vertex_input_state = alexandria::gpu::VulkanPipelineVertexInputStateCreateInfo::new(
+        &attribute_descriptions,
+        &binding_descriptions,
+    );
 
     let input_assembly_state = alexandria::gpu::VulkanPipelineInputAssemblyStateCreateInfo::new(
         alexandria::gpu::VulkanPrimitiveTopology::TriangleList,
@@ -235,4 +255,57 @@ fn create_graphics_pipeline(
             0,
         )
         .unwrap()
+}
+
+struct VertexBuffer {
+    buffer: alexandria::gpu::VulkanBuffer,
+}
+
+fn create_vertex_buffer(render_context: &RenderContext) -> VertexBuffer {
+    let buffer = render_context
+        .create_buffer(
+            0,
+            (std::mem::size_of::<Vertex>() * VERTICES.len()) as u64,
+            alexandria::gpu::VulkanBufferUsageFlag::VertexBuffer,
+            alexandria::gpu::VulkanSharingMode::Exclusive,
+            &[],
+        )
+        .unwrap();
+
+    VertexBuffer { buffer }
+}
+
+#[repr(C)]
+struct Vertex {
+    position: alexandria::math::Vector2f,
+    color: alexandria::math::Color3f<alexandria::math::Linear>,
+}
+
+impl Vertex {
+    /// Returns the vertex input binding description for this vertex type
+    fn binding_descriptions() -> [alexandria::gpu::VulkanVertexInputBindingDescription; 1] {
+        [alexandria::gpu::VulkanVertexInputBindingDescription::new(
+            0,
+            std::mem::size_of::<Vertex>() as _,
+            alexandria::gpu::VulkanVertexInputRate::Vertex,
+        )]
+    }
+
+    /// Returns the vertex input attribute descriptions for this vertex type
+    fn attribute_descriptions() -> [alexandria::gpu::VulkanVertexInputAttributeDescription; 2] {
+        [
+            alexandria::gpu::VulkanVertexInputAttributeDescription::new(
+                0,
+                0,
+                alexandria::gpu::VulkanFormat::R32G32SFloat,
+                std::mem::offset_of!(Vertex, position) as _,
+            ),
+            alexandria::gpu::VulkanVertexInputAttributeDescription::new(
+                1,
+                0,
+                alexandria::gpu::VulkanFormat::R32G32B32SFloat,
+                std::mem::offset_of!(Vertex, color) as _,
+            ),
+        ]
+    }
 }

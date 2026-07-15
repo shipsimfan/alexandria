@@ -3,10 +3,10 @@ use crate::{
     gpu::{
         VulkanDeviceExtension, VulkanInstance,
         device::{
-            VulkanCommandBufferFunctions, VulkanCommandPoolFunctions, VulkanDeviceFunctions,
-            VulkanFenceFunctions, VulkanImageViewFunctions, VulkanPipelineFunctions,
-            VulkanPipelineLayoutFunctions, VulkanQueueFunctions, VulkanSemaphoreFunctions,
-            VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
+            VulkanBufferFunctions, VulkanCommandBufferFunctions, VulkanCommandPoolFunctions,
+            VulkanDeviceFunctions, VulkanFenceFunctions, VulkanImageViewFunctions,
+            VulkanPipelineFunctions, VulkanPipelineLayoutFunctions, VulkanQueueFunctions,
+            VulkanSemaphoreFunctions, VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
         },
         load_device_function,
     },
@@ -42,6 +42,7 @@ impl VulkanDeviceFunctions {
             shader_module: VulkanShaderModuleFunctions::load(instance, device)?,
             pipeline: VulkanPipelineFunctions::load(instance, device)?,
             pipeline_layout: VulkanPipelineLayoutFunctions::load(instance, device)?,
+            buffer: VulkanBufferFunctions::load(instance, device)?,
 
             get_device_queue: load_device_function!(instance, device, VK_GET_DEVICE_QUEUE)?,
             destroy_device: load_device_function!(instance, device, VK_DESTROY_DEVICE)?,

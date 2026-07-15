@@ -34,11 +34,9 @@ impl VulkanInstanceInner {
         unsafe { adapters.set_len(adapter_count as usize) };
 
         // Convert the handles into `VulkanAdapter`s
-        let mut adapters: Vec<_> = adapters
+        Ok(adapters
             .into_iter()
             .map(|handle| VulkanAdapter::new(instance, handle))
-            .collect();
-        adapters.sort();
-        Ok(adapters)
+            .collect())
     }
 }

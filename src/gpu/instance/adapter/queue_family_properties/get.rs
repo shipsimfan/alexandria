@@ -4,21 +4,14 @@ use crate::{
 };
 
 impl VulkanQueueFamilyProperties {
-    /// Get the index of this queue family
-    ///
-    /// This value is used to reference this family in other functions
-    pub fn index(&self) -> u32 {
-        self.index
-    }
-
     /// Get the number of queues this family contains
     pub fn count(&self) -> u32 {
-        self.properties.queue_count
+        self.inner.queue_count
     }
 
     /// Get the flags of this queue family
     pub fn flags(&self) -> VulkanQueueFlags {
-        self.properties.queue_flags
+        self.inner.queue_flags
     }
 
     /// Does the flags of this queue family contain the given flag?
@@ -43,11 +36,11 @@ impl VulkanQueueFamilyProperties {
 
     /// Get the valid bits of the timestamp counter for this queue family
     pub fn timestamp_valid_bits(&self) -> u32 {
-        self.properties.timestamp_valid_bits
+        self.inner.timestamp_valid_bits
     }
 
     /// Get the minimum granularity for image transfer operations on this queue family
     pub fn min_image_transfer_granularity(&self) -> Vector3u {
-        self.properties.min_image_transfer_granularity.into()
+        self.inner.min_image_transfer_granularity.into()
     }
 }

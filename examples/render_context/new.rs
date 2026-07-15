@@ -113,7 +113,7 @@ fn find_compatible_adapter<'instance>(
         .expect("unable to get adapters");
 
     for adapter in adapters {
-        for (index, queue_family) in adapter.queue_families().iter().enumerate() {
+        for (index, queue_family) in adapter.get_queue_family_properties().iter().enumerate() {
             if !queue_family.graphics() {
                 continue;
             }
@@ -154,7 +154,10 @@ fn find_compatible_adapter<'instance>(
                 continue;
             }
 
-            println!("Selected adapter: {}", adapter.name());
+            println!(
+                "Selected adapter: {}",
+                adapter.get_properties().device_name()
+            );
             return (adapter, index as u32);
         }
     }

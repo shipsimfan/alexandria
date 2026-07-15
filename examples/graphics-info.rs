@@ -1,5 +1,6 @@
 use alexandria::gpu::{
     VulkanDeviceExtendedDynamicStateFeatures, VulkanDeviceFeatures, VulkanDeviceVulkan13Features,
+    VulkanInstanceExtension,
 };
 
 /// Prints out information about the graphics hardware on the system
@@ -61,6 +62,7 @@ fn main() {
             "Enumerate Adapters Example",
             alexandria::gpu::VulkanVersion::new(0, 1, 0, 0),
         )
+        .extension(VulkanInstanceExtension::Surface)
         .create()
         .unwrap();
 
@@ -72,15 +74,20 @@ fn main() {
     } else {
         println!();
         for adapter in adapters {
-            println!(" - {}", adapter.name());
-            println!("   - Kind: {:?}", adapter.kind());
-            println!("   - Memory: {}", adapter.vram());
-            println!("   - UUID: {}", adapter.uuid());
-            println!("   - Vulkan Version: v{}", adapter.api_version());
-            println!("   - Driver Version: v{}", adapter.driver_version());
+            let properties = adapter.get_properties();
+            println!(" - {}", properties.device_name());
+            println!("   - Kind: {:?}", properties.device_type());
+            println!("   - UUID: {}", properties.pipeline_cache_uuid());
+            println!("   - Vulkan Version: v{}", properties.api_version());
+            println!("   - Driver Version: v{}", properties.driver_version());
+
             println!("   - Queues Families:");
-            for queue in adapter.queue_families() {
-                print!("     {}. {} queues (", queue.index(), queue.count());
+            for (index, queue) in adapter
+                .get_queue_family_properties()
+                .into_iter()
+                .enumerate()
+            {
+                print!("     {}. {} queues (", index, queue.count());
                 let mut first = true;
                 if queue.graphics() {
                     print!("graphics");
