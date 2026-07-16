@@ -1,8 +1,8 @@
 use crate::FunctionSymbol;
 use vulkan::{
     VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdBindPipeline,
-    VkCmdDraw, VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdSetScissor, VkCmdSetViewport,
-    VkEndCommandBuffer, VkFreeCommandBuffers,
+    VkCmdBindVertexBuffers, VkCmdDraw, VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdSetScissor,
+    VkCmdSetViewport, VkEndCommandBuffer, VkFreeCommandBuffers,
 };
 
 mod load;
@@ -41,4 +41,7 @@ pub(in crate::gpu::device) struct VulkanCommandBufferFunctions {
 
     /// The function to draw some vertices in a command buffer
     pub cmd_draw: FunctionSymbol<VkCmdDraw>,
+
+    /// The function to bind vertex buffers to a command buffer
+    pub cmd_bind_vertex_buffers: FunctionSymbol<VkCmdBindVertexBuffers>,
 }

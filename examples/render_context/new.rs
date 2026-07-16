@@ -15,7 +15,10 @@ use alexandria::{
 
 impl RenderContext {
     /// Creates a new [`RenderContext`]
-    pub fn new(context: &AlexandriaContext<()>, window: &Window<()>) -> (Self, VulkanSurface) {
+    pub fn new(
+        context: &AlexandriaContext<()>,
+        window: &Window<()>,
+    ) -> (RenderContext, VulkanSurface) {
         // Create the Vulkan instance
         let instance = create_vulkan_instance(context, window);
         let _debug_messenger = debug_messenger::create(&instance);
@@ -67,6 +70,7 @@ impl RenderContext {
                 queue,
                 command_pool,
                 command_buffers: Vec::new(),
+                memory_properties: adapter.get_memory_properties(),
             },
             surface,
         )

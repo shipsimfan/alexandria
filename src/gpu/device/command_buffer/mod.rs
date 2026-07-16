@@ -6,6 +6,7 @@ mod functions;
 mod begin;
 mod cmd_begin_rendering;
 mod cmd_bind_pipeline;
+mod cmd_bind_vertex_buffers;
 mod cmd_draw;
 mod cmd_end_rendering;
 mod cmd_pipeline_barrier2;

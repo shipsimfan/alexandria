@@ -2,9 +2,9 @@ use crate::{
     FunctionSymbol,
     gpu::device::{
         VulkanBufferFunctions, VulkanCommandBufferFunctions, VulkanCommandPoolFunctions,
-        VulkanFenceFunctions, VulkanImageViewFunctions, VulkanPipelineFunctions,
-        VulkanPipelineLayoutFunctions, VulkanQueueFunctions, VulkanSemaphoreFunctions,
-        VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
+        VulkanDeviceMemoryFunctions, VulkanFenceFunctions, VulkanImageViewFunctions,
+        VulkanPipelineFunctions, VulkanPipelineLayoutFunctions, VulkanQueueFunctions,
+        VulkanSemaphoreFunctions, VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
     },
 };
 use vulkan::{VkDestroyDevice, VkDeviceWaitIdle, VkGetDeviceQueue};
@@ -48,6 +48,9 @@ pub(in crate::gpu::device) struct VulkanDeviceFunctions {
 
     /// The functions used by buffers
     pub buffer: VulkanBufferFunctions,
+
+    /// The functions used by device memory
+    pub device_memory: VulkanDeviceMemoryFunctions,
 
     /** Individual Functions **/
 

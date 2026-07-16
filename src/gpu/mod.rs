@@ -39,6 +39,7 @@ pub use vulkan::{
     VkInstanceCreateFlag as VulkanInstanceCreateFlag,
     VkInstanceCreateFlags as VulkanInstanceCreateFlags, VkLogicOp as VulkanLogicOp,
     VkMemoryHeapFlag as VulkanMemoryHeapFlag, VkMemoryHeapFlags as VulkanMemoryHeapFlags,
+    VkMemoryMapFlag as VulkanMemoryMapFlag, VkMemoryMapFlags as VulkanMemoryMapFlags,
     VkMemoryPropertyFlag as VulkanMemoryPropertyFlag,
     VkMemoryPropertyFlags as VulkanMemoryPropertyFlags, VkPhysicalDeviceType as VulkanAdapterType,
     VkPipelineBindPoint as VulkanPipelineBindPoint,

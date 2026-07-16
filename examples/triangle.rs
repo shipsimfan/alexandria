@@ -88,7 +88,9 @@ fn main() {
                         alexandria::gpu::VulkanPipelineBindPoint::Graphics,
                         &graphics_pipeline,
                     );
-                    command_buffer.cmd_draw(3, 1, 0, 0);
+                    command_buffer.cmd_bind_vertex_buffer(0, &vertex_buffer.buffer, 0);
+
+                    command_buffer.cmd_draw(VERTICES.len() as _, 1, 0, 0);
                 },
             );
             if !rendered {
@@ -259,10 +261,14 @@ fn create_graphics_pipeline(
 
 struct VertexBuffer {
     buffer: alexandria::gpu::VulkanBuffer,
+
+    #[allow(unused)]
+    memory: alexandria::gpu::VulkanDeviceMemory,
 }
 
 fn create_vertex_buffer(render_context: &RenderContext) -> VertexBuffer {
-    let buffer = render_context
+    // Create the buffer
+    let mut buffer = render_context
         .create_buffer(
             0,
             (std::mem::size_of::<Vertex>() * VERTICES.len()) as u64,
@@ -272,10 +278,50 @@ fn create_vertex_buffer(render_context: &RenderContext) -> VertexBuffer {
         )
         .unwrap();
 
-    VertexBuffer { buffer }
+    // Allocate memory for the buffer
+    let memory_requirements = buffer.get_memory_requirements();
+    let memory_type = find_memory_type(
+        render_context.memory_properties(),
+        memory_requirements.memory_type_bits(),
+        alexandria::gpu::VulkanMemoryPropertyFlag::HostVisible
+            | alexandria::gpu::VulkanMemoryPropertyFlag::HostCoherent,
+    );
+    let memory = render_context
+        .allocate_memory(memory_requirements.size(), memory_type)
+        .unwrap();
+
+    // Bind the buffer and memory
+    buffer.bind_memory(&memory, 0).unwrap();
+
+    // Fill the buffer with vertex data
+    let mut mapped_memory = memory
+        .map(0, memory_requirements.size(), 0)
+        .map_err(|(error, _)| error)
+        .unwrap();
+    mapped_memory.copy_from_slice(VERTICES);
+    let memory = mapped_memory.unmap();
+
+    VertexBuffer { buffer, memory }
+}
+
+fn find_memory_type<F: Into<alexandria::gpu::VulkanMemoryPropertyFlags>>(
+    memory_properties: &alexandria::gpu::VulkanAdapterMemoryProperties,
+    type_filter: u32,
+    properties: F,
+) -> usize {
+    let properties = properties.into();
+
+    for (i, memory_type) in memory_properties.memory_types().iter().enumerate() {
+        if (type_filter & (1 << i)) != 0 && memory_type.flags().contains(properties) {
+            return i;
+        }
+    }
+
+    panic!("Failed to find suitable memory type");
 }
 
 #[repr(C)]
+#[derive(Clone, Copy)]
 struct Vertex {
     position: alexandria::math::Vector2f,
     color: alexandria::math::Color3f<alexandria::math::Linear>,

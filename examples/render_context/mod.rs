@@ -1,8 +1,8 @@
 use alexandria::{
     Id,
     gpu::{
-        VulkanColorSpace, VulkanCommandBuffer, VulkanCommandPool, VulkanDevice, VulkanFormat,
-        VulkanPresentMode, VulkanQueue,
+        VulkanAdapterMemoryProperties, VulkanColorSpace, VulkanCommandBuffer, VulkanCommandPool,
+        VulkanDevice, VulkanFormat, VulkanPresentMode, VulkanQueue,
     },
 };
 use debug_messenger::DebugMessenger;
@@ -13,6 +13,7 @@ mod frame_data;
 mod swapchain;
 
 mod deref;
+mod get;
 mod new;
 
 pub use swapchain::Swapchain;
@@ -38,4 +39,7 @@ pub struct RenderContext {
 
     /// The allocated command buffers for each frame in flight
     command_buffers: Vec<Id<VulkanCommandBuffer>>,
+
+    /// The memory properties of the adapter associated with this context
+    memory_properties: VulkanAdapterMemoryProperties,
 }

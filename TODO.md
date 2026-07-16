@@ -1,8 +1,13 @@
 # ToDo
  1. Add renderer wrappers for triangle
+   1. Staging buffers
+   2. Index buffers
  2. Add error handling for keyboard events during event pumping
    - Wayland
  3. Add renderer wrappers for multi-cube
+   1. Uniform buffers
+   2. Depth buffers
+   3. Texture mapping
  4. Add model loading/parsing
    1. obj
    2. fbx

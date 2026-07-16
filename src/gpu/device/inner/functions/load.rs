@@ -4,9 +4,10 @@ use crate::{
         VulkanDeviceExtension, VulkanInstance,
         device::{
             VulkanBufferFunctions, VulkanCommandBufferFunctions, VulkanCommandPoolFunctions,
-            VulkanDeviceFunctions, VulkanFenceFunctions, VulkanImageViewFunctions,
-            VulkanPipelineFunctions, VulkanPipelineLayoutFunctions, VulkanQueueFunctions,
-            VulkanSemaphoreFunctions, VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
+            VulkanDeviceFunctions, VulkanDeviceMemoryFunctions, VulkanFenceFunctions,
+            VulkanImageViewFunctions, VulkanPipelineFunctions, VulkanPipelineLayoutFunctions,
+            VulkanQueueFunctions, VulkanSemaphoreFunctions, VulkanShaderModuleFunctions,
+            VulkanSwapchainFunctions,
         },
         load_device_function,
     },
@@ -43,6 +44,7 @@ impl VulkanDeviceFunctions {
             pipeline: VulkanPipelineFunctions::load(instance, device)?,
             pipeline_layout: VulkanPipelineLayoutFunctions::load(instance, device)?,
             buffer: VulkanBufferFunctions::load(instance, device)?,
+            device_memory: VulkanDeviceMemoryFunctions::load(instance, device)?,
 
             get_device_queue: load_device_function!(instance, device, VK_GET_DEVICE_QUEUE)?,
             destroy_device: load_device_function!(instance, device, VK_DESTROY_DEVICE)?,
