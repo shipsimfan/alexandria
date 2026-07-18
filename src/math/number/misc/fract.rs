@@ -4,13 +4,13 @@ pub const trait Fract {
     fn fract(self) -> Self;
 }
 
-impl const Fract for f32 {
+const impl Fract for f32 {
     fn fract(self) -> Self {
         f32::fract(self)
     }
 }
 
-impl const Fract for f64 {
+const impl Fract for f64 {
     fn fract(self) -> Self {
         f64::fract(self)
     }

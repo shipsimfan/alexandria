@@ -19,7 +19,7 @@ impl<T> Matrix4x4<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<[[T; 4]; 4]> for Matrix4x4<T> {
+const impl<T: [const] Destruct> From<[[T; 4]; 4]> for Matrix4x4<T> {
     fn from(rows: [[T; 4]; 4]) -> Self {
         Matrix4x4::from_row_array(rows)
     }

@@ -11,13 +11,13 @@ impl<T> Quaternion<T> {
     }
 }
 
-impl<T: [const] Clone> const From<&[T]> for Quaternion<T> {
+const impl<T: [const] Clone> From<&[T]> for Quaternion<T> {
     fn from(slice: &[T]) -> Self {
         Quaternion::from_slice(slice)
     }
 }
 
-impl<T: [const] Clone> const From<&[T; 4]> for Quaternion<T> {
+const impl<T: [const] Clone> From<&[T; 4]> for Quaternion<T> {
     fn from(slice: &[T; 4]) -> Self {
         Quaternion::from_slice(slice)
     }

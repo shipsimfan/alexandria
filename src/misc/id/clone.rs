@@ -1,7 +1,7 @@
 use crate::Id;
 use std::marker::PhantomData;
 
-impl<T> const Clone for Id<T> {
+const impl<T> Clone for Id<T> {
     fn clone(&self) -> Self {
         Id {
             index: self.index,

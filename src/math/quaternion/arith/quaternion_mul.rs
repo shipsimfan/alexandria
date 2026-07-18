@@ -4,13 +4,13 @@ use std::{
     ops::{Add, Mul, MulAssign, Sub},
 };
 
-impl<
+const impl<
     T: [const] Add<Output = T>
         + [const] Sub<Output = T>
         + [const] Mul<Output = T>
         + [const] Clone
         + [const] Destruct,
-> const Mul for Quaternion<T>
+> Mul for Quaternion<T>
 {
     type Output = Quaternion<T>;
 
@@ -31,13 +31,13 @@ impl<
     }
 }
 
-impl<
+const impl<
     T: [const] Add<Output = T>
         + [const] Sub<Output = T>
         + [const] Mul<Output = T>
         + [const] Clone
         + [const] Destruct,
-> const MulAssign for Quaternion<T>
+> MulAssign for Quaternion<T>
 {
     fn mul_assign(&mut self, rhs: Self) {
         *self = self.clone() * rhs;

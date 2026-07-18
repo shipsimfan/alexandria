@@ -1,7 +1,7 @@
 use crate::math::{Vector4, number::IntoSigned};
 use std::marker::Destruct;
 
-impl<T, U> const IntoSigned<Vector4<U>> for Vector4<T>
+const impl<T, U> IntoSigned<Vector4<U>> for Vector4<T>
 where
     T: [const] IntoSigned<U> + [const] Destruct,
 {

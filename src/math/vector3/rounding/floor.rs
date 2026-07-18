@@ -11,7 +11,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T> const Floor for Vector3<T>
+const impl<T> Floor for Vector3<T>
 where
     T: [const] Floor + [const] Destruct,
 {

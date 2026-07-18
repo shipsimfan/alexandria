@@ -43,7 +43,7 @@ impl<Space: ColorSpace<u8> + ColorSpace<f32>> Color4<f32, Space> {
     }
 }
 
-impl<Space: ColorSpace<u8> + ColorSpace<f32>> const From<Color4<f32, Space>> for Color4<u8, Space> {
+const impl<Space: ColorSpace<u8> + ColorSpace<f32>> From<Color4<f32, Space>> for Color4<u8, Space> {
     fn from(color: Color4<f32, Space>) -> Self {
         color.into_u8()
     }

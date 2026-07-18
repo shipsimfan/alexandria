@@ -12,7 +12,7 @@ impl<P, S> Rect<P, S> {
     }
 }
 
-impl<P, S> const From<[Vector2<P>; 2]> for Rect<P, S>
+const impl<P, S> From<[Vector2<P>; 2]> for Rect<P, S>
 where
     P: [const] Destruct,
     S: [const] FromSigned<P>,

@@ -1,6 +1,6 @@
 use crate::math::Vector4;
 
-impl<T: [const] Default> const Default for Vector4<T> {
+const impl<T: [const] Default> Default for Vector4<T> {
     fn default() -> Self {
         Vector4 {
             x: T::default(),

@@ -19,7 +19,7 @@ impl<T> Matrix3x3<T> {
     }
 }
 
-impl<T> const Max for Matrix3x3<T>
+const impl<T> Max for Matrix3x3<T>
 where
     T: [const] Max + [const] Destruct,
 {

@@ -4,13 +4,13 @@ pub const trait Recip: Sized {
     fn recip(self) -> Self;
 }
 
-impl const Recip for f32 {
+const impl Recip for f32 {
     fn recip(self) -> Self {
         f32::recip(self)
     }
 }
 
-impl const Recip for f64 {
+const impl Recip for f64 {
     fn recip(self) -> Self {
         f64::recip(self)
     }

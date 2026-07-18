@@ -24,7 +24,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 }
 
-impl<T: [const] Max + [const] Destruct, Space: ColorSpace<T>> const Max for Color4<T, Space> {
+const impl<T: [const] Max + [const] Destruct, Space: ColorSpace<T>> Max for Color4<T, Space> {
     fn max(self, other: Self) -> Self {
         self.max_c(other)
     }

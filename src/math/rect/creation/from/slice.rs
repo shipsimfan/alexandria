@@ -17,7 +17,7 @@ impl<P, S> Rect<P, S> {
     }
 }
 
-impl<P, S> const From<&[P]> for Rect<P, S>
+const impl<P, S> From<&[P]> for Rect<P, S>
 where
     P: [const] Clone,
     S: [const] FromSigned<P>,
@@ -27,7 +27,7 @@ where
     }
 }
 
-impl<P, S> const From<&[P; 4]> for Rect<P, S>
+const impl<P, S> From<&[P; 4]> for Rect<P, S>
 where
     P: [const] Clone,
     S: [const] FromSigned<P>,

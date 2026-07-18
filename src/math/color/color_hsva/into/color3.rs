@@ -24,7 +24,7 @@ impl<T: Zero + One, Space: ColorSpace<T>> ColorHsva<T, Space> {
     }
 }
 
-impl<
+const impl<
     T: Zero
         + One
         + [const] Sub<T, Output = T>
@@ -36,7 +36,7 @@ impl<
         + [const] FromF32
         + [const] Destruct,
     Space: ColorSpace<T>,
-> const Into<Color3<T, Space>> for ColorHsva<T, Space>
+> Into<Color3<T, Space>> for ColorHsva<T, Space>
 {
     fn into(self) -> Color3<T, Space> {
         self.into_rgb()

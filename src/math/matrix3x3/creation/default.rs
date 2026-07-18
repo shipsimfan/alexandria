@@ -1,6 +1,6 @@
 use crate::math::{Matrix3x3, Vector3};
 
-impl<T: [const] Default> const Default for Matrix3x3<T> {
+const impl<T: [const] Default> Default for Matrix3x3<T> {
     fn default() -> Self {
         Matrix3x3 {
             r0: Vector3::default(),

@@ -9,37 +9,37 @@ pub const trait Clamp: Sized {
 
 // Unsigned integers
 
-impl const Clamp for u8 {
+const impl Clamp for u8 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for u16 {
+const impl Clamp for u16 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for u32 {
+const impl Clamp for u32 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for u64 {
+const impl Clamp for u64 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for u128 {
+const impl Clamp for u128 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for usize {
+const impl Clamp for usize {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
@@ -47,50 +47,50 @@ impl const Clamp for usize {
 
 // Signed integers
 
-impl const Clamp for i8 {
+const impl Clamp for i8 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for i16 {
+const impl Clamp for i16 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for i32 {
+const impl Clamp for i32 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for i64 {
+const impl Clamp for i64 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for i128 {
+const impl Clamp for i128 {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
-impl const Clamp for isize {
+const impl Clamp for isize {
     fn clamp(self, min: Self, max: Self) -> Self {
         Ord::clamp(self, min, max)
     }
 }
 
 // Floating-point
-impl const Clamp for f32 {
+const impl Clamp for f32 {
     fn clamp(self, min: Self, max: Self) -> Self {
         f32::clamp(self, min, max)
     }
 }
 
-impl const Clamp for f64 {
+const impl Clamp for f64 {
     fn clamp(self, min: Self, max: Self) -> Self {
         f64::clamp(self, min, max)
     }

@@ -11,7 +11,7 @@ impl<T> Vector4<T> {
     }
 }
 
-impl<T: [const] CopySign + [const] Destruct> const CopySign for Vector4<T> {
+const impl<T: [const] CopySign + [const] Destruct> CopySign for Vector4<T> {
     fn copysign(self, sign: Self) -> Self {
         self.copysign(sign)
     }

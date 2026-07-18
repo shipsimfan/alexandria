@@ -32,7 +32,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 }
 
-impl<T: [const] Clamp + [const] Destruct, Space: ColorSpace<T>> const Clamp for Color4<T, Space>
+const impl<T: [const] Clamp + [const] Destruct, Space: ColorSpace<T>> Clamp for Color4<T, Space>
 where
     T: [const] Clamp + [const] Destruct,
     T::Bound: [const] Clone + [const] Destruct,

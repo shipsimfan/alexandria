@@ -50,7 +50,7 @@ impl<T: Zero + One> Matrix3x3<T> {
     }
 }
 
-impl<
+const impl<
     T: [const] Add<Output = T>
         + [const] Sub<Output = T>
         + [const] Mul<Output = T>
@@ -59,7 +59,7 @@ impl<
         + [const] Destruct
         + Zero
         + One,
-> const From<Quaternion<T>> for Matrix3x3<T>
+> From<Quaternion<T>> for Matrix3x3<T>
 {
     fn from(q: Quaternion<T>) -> Self {
         Matrix3x3::from_rotation(q)

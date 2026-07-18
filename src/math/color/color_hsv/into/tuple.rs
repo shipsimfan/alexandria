@@ -11,7 +11,7 @@ impl<T, Space: ColorSpace<T>> ColorHsv<T, Space> {
     }
 }
 
-impl<T: [const] Destruct, Space: ColorSpace<T>> const Into<(T, T, T)> for ColorHsv<T, Space> {
+const impl<T: [const] Destruct, Space: ColorSpace<T>> Into<(T, T, T)> for ColorHsv<T, Space> {
     fn into(self) -> (T, T, T) {
         self.into_tuple()
     }

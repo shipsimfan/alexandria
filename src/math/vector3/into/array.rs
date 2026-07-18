@@ -11,7 +11,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T: [const] Destruct> const Into<[T; 3]> for Vector3<T> {
+const impl<T: [const] Destruct> Into<[T; 3]> for Vector3<T> {
     fn into(self) -> [T; 3] {
         self.into_array()
     }

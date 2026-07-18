@@ -17,7 +17,7 @@ impl<P, S> Rect<P, S> {
     }
 }
 
-impl<P, S> const Into<[P; 4]> for Rect<P, S>
+const impl<P, S> Into<[P; 4]> for Rect<P, S>
 where
     P: [const] Destruct,
     S: [const] IntoSigned<P> + [const] Destruct,

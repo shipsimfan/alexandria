@@ -1,6 +1,6 @@
 use crate::math::Vector3;
 
-impl<T: [const] Clone> const Clone for Vector3<T> {
+const impl<T: [const] Clone> Clone for Vector3<T> {
     fn clone(&self) -> Self {
         Vector3::new(self.x.clone(), self.y.clone(), self.z.clone())
     }

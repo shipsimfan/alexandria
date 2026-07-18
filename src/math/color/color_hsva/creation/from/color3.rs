@@ -29,7 +29,7 @@ impl<T, Space: ColorSpace<T>> ColorHsva<T, Space> {
     }
 }
 
-impl<
+const impl<
     T: Zero
         + One
         + [const] Add<T, Output = T>
@@ -44,7 +44,7 @@ impl<
         + [const] Destruct
         + [const] FromF32,
     Space: ColorSpace<T>,
-> const From<Color3<T, Space>> for ColorHsva<T, Space>
+> From<Color3<T, Space>> for ColorHsva<T, Space>
 {
     fn from(value: Color3<T, Space>) -> Self {
         ColorHsva::from_rgb(value, T::NORMALIZED_ONE)

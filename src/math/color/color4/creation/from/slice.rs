@@ -16,13 +16,13 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 }
 
-impl<T: [const] Clone, Space: ColorSpace<T>> const From<&[T]> for Color4<T, Space> {
+const impl<T: [const] Clone, Space: ColorSpace<T>> From<&[T]> for Color4<T, Space> {
     fn from(slice: &[T]) -> Self {
         Color4::from_slice(slice)
     }
 }
 
-impl<T: [const] Clone, Space: ColorSpace<T>> const From<&[T; 4]> for Color4<T, Space> {
+const impl<T: [const] Clone, Space: ColorSpace<T>> From<&[T; 4]> for Color4<T, Space> {
     fn from(slice: &[T; 4]) -> Self {
         Color4::from_slice(slice)
     }

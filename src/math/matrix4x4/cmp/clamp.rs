@@ -21,7 +21,7 @@ impl<T> Matrix4x4<T> {
     }
 }
 
-impl<T: [const] Clamp + [const] Destruct> const Clamp for Matrix4x4<T>
+const impl<T: [const] Clamp + [const] Destruct> Clamp for Matrix4x4<T>
 where
     T::Bound: [const] Clone + [const] Destruct,
 {

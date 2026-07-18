@@ -1,8 +1,9 @@
 use crate::FunctionSymbol;
 use vulkan::{
-    VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdBindPipeline,
-    VkCmdBindVertexBuffers, VkCmdDraw, VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdSetScissor,
-    VkCmdSetViewport, VkEndCommandBuffer, VkFreeCommandBuffers,
+    VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdBindIndexBuffer,
+    VkCmdBindPipeline, VkCmdBindVertexBuffers, VkCmdCopyBuffer, VkCmdDraw, VkCmdDrawIndexed,
+    VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdSetScissor, VkCmdSetViewport,
+    VkEndCommandBuffer, VkFreeCommandBuffers,
 };
 
 mod load;
@@ -44,4 +45,13 @@ pub(in crate::gpu::device) struct VulkanCommandBufferFunctions {
 
     /// The function to bind vertex buffers to a command buffer
     pub cmd_bind_vertex_buffers: FunctionSymbol<VkCmdBindVertexBuffers>,
+
+    /// The function to copy data from one buffer to another in a command buffer
+    pub cmd_copy_buffer: FunctionSymbol<VkCmdCopyBuffer>,
+
+    /// The function to bind an index buffer to a command buffer
+    pub cmd_bind_index_buffer: FunctionSymbol<VkCmdBindIndexBuffer>,
+
+    /// The function to draw indexed vertices in a command buffer
+    pub cmd_draw_indexed: FunctionSymbol<VkCmdDrawIndexed>,
 }

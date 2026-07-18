@@ -4,7 +4,7 @@ use std::{
     ops::{Add, AddAssign},
 };
 
-impl<T: [const] Add<Output = T> + [const] Destruct> const Add for Matrix3x3<T> {
+const impl<T: [const] Add<Output = T> + [const] Destruct> Add for Matrix3x3<T> {
     type Output = Matrix3x3<T>;
 
     fn add(self, rhs: Self) -> Self::Output {
@@ -12,7 +12,7 @@ impl<T: [const] Add<Output = T> + [const] Destruct> const Add for Matrix3x3<T> {
     }
 }
 
-impl<T: [const] AddAssign + [const] Destruct> const AddAssign for Matrix3x3<T> {
+const impl<T: [const] AddAssign + [const] Destruct> AddAssign for Matrix3x3<T> {
     fn add_assign(&mut self, rhs: Self) {
         self.r0 += rhs.r0;
         self.r1 += rhs.r1;

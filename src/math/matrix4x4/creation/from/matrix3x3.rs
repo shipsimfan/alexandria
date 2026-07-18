@@ -19,7 +19,7 @@ impl<T: Zero + One> Matrix4x4<T> {
     }
 }
 
-impl<T: [const] Destruct + Zero + One> const From<Matrix3x3<T>> for Matrix4x4<T> {
+const impl<T: [const] Destruct + Zero + One> From<Matrix3x3<T>> for Matrix4x4<T> {
     fn from(matrix: Matrix3x3<T>) -> Self {
         Matrix4x4::from_matrix3x3(matrix)
     }

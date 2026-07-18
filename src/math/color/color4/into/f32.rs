@@ -11,7 +11,7 @@ impl<T, Space: ColorSpace<T> + ColorSpace<f32>> Color4<T, Space> {
     }
 }
 
-impl<Space: ColorSpace<u8> + ColorSpace<f32>> const From<Color4<u8, Space>> for Color4<f32, Space> {
+const impl<Space: ColorSpace<u8> + ColorSpace<f32>> From<Color4<u8, Space>> for Color4<f32, Space> {
     fn from(color: Color4<u8, Space>) -> Self {
         color.into_f32()
     }

@@ -8,6 +8,7 @@ mod get;
 mod new;
 mod present;
 mod submit;
+mod wait_idle;
 
 pub(in crate::gpu::device) use functions::*;
 

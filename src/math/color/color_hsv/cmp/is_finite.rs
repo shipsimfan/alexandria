@@ -10,7 +10,7 @@ impl<T, Space: ColorSpace<T>> ColorHsv<T, Space> {
     }
 }
 
-impl<T: [const] IsFinite, Space: ColorSpace<T>> const IsFinite for ColorHsv<T, Space> {
+const impl<T: [const] IsFinite, Space: ColorSpace<T>> IsFinite for ColorHsv<T, Space> {
     fn is_finite(&self) -> bool {
         self.is_finite()
     }

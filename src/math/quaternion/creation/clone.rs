@@ -1,6 +1,6 @@
 use crate::math::Quaternion;
 
-impl<T: [const] Clone> const Clone for Quaternion<T> {
+const impl<T: [const] Clone> Clone for Quaternion<T> {
     fn clone(&self) -> Self {
         Quaternion::new(
             self.x.clone(),

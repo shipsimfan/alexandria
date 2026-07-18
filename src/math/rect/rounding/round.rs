@@ -12,7 +12,7 @@ impl<P, S> Rect<P, S> {
     }
 }
 
-impl<P, S> const Round for Rect<P, S>
+const impl<P, S> Round for Rect<P, S>
 where
     P: [const] Round + [const] Destruct,
     S: [const] Round + [const] Destruct,

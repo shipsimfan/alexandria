@@ -11,7 +11,7 @@ impl<T> Quaternion<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<[T; 4]> for Quaternion<T> {
+const impl<T: [const] Destruct> From<[T; 4]> for Quaternion<T> {
     fn from(array: [T; 4]) -> Self {
         Quaternion::from_array(array)
     }

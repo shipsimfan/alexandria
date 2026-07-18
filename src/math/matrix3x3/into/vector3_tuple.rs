@@ -23,7 +23,7 @@ impl<T> Matrix3x3<T> {
     }
 }
 
-impl<T: [const] Destruct> const Into<(Vector3<T>, Vector3<T>, Vector3<T>)> for Matrix3x3<T> {
+const impl<T: [const] Destruct> Into<(Vector3<T>, Vector3<T>, Vector3<T>)> for Matrix3x3<T> {
     fn into(self) -> (Vector3<T>, Vector3<T>, Vector3<T>) {
         self.into_vec3_row_tuple()
     }

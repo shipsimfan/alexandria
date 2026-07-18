@@ -23,7 +23,7 @@ impl<T> Matrix4x4<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<(Vector4<T>, Vector4<T>, Vector4<T>, Vector4<T>)>
+const impl<T: [const] Destruct> From<(Vector4<T>, Vector4<T>, Vector4<T>, Vector4<T>)>
     for Matrix4x4<T>
 {
     fn from(rows: (Vector4<T>, Vector4<T>, Vector4<T>, Vector4<T>)) -> Self {

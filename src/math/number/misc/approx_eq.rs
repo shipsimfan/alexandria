@@ -9,37 +9,37 @@ pub const trait ApproxEq: Sized {
 
 // Unsigned integers
 
-impl const ApproxEq for u8 {
+const impl ApproxEq for u8 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         self.abs_diff(other) <= epsilon
     }
 }
 
-impl const ApproxEq for u16 {
+const impl ApproxEq for u16 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         self.abs_diff(other) <= epsilon
     }
 }
 
-impl const ApproxEq for u32 {
+const impl ApproxEq for u32 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         self.abs_diff(other) <= epsilon
     }
 }
 
-impl const ApproxEq for u64 {
+const impl ApproxEq for u64 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         self.abs_diff(other) <= epsilon
     }
 }
 
-impl const ApproxEq for u128 {
+const impl ApproxEq for u128 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         self.abs_diff(other) <= epsilon
     }
 }
 
-impl const ApproxEq for usize {
+const impl ApproxEq for usize {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         self.abs_diff(other) <= epsilon
     }
@@ -47,7 +47,7 @@ impl const ApproxEq for usize {
 
 // Signed integers
 
-impl const ApproxEq for i8 {
+const impl ApproxEq for i8 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         if epsilon < 0 {
             return false;
@@ -57,7 +57,7 @@ impl const ApproxEq for i8 {
     }
 }
 
-impl const ApproxEq for i16 {
+const impl ApproxEq for i16 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         if epsilon < 0 {
             return false;
@@ -67,7 +67,7 @@ impl const ApproxEq for i16 {
     }
 }
 
-impl const ApproxEq for i32 {
+const impl ApproxEq for i32 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         if epsilon < 0 {
             return false;
@@ -77,7 +77,7 @@ impl const ApproxEq for i32 {
     }
 }
 
-impl const ApproxEq for i64 {
+const impl ApproxEq for i64 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         if epsilon < 0 {
             return false;
@@ -87,7 +87,7 @@ impl const ApproxEq for i64 {
     }
 }
 
-impl const ApproxEq for i128 {
+const impl ApproxEq for i128 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         if epsilon < 0 {
             return false;
@@ -97,7 +97,7 @@ impl const ApproxEq for i128 {
     }
 }
 
-impl const ApproxEq for isize {
+const impl ApproxEq for isize {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         if epsilon < 0 {
             return false;
@@ -108,13 +108,13 @@ impl const ApproxEq for isize {
 }
 
 // Floating-point
-impl const ApproxEq for f32 {
+const impl ApproxEq for f32 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         (self - other).abs() <= epsilon
     }
 }
 
-impl const ApproxEq for f64 {
+const impl ApproxEq for f64 {
     fn approx_eq(self, other: Self, epsilon: Self) -> bool {
         (self - other).abs() <= epsilon
     }

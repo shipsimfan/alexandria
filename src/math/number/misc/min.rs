@@ -6,37 +6,37 @@ pub const trait Min: Sized {
 
 // Unsigned integers
 
-impl const Min for u8 {
+const impl Min for u8 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for u16 {
+const impl Min for u16 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for u32 {
+const impl Min for u32 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for u64 {
+const impl Min for u64 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for u128 {
+const impl Min for u128 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for usize {
+const impl Min for usize {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
@@ -44,37 +44,37 @@ impl const Min for usize {
 
 // Signed integers
 
-impl const Min for i8 {
+const impl Min for i8 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for i16 {
+const impl Min for i16 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for i32 {
+const impl Min for i32 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for i64 {
+const impl Min for i64 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for i128 {
+const impl Min for i128 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for isize {
+const impl Min for isize {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
@@ -82,13 +82,13 @@ impl const Min for isize {
 
 // Floating-point numbers
 
-impl const Min for f32 {
+const impl Min for f32 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }
 }
 
-impl const Min for f64 {
+const impl Min for f64 {
     fn min(self, other: Self) -> Self {
         if self <= other { self } else { other }
     }

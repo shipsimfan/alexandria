@@ -67,7 +67,7 @@ impl<T> Matrix4x4<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<[T; 16]> for Matrix4x4<T> {
+const impl<T: [const] Destruct> From<[T; 16]> for Matrix4x4<T> {
     fn from(values: [T; 16]) -> Self {
         Matrix4x4::from_flat_row_array(values)
     }

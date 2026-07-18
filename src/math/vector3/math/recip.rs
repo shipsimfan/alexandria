@@ -11,7 +11,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T: [const] Recip + [const] Destruct> const Recip for Vector3<T> {
+const impl<T: [const] Recip + [const] Destruct> Recip for Vector3<T> {
     fn recip(self) -> Self {
         self.recip()
     }

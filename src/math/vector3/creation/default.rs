@@ -1,6 +1,6 @@
 use crate::math::Vector3;
 
-impl<T: [const] Default> const Default for Vector3<T> {
+const impl<T: [const] Default> Default for Vector3<T> {
     fn default() -> Self {
         Vector3 {
             x: T::default(),

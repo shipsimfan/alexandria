@@ -14,7 +14,7 @@ impl<T, Space: ColorSpace<T>> ColorHsv<T, Space> {
     }
 }
 
-impl<T: [const] ApproxEq + [const] Destruct, Space: ColorSpace<T>> const ApproxEq
+const impl<T: [const] ApproxEq + [const] Destruct, Space: ColorSpace<T>> ApproxEq
     for ColorHsv<T, Space>
 where
     T::Epsilon: [const] Clone + [const] Destruct,

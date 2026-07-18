@@ -4,7 +4,7 @@ use std::{
     ops::{Mul, MulAssign},
 };
 
-impl<T: [const] Mul<Output = T> + [const] Clone + [const] Destruct> const Mul<T> for Matrix4x4<T> {
+const impl<T: [const] Mul<Output = T> + [const] Clone + [const] Destruct> Mul<T> for Matrix4x4<T> {
     type Output = Self;
 
     fn mul(self, rhs: T) -> Self::Output {
@@ -17,7 +17,7 @@ impl<T: [const] Mul<Output = T> + [const] Clone + [const] Destruct> const Mul<T>
     }
 }
 
-impl<T: [const] MulAssign + [const] Clone + [const] Destruct> const MulAssign<T> for Matrix4x4<T> {
+const impl<T: [const] MulAssign + [const] Clone + [const] Destruct> MulAssign<T> for Matrix4x4<T> {
     fn mul_assign(&mut self, rhs: T) {
         self.r0 *= rhs.clone();
         self.r1 *= rhs.clone();
@@ -26,7 +26,7 @@ impl<T: [const] MulAssign + [const] Clone + [const] Destruct> const MulAssign<T>
     }
 }
 
-impl const Mul<Matrix4x4<u8>> for u8 {
+const impl Mul<Matrix4x4<u8>> for u8 {
     type Output = Matrix4x4<u8>;
 
     fn mul(self, rhs: Matrix4x4<u8>) -> Self::Output {
@@ -34,7 +34,7 @@ impl const Mul<Matrix4x4<u8>> for u8 {
     }
 }
 
-impl const Mul<Matrix4x4<u16>> for u16 {
+const impl Mul<Matrix4x4<u16>> for u16 {
     type Output = Matrix4x4<u16>;
 
     fn mul(self, rhs: Matrix4x4<u16>) -> Self::Output {
@@ -42,7 +42,7 @@ impl const Mul<Matrix4x4<u16>> for u16 {
     }
 }
 
-impl const Mul<Matrix4x4<u32>> for u32 {
+const impl Mul<Matrix4x4<u32>> for u32 {
     type Output = Matrix4x4<u32>;
 
     fn mul(self, rhs: Matrix4x4<u32>) -> Self::Output {
@@ -50,7 +50,7 @@ impl const Mul<Matrix4x4<u32>> for u32 {
     }
 }
 
-impl const Mul<Matrix4x4<u64>> for u64 {
+const impl Mul<Matrix4x4<u64>> for u64 {
     type Output = Matrix4x4<u64>;
 
     fn mul(self, rhs: Matrix4x4<u64>) -> Self::Output {
@@ -58,7 +58,7 @@ impl const Mul<Matrix4x4<u64>> for u64 {
     }
 }
 
-impl const Mul<Matrix4x4<u128>> for u128 {
+const impl Mul<Matrix4x4<u128>> for u128 {
     type Output = Matrix4x4<u128>;
 
     fn mul(self, rhs: Matrix4x4<u128>) -> Self::Output {
@@ -66,7 +66,7 @@ impl const Mul<Matrix4x4<u128>> for u128 {
     }
 }
 
-impl const Mul<Matrix4x4<usize>> for usize {
+const impl Mul<Matrix4x4<usize>> for usize {
     type Output = Matrix4x4<usize>;
 
     fn mul(self, rhs: Matrix4x4<usize>) -> Self::Output {
@@ -74,7 +74,7 @@ impl const Mul<Matrix4x4<usize>> for usize {
     }
 }
 
-impl const Mul<Matrix4x4<i8>> for i8 {
+const impl Mul<Matrix4x4<i8>> for i8 {
     type Output = Matrix4x4<i8>;
 
     fn mul(self, rhs: Matrix4x4<i8>) -> Self::Output {
@@ -82,7 +82,7 @@ impl const Mul<Matrix4x4<i8>> for i8 {
     }
 }
 
-impl const Mul<Matrix4x4<i16>> for i16 {
+const impl Mul<Matrix4x4<i16>> for i16 {
     type Output = Matrix4x4<i16>;
 
     fn mul(self, rhs: Matrix4x4<i16>) -> Self::Output {
@@ -90,7 +90,7 @@ impl const Mul<Matrix4x4<i16>> for i16 {
     }
 }
 
-impl const Mul<Matrix4x4<i32>> for i32 {
+const impl Mul<Matrix4x4<i32>> for i32 {
     type Output = Matrix4x4<i32>;
 
     fn mul(self, rhs: Matrix4x4<i32>) -> Self::Output {
@@ -98,7 +98,7 @@ impl const Mul<Matrix4x4<i32>> for i32 {
     }
 }
 
-impl const Mul<Matrix4x4<i64>> for i64 {
+const impl Mul<Matrix4x4<i64>> for i64 {
     type Output = Matrix4x4<i64>;
 
     fn mul(self, rhs: Matrix4x4<i64>) -> Self::Output {
@@ -106,7 +106,7 @@ impl const Mul<Matrix4x4<i64>> for i64 {
     }
 }
 
-impl const Mul<Matrix4x4<i128>> for i128 {
+const impl Mul<Matrix4x4<i128>> for i128 {
     type Output = Matrix4x4<i128>;
 
     fn mul(self, rhs: Matrix4x4<i128>) -> Self::Output {
@@ -114,7 +114,7 @@ impl const Mul<Matrix4x4<i128>> for i128 {
     }
 }
 
-impl const Mul<Matrix4x4<isize>> for isize {
+const impl Mul<Matrix4x4<isize>> for isize {
     type Output = Matrix4x4<isize>;
 
     fn mul(self, rhs: Matrix4x4<isize>) -> Self::Output {
@@ -122,7 +122,7 @@ impl const Mul<Matrix4x4<isize>> for isize {
     }
 }
 
-impl const Mul<Matrix4x4<f32>> for f32 {
+const impl Mul<Matrix4x4<f32>> for f32 {
     type Output = Matrix4x4<f32>;
 
     fn mul(self, rhs: Matrix4x4<f32>) -> Self::Output {
@@ -130,7 +130,7 @@ impl const Mul<Matrix4x4<f32>> for f32 {
     }
 }
 
-impl const Mul<Matrix4x4<f64>> for f64 {
+const impl Mul<Matrix4x4<f64>> for f64 {
     type Output = Matrix4x4<f64>;
 
     fn mul(self, rhs: Matrix4x4<f64>) -> Self::Output {

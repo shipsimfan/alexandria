@@ -21,7 +21,6 @@
 //
 // Other features
 #![feature(associated_type_defaults)]
-#![feature(box_as_ptr)]
 #![feature(formatting_options)]
 
 mod context;

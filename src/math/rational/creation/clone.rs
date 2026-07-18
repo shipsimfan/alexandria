@@ -1,6 +1,6 @@
 use crate::math::Rational;
 
-impl const Clone for Rational {
+const impl Clone for Rational {
     fn clone(&self) -> Self {
         Rational {
             numerator: self.numerator,

@@ -15,7 +15,7 @@ impl<T> Matrix4x4<T> {
     }
 }
 
-impl<T: [const] ApproxEq + [const] Destruct> const ApproxEq for Matrix4x4<T>
+const impl<T: [const] ApproxEq + [const] Destruct> ApproxEq for Matrix4x4<T>
 where
     T::Epsilon: [const] Clone + [const] Destruct,
 {

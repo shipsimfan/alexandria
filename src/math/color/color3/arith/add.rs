@@ -4,7 +4,7 @@ use std::{
     ops::{Add, AddAssign},
 };
 
-impl<T: [const] Add<Output = T> + [const] Destruct, Space: ColorSpace<T>> const Add
+const impl<T: [const] Add<Output = T> + [const] Destruct, Space: ColorSpace<T>> Add
     for Color3<T, Space>
 {
     type Output = Color3<T, Space>;
@@ -14,7 +14,7 @@ impl<T: [const] Add<Output = T> + [const] Destruct, Space: ColorSpace<T>> const 
     }
 }
 
-impl<T: [const] Add<Output = T> + [const] Clone + [const] Destruct, Space: ColorSpace<T>> const
+const impl<T: [const] Add<Output = T> + [const] Clone + [const] Destruct, Space: ColorSpace<T>>
     Add<T> for Color3<T, Space>
 {
     type Output = Color3<T, Space>;
@@ -24,7 +24,7 @@ impl<T: [const] Add<Output = T> + [const] Clone + [const] Destruct, Space: Color
     }
 }
 
-impl<T: [const] AddAssign + [const] Destruct, Space: ColorSpace<T>> const AddAssign
+const impl<T: [const] AddAssign + [const] Destruct, Space: ColorSpace<T>> AddAssign
     for Color3<T, Space>
 {
     fn add_assign(&mut self, rhs: Self) {
@@ -34,7 +34,7 @@ impl<T: [const] AddAssign + [const] Destruct, Space: ColorSpace<T>> const AddAss
     }
 }
 
-impl<T: [const] AddAssign + [const] Clone, Space: ColorSpace<T>> const AddAssign<T>
+const impl<T: [const] AddAssign + [const] Clone, Space: ColorSpace<T>> AddAssign<T>
     for Color3<T, Space>
 {
     fn add_assign(&mut self, rhs: T) {
@@ -44,7 +44,7 @@ impl<T: [const] AddAssign + [const] Clone, Space: ColorSpace<T>> const AddAssign
     }
 }
 
-impl<Space: ColorSpace<u8>> const Add<Color3<u8, Space>> for u8 {
+const impl<Space: ColorSpace<u8>> Add<Color3<u8, Space>> for u8 {
     type Output = Color3<u8, Space>;
 
     fn add(self, rhs: Color3<u8, Space>) -> Self::Output {
@@ -52,7 +52,7 @@ impl<Space: ColorSpace<u8>> const Add<Color3<u8, Space>> for u8 {
     }
 }
 
-impl<Space: ColorSpace<u16>> const Add<Color3<u16, Space>> for u16 {
+const impl<Space: ColorSpace<u16>> Add<Color3<u16, Space>> for u16 {
     type Output = Color3<u16, Space>;
 
     fn add(self, rhs: Color3<u16, Space>) -> Self::Output {
@@ -60,7 +60,7 @@ impl<Space: ColorSpace<u16>> const Add<Color3<u16, Space>> for u16 {
     }
 }
 
-impl<Space: ColorSpace<u32>> const Add<Color3<u32, Space>> for u32 {
+const impl<Space: ColorSpace<u32>> Add<Color3<u32, Space>> for u32 {
     type Output = Color3<u32, Space>;
 
     fn add(self, rhs: Color3<u32, Space>) -> Self::Output {
@@ -68,7 +68,7 @@ impl<Space: ColorSpace<u32>> const Add<Color3<u32, Space>> for u32 {
     }
 }
 
-impl<Space: ColorSpace<u64>> const Add<Color3<u64, Space>> for u64 {
+const impl<Space: ColorSpace<u64>> Add<Color3<u64, Space>> for u64 {
     type Output = Color3<u64, Space>;
 
     fn add(self, rhs: Color3<u64, Space>) -> Self::Output {
@@ -76,7 +76,7 @@ impl<Space: ColorSpace<u64>> const Add<Color3<u64, Space>> for u64 {
     }
 }
 
-impl<Space: ColorSpace<u128>> const Add<Color3<u128, Space>> for u128 {
+const impl<Space: ColorSpace<u128>> Add<Color3<u128, Space>> for u128 {
     type Output = Color3<u128, Space>;
 
     fn add(self, rhs: Color3<u128, Space>) -> Self::Output {
@@ -84,7 +84,7 @@ impl<Space: ColorSpace<u128>> const Add<Color3<u128, Space>> for u128 {
     }
 }
 
-impl<Space: ColorSpace<usize>> const Add<Color3<usize, Space>> for usize {
+const impl<Space: ColorSpace<usize>> Add<Color3<usize, Space>> for usize {
     type Output = Color3<usize, Space>;
 
     fn add(self, rhs: Color3<usize, Space>) -> Self::Output {
@@ -92,7 +92,7 @@ impl<Space: ColorSpace<usize>> const Add<Color3<usize, Space>> for usize {
     }
 }
 
-impl<Space: ColorSpace<i8>> const Add<Color3<i8, Space>> for i8 {
+const impl<Space: ColorSpace<i8>> Add<Color3<i8, Space>> for i8 {
     type Output = Color3<i8, Space>;
 
     fn add(self, rhs: Color3<i8, Space>) -> Self::Output {
@@ -100,7 +100,7 @@ impl<Space: ColorSpace<i8>> const Add<Color3<i8, Space>> for i8 {
     }
 }
 
-impl<Space: ColorSpace<i16>> const Add<Color3<i16, Space>> for i16 {
+const impl<Space: ColorSpace<i16>> Add<Color3<i16, Space>> for i16 {
     type Output = Color3<i16, Space>;
 
     fn add(self, rhs: Color3<i16, Space>) -> Self::Output {
@@ -108,7 +108,7 @@ impl<Space: ColorSpace<i16>> const Add<Color3<i16, Space>> for i16 {
     }
 }
 
-impl<Space: ColorSpace<i32>> const Add<Color3<i32, Space>> for i32 {
+const impl<Space: ColorSpace<i32>> Add<Color3<i32, Space>> for i32 {
     type Output = Color3<i32, Space>;
 
     fn add(self, rhs: Color3<i32, Space>) -> Self::Output {
@@ -116,7 +116,7 @@ impl<Space: ColorSpace<i32>> const Add<Color3<i32, Space>> for i32 {
     }
 }
 
-impl<Space: ColorSpace<i64>> const Add<Color3<i64, Space>> for i64 {
+const impl<Space: ColorSpace<i64>> Add<Color3<i64, Space>> for i64 {
     type Output = Color3<i64, Space>;
 
     fn add(self, rhs: Color3<i64, Space>) -> Self::Output {
@@ -124,7 +124,7 @@ impl<Space: ColorSpace<i64>> const Add<Color3<i64, Space>> for i64 {
     }
 }
 
-impl<Space: ColorSpace<i128>> const Add<Color3<i128, Space>> for i128 {
+const impl<Space: ColorSpace<i128>> Add<Color3<i128, Space>> for i128 {
     type Output = Color3<i128, Space>;
 
     fn add(self, rhs: Color3<i128, Space>) -> Self::Output {
@@ -132,7 +132,7 @@ impl<Space: ColorSpace<i128>> const Add<Color3<i128, Space>> for i128 {
     }
 }
 
-impl<Space: ColorSpace<isize>> const Add<Color3<isize, Space>> for isize {
+const impl<Space: ColorSpace<isize>> Add<Color3<isize, Space>> for isize {
     type Output = Color3<isize, Space>;
 
     fn add(self, rhs: Color3<isize, Space>) -> Self::Output {
@@ -140,7 +140,7 @@ impl<Space: ColorSpace<isize>> const Add<Color3<isize, Space>> for isize {
     }
 }
 
-impl<Space: ColorSpace<f32>> const Add<Color3<f32, Space>> for f32 {
+const impl<Space: ColorSpace<f32>> Add<Color3<f32, Space>> for f32 {
     type Output = Color3<f32, Space>;
 
     fn add(self, rhs: Color3<f32, Space>) -> Self::Output {
@@ -148,7 +148,7 @@ impl<Space: ColorSpace<f32>> const Add<Color3<f32, Space>> for f32 {
     }
 }
 
-impl<Space: ColorSpace<f64>> const Add<Color3<f64, Space>> for f64 {
+const impl<Space: ColorSpace<f64>> Add<Color3<f64, Space>> for f64 {
     type Output = Color3<f64, Space>;
 
     fn add(self, rhs: Color3<f64, Space>) -> Self::Output {

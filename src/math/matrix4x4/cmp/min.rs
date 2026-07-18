@@ -19,7 +19,7 @@ impl<T> Matrix4x4<T> {
     }
 }
 
-impl<T> const Min for Matrix4x4<T>
+const impl<T> Min for Matrix4x4<T>
 where
     T: [const] Min + [const] Destruct,
 {

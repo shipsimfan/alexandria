@@ -23,7 +23,7 @@ impl<T> Matrix3x3<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<(Vector3<T>, Vector3<T>, Vector3<T>)> for Matrix3x3<T> {
+const impl<T: [const] Destruct> From<(Vector3<T>, Vector3<T>, Vector3<T>)> for Matrix3x3<T> {
     fn from(rows: (Vector3<T>, Vector3<T>, Vector3<T>)) -> Self {
         Matrix3x3::from_vec3_row_tuple(rows)
     }

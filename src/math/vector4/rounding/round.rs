@@ -11,7 +11,7 @@ impl<T> Vector4<T> {
     }
 }
 
-impl<T> const Round for Vector4<T>
+const impl<T> Round for Vector4<T>
 where
     T: [const] Round + [const] Destruct,
 {

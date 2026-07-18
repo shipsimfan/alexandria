@@ -19,6 +19,8 @@ const VERTICES: &[Vertex] = &[
     },
 ];
 
+const INDICES: &[u32] = &[0, 1, 2];
+
 fn main() {
     // Create the Alexandria context with GPU and window support
     let (context, mut pump) = alexandria::AlexandriaContext::<()>::builder()
@@ -54,7 +56,16 @@ fn main() {
     let graphics_pipeline = create_graphics_pipeline(&render_context, &pipeline_layout, &shader);
 
     // Create the vertex buffer
-    let vertex_buffer = create_vertex_buffer(&render_context);
+    let vertex_buffer = create_device_buffer(
+        &mut render_context,
+        alexandria::gpu::VulkanBufferUsageFlag::VertexBuffer,
+        VERTICES,
+    );
+    let index_buffer = create_device_buffer(
+        &mut render_context,
+        alexandria::gpu::VulkanBufferUsageFlag::IndexBuffer,
+        INDICES,
+    );
 
     // Create the swapchain and image views
     let mut swapchain = Swapchain::new(&mut render_context, &mut surface, &window);
@@ -89,8 +100,13 @@ fn main() {
                         &graphics_pipeline,
                     );
                     command_buffer.cmd_bind_vertex_buffer(0, &vertex_buffer.buffer, 0);
+                    command_buffer.cmd_bind_index_buffer(
+                        &index_buffer.buffer,
+                        0,
+                        alexandria::gpu::VulkanIndexType::Uint32,
+                    );
 
-                    command_buffer.cmd_draw(VERTICES.len() as _, 1, 0, 0);
+                    command_buffer.cmd_draw_indexed(INDICES.len() as _, 1, 0, 0, 0);
                 },
             );
             if !rendered {
@@ -259,20 +275,74 @@ fn create_graphics_pipeline(
         .unwrap()
 }
 
-struct VertexBuffer {
+struct Buffer {
     buffer: alexandria::gpu::VulkanBuffer,
 
     #[allow(unused)]
     memory: alexandria::gpu::VulkanDeviceMemory,
 }
 
-fn create_vertex_buffer(render_context: &RenderContext) -> VertexBuffer {
+fn create_device_buffer<T: Copy, U: Into<alexandria::gpu::VulkanBufferUsageFlags>>(
+    render_context: &mut RenderContext,
+    properties: U,
+    data: &[T],
+) -> Buffer {
+    let buffer_size = data.len() * std::mem::size_of::<T>();
+
+    // Create the staging buffer
+    let staging_buffer = create_buffer(
+        render_context,
+        buffer_size,
+        alexandria::gpu::VulkanBufferUsageFlag::TransferSrc,
+        alexandria::gpu::VulkanMemoryPropertyFlag::HostVisible
+            | alexandria::gpu::VulkanMemoryPropertyFlag::HostCoherent,
+    );
+
+    // Fill the staging buffer with vertex data
+    let mut mapped_memory = staging_buffer
+        .memory
+        .map(0, buffer_size, 0)
+        .map_err(|(error, _)| error)
+        .unwrap();
+    mapped_memory.copy_from_slice(data);
+    let staging_buffer_memory = mapped_memory.unmap();
+
+    // Create the vertex buffer
+    let vertex_buffer = create_buffer(
+        render_context,
+        buffer_size,
+        properties.into() | alexandria::gpu::VulkanBufferUsageFlag::TransferDst,
+        alexandria::gpu::VulkanMemoryPropertyFlag::DeviceLocal,
+    );
+
+    // Copy the data from the staging buffer to the vertex buffer
+    copy_buffer(
+        render_context,
+        &staging_buffer.buffer,
+        &vertex_buffer.buffer,
+        buffer_size,
+    );
+
+    drop(staging_buffer_memory);
+
+    vertex_buffer
+}
+
+fn create_buffer<
+    U: Into<alexandria::gpu::VulkanBufferUsageFlags>,
+    P: Into<alexandria::gpu::VulkanMemoryPropertyFlags>,
+>(
+    render_context: &RenderContext,
+    size: usize,
+    usage: U,
+    properties: P,
+) -> Buffer {
     // Create the buffer
     let mut buffer = render_context
         .create_buffer(
             0,
-            (std::mem::size_of::<Vertex>() * VERTICES.len()) as u64,
-            alexandria::gpu::VulkanBufferUsageFlag::VertexBuffer,
+            size as _,
+            usage,
             alexandria::gpu::VulkanSharingMode::Exclusive,
             &[],
         )
@@ -283,8 +353,7 @@ fn create_vertex_buffer(render_context: &RenderContext) -> VertexBuffer {
     let memory_type = find_memory_type(
         render_context.memory_properties(),
         memory_requirements.memory_type_bits(),
-        alexandria::gpu::VulkanMemoryPropertyFlag::HostVisible
-            | alexandria::gpu::VulkanMemoryPropertyFlag::HostCoherent,
+        properties,
     );
     let memory = render_context
         .allocate_memory(memory_requirements.size(), memory_type)
@@ -293,15 +362,7 @@ fn create_vertex_buffer(render_context: &RenderContext) -> VertexBuffer {
     // Bind the buffer and memory
     buffer.bind_memory(&memory, 0).unwrap();
 
-    // Fill the buffer with vertex data
-    let mut mapped_memory = memory
-        .map(0, memory_requirements.size(), 0)
-        .map_err(|(error, _)| error)
-        .unwrap();
-    mapped_memory.copy_from_slice(VERTICES);
-    let memory = mapped_memory.unmap();
-
-    VertexBuffer { buffer, memory }
+    Buffer { buffer, memory }
 }
 
 fn find_memory_type<F: Into<alexandria::gpu::VulkanMemoryPropertyFlags>>(
@@ -318,6 +379,51 @@ fn find_memory_type<F: Into<alexandria::gpu::VulkanMemoryPropertyFlags>>(
     }
 
     panic!("Failed to find suitable memory type");
+}
+
+fn copy_buffer(
+    render_context: &mut RenderContext,
+    src_buffer: &alexandria::gpu::VulkanBuffer,
+    dst_buffer: &alexandria::gpu::VulkanBuffer,
+    size: usize,
+) {
+    let (command_pool, queue) = render_context.command_pool();
+
+    // Allocate a command buffer for the copy operation
+    let command_buffer_id = command_pool
+        .allocate_command_buffer(alexandria::gpu::VulkanCommandBufferLevel::Primary)
+        .unwrap();
+
+    // Record the copy command in the command buffer
+    let command_buffer = &mut command_pool[command_buffer_id];
+    command_buffer.begin().unwrap();
+    command_buffer.cmd_copy_buffer(
+        src_buffer,
+        dst_buffer,
+        &[alexandria::gpu::VulkanBufferCopy::new(0, 0, size as _)],
+    );
+    command_buffer.end().unwrap();
+
+    // Submit the command buffer to the queue and wait for it to finish
+    queue
+        .submit(
+            &[alexandria::gpu::VulkanSubmitInfo::new(
+                0,
+                &[],
+                &[alexandria::gpu::VulkanCommandBufferSubmitInfo::new(
+                    command_buffer,
+                    0,
+                )],
+                &[],
+            )],
+            None,
+        )
+        .unwrap();
+
+    queue.wait_idle().unwrap();
+
+    // Free the command buffer after the copy operation is complete
+    command_pool.free_command_buffer(command_buffer_id);
 }
 
 #[repr(C)]

@@ -1,6 +1,6 @@
 use crate::math::Rational;
 
-impl const PartialEq for Rational {
+const impl PartialEq for Rational {
     fn eq(&self, other: &Self) -> bool {
         let a = self.numerator as i64 * other.denominator.get() as i64;
         let b = other.numerator as i64 * self.denominator.get() as i64;
@@ -8,4 +8,4 @@ impl const PartialEq for Rational {
     }
 }
 
-impl const Eq for Rational {}
+const impl Eq for Rational {}

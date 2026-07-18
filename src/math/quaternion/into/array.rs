@@ -11,7 +11,7 @@ impl<T> Quaternion<T> {
     }
 }
 
-impl<T: [const] Destruct> const Into<[T; 4]> for Quaternion<T> {
+const impl<T: [const] Destruct> Into<[T; 4]> for Quaternion<T> {
     fn into(self) -> [T; 4] {
         self.into_array()
     }

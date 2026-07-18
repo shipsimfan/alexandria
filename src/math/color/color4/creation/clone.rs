@@ -1,6 +1,6 @@
 use crate::math::{Color4, ColorSpace};
 
-impl<T: [const] Clone, Space: ColorSpace<T>> const Clone for Color4<T, Space> {
+const impl<T: [const] Clone, Space: ColorSpace<T>> Clone for Color4<T, Space> {
     fn clone(&self) -> Self {
         Color4::new(
             self.r.clone(),

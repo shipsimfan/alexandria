@@ -65,7 +65,7 @@ impl Uuid {
     }
 }
 
-impl const FromStr for Uuid {
+const impl FromStr for Uuid {
     type Err = InvalidUUID;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {

@@ -11,7 +11,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T> const Ceil for Vector3<T>
+const impl<T> Ceil for Vector3<T>
 where
     T: [const] Ceil + [const] Destruct,
 {

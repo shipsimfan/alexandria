@@ -4,7 +4,7 @@ use std::{
     ops::{Sub, SubAssign},
 };
 
-impl<T: [const] Sub<Output = T> + [const] Destruct> const Sub for Matrix3x3<T> {
+const impl<T: [const] Sub<Output = T> + [const] Destruct> Sub for Matrix3x3<T> {
     type Output = Matrix3x3<T>;
 
     fn sub(self, rhs: Self) -> Self::Output {
@@ -12,7 +12,7 @@ impl<T: [const] Sub<Output = T> + [const] Destruct> const Sub for Matrix3x3<T> {
     }
 }
 
-impl<T: [const] SubAssign + [const] Destruct> const SubAssign for Matrix3x3<T> {
+const impl<T: [const] SubAssign + [const] Destruct> SubAssign for Matrix3x3<T> {
     fn sub_assign(&mut self, rhs: Self) {
         self.r0 -= rhs.r0;
         self.r1 -= rhs.r1;

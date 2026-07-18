@@ -23,7 +23,7 @@ impl<T> Matrix3x3<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<[T; 9]> for Matrix3x3<T> {
+const impl<T: [const] Destruct> From<[T; 9]> for Matrix3x3<T> {
     fn from(values: [T; 9]) -> Self {
         Matrix3x3::from_flat_row_array(values)
     }

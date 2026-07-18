@@ -11,7 +11,7 @@ impl<T, Space: ColorSpace<T> + ColorSpace<f32>> ColorHsv<T, Space> {
     }
 }
 
-impl<Space: ColorSpace<u8> + ColorSpace<f32>> const From<ColorHsv<u8, Space>>
+const impl<Space: ColorSpace<u8> + ColorSpace<f32>> From<ColorHsv<u8, Space>>
     for ColorHsv<f32, Space>
 {
     fn from(color: ColorHsv<u8, Space>) -> Self {

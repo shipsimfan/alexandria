@@ -36,7 +36,7 @@ pub use vulkan::{
     VkImageLayout as VulkanImageLayout, VkImageUsageFlag as VulkanImageUsageFlag,
     VkImageUsageFlags as VulkanImageUsageFlags, VkImageViewCreateFlag as VulkanImageViewCreateFlag,
     VkImageViewCreateFlags as VulkanImageViewCreateFlags, VkImageViewType as VulkanImageViewType,
-    VkInstanceCreateFlag as VulkanInstanceCreateFlag,
+    VkIndexType as VulkanIndexType, VkInstanceCreateFlag as VulkanInstanceCreateFlag,
     VkInstanceCreateFlags as VulkanInstanceCreateFlags, VkLogicOp as VulkanLogicOp,
     VkMemoryHeapFlag as VulkanMemoryHeapFlag, VkMemoryHeapFlags as VulkanMemoryHeapFlags,
     VkMemoryMapFlag as VulkanMemoryMapFlag, VkMemoryMapFlags as VulkanMemoryMapFlags,

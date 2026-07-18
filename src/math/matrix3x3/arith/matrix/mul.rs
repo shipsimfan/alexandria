@@ -4,7 +4,7 @@ use std::{
     ops::{Add, Mul, MulAssign},
 };
 
-impl<T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] Clone + [const] Destruct> const
+const impl<T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] Clone + [const] Destruct>
     Mul for Matrix3x3<T>
 {
     type Output = Matrix3x3<T>;
@@ -18,7 +18,7 @@ impl<T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] Clone + [con
     }
 }
 
-impl<T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] Clone + [const] Destruct> const
+const impl<T: [const] Add<Output = T> + [const] Mul<Output = T> + [const] Clone + [const] Destruct>
     MulAssign for Matrix3x3<T>
 {
     fn mul_assign(&mut self, rhs: Self) {

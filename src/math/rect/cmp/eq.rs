@@ -1,6 +1,6 @@
 use crate::math::Rect;
 
-impl<P, S> const PartialEq for Rect<P, S>
+const impl<P, S> PartialEq for Rect<P, S>
 where
     P: [const] PartialEq,
     S: [const] PartialEq,
@@ -10,7 +10,7 @@ where
     }
 }
 
-impl<P, S> const Eq for Rect<P, S>
+const impl<P, S> Eq for Rect<P, S>
 where
     P: [const] Eq,
     S: [const] Eq,

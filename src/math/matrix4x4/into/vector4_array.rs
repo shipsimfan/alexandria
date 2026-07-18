@@ -24,7 +24,7 @@ impl<T> Matrix4x4<T> {
     }
 }
 
-impl<T: [const] Destruct> const Into<[Vector4<T>; 4]> for Matrix4x4<T> {
+const impl<T: [const] Destruct> Into<[Vector4<T>; 4]> for Matrix4x4<T> {
     fn into(self) -> [Vector4<T>; 4] {
         self.into_vec4_row_array()
     }

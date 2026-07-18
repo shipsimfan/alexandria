@@ -19,7 +19,7 @@ impl<P, S> Rect<P, S> {
     }
 }
 
-impl<P, S> const ApproxEq for Rect<P, S>
+const impl<P, S> ApproxEq for Rect<P, S>
 where
     S: [const] ApproxEq + [const] Destruct,
     P: [const] ApproxEq + [const] Destruct,

@@ -10,7 +10,7 @@ impl<T> Matrix3x3<T> {
     }
 }
 
-impl<T> const IsFinite for Matrix3x3<T>
+const impl<T> IsFinite for Matrix3x3<T>
 where
     T: [const] IsFinite,
 {

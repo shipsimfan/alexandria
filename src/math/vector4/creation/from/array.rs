@@ -11,7 +11,7 @@ impl<T> Vector4<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<[T; 4]> for Vector4<T> {
+const impl<T: [const] Destruct> From<[T; 4]> for Vector4<T> {
     fn from(array: [T; 4]) -> Self {
         Vector4::from_array(array)
     }

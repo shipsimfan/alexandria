@@ -11,7 +11,7 @@ impl<T, Space: ColorSpace<T>> ColorHsva<T, Space> {
     }
 }
 
-impl<T: [const] Destruct, Space: ColorSpace<T>> const From<[T; 4]> for ColorHsva<T, Space> {
+const impl<T: [const] Destruct, Space: ColorSpace<T>> From<[T; 4]> for ColorHsva<T, Space> {
     fn from(array: [T; 4]) -> Self {
         ColorHsva::from_array(array)
     }

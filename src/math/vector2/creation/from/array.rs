@@ -11,7 +11,7 @@ impl<T> Vector2<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<[T; 2]> for Vector2<T> {
+const impl<T: [const] Destruct> From<[T; 2]> for Vector2<T> {
     fn from(array: [T; 2]) -> Vector2<T> {
         Vector2::from_array(array)
     }

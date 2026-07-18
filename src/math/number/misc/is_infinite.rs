@@ -7,37 +7,37 @@ pub const trait IsInfinite {
 
 // Unsigned integers
 
-impl const IsInfinite for u8 {
+const impl IsInfinite for u8 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for u16 {
+const impl IsInfinite for u16 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for u32 {
+const impl IsInfinite for u32 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for u64 {
+const impl IsInfinite for u64 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for u128 {
+const impl IsInfinite for u128 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for usize {
+const impl IsInfinite for usize {
     fn is_infinite(&self) -> bool {
         false
     }
@@ -45,50 +45,50 @@ impl const IsInfinite for usize {
 
 // Signed integers
 
-impl const IsInfinite for i8 {
+const impl IsInfinite for i8 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for i16 {
+const impl IsInfinite for i16 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for i32 {
+const impl IsInfinite for i32 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for i64 {
+const impl IsInfinite for i64 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for i128 {
+const impl IsInfinite for i128 {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
-impl const IsInfinite for isize {
+const impl IsInfinite for isize {
     fn is_infinite(&self) -> bool {
         false
     }
 }
 
 // Floating-point
-impl const IsInfinite for f32 {
+const impl IsInfinite for f32 {
     fn is_infinite(&self) -> bool {
         f32::is_infinite(*self)
     }
 }
 
-impl const IsInfinite for f64 {
+const impl IsInfinite for f64 {
     fn is_infinite(&self) -> bool {
         f64::is_infinite(*self)
     }

@@ -12,7 +12,7 @@ impl<T> Vector2<T> {
     }
 }
 
-impl<T> const Trunc for Vector2<T>
+const impl<T> Trunc for Vector2<T>
 where
     T: [const] Trunc + [const] Destruct,
 {

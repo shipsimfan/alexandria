@@ -4,7 +4,7 @@ use std::{
     ops::{Rem, RemAssign},
 };
 
-impl<T: [const] Rem<Output = T> + [const] Destruct> const Rem for Vector3<T> {
+const impl<T: [const] Rem<Output = T> + [const] Destruct> Rem for Vector3<T> {
     type Output = Self;
 
     fn rem(self, rhs: Self) -> Self::Output {
@@ -12,7 +12,7 @@ impl<T: [const] Rem<Output = T> + [const] Destruct> const Rem for Vector3<T> {
     }
 }
 
-impl<T: [const] Rem<Output = T> + [const] Clone + [const] Destruct> const Rem<T> for Vector3<T> {
+const impl<T: [const] Rem<Output = T> + [const] Clone + [const] Destruct> Rem<T> for Vector3<T> {
     type Output = Self;
 
     fn rem(self, rhs: T) -> Self::Output {
@@ -20,7 +20,7 @@ impl<T: [const] Rem<Output = T> + [const] Clone + [const] Destruct> const Rem<T>
     }
 }
 
-impl<T: [const] RemAssign + [const] Destruct> const RemAssign for Vector3<T> {
+const impl<T: [const] RemAssign + [const] Destruct> RemAssign for Vector3<T> {
     fn rem_assign(&mut self, rhs: Self) {
         self.x %= rhs.x;
         self.y %= rhs.y;
@@ -28,7 +28,7 @@ impl<T: [const] RemAssign + [const] Destruct> const RemAssign for Vector3<T> {
     }
 }
 
-impl<T: [const] RemAssign + [const] Clone + [const] Destruct> const RemAssign<T> for Vector3<T> {
+const impl<T: [const] RemAssign + [const] Clone + [const] Destruct> RemAssign<T> for Vector3<T> {
     fn rem_assign(&mut self, rhs: T) {
         self.x %= rhs.clone();
         self.y %= rhs.clone();
@@ -36,7 +36,7 @@ impl<T: [const] RemAssign + [const] Clone + [const] Destruct> const RemAssign<T>
     }
 }
 
-impl const Rem<Vector3<u8>> for u8 {
+const impl Rem<Vector3<u8>> for u8 {
     type Output = Vector3<u8>;
 
     fn rem(self, rhs: Vector3<u8>) -> Self::Output {
@@ -44,7 +44,7 @@ impl const Rem<Vector3<u8>> for u8 {
     }
 }
 
-impl const Rem<Vector3<u16>> for u16 {
+const impl Rem<Vector3<u16>> for u16 {
     type Output = Vector3<u16>;
 
     fn rem(self, rhs: Vector3<u16>) -> Self::Output {
@@ -52,7 +52,7 @@ impl const Rem<Vector3<u16>> for u16 {
     }
 }
 
-impl const Rem<Vector3<u32>> for u32 {
+const impl Rem<Vector3<u32>> for u32 {
     type Output = Vector3<u32>;
 
     fn rem(self, rhs: Vector3<u32>) -> Self::Output {
@@ -60,7 +60,7 @@ impl const Rem<Vector3<u32>> for u32 {
     }
 }
 
-impl const Rem<Vector3<u64>> for u64 {
+const impl Rem<Vector3<u64>> for u64 {
     type Output = Vector3<u64>;
 
     fn rem(self, rhs: Vector3<u64>) -> Self::Output {
@@ -68,7 +68,7 @@ impl const Rem<Vector3<u64>> for u64 {
     }
 }
 
-impl const Rem<Vector3<u128>> for u128 {
+const impl Rem<Vector3<u128>> for u128 {
     type Output = Vector3<u128>;
 
     fn rem(self, rhs: Vector3<u128>) -> Self::Output {
@@ -76,7 +76,7 @@ impl const Rem<Vector3<u128>> for u128 {
     }
 }
 
-impl const Rem<Vector3<usize>> for usize {
+const impl Rem<Vector3<usize>> for usize {
     type Output = Vector3<usize>;
 
     fn rem(self, rhs: Vector3<usize>) -> Self::Output {
@@ -84,7 +84,7 @@ impl const Rem<Vector3<usize>> for usize {
     }
 }
 
-impl const Rem<Vector3<i8>> for i8 {
+const impl Rem<Vector3<i8>> for i8 {
     type Output = Vector3<i8>;
 
     fn rem(self, rhs: Vector3<i8>) -> Self::Output {
@@ -92,7 +92,7 @@ impl const Rem<Vector3<i8>> for i8 {
     }
 }
 
-impl const Rem<Vector3<i16>> for i16 {
+const impl Rem<Vector3<i16>> for i16 {
     type Output = Vector3<i16>;
 
     fn rem(self, rhs: Vector3<i16>) -> Self::Output {
@@ -100,7 +100,7 @@ impl const Rem<Vector3<i16>> for i16 {
     }
 }
 
-impl const Rem<Vector3<i32>> for i32 {
+const impl Rem<Vector3<i32>> for i32 {
     type Output = Vector3<i32>;
 
     fn rem(self, rhs: Vector3<i32>) -> Self::Output {
@@ -108,7 +108,7 @@ impl const Rem<Vector3<i32>> for i32 {
     }
 }
 
-impl const Rem<Vector3<i64>> for i64 {
+const impl Rem<Vector3<i64>> for i64 {
     type Output = Vector3<i64>;
 
     fn rem(self, rhs: Vector3<i64>) -> Self::Output {
@@ -116,7 +116,7 @@ impl const Rem<Vector3<i64>> for i64 {
     }
 }
 
-impl const Rem<Vector3<i128>> for i128 {
+const impl Rem<Vector3<i128>> for i128 {
     type Output = Vector3<i128>;
 
     fn rem(self, rhs: Vector3<i128>) -> Self::Output {
@@ -124,7 +124,7 @@ impl const Rem<Vector3<i128>> for i128 {
     }
 }
 
-impl const Rem<Vector3<isize>> for isize {
+const impl Rem<Vector3<isize>> for isize {
     type Output = Vector3<isize>;
 
     fn rem(self, rhs: Vector3<isize>) -> Self::Output {
@@ -132,7 +132,7 @@ impl const Rem<Vector3<isize>> for isize {
     }
 }
 
-impl const Rem<Vector3<f32>> for f32 {
+const impl Rem<Vector3<f32>> for f32 {
     type Output = Vector3<f32>;
 
     fn rem(self, rhs: Vector3<f32>) -> Self::Output {
@@ -140,7 +140,7 @@ impl const Rem<Vector3<f32>> for f32 {
     }
 }
 
-impl const Rem<Vector3<f64>> for f64 {
+const impl Rem<Vector3<f64>> for f64 {
     type Output = Vector3<f64>;
 
     fn rem(self, rhs: Vector3<f64>) -> Self::Output {

@@ -1,7 +1,7 @@
 use crate::math::{Matrix4x4, Vector4, number::FromSigned};
 use std::marker::Destruct;
 
-impl<T, U> const FromSigned<Matrix4x4<U>> for Matrix4x4<T>
+const impl<T, U> FromSigned<Matrix4x4<U>> for Matrix4x4<T>
 where
     T: [const] FromSigned<U>,
     U: [const] Destruct,

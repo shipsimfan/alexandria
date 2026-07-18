@@ -11,13 +11,13 @@ impl<T, Space: ColorSpace<T>> ColorHsv<T, Space> {
     }
 }
 
-impl<T: [const] Clone, Space: ColorSpace<T>> const From<&[T]> for ColorHsv<T, Space> {
+const impl<T: [const] Clone, Space: ColorSpace<T>> From<&[T]> for ColorHsv<T, Space> {
     fn from(slice: &[T]) -> Self {
         ColorHsv::from_slice(slice)
     }
 }
 
-impl<T: [const] Clone, Space: ColorSpace<T>> const From<&[T; 3]> for ColorHsv<T, Space> {
+const impl<T: [const] Clone, Space: ColorSpace<T>> From<&[T; 3]> for ColorHsv<T, Space> {
     fn from(slice: &[T; 3]) -> Self {
         ColorHsv::from_slice(slice)
     }

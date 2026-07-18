@@ -7,37 +7,37 @@ pub const trait NormalizedWrappingSub: Sized {
 
 // Unsigned integers
 
-impl const NormalizedWrappingSub for u8 {
+const impl NormalizedWrappingSub for u8 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other)
     }
 }
 
-impl const NormalizedWrappingSub for u16 {
+const impl NormalizedWrappingSub for u16 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other)
     }
 }
 
-impl const NormalizedWrappingSub for u32 {
+const impl NormalizedWrappingSub for u32 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other)
     }
 }
 
-impl const NormalizedWrappingSub for u64 {
+const impl NormalizedWrappingSub for u64 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other)
     }
 }
 
-impl const NormalizedWrappingSub for u128 {
+const impl NormalizedWrappingSub for u128 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other)
     }
 }
 
-impl const NormalizedWrappingSub for usize {
+const impl NormalizedWrappingSub for usize {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other)
     }
@@ -45,37 +45,37 @@ impl const NormalizedWrappingSub for usize {
 
 // Signed integers
 
-impl const NormalizedWrappingSub for i8 {
+const impl NormalizedWrappingSub for i8 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other) & i8::MIN
     }
 }
 
-impl const NormalizedWrappingSub for i16 {
+const impl NormalizedWrappingSub for i16 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other) & i16::MIN
     }
 }
 
-impl const NormalizedWrappingSub for i32 {
+const impl NormalizedWrappingSub for i32 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other) & i32::MIN
     }
 }
 
-impl const NormalizedWrappingSub for i64 {
+const impl NormalizedWrappingSub for i64 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other) & i64::MIN
     }
 }
 
-impl const NormalizedWrappingSub for i128 {
+const impl NormalizedWrappingSub for i128 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other) & i128::MIN
     }
 }
 
-impl const NormalizedWrappingSub for isize {
+const impl NormalizedWrappingSub for isize {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         self.wrapping_sub(other) & isize::MIN
     }
@@ -83,14 +83,14 @@ impl const NormalizedWrappingSub for isize {
 
 // Floating point numbers
 
-impl const NormalizedWrappingSub for f32 {
+const impl NormalizedWrappingSub for f32 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         let fract = (self - other).fract();
         if fract < 0.0 { fract + 1.0 } else { fract }
     }
 }
 
-impl const NormalizedWrappingSub for f64 {
+const impl NormalizedWrappingSub for f64 {
     fn normalized_wrapping_sub(self, other: Self) -> Self {
         let fract = (self - other).fract();
         if fract < 0.0 { fract + 1.0 } else { fract }

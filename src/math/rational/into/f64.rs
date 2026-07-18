@@ -7,7 +7,7 @@ impl Rational {
     }
 }
 
-impl const Into<f64> for Rational {
+const impl Into<f64> for Rational {
     fn into(self) -> f64 {
         self.as_f64()
     }

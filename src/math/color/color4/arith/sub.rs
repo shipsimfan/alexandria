@@ -4,7 +4,7 @@ use std::{
     ops::{Sub, SubAssign},
 };
 
-impl<T: [const] Sub<Output = T> + [const] Destruct, Space: ColorSpace<T>> const Sub
+const impl<T: [const] Sub<Output = T> + [const] Destruct, Space: ColorSpace<T>> Sub
     for Color4<T, Space>
 {
     type Output = Color4<T, Space>;
@@ -14,7 +14,7 @@ impl<T: [const] Sub<Output = T> + [const] Destruct, Space: ColorSpace<T>> const 
     }
 }
 
-impl<T: [const] Sub<Output = T> + [const] Clone + [const] Destruct, Space: ColorSpace<T>> const
+const impl<T: [const] Sub<Output = T> + [const] Clone + [const] Destruct, Space: ColorSpace<T>>
     Sub<T> for Color4<T, Space>
 {
     type Output = Color4<T, Space>;
@@ -29,7 +29,7 @@ impl<T: [const] Sub<Output = T> + [const] Clone + [const] Destruct, Space: Color
     }
 }
 
-impl<T: [const] SubAssign + [const] Destruct, Space: ColorSpace<T>> const SubAssign
+const impl<T: [const] SubAssign + [const] Destruct, Space: ColorSpace<T>> SubAssign
     for Color4<T, Space>
 {
     fn sub_assign(&mut self, rhs: Self) {
@@ -40,7 +40,7 @@ impl<T: [const] SubAssign + [const] Destruct, Space: ColorSpace<T>> const SubAss
     }
 }
 
-impl<T: [const] SubAssign + [const] Clone + [const] Destruct, Space: ColorSpace<T>> const
+const impl<T: [const] SubAssign + [const] Clone + [const] Destruct, Space: ColorSpace<T>>
     SubAssign<T> for Color4<T, Space>
 {
     fn sub_assign(&mut self, rhs: T) {
@@ -51,7 +51,7 @@ impl<T: [const] SubAssign + [const] Clone + [const] Destruct, Space: ColorSpace<
     }
 }
 
-impl<Space: ColorSpace<u8>> const Sub<Color4<u8, Space>> for u8 {
+const impl<Space: ColorSpace<u8>> Sub<Color4<u8, Space>> for u8 {
     type Output = Color4<u8, Space>;
 
     fn sub(self, rhs: Color4<u8, Space>) -> Self::Output {
@@ -59,7 +59,7 @@ impl<Space: ColorSpace<u8>> const Sub<Color4<u8, Space>> for u8 {
     }
 }
 
-impl<Space: ColorSpace<u16>> const Sub<Color4<u16, Space>> for u16 {
+const impl<Space: ColorSpace<u16>> Sub<Color4<u16, Space>> for u16 {
     type Output = Color4<u16, Space>;
 
     fn sub(self, rhs: Color4<u16, Space>) -> Self::Output {
@@ -67,7 +67,7 @@ impl<Space: ColorSpace<u16>> const Sub<Color4<u16, Space>> for u16 {
     }
 }
 
-impl<Space: ColorSpace<u32>> const Sub<Color4<u32, Space>> for u32 {
+const impl<Space: ColorSpace<u32>> Sub<Color4<u32, Space>> for u32 {
     type Output = Color4<u32, Space>;
 
     fn sub(self, rhs: Color4<u32, Space>) -> Self::Output {
@@ -75,7 +75,7 @@ impl<Space: ColorSpace<u32>> const Sub<Color4<u32, Space>> for u32 {
     }
 }
 
-impl<Space: ColorSpace<u64>> const Sub<Color4<u64, Space>> for u64 {
+const impl<Space: ColorSpace<u64>> Sub<Color4<u64, Space>> for u64 {
     type Output = Color4<u64, Space>;
 
     fn sub(self, rhs: Color4<u64, Space>) -> Self::Output {
@@ -83,7 +83,7 @@ impl<Space: ColorSpace<u64>> const Sub<Color4<u64, Space>> for u64 {
     }
 }
 
-impl<Space: ColorSpace<u128>> const Sub<Color4<u128, Space>> for u128 {
+const impl<Space: ColorSpace<u128>> Sub<Color4<u128, Space>> for u128 {
     type Output = Color4<u128, Space>;
 
     fn sub(self, rhs: Color4<u128, Space>) -> Self::Output {
@@ -91,7 +91,7 @@ impl<Space: ColorSpace<u128>> const Sub<Color4<u128, Space>> for u128 {
     }
 }
 
-impl<Space: ColorSpace<usize>> const Sub<Color4<usize, Space>> for usize {
+const impl<Space: ColorSpace<usize>> Sub<Color4<usize, Space>> for usize {
     type Output = Color4<usize, Space>;
 
     fn sub(self, rhs: Color4<usize, Space>) -> Self::Output {
@@ -99,7 +99,7 @@ impl<Space: ColorSpace<usize>> const Sub<Color4<usize, Space>> for usize {
     }
 }
 
-impl<Space: ColorSpace<i8>> const Sub<Color4<i8, Space>> for i8 {
+const impl<Space: ColorSpace<i8>> Sub<Color4<i8, Space>> for i8 {
     type Output = Color4<i8, Space>;
 
     fn sub(self, rhs: Color4<i8, Space>) -> Self::Output {
@@ -107,7 +107,7 @@ impl<Space: ColorSpace<i8>> const Sub<Color4<i8, Space>> for i8 {
     }
 }
 
-impl<Space: ColorSpace<i16>> const Sub<Color4<i16, Space>> for i16 {
+const impl<Space: ColorSpace<i16>> Sub<Color4<i16, Space>> for i16 {
     type Output = Color4<i16, Space>;
 
     fn sub(self, rhs: Color4<i16, Space>) -> Self::Output {
@@ -115,7 +115,7 @@ impl<Space: ColorSpace<i16>> const Sub<Color4<i16, Space>> for i16 {
     }
 }
 
-impl<Space: ColorSpace<i32>> const Sub<Color4<i32, Space>> for i32 {
+const impl<Space: ColorSpace<i32>> Sub<Color4<i32, Space>> for i32 {
     type Output = Color4<i32, Space>;
 
     fn sub(self, rhs: Color4<i32, Space>) -> Self::Output {
@@ -123,7 +123,7 @@ impl<Space: ColorSpace<i32>> const Sub<Color4<i32, Space>> for i32 {
     }
 }
 
-impl<Space: ColorSpace<i64>> const Sub<Color4<i64, Space>> for i64 {
+const impl<Space: ColorSpace<i64>> Sub<Color4<i64, Space>> for i64 {
     type Output = Color4<i64, Space>;
 
     fn sub(self, rhs: Color4<i64, Space>) -> Self::Output {
@@ -131,7 +131,7 @@ impl<Space: ColorSpace<i64>> const Sub<Color4<i64, Space>> for i64 {
     }
 }
 
-impl<Space: ColorSpace<i128>> const Sub<Color4<i128, Space>> for i128 {
+const impl<Space: ColorSpace<i128>> Sub<Color4<i128, Space>> for i128 {
     type Output = Color4<i128, Space>;
 
     fn sub(self, rhs: Color4<i128, Space>) -> Self::Output {
@@ -139,7 +139,7 @@ impl<Space: ColorSpace<i128>> const Sub<Color4<i128, Space>> for i128 {
     }
 }
 
-impl<Space: ColorSpace<isize>> const Sub<Color4<isize, Space>> for isize {
+const impl<Space: ColorSpace<isize>> Sub<Color4<isize, Space>> for isize {
     type Output = Color4<isize, Space>;
 
     fn sub(self, rhs: Color4<isize, Space>) -> Self::Output {
@@ -147,7 +147,7 @@ impl<Space: ColorSpace<isize>> const Sub<Color4<isize, Space>> for isize {
     }
 }
 
-impl<Space: ColorSpace<f32>> const Sub<Color4<f32, Space>> for f32 {
+const impl<Space: ColorSpace<f32>> Sub<Color4<f32, Space>> for f32 {
     type Output = Color4<f32, Space>;
 
     fn sub(self, rhs: Color4<f32, Space>) -> Self::Output {
@@ -155,7 +155,7 @@ impl<Space: ColorSpace<f32>> const Sub<Color4<f32, Space>> for f32 {
     }
 }
 
-impl<Space: ColorSpace<f64>> const Sub<Color4<f64, Space>> for f64 {
+const impl<Space: ColorSpace<f64>> Sub<Color4<f64, Space>> for f64 {
     type Output = Color4<f64, Space>;
 
     fn sub(self, rhs: Color4<f64, Space>) -> Self::Output {

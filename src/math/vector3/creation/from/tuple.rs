@@ -11,7 +11,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<(T, T, T)> for Vector3<T> {
+const impl<T: [const] Destruct> From<(T, T, T)> for Vector3<T> {
     fn from(tuple: (T, T, T)) -> Self {
         Vector3::from_tuple(tuple)
     }

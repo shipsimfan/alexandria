@@ -19,7 +19,7 @@ impl<T> Matrix4x4<T> {
     }
 }
 
-impl<T: [const] Clone + [const] Destruct> const From<&[T]> for Matrix4x4<T> {
+const impl<T: [const] Clone + [const] Destruct> From<&[T]> for Matrix4x4<T> {
     fn from(values: &[T]) -> Self {
         Matrix4x4::from_flat_row_slice(values)
     }

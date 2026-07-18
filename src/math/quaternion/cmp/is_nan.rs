@@ -10,7 +10,7 @@ impl<T> Quaternion<T> {
     }
 }
 
-impl<T> const IsNaN for Quaternion<T>
+const impl<T> IsNaN for Quaternion<T>
 where
     T: [const] IsNaN,
 {

@@ -11,7 +11,7 @@ impl<T> Quaternion<T> {
     }
 }
 
-impl<T: [const] Destruct> const From<(T, T, T, T)> for Quaternion<T> {
+const impl<T: [const] Destruct> From<(T, T, T, T)> for Quaternion<T> {
     fn from(tuple: (T, T, T, T)) -> Self {
         Quaternion::from_tuple(tuple)
     }

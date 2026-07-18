@@ -8,7 +8,7 @@ impl Rational {
     }
 }
 
-impl const From<(i32, NonZeroU32)> for Rational {
+const impl From<(i32, NonZeroU32)> for Rational {
     fn from(tuple: (i32, NonZeroU32)) -> Self {
         Rational::from_tuple(tuple)
     }

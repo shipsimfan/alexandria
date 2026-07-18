@@ -11,7 +11,7 @@ impl<T> Vector4<T> {
     }
 }
 
-impl<T: [const] Signum + [const] Destruct> const Signum for Vector4<T> {
+const impl<T: [const] Signum + [const] Destruct> Signum for Vector4<T> {
     fn signum(self) -> Self {
         self.signum()
     }

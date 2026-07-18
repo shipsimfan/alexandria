@@ -4,7 +4,7 @@ use std::{
     ops::{Add, Div, Mul, Neg, Sub},
 };
 
-impl<
+const impl<
     T: [const] Add<Output = T>
         + [const] Sub<Output = T>
         + [const] Mul<Output = T>
@@ -13,7 +13,7 @@ impl<
         + [const] Clone
         + [const] Destruct
         + Zero,
-> const Mul<Vector3<T>> for Quaternion<T>
+> Mul<Vector3<T>> for Quaternion<T>
 {
     type Output = Vector3<T>;
 

@@ -6,37 +6,37 @@ pub const trait Max: Sized {
 
 // Unsigned integers
 
-impl const Max for u8 {
+const impl Max for u8 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for u16 {
+const impl Max for u16 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for u32 {
+const impl Max for u32 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for u64 {
+const impl Max for u64 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for u128 {
+const impl Max for u128 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for usize {
+const impl Max for usize {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
@@ -44,37 +44,37 @@ impl const Max for usize {
 
 // Signed integers
 
-impl const Max for i8 {
+const impl Max for i8 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for i16 {
+const impl Max for i16 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for i32 {
+const impl Max for i32 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for i64 {
+const impl Max for i64 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for i128 {
+const impl Max for i128 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for isize {
+const impl Max for isize {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
@@ -82,13 +82,13 @@ impl const Max for isize {
 
 // Floating-point numbers
 
-impl const Max for f32 {
+const impl Max for f32 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }
 }
 
-impl const Max for f64 {
+const impl Max for f64 {
     fn max(self, other: Self) -> Self {
         if self >= other { self } else { other }
     }

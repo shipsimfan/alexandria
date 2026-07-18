@@ -12,7 +12,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T> const Fract for Vector3<T>
+const impl<T> Fract for Vector3<T>
 where
     T: [const] Fract + [const] Destruct,
 {

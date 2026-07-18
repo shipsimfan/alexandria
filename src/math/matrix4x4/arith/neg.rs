@@ -1,7 +1,7 @@
 use crate::math::Matrix4x4;
 use std::{marker::Destruct, ops::Neg};
 
-impl<T: [const] Neg<Output = T> + [const] Destruct> const Neg for Matrix4x4<T> {
+const impl<T: [const] Neg<Output = T> + [const] Destruct> Neg for Matrix4x4<T> {
     type Output = Matrix4x4<T>;
 
     fn neg(self) -> Self::Output {

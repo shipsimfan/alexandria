@@ -10,7 +10,7 @@ impl<T> Quaternion<T> {
     }
 }
 
-impl<T> const IsFinite for Quaternion<T>
+const impl<T> IsFinite for Quaternion<T>
 where
     T: [const] IsFinite,
 {

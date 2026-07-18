@@ -19,7 +19,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 }
 
-impl<T: [const] Destruct, Space: ColorSpace<T>> const Into<(Color3<T, Space>, T)>
+const impl<T: [const] Destruct, Space: ColorSpace<T>> Into<(Color3<T, Space>, T)>
     for Color4<T, Space>
 {
     fn into(self) -> (Color3<T, Space>, T) {

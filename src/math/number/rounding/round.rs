@@ -6,37 +6,37 @@ pub const trait Round {
 
 // Unsigned integers
 
-impl const Round for u8 {
+const impl Round for u8 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for u16 {
+const impl Round for u16 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for u32 {
+const impl Round for u32 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for u64 {
+const impl Round for u64 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for u128 {
+const impl Round for u128 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for usize {
+const impl Round for usize {
     fn round(self) -> Self {
         self
     }
@@ -44,50 +44,50 @@ impl const Round for usize {
 
 // Signed integers
 
-impl const Round for i8 {
+const impl Round for i8 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for i16 {
+const impl Round for i16 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for i32 {
+const impl Round for i32 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for i64 {
+const impl Round for i64 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for i128 {
+const impl Round for i128 {
     fn round(self) -> Self {
         self
     }
 }
 
-impl const Round for isize {
+const impl Round for isize {
     fn round(self) -> Self {
         self
     }
 }
 
 // Floating-point
-impl const Round for f32 {
+const impl Round for f32 {
     fn round(self) -> Self {
         f32::round(self)
     }
 }
 
-impl const Round for f64 {
+const impl Round for f64 {
     fn round(self) -> Self {
         f64::round(self)
     }

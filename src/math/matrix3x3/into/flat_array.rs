@@ -25,7 +25,7 @@ impl<T> Matrix3x3<T> {
     }
 }
 
-impl<T: [const] Destruct> const Into<[T; 9]> for Matrix3x3<T> {
+const impl<T: [const] Destruct> Into<[T; 9]> for Matrix3x3<T> {
     fn into(self) -> [T; 9] {
         self.into_flat_row_array()
     }

@@ -1,7 +1,7 @@
 use crate::MemorySize;
 use std::ops::Deref;
 
-impl const Deref for MemorySize {
+const impl Deref for MemorySize {
     type Target = u64;
 
     fn deref(&self) -> &Self::Target {
@@ -9,7 +9,7 @@ impl const Deref for MemorySize {
     }
 }
 
-impl const AsRef<u64> for MemorySize {
+const impl AsRef<u64> for MemorySize {
     fn as_ref(&self) -> &u64 {
         &self.0
     }

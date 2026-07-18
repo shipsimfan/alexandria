@@ -14,7 +14,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T: [const] ApproxEq + [const] Destruct> const ApproxEq for Vector3<T>
+const impl<T: [const] ApproxEq + [const] Destruct> ApproxEq for Vector3<T>
 where
     T::Epsilon: [const] Clone + [const] Destruct,
 {

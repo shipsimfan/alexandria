@@ -9,37 +9,37 @@ pub const trait Log: Sized {
 
 // Unsigned integers
 
-impl const Log for u8 {
+const impl Log for u8 {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as u8
     }
 }
 
-impl const Log for u16 {
+const impl Log for u16 {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as u16
     }
 }
 
-impl const Log for u32 {
+const impl Log for u32 {
     fn log(self, base: Self) -> Self {
         self.ilog(base)
     }
 }
 
-impl const Log for u64 {
+const impl Log for u64 {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as u64
     }
 }
 
-impl const Log for u128 {
+const impl Log for u128 {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as u128
     }
 }
 
-impl const Log for usize {
+const impl Log for usize {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as usize
     }
@@ -47,37 +47,37 @@ impl const Log for usize {
 
 // Signed integers
 
-impl const Log for i8 {
+const impl Log for i8 {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as i8
     }
 }
 
-impl const Log for i16 {
+const impl Log for i16 {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as i16
     }
 }
 
-impl const Log for i32 {
+const impl Log for i32 {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as i32
     }
 }
 
-impl const Log for i64 {
+const impl Log for i64 {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as i64
     }
 }
 
-impl const Log for i128 {
+const impl Log for i128 {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as i128
     }
 }
 
-impl const Log for isize {
+const impl Log for isize {
     fn log(self, base: Self) -> Self {
         self.ilog(base) as isize
     }

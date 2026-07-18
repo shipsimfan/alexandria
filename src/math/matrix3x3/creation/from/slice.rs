@@ -37,7 +37,7 @@ impl<T> Matrix3x3<T> {
     }
 }
 
-impl<T: [const] Clone + [const] Destruct> const From<&[&[T]]> for Matrix3x3<T> {
+const impl<T: [const] Clone + [const] Destruct> From<&[&[T]]> for Matrix3x3<T> {
     fn from(rows: &[&[T]]) -> Self {
         Matrix3x3::from_row_slice(rows)
     }

@@ -1,6 +1,6 @@
 use crate::math::Rect;
 
-impl<P, S> const Clone for Rect<P, S>
+const impl<P, S> Clone for Rect<P, S>
 where
     P: [const] Clone,
     S: [const] Clone,

@@ -1,7 +1,7 @@
 use crate::math::{Quaternion, number::IntoSigned};
 use std::marker::Destruct;
 
-impl<T, U> const IntoSigned<Quaternion<U>> for Quaternion<T>
+const impl<T, U> IntoSigned<Quaternion<U>> for Quaternion<T>
 where
     T: [const] IntoSigned<U> + [const] Destruct,
 {

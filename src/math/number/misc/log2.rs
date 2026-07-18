@@ -6,37 +6,37 @@ pub const trait Log2 {
 
 // Unsigned integers
 
-impl const Log2 for u8 {
+const impl Log2 for u8 {
     fn log2(self) -> Self {
         self.ilog2() as u8
     }
 }
 
-impl const Log2 for u16 {
+const impl Log2 for u16 {
     fn log2(self) -> Self {
         self.ilog2() as u16
     }
 }
 
-impl const Log2 for u32 {
+const impl Log2 for u32 {
     fn log2(self) -> Self {
         self.ilog2()
     }
 }
 
-impl const Log2 for u64 {
+const impl Log2 for u64 {
     fn log2(self) -> Self {
         self.ilog2() as u64
     }
 }
 
-impl const Log2 for u128 {
+const impl Log2 for u128 {
     fn log2(self) -> Self {
         self.ilog2() as u128
     }
 }
 
-impl const Log2 for usize {
+const impl Log2 for usize {
     fn log2(self) -> Self {
         self.ilog2() as usize
     }
@@ -44,37 +44,37 @@ impl const Log2 for usize {
 
 // Signed integers
 
-impl const Log2 for i8 {
+const impl Log2 for i8 {
     fn log2(self) -> Self {
         self.ilog2() as i8
     }
 }
 
-impl const Log2 for i16 {
+const impl Log2 for i16 {
     fn log2(self) -> Self {
         self.ilog2() as i16
     }
 }
 
-impl const Log2 for i32 {
+const impl Log2 for i32 {
     fn log2(self) -> Self {
         self.ilog2() as i32
     }
 }
 
-impl const Log2 for i64 {
+const impl Log2 for i64 {
     fn log2(self) -> Self {
         self.ilog2() as i64
     }
 }
 
-impl const Log2 for i128 {
+const impl Log2 for i128 {
     fn log2(self) -> Self {
         self.ilog2() as i128
     }
 }
 
-impl const Log2 for isize {
+const impl Log2 for isize {
     fn log2(self) -> Self {
         self.ilog2() as isize
     }

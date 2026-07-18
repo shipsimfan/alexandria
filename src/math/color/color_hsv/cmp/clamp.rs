@@ -31,7 +31,7 @@ impl<T, Space: ColorSpace<T>> ColorHsv<T, Space> {
     }
 }
 
-impl<T: [const] Clamp + [const] Destruct, Space: ColorSpace<T>> const Clamp for ColorHsv<T, Space>
+const impl<T: [const] Clamp + [const] Destruct, Space: ColorSpace<T>> Clamp for ColorHsv<T, Space>
 where
     T: [const] Clamp + [const] Destruct,
     T::Bound: [const] Clone + [const] Destruct,

@@ -14,7 +14,7 @@ use crate::math::{Color3, ColorSpace};
 /// bytes. Convert to [`Linear`] before doing math like lerp, filtering, or blending.
 pub struct Linear;
 
-impl<T: Sized> const ColorSpace<T> for Linear {
+const impl<T: Sized> ColorSpace<T> for Linear {
     const NAME: &'static str = "Linear";
 
     fn from_linear(color: Color3<T, Linear>) -> Color3<T, Self> {

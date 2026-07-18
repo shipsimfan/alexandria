@@ -7,7 +7,7 @@ use std::{
     ops::{Add, AddAssign, Div, Sub},
 };
 
-impl<
+const impl<
     T: Zero
         + One
         + [const] Add<T, Output = T>
@@ -22,7 +22,7 @@ impl<
         + [const] Destruct
         + [const] FromF32,
     Space: ColorSpace<T>,
-> const From<Color4<T, Space>> for ColorHsv<T, Space>
+> From<Color4<T, Space>> for ColorHsv<T, Space>
 {
     fn from(value: Color4<T, Space>) -> Self {
         ColorHsv::from_rgb(Color3::new(value.r, value.g, value.b)).into()

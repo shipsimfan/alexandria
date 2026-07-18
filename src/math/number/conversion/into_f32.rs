@@ -9,7 +9,7 @@ pub const trait IntoF32 {
 
 // Unsigned integers
 
-impl const IntoF32 for u8 {
+const impl IntoF32 for u8 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -19,7 +19,7 @@ impl const IntoF32 for u8 {
     }
 }
 
-impl const IntoF32 for u16 {
+const impl IntoF32 for u16 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -29,7 +29,7 @@ impl const IntoF32 for u16 {
     }
 }
 
-impl const IntoF32 for u32 {
+const impl IntoF32 for u32 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -39,7 +39,7 @@ impl const IntoF32 for u32 {
     }
 }
 
-impl const IntoF32 for u64 {
+const impl IntoF32 for u64 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -49,7 +49,7 @@ impl const IntoF32 for u64 {
     }
 }
 
-impl const IntoF32 for u128 {
+const impl IntoF32 for u128 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -59,7 +59,7 @@ impl const IntoF32 for u128 {
     }
 }
 
-impl const IntoF32 for usize {
+const impl IntoF32 for usize {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -71,7 +71,7 @@ impl const IntoF32 for usize {
 
 // Signed integers
 
-impl const IntoF32 for i8 {
+const impl IntoF32 for i8 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -85,7 +85,7 @@ impl const IntoF32 for i8 {
     }
 }
 
-impl const IntoF32 for i16 {
+const impl IntoF32 for i16 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -99,7 +99,7 @@ impl const IntoF32 for i16 {
     }
 }
 
-impl const IntoF32 for i32 {
+const impl IntoF32 for i32 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -113,7 +113,7 @@ impl const IntoF32 for i32 {
     }
 }
 
-impl const IntoF32 for i64 {
+const impl IntoF32 for i64 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -127,7 +127,7 @@ impl const IntoF32 for i64 {
     }
 }
 
-impl const IntoF32 for i128 {
+const impl IntoF32 for i128 {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -141,7 +141,7 @@ impl const IntoF32 for i128 {
     }
 }
 
-impl const IntoF32 for isize {
+const impl IntoF32 for isize {
     fn into_f32(self) -> f32 {
         self as f32
     }
@@ -157,7 +157,7 @@ impl const IntoF32 for isize {
 
 // Floating-point
 
-impl const IntoF32 for f32 {
+const impl IntoF32 for f32 {
     fn into_f32(self) -> f32 {
         self
     }
@@ -167,7 +167,7 @@ impl const IntoF32 for f32 {
     }
 }
 
-impl const IntoF32 for f64 {
+const impl IntoF32 for f64 {
     fn into_f32(self) -> f32 {
         self as f32
     }

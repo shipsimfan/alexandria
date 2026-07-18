@@ -21,7 +21,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T: [const] Clamp + [const] Destruct> const Clamp for Vector3<T>
+const impl<T: [const] Clamp + [const] Destruct> Clamp for Vector3<T>
 where
     T::Bound: [const] Clone + [const] Destruct,
 {

@@ -11,7 +11,7 @@ impl<T, Space: ColorSpace<T>> ColorHsva<T, Space> {
     }
 }
 
-impl<T: [const] Destruct, Space: ColorSpace<T>> const Into<ColorHsv<T, Space>>
+const impl<T: [const] Destruct, Space: ColorSpace<T>> Into<ColorHsv<T, Space>>
     for ColorHsva<T, Space>
 {
     fn into(self) -> ColorHsv<T, Space> {

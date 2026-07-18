@@ -11,7 +11,7 @@ impl<T, Space: ColorSpace<T>> ColorHsv<T, Space> {
     }
 }
 
-impl<T: [const] Destruct, Space: ColorSpace<T>> const From<(T, T, T)> for ColorHsv<T, Space> {
+const impl<T: [const] Destruct, Space: ColorSpace<T>> From<(T, T, T)> for ColorHsv<T, Space> {
     fn from(tuple: (T, T, T)) -> Self {
         ColorHsv::from_tuple(tuple)
     }

@@ -19,7 +19,7 @@ impl<T> Vector2<T> {
     }
 }
 
-impl<T> const Max for Vector2<T>
+const impl<T> Max for Vector2<T>
 where
     T: [const] Max + [const] Destruct,
 {

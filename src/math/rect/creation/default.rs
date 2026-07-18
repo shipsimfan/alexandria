@@ -1,6 +1,6 @@
 use crate::math::{Rect, Vector2};
 
-impl<P, S> const Default for Rect<P, S>
+const impl<P, S> Default for Rect<P, S>
 where
     P: [const] Default,
     S: [const] Default,

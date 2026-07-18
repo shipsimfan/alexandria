@@ -8,7 +8,7 @@ impl Rational {
     }
 }
 
-impl const Into<(i32, NonZeroU32)> for Rational {
+const impl Into<(i32, NonZeroU32)> for Rational {
     fn into(self) -> (i32, NonZeroU32) {
         self.into_tuple()
     }

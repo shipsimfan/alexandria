@@ -15,7 +15,7 @@ impl<T> Quaternion<T> {
     }
 }
 
-impl<T: [const] ApproxEq + [const] Destruct> const ApproxEq for Quaternion<T>
+const impl<T: [const] ApproxEq + [const] Destruct> ApproxEq for Quaternion<T>
 where
     T::Epsilon: [const] Clone + [const] Destruct,
 {

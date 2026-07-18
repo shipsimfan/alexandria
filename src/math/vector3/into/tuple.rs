@@ -11,7 +11,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T: [const] Destruct> const Into<(T, T, T)> for Vector3<T> {
+const impl<T: [const] Destruct> Into<(T, T, T)> for Vector3<T> {
     fn into(self) -> (T, T, T) {
         self.into_tuple()
     }

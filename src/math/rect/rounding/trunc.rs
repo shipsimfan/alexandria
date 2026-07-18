@@ -13,7 +13,7 @@ impl<P, S> Rect<P, S> {
     }
 }
 
-impl<P, S> const Trunc for Rect<P, S>
+const impl<P, S> Trunc for Rect<P, S>
 where
     P: [const] Trunc + [const] Destruct,
     S: [const] Trunc + [const] Destruct,

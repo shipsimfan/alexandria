@@ -11,7 +11,7 @@ impl<T> Vector4<T> {
     }
 }
 
-impl<T: [const] Abs + [const] Destruct> const Abs for Vector4<T> {
+const impl<T: [const] Abs + [const] Destruct> Abs for Vector4<T> {
     fn abs(self) -> Self {
         self.abs()
     }

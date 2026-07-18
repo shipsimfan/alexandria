@@ -7,7 +7,7 @@ impl Rational {
     }
 }
 
-impl const Into<f32> for Rational {
+const impl Into<f32> for Rational {
     fn into(self) -> f32 {
         self.as_f32()
     }

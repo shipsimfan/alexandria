@@ -10,7 +10,7 @@ impl<T> Matrix4x4<T> {
     }
 }
 
-impl<T> const IsNaN for Matrix4x4<T>
+const impl<T> IsNaN for Matrix4x4<T>
 where
     T: [const] IsNaN,
 {

@@ -11,13 +11,13 @@ impl<T> Vector4<T> {
     }
 }
 
-impl<T: [const] Clone> const From<&[T]> for Vector4<T> {
+const impl<T: [const] Clone> From<&[T]> for Vector4<T> {
     fn from(slice: &[T]) -> Self {
         Vector4::from_slice(slice)
     }
 }
 
-impl<T: [const] Clone> const From<&[T; 4]> for Vector4<T> {
+const impl<T: [const] Clone> From<&[T; 4]> for Vector4<T> {
     fn from(slice: &[T; 4]) -> Self {
         Vector4::from_slice(slice)
     }

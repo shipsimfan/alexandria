@@ -12,7 +12,7 @@ impl<P, S> Rect<P, S> {
     }
 }
 
-impl<P, S> const Floor for Rect<P, S>
+const impl<P, S> Floor for Rect<P, S>
 where
     P: [const] Floor + [const] Destruct,
     S: [const] Floor + [const] Destruct,

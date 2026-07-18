@@ -10,7 +10,7 @@ impl<T> Vector4<T> {
     }
 }
 
-impl<T> const IsFinite for Vector4<T>
+const impl<T> IsFinite for Vector4<T>
 where
     T: [const] IsFinite,
 {

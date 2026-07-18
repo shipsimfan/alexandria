@@ -6,13 +6,13 @@ pub const trait Trunc {
     fn trunc(self) -> Self;
 }
 
-impl const Trunc for f32 {
+const impl Trunc for f32 {
     fn trunc(self) -> Self {
         f32::trunc(self)
     }
 }
 
-impl const Trunc for f64 {
+const impl Trunc for f64 {
     fn trunc(self) -> Self {
         f64::trunc(self)
     }

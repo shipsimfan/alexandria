@@ -19,7 +19,7 @@ impl<T> Vector3<T> {
     }
 }
 
-impl<T> const Min for Vector3<T>
+const impl<T> Min for Vector3<T>
 where
     T: [const] Min + [const] Destruct,
 {

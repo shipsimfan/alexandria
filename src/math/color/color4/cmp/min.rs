@@ -24,7 +24,7 @@ impl<T, Space: ColorSpace<T>> Color4<T, Space> {
     }
 }
 
-impl<T: [const] Min + [const] Destruct, Space: ColorSpace<T>> const Min for Color4<T, Space> {
+const impl<T: [const] Min + [const] Destruct, Space: ColorSpace<T>> Min for Color4<T, Space> {
     fn min(self, other: Self) -> Self {
         self.min_c(other)
     }

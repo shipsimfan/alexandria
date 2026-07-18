@@ -1,7 +1,7 @@
 use crate::math::Vector4;
 use std::{marker::Destruct, ops::Neg};
 
-impl<T: [const] Neg<Output = T> + [const] Destruct> const Neg for Vector4<T> {
+const impl<T: [const] Neg<Output = T> + [const] Destruct> Neg for Vector4<T> {
     type Output = Self;
 
     fn neg(self) -> Self::Output {
