@@ -3,7 +3,7 @@ use vulkan::VkVertexInputAttributeDescription;
 
 impl VulkanVertexInputAttributeDescription {
     /// Creates a new [`VulkanVertexInputAttributeDescription`]
-    pub fn new(
+    pub const fn new(
         location: u32,
         binding: u32,
         format: VulkanFormat,

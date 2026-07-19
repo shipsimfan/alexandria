@@ -3,7 +3,7 @@ use vulkan::VkVertexInputBindingDescription;
 
 impl VulkanVertexInputBindingDescription {
     /// Creates a new [`VulkanVertexInputBindingDescription`]
-    pub fn new(
+    pub const fn new(
         binding: u32,
         stride: u32,
         input_rate: VulkanVertexInputRate,
