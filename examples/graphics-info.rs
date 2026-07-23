@@ -81,6 +81,45 @@ fn main() {
             println!("   - Vulkan Version: v{}", properties.api_version());
             println!("   - Driver Version: v{}", properties.driver_version());
 
+            println!("   - Limits:");
+            println!(
+                "      - Max Push Constants Size: {} bytes",
+                properties.max_push_constants_size()
+            );
+            println!(
+                "      - Max Memory Allocations: {}",
+                properties.max_memory_allocations()
+            );
+            println!(
+                "      - Buffer Image Granularity: {} bytes",
+                properties.buffer_image_granularity()
+            );
+            println!(
+                "      - Max Vertex Input Attributes: {}",
+                properties.max_vertex_input_attributes()
+            );
+            println!(
+                "      - Max Vertex Input Bindings: {}",
+                properties.max_vertex_input_bindings()
+            );
+            println!(
+                "      - Max Vertex Input Attribute Offset: {}",
+                properties.max_vertex_input_attribute_offset()
+            );
+            println!(
+                "      - Max Vertex Input Binding Stride: {}",
+                properties.max_vertex_input_binding_stride()
+            );
+            println!("      - Max Viewports: {}", properties.max_viewports());
+            println!(
+                "      - Max Viewport Dimensions: {}",
+                properties.max_viewport_dimensions()
+            );
+            println!(
+                "      - Min Memory Map Alignment: {} bytes",
+                properties.min_memory_map_alignment()
+            );
+
             println!("   - Memory Heaps:");
             let memory_properties = adapter.get_memory_properties();
             for (index, memory_type) in memory_properties.memory_types().into_iter().enumerate() {

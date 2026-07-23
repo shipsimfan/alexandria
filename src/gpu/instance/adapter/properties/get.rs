@@ -42,6 +42,11 @@ impl VulkanAdapterProperties {
         Uuid::from_flat(self.inner.pipeline_cache_uuid)
     }
 
+    /// Get the maximum size of push constants supported by the adapter
+    pub fn max_push_constants_size(&self) -> u32 {
+        self.inner.limits.max_push_constants_size
+    }
+
     /// Get the maximum number of device memory allocations supported by the adapter
     pub fn max_memory_allocations(&self) -> u32 {
         self.inner.limits.max_memory_allocation_count

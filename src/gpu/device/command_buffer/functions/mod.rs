@@ -2,8 +2,8 @@ use crate::FunctionSymbol;
 use vulkan::{
     VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdBindIndexBuffer,
     VkCmdBindPipeline, VkCmdBindVertexBuffers, VkCmdCopyBuffer, VkCmdDraw, VkCmdDrawIndexed,
-    VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdSetScissor, VkCmdSetViewport,
-    VkEndCommandBuffer, VkFreeCommandBuffers,
+    VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdPushConstants, VkCmdSetScissor,
+    VkCmdSetViewport, VkEndCommandBuffer, VkFreeCommandBuffers,
 };
 
 mod load;
@@ -54,4 +54,7 @@ pub(in crate::gpu::device) struct VulkanCommandBufferFunctions {
 
     /// The function to draw indexed vertices in a command buffer
     pub cmd_draw_indexed: FunctionSymbol<VkCmdDrawIndexed>,
+
+    /// The function to set push constants in a command buffer
+    pub cmd_push_constants: FunctionSymbol<VkCmdPushConstants>,
 }

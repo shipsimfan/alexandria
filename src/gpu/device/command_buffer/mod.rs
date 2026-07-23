@@ -13,6 +13,7 @@ mod cmd_draw;
 mod cmd_draw_indexed;
 mod cmd_end_rendering;
 mod cmd_pipeline_barrier2;
+mod cmd_push_constants;
 mod cmd_set_scissor;
 mod cmd_set_viewport;
 mod end;
