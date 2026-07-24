@@ -1,5 +1,6 @@
 use vulkan::VkMemoryRequirements2;
 
+mod extend;
 mod get;
 mod new;
 
