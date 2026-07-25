@@ -8,7 +8,8 @@ impl VulkanMemoryRequirements {
             .inner
             .memory_requirements
             .size
-            .next_multiple_of(other.inner.memory_requirements.alignment);
+            .next_multiple_of(other.inner.memory_requirements.alignment)
+            + *other.size();
         let alignment = self
             .inner
             .memory_requirements
