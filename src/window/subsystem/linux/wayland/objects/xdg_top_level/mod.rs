@@ -4,6 +4,7 @@ use wayland::xdg_shell::xdg_toplevel;
 
 mod listener;
 
+mod commit;
 mod data;
 mod deref;
 mod drop;

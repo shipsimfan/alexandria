@@ -4,7 +4,10 @@ use crate::{
     window::{
         WaylandGlobals, WaylandWindow, WindowBuilder,
         display::DisplayInner,
-        window::{WindowInner, linux::wayland::WaylandEventHandler},
+        window::{
+            WindowInner,
+            linux::wayland::{WaylandEventHandler, WindowHandle},
+        },
     },
 };
 use std::{ffi::CString, str::FromStr};
@@ -39,10 +42,14 @@ impl<UserEvent: 'static + Send> WaylandWindow<UserEvent> {
         let xdg_top_level = xdg_surface.get_top_level()?;
 
         // Get the toplevel decoration for this surface
-        let mut window = globals
-            .xdg_decoration_manager()
-            .unwrap()
-            .get_top_level_decoration(xdg_top_level)?;
+        let mut window = match globals.xdg_decoration_manager() {
+            Some(decoration_manager) => {
+                let mut window = decoration_manager.get_top_level_decoration(xdg_top_level)?;
+                window.set_decorations(builder.is_bordered());
+                WindowHandle::Decorated(window)
+            }
+            None => WindowHandle::Undecorated(xdg_top_level),
+        };
 
         // Set the title of the window
         let title = CString::from_str(builder.get_title()).unwrap();
@@ -57,7 +64,6 @@ impl<UserEvent: 'static + Send> WaylandWindow<UserEvent> {
             window.set_minimized();
         }
 
-        window.set_decorations(builder.is_bordered());
         window.set_max_size(builder.get_maximum_size().unwrap_or(Vector2u::ZERO));
         window.set_min_size(builder.get_minimum_size().unwrap_or(Vector2u::ZERO));
 

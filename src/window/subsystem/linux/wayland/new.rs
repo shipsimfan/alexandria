@@ -34,9 +34,6 @@ impl<UserEvent: Send> WaylandWindowSubsystem<UserEvent> {
         if registry.data().xdg_wm_base().is_none() {
             return Err(Error::new("no XDG window manager available"));
         }
-        if registry.data().xdg_decoration_manager().is_none() {
-            return Err(Error::new("no XDG decoration manager available"));
-        }
 
         Ok(WaylandWindowSubsystem {
             registry,

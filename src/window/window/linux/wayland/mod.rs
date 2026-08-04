@@ -1,7 +1,9 @@
-use crate::{math::Vector2u, window::XdgTopLevelDecoration};
 use event_handler::WaylandEventHandler;
+use handle::WindowHandle;
+use crate::math::Vector2u;
 
 mod event_handler;
+mod handle;
 
 mod get;
 mod new;
@@ -11,7 +13,7 @@ mod set_id;
 /// The Wayland-specific implementation of [`Window`](crate::window::Window)s
 pub(in crate::window) struct WaylandWindow<UserEvent: 'static + Send> {
     /// The raw window
-    window: XdgTopLevelDecoration<WaylandEventHandler<UserEvent>>,
+    window: WindowHandle<UserEvent>,
 
     /// The current title of the window
     title: String,

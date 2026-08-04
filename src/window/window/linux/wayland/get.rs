@@ -79,7 +79,9 @@ impl<UserEvent: 'static + Send> WaylandWindow<UserEvent> {
     pub(in crate::window::window::linux) fn surface_creation_handle(
         &self,
     ) -> WindowSurfaceCreationHandle {
-        let (surface, display) = unsafe { self.window.surface_and_display() };
+        let surface = self.window.surface().surface();
+        let display = unsafe { surface.connection().handle() };
+        let surface = unsafe { surface.handle() };
 
         WindowSurfaceCreationHandle::Wayland { display, surface }
     }

@@ -8,14 +8,7 @@ impl<T> XdgTopLevel<T> {
     }
 
     /// Get the underlying XDG surface for this XDG toplevel
-    pub(in crate::window::subsystem::linux::wayland) fn surface(&self) -> &XdgSurface<T> {
+    pub(in crate::window) fn surface(&self) -> &XdgSurface<T> {
         &self.surface
-    }
-
-    /// Get a mutable reference to the underlying XDG surface for this XDG toplevel
-    pub(in crate::window::subsystem::linux::wayland) fn surface_mut(
-        &mut self,
-    ) -> &mut XdgSurface<T> {
-        &mut self.surface
     }
 }

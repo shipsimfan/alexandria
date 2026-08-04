@@ -1,7 +1,7 @@
 use crate::{
     PackedMap, Result,
     math::{Vector2i, Vector2u},
-    window::{WaylandWindow, display::DisplayInner},
+    window::{WaylandWindow, display::DisplayInner, window::linux::wayland::WindowHandle},
 };
 use std::{ffi::CString, str::FromStr};
 
@@ -85,7 +85,10 @@ impl<UserEvent: 'static + Send> WaylandWindow<UserEvent> {
         &mut self,
         borderless: bool,
     ) -> Result<()> {
-        self.window.set_decorations(!borderless);
+        match &mut self.window {
+            WindowHandle::Decorated(window) => window.set_decorations(!borderless),
+            WindowHandle::Undecorated(_) => {}
+        }
         Ok(())
     }
 

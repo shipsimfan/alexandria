@@ -127,3 +127,4 @@
  16. Add more external control to event queue
  17. Add max capacity to event queue
  18. Make fullscreen look for display with greatest overlap
+ 19. Add dynamic `libdecor` support for Wayland
