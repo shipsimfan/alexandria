@@ -5,6 +5,7 @@ mod functions;
 
 mod begin;
 mod cmd_begin_rendering;
+mod cmd_bind_descriptor_sets;
 mod cmd_bind_index_buffer;
 mod cmd_bind_pipeline;
 mod cmd_bind_vertex_buffer;

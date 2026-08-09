@@ -4,10 +4,10 @@ use crate::{
 };
 use vulkan::{
     VK_ALLOCATE_COMMAND_BUFFERS, VK_BEGIN_COMMAND_BUFFER, VK_CMD_BEGIN_RENDERING,
-    VK_CMD_BIND_INDEX_BUFFER, VK_CMD_BIND_PIPELINE, VK_CMD_BIND_VERTEX_BUFFERS, VK_CMD_COPY_BUFFER,
-    VK_CMD_DRAW, VK_CMD_DRAW_INDEXED, VK_CMD_END_RENDERING, VK_CMD_PIPELINE_BARRIER2,
-    VK_CMD_PUSH_CONSTANTS, VK_CMD_SET_SCISSOR, VK_CMD_SET_VIEWPORT, VK_END_COMMAND_BUFFER,
-    VK_FREE_COMMAND_BUFFERS, VkDevice,
+    VK_CMD_BIND_DESCRIPTOR_SETS, VK_CMD_BIND_INDEX_BUFFER, VK_CMD_BIND_PIPELINE,
+    VK_CMD_BIND_VERTEX_BUFFERS, VK_CMD_COPY_BUFFER, VK_CMD_DRAW, VK_CMD_DRAW_INDEXED,
+    VK_CMD_END_RENDERING, VK_CMD_PIPELINE_BARRIER2, VK_CMD_PUSH_CONSTANTS, VK_CMD_SET_SCISSOR,
+    VK_CMD_SET_VIEWPORT, VK_END_COMMAND_BUFFER, VK_FREE_COMMAND_BUFFERS, VkDevice,
 };
 
 impl VulkanCommandBufferFunctions {
@@ -50,6 +50,11 @@ impl VulkanCommandBufferFunctions {
             )?,
             cmd_draw_indexed: load_device_function!(instance, device, VK_CMD_DRAW_INDEXED)?,
             cmd_push_constants: load_device_function!(instance, device, VK_CMD_PUSH_CONSTANTS)?,
+            cmd_bind_descriptor_sets: load_device_function!(
+                instance,
+                device,
+                VK_CMD_BIND_DESCRIPTOR_SETS
+            )?,
         })
     }
 }

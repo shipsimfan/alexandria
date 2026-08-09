@@ -350,11 +350,10 @@ fn create_buffer<
 
     // Allocate memory for the buffer
     let memory_requirements = buffer.get_memory_requirements();
-    let memory_type = find_memory_type(
-        render_context.memory_properties(),
-        memory_requirements.memory_type_bits(),
-        properties,
-    );
+    let memory_type = render_context
+        .memory_properties()
+        .find_memory_type(memory_requirements.memory_type_bits(), properties)
+        .expect("no suitable memory type found");
     let memory = render_context
         .allocate_memory(memory_requirements.size(), memory_type)
         .unwrap();
@@ -363,22 +362,6 @@ fn create_buffer<
     buffer.bind_memory(&memory, 0).unwrap();
 
     Buffer { buffer, memory }
-}
-
-fn find_memory_type<F: Into<alexandria::gpu::VulkanMemoryPropertyFlags>>(
-    memory_properties: &alexandria::gpu::VulkanAdapterMemoryProperties,
-    type_filter: u32,
-    properties: F,
-) -> usize {
-    let properties = properties.into();
-
-    for (i, memory_type) in memory_properties.memory_types().iter().enumerate() {
-        if (type_filter & (1 << i)) != 0 && memory_type.flags().contains(properties) {
-            return i;
-        }
-    }
-
-    panic!("Failed to find suitable memory type");
 }
 
 fn copy_buffer(

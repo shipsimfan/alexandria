@@ -3,6 +3,7 @@ use vulkan::VkPhysicalDeviceMemoryProperties;
 mod heap;
 mod r#type;
 
+mod find_memory_type;
 mod get;
 mod new;
 

@@ -1,9 +1,9 @@
 use crate::FunctionSymbol;
 use vulkan::{
-    VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdBindIndexBuffer,
-    VkCmdBindPipeline, VkCmdBindVertexBuffers, VkCmdCopyBuffer, VkCmdDraw, VkCmdDrawIndexed,
-    VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdPushConstants, VkCmdSetScissor,
-    VkCmdSetViewport, VkEndCommandBuffer, VkFreeCommandBuffers,
+    VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdBindDescriptorSets,
+    VkCmdBindIndexBuffer, VkCmdBindPipeline, VkCmdBindVertexBuffers, VkCmdCopyBuffer, VkCmdDraw,
+    VkCmdDrawIndexed, VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdPushConstants,
+    VkCmdSetScissor, VkCmdSetViewport, VkEndCommandBuffer, VkFreeCommandBuffers,
 };
 
 mod load;
@@ -57,4 +57,7 @@ pub(in crate::gpu::device) struct VulkanCommandBufferFunctions {
 
     /// The function to set push constants in a command buffer
     pub cmd_push_constants: FunctionSymbol<VkCmdPushConstants>,
+
+    /// The function to bind descriptor sets to a command buffer
+    pub cmd_bind_descriptor_sets: FunctionSymbol<VkCmdBindDescriptorSets>,
 }

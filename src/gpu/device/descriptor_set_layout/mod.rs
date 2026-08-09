@@ -2,9 +2,13 @@ use crate::gpu::VulkanDevice;
 use vulkan::VkDescriptorSetLayout;
 
 mod functions;
+mod layout_binding;
 
 mod drop;
 mod get;
+mod new;
+
+pub use layout_binding::*;
 
 pub(in crate::gpu::device) use functions::*;
 
