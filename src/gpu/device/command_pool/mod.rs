@@ -23,6 +23,6 @@ pub struct VulkanCommandPool {
     /// The command buffers that have been allocated from this pool
     command_buffers: PackedMap<VulkanCommandBuffer>,
 
-    /// The device this queue is on
+    /// The device this command pool is on
     device: VulkanDevice,
 }
