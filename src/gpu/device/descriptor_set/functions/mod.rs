@@ -1,5 +1,5 @@
 use crate::FunctionSymbol;
-use vulkan::{VkAllocateDescriptorSets, VkFreeDescriptorSets};
+use vulkan::{VkAllocateDescriptorSets, VkFreeDescriptorSets, VkUpdateDescriptorSets};
 
 mod load;
 
@@ -10,4 +10,7 @@ pub(in crate::gpu::device) struct VulkanDescriptorSetFunctions {
 
     /// The function to free descriptor sets back to a descriptor pool
     pub free_descriptor_sets: FunctionSymbol<VkFreeDescriptorSets>,
+
+    /// The function to update descriptor sets on a device
+    pub update_descriptor_sets: FunctionSymbol<VkUpdateDescriptorSets>,
 }
