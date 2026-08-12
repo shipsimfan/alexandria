@@ -10,7 +10,7 @@ use vulkan::{VkDescriptorPool, VkDescriptorPoolCreateInfo, try_vulkan};
 
 impl VulkanDescriptorPool {
     /// Create a new [`VulkanDescriptorPool`]
-    pub fn new(
+    pub(in crate::gpu::device) fn new(
         flags: VulkanDescriptorPoolCreateFlags,
         max_sets: u32,
         pool_sizes: &[VulkanDescriptorPoolSize],

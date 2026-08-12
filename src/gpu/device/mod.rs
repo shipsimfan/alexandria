@@ -26,6 +26,7 @@ mod swapchain;
 mod allocate_memory;
 mod create_buffer;
 mod create_command_pool;
+mod create_descriptor_pool;
 mod create_descriptor_set_layout;
 mod create_fence;
 mod create_graphics_pipeline;
