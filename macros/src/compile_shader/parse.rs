@@ -33,6 +33,7 @@ impl<'a> Parse<'a> for CompileShader<'a> {
                 "spirv_1_4",
                 "-emit-spirv-directly",
                 "-fvk-use-entrypoint-name",
+                "-matrix-layout-row-major",
             ]);
         let mut entry_points = Vec::with_capacity(input.entry_points.len());
         for entry_point_ident in input.entry_points {

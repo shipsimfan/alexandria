@@ -11,7 +11,7 @@ impl VulkanDevice {
     pub fn create_pipeline_layout<F: Into<VulkanPipelineLayoutCreateFlags>>(
         &self,
         flags: F,
-        descriptor_set_layout: Option<&VulkanDescriptorSetLayout>,
+        descriptor_set_layout: &[&VulkanDescriptorSetLayout],
         push_constant_ranges: &[VulkanPushConstantRange],
     ) -> Result<VulkanPipelineLayout> {
         VulkanPipelineLayout::new(

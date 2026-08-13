@@ -50,7 +50,7 @@ fn main() {
     let shader = render_context.create_shader_module(&SHADER).unwrap();
 
     // Create the pipeline layout
-    let pipeline_layout = render_context.create_pipeline_layout(0, None, &[]).unwrap();
+    let pipeline_layout = render_context.create_pipeline_layout(0, &[], &[]).unwrap();
 
     // Create the graphics pipeline
     let graphics_pipeline = create_graphics_pipeline(&render_context, &pipeline_layout, &shader);

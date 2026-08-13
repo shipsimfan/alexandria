@@ -12,18 +12,19 @@ impl VulkanPipelineLayout {
     /// Create a new [`VulkanPipelineLayout`]
     pub(in crate::gpu::device) fn new(
         flags: VulkanPipelineLayoutCreateFlags,
-        descriptor_set_layout: Option<&VulkanDescriptorSetLayout>,
+        descriptor_set_layouts: &[&VulkanDescriptorSetLayout],
         push_constant_ranges: &[VulkanPushConstantRange],
         device: &VulkanDevice,
     ) -> Result<VulkanPipelineLayout> {
+        let descriptor_set_layouts: Vec<_> = descriptor_set_layouts
+            .iter()
+            .map(|layout| layout.handle())
+            .collect();
+
         let create_info = VkPipelineLayoutCreateInfo {
             flags,
-            set_layout_count: if descriptor_set_layout.is_some() {
-                1
-            } else {
-                0
-            },
-            set_layouts: descriptor_set_layout.map_or(null(), |layout| &layout.handle()),
+            set_layout_count: descriptor_set_layouts.len() as u32,
+            set_layouts: descriptor_set_layouts.as_ptr(),
             push_constant_range_count: push_constant_ranges.len() as u32,
             push_constant_ranges: push_constant_ranges.as_ptr().cast(),
             ..Default::default()
