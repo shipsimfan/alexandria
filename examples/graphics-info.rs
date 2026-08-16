@@ -191,14 +191,58 @@ fn main() {
 
             println!("   - Features:");
             let mut features = VulkanDeviceFeatures::default();
+            let mut vulkan_11_features = alexandria::gpu::VulkanDeviceVulkan11Features::default();
             let mut vulkan_13_features = VulkanDeviceVulkan13Features::default();
+            let mut buffer_device_address_features =
+                alexandria::gpu::VulkanDeviceBufferDeviceAddressFeatures::default();
             let mut extended_dynamic_state_features =
                 VulkanDeviceExtendedDynamicStateFeatures::default();
             adapter.get_features([
                 &mut features as &mut _,
+                &mut vulkan_11_features as _,
                 &mut vulkan_13_features as _,
                 &mut extended_dynamic_state_features as _,
+                &mut buffer_device_address_features as _,
             ]);
+
+            print!("     - Vulkan 1.1 Features: ");
+            if vulkan_11_features.storage_buffer_16_bit_access() {
+                print!("storage_buffer_16_bit_access ");
+            }
+            if vulkan_11_features.uniform_and_storage_buffer_16_bit_access() {
+                print!("uniform_and_storage_buffer_16_bit_access ");
+            }
+            if vulkan_11_features.storage_push_constant_16() {
+                print!("storage_push_constant_16 ");
+            }
+            if vulkan_11_features.storage_input_output_16() {
+                print!("storage_input_output_16 ");
+            }
+            if vulkan_11_features.multiview() {
+                print!("multiview ");
+            }
+            if vulkan_11_features.multiview_geometry_shader() {
+                print!("multiview_geometry_shader ");
+            }
+            if vulkan_11_features.multiview_tessellation_shader() {
+                print!("multiview_tessellation_shader ");
+            }
+            if vulkan_11_features.variable_pointers_storage_buffer() {
+                print!("variable_pointers_storage_buffer ");
+            }
+            if vulkan_11_features.variable_pointers() {
+                print!("variable_pointers ");
+            }
+            if vulkan_11_features.protected_memory() {
+                print!("protected_memory ");
+            }
+            if vulkan_11_features.sampler_ycbcr_conversion() {
+                print!("sampler_ycbcr_conversion ");
+            }
+            if vulkan_11_features.shader_draw_parameters() {
+                print!("shader_draw_parameters");
+            }
+            println!();
 
             print!("     - Vulkan 1.3 Features: ");
             if vulkan_13_features.robust_image_access() {
@@ -245,6 +289,18 @@ fn main() {
             }
             if vulkan_13_features.maintenance4() {
                 print!("maintenance4");
+            }
+            println!();
+
+            print!("     - Buffer Device Address Features: ");
+            if buffer_device_address_features.buffer_device_address() {
+                print!("buffer_device_address ");
+            }
+            if buffer_device_address_features.buffer_device_address_capture_replay() {
+                print!("buffer_device_address_capture_replay ");
+            }
+            if buffer_device_address_features.buffer_device_address_multi_device() {
+                print!("buffer_device_address_multi_device");
             }
             println!();
 

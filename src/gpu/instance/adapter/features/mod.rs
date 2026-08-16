@@ -1,10 +1,12 @@
 use vulkan::util::NextChainMut;
 
+mod buffer_device_address_features;
 mod extended_dynamic_state_features;
 mod features;
 mod vulkan_1_1_features;
 mod vulkan_1_3_features;
 
+pub use buffer_device_address_features::*;
 pub use extended_dynamic_state_features::*;
 pub use features::*;
 pub use vulkan_1_1_features::*;
