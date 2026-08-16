@@ -2,7 +2,7 @@ use crate::{
     Error, MemorySize, Result,
     gpu::{VulkanDevice, VulkanDeviceMemory},
 };
-use std::ptr::null;
+use std::{ffi::c_void, ptr::null};
 use vulkan::{VkDeviceMemory, VkMemoryAllocateInfo, try_vulkan};
 
 impl VulkanDeviceMemory {
@@ -10,10 +10,12 @@ impl VulkanDeviceMemory {
     pub(in crate::gpu::device) fn new(
         allocation_size: MemorySize,
         memory_type_index: usize,
+        next: *const c_void,
         device: &VulkanDevice,
     ) -> Result<VulkanDeviceMemory> {
         let mut handle = VkDeviceMemory::null();
         let allocate_info = VkMemoryAllocateInfo {
+            next,
             allocation_size: *allocation_size,
             memory_type_index: memory_type_index as _,
             ..Default::default()
