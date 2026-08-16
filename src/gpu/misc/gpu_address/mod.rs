@@ -9,7 +9,6 @@ mod pointer;
 
 /// An address in GPU memory
 #[repr(C)]
-#[derive(Copy)]
 pub struct GpuAddress<T> {
     /// The actual value of the GPU address
     address: u64,

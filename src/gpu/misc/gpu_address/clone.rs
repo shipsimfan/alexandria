@@ -5,3 +5,5 @@ impl<T> Clone for GpuAddress<T> {
         GpuAddress::new(self.address)
     }
 }
+
+impl<T> Copy for GpuAddress<T> {}
