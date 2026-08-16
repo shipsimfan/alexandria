@@ -7,6 +7,7 @@ mod memory_requirements;
 mod bind_memory;
 mod drop;
 mod get;
+mod get_device_address;
 mod get_memory_requirements;
 mod new;
 

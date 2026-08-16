@@ -1,6 +1,7 @@
 use crate::FunctionSymbol;
 use vulkan::{
-    VkBindBufferMemory2, VkCreateBuffer, VkDestroyBuffer, VkGetBufferMemoryRequirements2,
+    VkBindBufferMemory2, VkCreateBuffer, VkDestroyBuffer, VkGetBufferDeviceAddress,
+    VkGetBufferMemoryRequirements2,
 };
 
 mod load;
@@ -18,4 +19,7 @@ pub(in crate::gpu::device) struct VulkanBufferFunctions {
 
     /// The function to bind memory to a buffer
     pub bind_buffer_memory2: FunctionSymbol<VkBindBufferMemory2>,
+
+    /// The function to get the device address of a buffer
+    pub get_buffer_device_address: FunctionSymbol<VkGetBufferDeviceAddress>,
 }

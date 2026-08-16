@@ -1,19 +1,15 @@
 # ToDo
- 1. Add renderer wrappers for triangle
-   1. Staging buffers
-   2. Index buffers
- 2. Add error handling for keyboard events during event pumping
+ 1. Add error handling for keyboard events during event pumping
    - Wayland
- 3. Add renderer wrappers for multi-cube
-   1. Uniform buffers
-   2. Depth buffers
-   3. Texture mapping
- 4. Add model loading/parsing
+ 2. Add renderer wrappers for multi-cube
+   1. Depth buffers
+   2. Texture mapping
+ 3. Add model loading/parsing
    1. obj
    2. fbx
    3. gltf/glb
    4. dae
- 5. Add texture loading/parsing
+ 4. Add texture loading/parsing
    1. qoi
    2. png
    3. jpg
@@ -22,7 +18,7 @@
    6. dds
    7. ktx2
    8. exr
- 6. Finish adding Linux Windowing support
+ 5. Finish adding Linux Windowing support
    1. Wayland
      1. Add extra window Events
        - Content Scale Changed
@@ -79,7 +75,7 @@
        - Borderless
        - Resizable
        - Fullscreen + Fullscreen Display Mode
- 7. Input system
+ 6. Input system
    1. Keyboard
      1. Add window tracking to Wayland
      2. X11
@@ -91,40 +87,40 @@
      1. Windows
      2. Wayland
      3. X11
- 8. Add window icons
+ 7. Add window icons
    1. Windows
    2. Wayland
    3. X11
- 9. Add audio wrappers (pull-style)
+ 8. Add audio wrappers (pull-style)
    1. WASAPI
    2. PipeWire
    3. PulseAudio
    4. ALSA
- 10. Add audio file loading/parsing
+ 9. Add audio file loading/parsing
    1. wav
    2. ogg
    3. mp3
    4. flac
    5. opus
- 11. Add text input support
+ 10. Add text input support
    1. Windows
    2. Wayland
    3. X11
- 12. Add support for multiple keyboards
+ 11. Add support for multiple keyboards
    1. Windows
    2. Wayland
    3. X11
- 13. Add support for multiple mice
+ 12. Add support for multiple mice
    1. Windows
    2. Wayland
    3. X11
- 14. Add more input types
+ 13. Add more input types
    1. X-Box controllers (Windows)
    2. General controllers
    3. Joysticks
    4. Steering Wheels, Pedals, Gear Shift
- 15. Add 2-d support to `Matrix3x3`
- 16. Add more external control to event queue
- 17. Add max capacity to event queue
- 18. Make fullscreen look for display with greatest overlap
- 19. Add dynamic `libdecor` support for Wayland
+ 14. Add 2-d support to `Matrix3x3`
+ 15. Add more external control to event queue
+ 16. Add max capacity to event queue
+ 17. Make fullscreen look for display with greatest overlap
+ 18. Add dynamic `libdecor` support for Wayland
