@@ -6,9 +6,9 @@ use crate::{
             VulkanBufferFunctions, VulkanCommandBufferFunctions, VulkanCommandPoolFunctions,
             VulkanDescriptorPoolFunctions, VulkanDescriptorSetFunctions,
             VulkanDescriptorSetLayoutFunctions, VulkanDeviceFunctions, VulkanDeviceMemoryFunctions,
-            VulkanFenceFunctions, VulkanImageViewFunctions, VulkanPipelineFunctions,
-            VulkanPipelineLayoutFunctions, VulkanQueueFunctions, VulkanSemaphoreFunctions,
-            VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
+            VulkanFenceFunctions, VulkanImageFunctions, VulkanImageViewFunctions,
+            VulkanPipelineFunctions, VulkanPipelineLayoutFunctions, VulkanQueueFunctions,
+            VulkanSemaphoreFunctions, VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
         },
         load_device_function,
     },
@@ -35,6 +35,7 @@ impl VulkanDeviceFunctions {
 
         Ok(VulkanDeviceFunctions {
             swapchain,
+            image: VulkanImageFunctions::load(instance, device)?,
             image_view: VulkanImageViewFunctions::load(instance, device)?,
             command_pool: VulkanCommandPoolFunctions::load(instance, device)?,
             command_buffer: VulkanCommandBufferFunctions::load(instance, device)?,

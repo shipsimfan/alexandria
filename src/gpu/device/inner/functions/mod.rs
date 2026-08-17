@@ -4,9 +4,9 @@ use crate::{
         VulkanBufferFunctions, VulkanCommandBufferFunctions, VulkanCommandPoolFunctions,
         VulkanDescriptorPoolFunctions, VulkanDescriptorSetFunctions,
         VulkanDescriptorSetLayoutFunctions, VulkanDeviceMemoryFunctions, VulkanFenceFunctions,
-        VulkanImageViewFunctions, VulkanPipelineFunctions, VulkanPipelineLayoutFunctions,
-        VulkanQueueFunctions, VulkanSemaphoreFunctions, VulkanShaderModuleFunctions,
-        VulkanSwapchainFunctions,
+        VulkanImageFunctions, VulkanImageViewFunctions, VulkanPipelineFunctions,
+        VulkanPipelineLayoutFunctions, VulkanQueueFunctions, VulkanSemaphoreFunctions,
+        VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
     },
 };
 use vulkan::{VkDestroyDevice, VkDeviceWaitIdle, VkGetDeviceQueue};
@@ -20,6 +20,9 @@ pub(in crate::gpu::device) struct VulkanDeviceFunctions {
 
     /// The functions used by swapchains
     swapchain: Option<VulkanSwapchainFunctions>,
+
+    /// The functions used by images
+    pub image: VulkanImageFunctions,
 
     /// The functions used by image views
     pub image_view: VulkanImageViewFunctions,
