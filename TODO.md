@@ -1,15 +1,12 @@
 # ToDo
  1. Add error handling for keyboard events during event pumping
    - Wayland
- 2. Add renderer wrappers for multi-cube
-   1. Depth buffers
-   2. Texture mapping
- 3. Add model loading/parsing
+ 2. Add model loading/parsing
    1. obj
    2. fbx
    3. gltf/glb
    4. dae
- 4. Add texture loading/parsing
+ 3. Add texture loading/parsing
    1. qoi
    2. png
    3. jpg
@@ -18,7 +15,7 @@
    6. dds
    7. ktx2
    8. exr
- 5. Finish adding Linux Windowing support
+ 4. Finish adding Linux Windowing support
    1. Wayland
      1. Add extra window Events
        - Content Scale Changed
@@ -75,7 +72,7 @@
        - Borderless
        - Resizable
        - Fullscreen + Fullscreen Display Mode
- 6. Input system
+ 5. Input system
    1. Keyboard
      1. Add window tracking to Wayland
      2. X11
@@ -87,40 +84,40 @@
      1. Windows
      2. Wayland
      3. X11
- 7. Add window icons
+ 6. Add window icons
    1. Windows
    2. Wayland
    3. X11
- 8. Add audio wrappers (pull-style)
+ 7. Add audio wrappers (pull-style)
    1. WASAPI
    2. PipeWire
    3. PulseAudio
    4. ALSA
- 9. Add audio file loading/parsing
+ 8. Add audio file loading/parsing
    1. wav
    2. ogg
    3. mp3
    4. flac
    5. opus
- 10. Add text input support
+ 9. Add text input support
    1. Windows
    2. Wayland
    3. X11
- 11. Add support for multiple keyboards
+ 10. Add support for multiple keyboards
    1. Windows
    2. Wayland
    3. X11
- 12. Add support for multiple mice
+ 11. Add support for multiple mice
    1. Windows
    2. Wayland
    3. X11
- 13. Add more input types
+ 12. Add more input types
    1. X-Box controllers (Windows)
    2. General controllers
    3. Joysticks
    4. Steering Wheels, Pedals, Gear Shift
- 14. Add 2-d support to `Matrix3x3`
- 15. Add more external control to event queue
- 16. Add max capacity to event queue
- 17. Make fullscreen look for display with greatest overlap
- 18. Add dynamic `libdecor` support for Wayland
+ 13. Add 2-d support to `Matrix3x3`
+ 14. Add more external control to event queue
+ 15. Add max capacity to event queue
+ 16. Make fullscreen look for display with greatest overlap
+ 17. Add dynamic `libdecor` support for Wayland

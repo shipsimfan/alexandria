@@ -30,6 +30,7 @@ mod create_descriptor_pool;
 mod create_descriptor_set_layout;
 mod create_fence;
 mod create_graphics_pipeline;
+mod create_image;
 mod create_pipeline_layout;
 mod create_semaphore;
 mod create_shader_module;
