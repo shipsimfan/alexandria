@@ -4,6 +4,7 @@ use inner::VulkanImageInner;
 mod functions;
 mod inner;
 
+mod bind_memory;
 mod create_image_view;
 mod get;
 mod get_memory_requirements;

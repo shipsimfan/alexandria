@@ -1,5 +1,5 @@
 use crate::FunctionSymbol;
-use vulkan::{VkCreateImage, VkDestroyImage, VkGetImageMemoryRequirements};
+use vulkan::{VkBindImageMemory, VkCreateImage, VkDestroyImage, VkGetImageMemoryRequirements};
 
 mod load;
 
@@ -13,4 +13,7 @@ pub(in crate::gpu::device) struct VulkanImageFunctions {
 
     /// The function to get the memory requirements for an image
     pub get_image_memory_requirements: FunctionSymbol<VkGetImageMemoryRequirements>,
+
+    /// The function to bind memory to an image
+    pub bind_image_memory: FunctionSymbol<VkBindImageMemory>,
 }
