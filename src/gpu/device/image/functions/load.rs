@@ -2,7 +2,7 @@ use crate::{
     Result,
     gpu::{VulkanInstance, device::VulkanImageFunctions, load_device_function},
 };
-use vulkan::{VK_CREATE_IMAGE, VK_DESTROY_IMAGE, VkDevice};
+use vulkan::{VK_CREATE_IMAGE, VK_DESTROY_IMAGE, VK_GET_IMAGE_MEMORY_REQUIREMENTS, VkDevice};
 
 impl VulkanImageFunctions {
     /// Load all the required image functions
@@ -10,6 +10,11 @@ impl VulkanImageFunctions {
         Ok(VulkanImageFunctions {
             create_image: load_device_function!(instance, device, VK_CREATE_IMAGE)?,
             destroy_image: load_device_function!(instance, device, VK_DESTROY_IMAGE)?,
+            get_image_memory_requirements: load_device_function!(
+                instance,
+                device,
+                VK_GET_IMAGE_MEMORY_REQUIREMENTS
+            )?,
         })
     }
 }

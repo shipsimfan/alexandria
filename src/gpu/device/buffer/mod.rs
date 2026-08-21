@@ -2,7 +2,6 @@ use crate::gpu::VulkanDevice;
 use vulkan::VkBuffer;
 
 mod functions;
-mod memory_requirements;
 
 mod bind_memory;
 mod drop;
@@ -10,8 +9,6 @@ mod get;
 mod get_device_address;
 mod get_memory_requirements;
 mod new;
-
-pub use memory_requirements::*;
 
 pub(in crate::gpu::device) use functions::*;
 

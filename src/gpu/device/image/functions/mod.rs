@@ -1,5 +1,5 @@
 use crate::FunctionSymbol;
-use vulkan::{VkCreateImage, VkDestroyImage};
+use vulkan::{VkCreateImage, VkDestroyImage, VkGetImageMemoryRequirements};
 
 mod load;
 
@@ -10,4 +10,7 @@ pub(in crate::gpu::device) struct VulkanImageFunctions {
 
     /// The function to destroy an image
     pub destroy_image: FunctionSymbol<VkDestroyImage>,
+
+    /// The function to get the memory requirements for an image
+    pub get_image_memory_requirements: FunctionSymbol<VkGetImageMemoryRequirements>,
 }
