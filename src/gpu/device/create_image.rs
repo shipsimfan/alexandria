@@ -11,6 +11,7 @@ use crate::{
 impl VulkanDevice {
     /// Create a new [`VulkanImage`]
     pub fn create_image<F: Into<VulkanImageCreateFlags>, U: Into<VulkanImageUsageFlags>>(
+        &self,
         flags: F,
         image_type: VulkanImageType,
         format: VulkanFormat,
@@ -23,7 +24,6 @@ impl VulkanDevice {
         sharing_mode: VulkanSharingMode,
         queue_family_indices: &[u32],
         initial_layout: VulkanImageLayout,
-        device: &VulkanDevice,
     ) -> Result<VulkanImage> {
         VulkanImage::new(
             flags.into(),
@@ -38,7 +38,7 @@ impl VulkanDevice {
             sharing_mode,
             queue_family_indices,
             initial_layout,
-            device,
+            self,
         )
     }
 }
