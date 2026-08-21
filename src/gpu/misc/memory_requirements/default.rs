@@ -8,7 +8,7 @@ impl Default for VulkanMemoryRequirements {
                 memory_requirements: VkMemoryRequirements {
                     size: 0,
                     alignment: 1,
-                    memory_type_bits: 0,
+                    memory_type_bits: u32::MAX,
                 },
                 ..Default::default()
             },
