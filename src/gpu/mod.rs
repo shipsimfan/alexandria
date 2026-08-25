@@ -35,7 +35,7 @@ pub use vulkan::{
     VkDescriptorType as VulkanDescriptorType, VkDeviceQueueCreateFlag as VulkanQueueCreateFlag,
     VkDeviceQueueCreateFlags as VulkanQueueCreateFlags, VkDynamicState as VulkanDynamicState,
     VkFenceCreateFlag as VulkanFenceCreateFlag, VkFenceCreateFlags as VulkanFenceCreateFlags,
-    VkFormat as VulkanFormat, VkFrontFace as VulkanFrontFace,
+    VkFilter as VulkanFilter, VkFormat as VulkanFormat, VkFrontFace as VulkanFrontFace,
     VkImageAspectFlag as VulkanImageAspectFlag, VkImageAspectFlags as VulkanImageAspectFlags,
     VkImageCreateFlag as VulkanImageCreateFlag, VkImageCreateFlags as VulkanImageCreateFlags,
     VkImageLayout as VulkanImageLayout, VkImageTiling as VulkanImageTiling,

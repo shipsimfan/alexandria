@@ -1,9 +1,10 @@
 use crate::FunctionSymbol;
 use vulkan::{
     VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdBindDescriptorSets,
-    VkCmdBindIndexBuffer, VkCmdBindPipeline, VkCmdBindVertexBuffers, VkCmdCopyBuffer, VkCmdDraw,
-    VkCmdDrawIndexed, VkCmdEndRendering, VkCmdPipelineBarrier2, VkCmdPushConstants,
-    VkCmdSetScissor, VkCmdSetViewport, VkEndCommandBuffer, VkFreeCommandBuffers,
+    VkCmdBindIndexBuffer, VkCmdBindPipeline, VkCmdBindVertexBuffers, VkCmdBlitImage,
+    VkCmdCopyBuffer, VkCmdDraw, VkCmdDrawIndexed, VkCmdEndRendering, VkCmdPipelineBarrier2,
+    VkCmdPushConstants, VkCmdSetScissor, VkCmdSetViewport, VkEndCommandBuffer,
+    VkFreeCommandBuffers,
 };
 
 mod load;
@@ -60,4 +61,7 @@ pub(in crate::gpu::device) struct VulkanCommandBufferFunctions {
 
     /// The function to bind descriptor sets to a command buffer
     pub cmd_bind_descriptor_sets: FunctionSymbol<VkCmdBindDescriptorSets>,
+
+    /// The function to blit data from one image to another in a command buffer
+    pub cmd_blit_image: FunctionSymbol<VkCmdBlitImage>,
 }

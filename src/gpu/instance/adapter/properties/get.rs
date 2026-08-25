@@ -52,6 +52,11 @@ impl VulkanAdapterProperties {
         self.inner.limits.max_memory_allocation_count
     }
 
+    /// Get the maximum number of sampler allocations supported by the adapter
+    pub fn max_sampler_allocations(&self) -> u32 {
+        self.inner.limits.max_sampler_allocation_count
+    }
+
     /// Get the buffer image granularity of the adapter
     pub fn buffer_image_granularity(&self) -> u64 {
         self.inner.limits.buffer_image_granularity
@@ -75,6 +80,16 @@ impl VulkanAdapterProperties {
     /// Get the maximum stride supported for vertex input bindings by the adapter
     pub fn max_vertex_input_binding_stride(&self) -> u32 {
         self.inner.limits.max_vertex_input_binding_stride
+    }
+
+    /// Get the maximum LOD bias supported for mipmapped images by the adapter
+    pub fn max_sampler_lod_bias(&self) -> f32 {
+        self.inner.limits.max_sampler_lod_bias
+    }
+
+    /// Get the maximum anisotropy supported for samplers by the adapter
+    pub fn max_sampler_anisotropy(&self) -> f32 {
+        self.inner.limits.max_sampler_anisotropy
     }
 
     /// Get the maximum number of viewports supported by the adapter

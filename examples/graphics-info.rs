@@ -91,6 +91,10 @@ fn main() {
                 properties.max_memory_allocations()
             );
             println!(
+                "      - Max Sampler Allocations: {}",
+                properties.max_sampler_allocations()
+            );
+            println!(
                 "      - Buffer Image Granularity: {} bytes",
                 properties.buffer_image_granularity()
             );
@@ -111,6 +115,14 @@ fn main() {
                 properties.max_vertex_input_binding_stride()
             );
             println!("      - Max Viewports: {}", properties.max_viewports());
+            println!(
+                "      - Max Sampler LOD Bias: {}",
+                properties.max_sampler_lod_bias()
+            );
+            println!(
+                "      - Max Sampler Anisotropy: {}",
+                properties.max_sampler_anisotropy()
+            );
             println!(
                 "      - Max Viewport Dimensions: {}",
                 properties.max_viewport_dimensions()
@@ -204,6 +216,12 @@ fn main() {
                 &mut extended_dynamic_state_features as _,
                 &mut buffer_device_address_features as _,
             ]);
+
+            print!("     - Vulkan 1.0 Features: ");
+            if features.sampler_anisotropy() {
+                print!("sampler_anisotropy ");
+            }
+            println!();
 
             print!("     - Vulkan 1.1 Features: ");
             if vulkan_11_features.storage_buffer_16_bit_access() {

@@ -9,6 +9,7 @@ mod cmd_bind_descriptor_sets;
 mod cmd_bind_index_buffer;
 mod cmd_bind_pipeline;
 mod cmd_bind_vertex_buffer;
+mod cmd_blit_image;
 mod cmd_copy_buffer;
 mod cmd_draw;
 mod cmd_draw_indexed;
@@ -24,6 +25,7 @@ mod new;
 pub(in crate::gpu::device) use functions::*;
 
 pub use cmd_begin_rendering::*;
+pub use cmd_blit_image::*;
 pub use cmd_copy_buffer::*;
 pub use cmd_pipeline_barrier2::*;
 
