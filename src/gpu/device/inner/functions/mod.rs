@@ -5,8 +5,8 @@ use crate::{
         VulkanDescriptorPoolFunctions, VulkanDescriptorSetFunctions,
         VulkanDescriptorSetLayoutFunctions, VulkanDeviceMemoryFunctions, VulkanFenceFunctions,
         VulkanImageFunctions, VulkanImageViewFunctions, VulkanPipelineFunctions,
-        VulkanPipelineLayoutFunctions, VulkanQueueFunctions, VulkanSemaphoreFunctions,
-        VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
+        VulkanPipelineLayoutFunctions, VulkanQueueFunctions, VulkanSamplerFunctions,
+        VulkanSemaphoreFunctions, VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
     },
 };
 use vulkan::{VkDestroyDevice, VkDeviceWaitIdle, VkGetDeviceQueue};
@@ -65,6 +65,9 @@ pub(in crate::gpu::device) struct VulkanDeviceFunctions {
 
     /// The functions used by descriptor sets
     pub descriptor_set: VulkanDescriptorSetFunctions,
+
+    /// The functions used by samplers
+    pub sampler: VulkanSamplerFunctions,
 
     /** Individual Functions **/
 

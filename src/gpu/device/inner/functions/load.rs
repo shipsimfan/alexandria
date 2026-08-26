@@ -8,7 +8,8 @@ use crate::{
             VulkanDescriptorSetLayoutFunctions, VulkanDeviceFunctions, VulkanDeviceMemoryFunctions,
             VulkanFenceFunctions, VulkanImageFunctions, VulkanImageViewFunctions,
             VulkanPipelineFunctions, VulkanPipelineLayoutFunctions, VulkanQueueFunctions,
-            VulkanSemaphoreFunctions, VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
+            VulkanSamplerFunctions, VulkanSemaphoreFunctions, VulkanShaderModuleFunctions,
+            VulkanSwapchainFunctions,
         },
         load_device_function,
     },
@@ -50,6 +51,7 @@ impl VulkanDeviceFunctions {
             descriptor_set_layout: VulkanDescriptorSetLayoutFunctions::load(instance, device)?,
             descriptor_pool: VulkanDescriptorPoolFunctions::load(instance, device)?,
             descriptor_set: VulkanDescriptorSetFunctions::load(instance, device)?,
+            sampler: VulkanSamplerFunctions::load(instance, device)?,
 
             get_device_queue: load_device_function!(instance, device, VK_GET_DEVICE_QUEUE)?,
             destroy_device: load_device_function!(instance, device, VK_DESTROY_DEVICE)?,

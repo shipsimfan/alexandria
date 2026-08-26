@@ -32,6 +32,7 @@ mod create_fence;
 mod create_graphics_pipeline;
 mod create_image;
 mod create_pipeline_layout;
+mod create_sampler;
 mod create_semaphore;
 mod create_shader_module;
 mod create_swapchain;
