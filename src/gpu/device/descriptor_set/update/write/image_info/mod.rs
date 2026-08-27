@@ -6,6 +6,7 @@ mod new;
 mod set;
 
 /// A Vulkan descriptor image info object
+#[repr(transparent)]
 pub struct VulkanDescriptorImageInfo<'a> {
     /// The underlying Vulkan descriptor image info
     inner: VkDescriptorImageInfo,

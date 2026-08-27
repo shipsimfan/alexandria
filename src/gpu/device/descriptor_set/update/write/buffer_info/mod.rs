@@ -7,6 +7,7 @@ mod new;
 mod set;
 
 /// A Vulkan descriptor buffer info object
+#[repr(transparent)]
 pub struct VulkanDescriptorBufferInfo<'a> {
     /// The underlying Vulkan descriptor buffer info
     inner: VkDescriptorBufferInfo,
