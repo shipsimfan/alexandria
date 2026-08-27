@@ -10,4 +10,14 @@ impl VulkanDescriptorPoolSize {
     pub fn count(&self) -> u32 {
         self.inner.descriptor_count
     }
+
+    /// Get a mutable reference to the type of the descriptor pool size
+    pub fn r#type_mut(&mut self) -> &mut VulkanDescriptorType {
+        &mut self.inner.r#type
+    }
+
+    /// Get a mutable reference to the count of the descriptor pool size
+    pub fn count_mut(&mut self) -> &mut u32 {
+        &mut self.inner.descriptor_count
+    }
 }
