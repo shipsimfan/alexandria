@@ -1,13 +1,12 @@
 # ToDo
- 1. Move math to it's own library (Dioptra)
- 2. Add error handling for keyboard events during event pumping
+ 1. Add error handling for keyboard events during event pumping
    - Wayland
- 3. Add model loading/parsing (Parthenon)
+ 2. Add model loading/parsing (Parthenon)
    1. obj
    2. fbx
    3. gltf/glb
    4. dae
- 4. Add texture loading/parsing (Mosaic)
+ 3. Add texture loading/parsing (Mosaic)
    1. qoi
    2. png
    3. jpg
@@ -16,7 +15,7 @@
    6. dds
    7. ktx2
    8. exr
- 5. Input system
+ 4. Input system
    1. Add keyboard window tracking to Wayland
    2. Mouse
      1. Windows
@@ -25,44 +24,44 @@
      1. Windows
      2. Wayland
    4. X-Box controllers (Windows)
- 6. Add window icons
+ 5. Add window icons
    1. Windows
    2. Wayland
- 7. Add audio wrappers (pull-style)
+ 6. Add audio wrappers (pull-style)
    1. WASAPI
    2. PipeWire
    3. PulseAudio
    4. ALSA
- 8. Add audio file loading/parsing
+ 7. Add audio file loading/parsing
    1. wav
    2. ogg
    3. mp3
    4. flac
    5. opus
- 9. Add text input support
+ 8. Add text input support
    1. Windows
    2. Wayland
- 10. Add support for multiple keyboards
+ 9. Add support for multiple keyboards
    1. Windows
    2. Wayland
- 11. Add support for multiple mice
+ 10. Add support for multiple mice
    1. Windows
    2. Wayland
- 12. Add more input types
+ 11. Add more input types
    1. General controllers
    2. Joysticks
    3. Steering Wheels, Pedals, Gear Shift
- 13. Add 2-d support to `Matrix3x3`
- 14. Add more external control to event queue
- 15. Add max capacity to event queue
- 16. Make fullscreen look for display with greatest overlap
- 17. Add dynamic `libdecor` support for Wayland
- 18. Finish Wayland window support
+ 12. Add 2-d support to `Matrix3x3`
+ 13. Add more external control to event queue
+ 14. Add max capacity to event queue
+ 15. Make fullscreen look for display with greatest overlap
+ 16. Add dynamic `libdecor` support for Wayland
+ 17. Finish Wayland window support
    1. Add extra window Events
      - Content Scale Changed
    2. Add extra state tracking
      - Content Scale
-  19. Add X11 support
+ 18. Add X11 support
    1. Connection
    2. `pump_events` + `wait_for_event` functions
    3. Display enumeration
