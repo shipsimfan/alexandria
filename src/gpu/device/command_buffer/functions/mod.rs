@@ -7,7 +7,12 @@ use vulkan::{
     VkFreeCommandBuffers,
 };
 
+mod debug_utils;
+
+mod get;
 mod load;
+
+pub(in crate::gpu::device) use debug_utils::*;
 
 /// The functions that are used by command buffers associated with a device
 pub(in crate::gpu::device) struct VulkanCommandBufferFunctions {
@@ -64,4 +69,7 @@ pub(in crate::gpu::device) struct VulkanCommandBufferFunctions {
 
     /// The function to blit data from one image to another in a command buffer
     pub cmd_blit_image: FunctionSymbol<VkCmdBlitImage>,
+
+    /// The debug util functions for a command buffer
+    debug_utils: Option<VulkanCommandBufferDebugUtilFunctions>,
 }

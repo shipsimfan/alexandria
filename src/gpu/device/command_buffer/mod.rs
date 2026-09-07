@@ -1,9 +1,11 @@
 use crate::gpu::VulkanDevice;
 use vulkan::VkCommandBuffer;
 
+mod debug_utils_label;
 mod functions;
 
 mod begin;
+mod cmd_begin_debug_utils_label;
 mod cmd_begin_rendering;
 mod cmd_bind_descriptor_sets;
 mod cmd_bind_index_buffer;
@@ -20,6 +22,7 @@ mod cmd_set_scissor;
 mod cmd_set_viewport;
 mod end;
 mod get;
+mod nameable;
 mod new;
 
 pub(in crate::gpu::device) use functions::*;
@@ -28,6 +31,7 @@ pub use cmd_begin_rendering::*;
 pub use cmd_blit_image::*;
 pub use cmd_copy_buffer::*;
 pub use cmd_pipeline_barrier2::*;
+pub use debug_utils_label::*;
 
 /// A buffer for recording commands to be submitted to a Vulkan queue
 pub struct VulkanCommandBuffer {

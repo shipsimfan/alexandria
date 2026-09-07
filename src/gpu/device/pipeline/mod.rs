@@ -6,6 +6,7 @@ mod graphics_create_info;
 
 mod drop;
 mod get;
+mod nameable;
 mod new_graphics;
 
 pub use graphics_create_info::*;

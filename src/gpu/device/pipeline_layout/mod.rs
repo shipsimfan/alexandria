@@ -6,6 +6,7 @@ mod push_constant_range;
 
 mod drop;
 mod get;
+mod nameable;
 mod new;
 
 pub use push_constant_range::*;

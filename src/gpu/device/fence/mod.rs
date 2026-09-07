@@ -5,6 +5,7 @@ mod functions;
 
 mod drop;
 mod get;
+mod nameable;
 mod new;
 mod reset;
 mod wait;

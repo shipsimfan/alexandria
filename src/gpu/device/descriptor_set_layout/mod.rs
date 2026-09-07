@@ -6,6 +6,7 @@ mod layout_binding;
 
 mod drop;
 mod get;
+mod nameable;
 mod new;
 
 pub use layout_binding::*;

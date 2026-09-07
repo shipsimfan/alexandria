@@ -5,6 +5,7 @@ mod functions;
 mod submit_info;
 
 mod get;
+mod nameable;
 mod new;
 mod present;
 mod submit;

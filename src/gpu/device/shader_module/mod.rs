@@ -6,6 +6,7 @@ mod functions;
 
 mod drop;
 mod get;
+mod nameable;
 mod new;
 
 pub use code::*;

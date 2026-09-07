@@ -4,6 +4,7 @@ mod functions;
 mod update;
 
 mod get;
+mod nameable;
 mod new;
 
 pub use update::*;

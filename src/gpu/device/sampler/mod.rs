@@ -5,6 +5,7 @@ mod functions;
 
 mod drop;
 mod get;
+mod nameable;
 mod new;
 
 pub(in crate::gpu::device) use functions::*;

@@ -7,6 +7,7 @@ mod mapped_memory;
 mod drop;
 mod get;
 mod map;
+mod nameable;
 mod new;
 
 pub use mapped_memory::*;

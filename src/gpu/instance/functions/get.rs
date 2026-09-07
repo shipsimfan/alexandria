@@ -29,4 +29,9 @@ impl VulkanInstanceFunctions {
     pub(in crate::gpu::instance) fn wayland_surface(&self) -> &VulkanWaylandSurfaceFunctions {
         self.wayland_surface.as_ref().unwrap()
     }
+
+    /// Does the instance have debug messenger functions loaded?
+    pub(in crate::gpu::instance) fn has_debug_messenger(&self) -> bool {
+        self.debug_messenger.is_some()
+    }
 }

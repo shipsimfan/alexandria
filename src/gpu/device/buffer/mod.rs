@@ -8,6 +8,7 @@ mod drop;
 mod get;
 mod get_device_address;
 mod get_memory_requirements;
+mod nameable;
 mod new;
 
 pub(in crate::gpu::device) use functions::*;

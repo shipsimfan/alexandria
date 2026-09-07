@@ -9,7 +9,10 @@ use crate::{
         VulkanSemaphoreFunctions, VulkanShaderModuleFunctions, VulkanSwapchainFunctions,
     },
 };
-use vulkan::{VkDestroyDevice, VkDeviceWaitIdle, VkGetDeviceQueue};
+use vulkan::{
+    VkDestroyDevice, VkDeviceWaitIdle, VkGetDeviceQueue,
+    ext_debug_utils::VkSetDebugUtilsObjectNameExt,
+};
 
 mod get;
 mod load;
@@ -79,4 +82,7 @@ pub(in crate::gpu::device) struct VulkanDeviceFunctions {
 
     /// The function used to wait for the device to be idle
     pub device_wait_idle: FunctionSymbol<VkDeviceWaitIdle>,
+
+    /// The function to name a specific Vulkan object
+    pub set_debug_utils_object_name: Option<FunctionSymbol<VkSetDebugUtilsObjectNameExt>>,
 }

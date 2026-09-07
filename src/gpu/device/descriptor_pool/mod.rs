@@ -8,6 +8,7 @@ mod allocate_descriptor_set;
 mod drop;
 mod free_descriptor_set;
 mod get;
+mod nameable;
 mod new;
 
 pub use size::*;

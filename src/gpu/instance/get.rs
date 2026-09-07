@@ -11,4 +11,9 @@ impl VulkanInstance {
     pub(in crate::gpu) fn functions(&self) -> &VulkanInstanceFunctions {
         self.inner.functions()
     }
+
+    /// Are debug util functions loaded?
+    pub fn debug_utils_enabled(&self) -> bool {
+        self.inner.functions().has_debug_messenger()
+    }
 }

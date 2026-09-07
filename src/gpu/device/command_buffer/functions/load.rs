@@ -1,6 +1,10 @@
 use crate::{
     Result,
-    gpu::{VulkanInstance, device::VulkanCommandBufferFunctions, load_device_function},
+    gpu::{
+        VulkanInstance,
+        device::{VulkanCommandBufferDebugUtilFunctions, VulkanCommandBufferFunctions},
+        load_device_function,
+    },
 };
 use vulkan::{
     VK_ALLOCATE_COMMAND_BUFFERS, VK_BEGIN_COMMAND_BUFFER, VK_CMD_BEGIN_RENDERING,
@@ -17,6 +21,14 @@ impl VulkanCommandBufferFunctions {
         instance: &VulkanInstance,
         device: VkDevice,
     ) -> Result<VulkanCommandBufferFunctions> {
+        let debug_utils = if instance.debug_utils_enabled() {
+            Some(VulkanCommandBufferDebugUtilFunctions::load(
+                instance, device,
+            )?)
+        } else {
+            None
+        };
+
         Ok(VulkanCommandBufferFunctions {
             allocate_command_buffers: load_device_function!(
                 instance,
@@ -57,6 +69,7 @@ impl VulkanCommandBufferFunctions {
                 VK_CMD_BIND_DESCRIPTOR_SETS
             )?,
             cmd_blit_image: load_device_function!(instance, device, VK_CMD_BLIT_IMAGE)?,
+            debug_utils,
         })
     }
 }

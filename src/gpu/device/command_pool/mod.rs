@@ -11,6 +11,7 @@ mod drop;
 mod free_command_buffer;
 mod get;
 mod index;
+mod nameable;
 mod new;
 
 pub(in crate::gpu::device) use functions::*;

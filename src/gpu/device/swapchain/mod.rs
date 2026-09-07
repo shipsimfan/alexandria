@@ -6,6 +6,7 @@ mod functions;
 mod acquire_next_image;
 mod drop;
 mod get;
+mod nameable;
 mod new;
 mod unwrap_surface;
 

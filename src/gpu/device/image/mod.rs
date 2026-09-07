@@ -8,6 +8,7 @@ mod bind_memory;
 mod create_image_view;
 mod get;
 mod get_memory_requirements;
+mod nameable;
 mod new;
 
 pub(in crate::gpu::device) use functions::*;

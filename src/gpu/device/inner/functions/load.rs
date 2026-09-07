@@ -14,7 +14,10 @@ use crate::{
         load_device_function,
     },
 };
-use vulkan::{VK_DESTROY_DEVICE, VK_DEVICE_WAIT_IDLE, VK_GET_DEVICE_QUEUE, VkDevice};
+use vulkan::{
+    VK_DESTROY_DEVICE, VK_DEVICE_WAIT_IDLE, VK_GET_DEVICE_QUEUE, VkDevice,
+    ext_debug_utils::VK_SET_DEBUG_UTILS_OBJECT_NAME_EXT,
+};
 
 impl VulkanDeviceFunctions {
     /// Load all the required device functions
@@ -33,6 +36,16 @@ impl VulkanDeviceFunctions {
                 VulkanDeviceExtension::ExtendedDynamicState => {}
             }
         }
+
+        let set_debug_utils_object_name = if instance.debug_utils_enabled() {
+            Some(load_device_function!(
+                instance,
+                device,
+                VK_SET_DEBUG_UTILS_OBJECT_NAME_EXT
+            )?)
+        } else {
+            None
+        };
 
         Ok(VulkanDeviceFunctions {
             swapchain,
@@ -56,6 +69,7 @@ impl VulkanDeviceFunctions {
             get_device_queue: load_device_function!(instance, device, VK_GET_DEVICE_QUEUE)?,
             destroy_device: load_device_function!(instance, device, VK_DESTROY_DEVICE)?,
             device_wait_idle: load_device_function!(instance, device, VK_DEVICE_WAIT_IDLE)?,
+            set_debug_utils_object_name,
         })
     }
 }
