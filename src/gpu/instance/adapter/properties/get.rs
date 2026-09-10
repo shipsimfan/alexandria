@@ -53,13 +53,93 @@ impl VulkanAdapterProperties {
     }
 
     /// Get the maximum number of sampler allocations supported by the adapter
-    pub fn max_sampler_allocations(&self) -> u32 {
+    pub fn max_sampler_allocation_count(&self) -> u32 {
         self.inner.limits.max_sampler_allocation_count
     }
 
     /// Get the buffer image granularity of the adapter
     pub fn buffer_image_granularity(&self) -> u64 {
         self.inner.limits.buffer_image_granularity
+    }
+
+    /// Get the maximum number of descriptor sets that can be bound
+    pub fn max_bound_descriptor_sets(&self) -> u32 {
+        self.inner.limits.max_bound_descriptor_sets
+    }
+
+    /// Get the maximum number of samplers per stage supported by the adapter
+    pub fn max_per_stage_descriptor_samplers(&self) -> u32 {
+        self.inner.limits.max_per_stage_descriptor_samplers
+    }
+
+    /// Get the maximum number of uniform buffers per stage supported by the adapter
+    pub fn max_per_stage_descriptor_uniform_buffers(&self) -> u32 {
+        self.inner.limits.max_per_stage_descriptor_uniform_buffers
+    }
+
+    /// Get the maximum number of storage buffers per stage supported by the adapter
+    pub fn max_per_stage_descriptor_storage_buffers(&self) -> u32 {
+        self.inner.limits.max_per_stage_descriptor_storage_buffers
+    }
+
+    /// Get the maximum number of sampled images per stage supported by the adapter
+    pub fn max_per_stage_descriptor_sampled_images(&self) -> u32 {
+        self.inner.limits.max_per_stage_descriptor_sampled_images
+    }
+
+    /// Get the maximum number of storage images per stage supported by the adapter
+    pub fn max_per_stage_descriptor_storage_images(&self) -> u32 {
+        self.inner.limits.max_per_stage_descriptor_storage_images
+    }
+
+    /// Get the maximum number of input attachments per stage supported by the adapter
+    pub fn max_per_stage_descriptor_input_attachments(&self) -> u32 {
+        self.inner.limits.max_per_stage_descriptor_input_attachments
+    }
+
+    /// Get the maximum number of resources per stage supported by the adapter
+    pub fn max_per_stage_resources(&self) -> u32 {
+        self.inner.limits.max_per_stage_resources
+    }
+
+    /// Get the maximum number of samplers in a descriptor set supported by the adapter
+    pub fn max_descriptor_set_samplers(&self) -> u32 {
+        self.inner.limits.max_descriptor_set_samplers
+    }
+
+    /// Get the maximum number of uniform buffers in a descriptor set supported by the adapter
+    pub fn max_descriptor_set_uniform_buffers(&self) -> u32 {
+        self.inner.limits.max_descriptor_set_uniform_buffers
+    }
+
+    /// Get the maximum number of dynamic uniform buffers in a descriptor set supported by the adapter
+    pub fn max_descriptor_set_uniform_buffers_dynamic(&self) -> u32 {
+        self.inner.limits.max_descriptor_set_uniform_buffers_dynamic
+    }
+
+    /// Get the maximum number of storage buffers in a descriptor set supported by the adapter
+    pub fn max_descriptor_set_storage_buffers(&self) -> u32 {
+        self.inner.limits.max_descriptor_set_storage_buffers
+    }
+
+    /// Get the maximum number of dynamic storage buffers in a descriptor set supported by the adapter
+    pub fn max_descriptor_set_storage_buffers_dynamic(&self) -> u32 {
+        self.inner.limits.max_descriptor_set_storage_buffers_dynamic
+    }
+
+    /// Get the maximum number of sampled images in a descriptor set supported by the adapter
+    pub fn max_descriptor_set_sampled_images(&self) -> u32 {
+        self.inner.limits.max_descriptor_set_sampled_images
+    }
+
+    /// Get the maximum number of storage images in a descriptor set supported by the adapter
+    pub fn max_descriptor_set_storage_images(&self) -> u32 {
+        self.inner.limits.max_descriptor_set_storage_images
+    }
+
+    /// Get the maximum number of input attachments in a descriptor set supported by the adapter
+    pub fn max_descriptor_set_input_attachments(&self) -> u32 {
+        self.inner.limits.max_descriptor_set_input_attachments
     }
 
     /// Get the maximum number of vertex input attributes supported by the adapter

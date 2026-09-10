@@ -92,11 +92,75 @@ fn main() {
             );
             println!(
                 "      - Max Sampler Allocations: {}",
-                properties.max_sampler_allocations()
+                properties.max_sampler_allocation_count()
             );
             println!(
                 "      - Buffer Image Granularity: {} bytes",
                 properties.buffer_image_granularity()
+            );
+            println!(
+                "      - Max Bound Descriptor Sets: {}",
+                properties.max_bound_descriptor_sets()
+            );
+            println!(
+                "      - Max Per Stage Descriptor Samplers: {}",
+                properties.max_per_stage_descriptor_samplers()
+            );
+            println!(
+                "      - Max Per Stage Descriptor Uniform Buffers: {}",
+                properties.max_per_stage_descriptor_uniform_buffers()
+            );
+            println!(
+                "      - Max Per Stage Descriptor Storage Buffers: {}",
+                properties.max_per_stage_descriptor_storage_buffers()
+            );
+            println!(
+                "      - Max Per Stage Descriptor Sampled Images: {}",
+                properties.max_per_stage_descriptor_sampled_images()
+            );
+            println!(
+                "      - Max Per Stage Descriptor Storage Images: {}",
+                properties.max_per_stage_descriptor_storage_images()
+            );
+            println!(
+                "      - Max Per Stage Descriptor Input Attachments: {}",
+                properties.max_per_stage_descriptor_input_attachments()
+            );
+            println!(
+                "      - Max Per Stage Resources: {}",
+                properties.max_per_stage_resources()
+            );
+            println!(
+                "      - Max Descriptor Set Samplers: {}",
+                properties.max_descriptor_set_samplers()
+            );
+            println!(
+                "      - Max Descriptor Set Uniform Buffers: {}",
+                properties.max_descriptor_set_uniform_buffers()
+            );
+            println!(
+                "      - Max Descriptor Set Uniform Buffers Dynamic: {}",
+                properties.max_descriptor_set_uniform_buffers_dynamic()
+            );
+            println!(
+                "      - Max Descriptor Set Storage Buffers: {}",
+                properties.max_descriptor_set_storage_buffers()
+            );
+            println!(
+                "      - Max Descriptor Set Storage Buffers Dynamic: {}",
+                properties.max_descriptor_set_storage_buffers_dynamic()
+            );
+            println!(
+                "      - Max Descriptor Set Sampled Images: {}",
+                properties.max_descriptor_set_sampled_images()
+            );
+            println!(
+                "      - Max Descriptor Set Storage Images: {}",
+                properties.max_descriptor_set_storage_images()
+            );
+            println!(
+                "      - Max Descriptor Set Input Attachments: {}",
+                properties.max_descriptor_set_input_attachments()
             );
             println!(
                 "      - Max Vertex Input Attributes: {}",
