@@ -1,4 +1,4 @@
-use crate::gpu::{VulkanDebugUtilsLabel, VulkanCommandBuffer};
+use crate::gpu::{VulkanCommandBuffer, VulkanDebugUtilsLabel};
 
 impl<'a> VulkanDebugUtilsLabel<'a> {
     /// Get the command buffer associated with this debug utils label

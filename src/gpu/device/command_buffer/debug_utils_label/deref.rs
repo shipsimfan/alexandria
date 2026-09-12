@@ -1,4 +1,4 @@
-use crate::gpu::{VulkanDebugUtilsLabel, VulkanCommandBuffer};
+use crate::gpu::{VulkanCommandBuffer, VulkanDebugUtilsLabel};
 use std::ops::{Deref, DerefMut};
 
 impl<'a> Deref for VulkanDebugUtilsLabel<'a> {

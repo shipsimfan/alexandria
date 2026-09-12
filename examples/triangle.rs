@@ -432,13 +432,13 @@ impl Vertex {
             alexandria::gpu::VulkanVertexInputAttributeDescription::new(
                 0,
                 0,
-                alexandria::gpu::VulkanFormat::R32G32SFloat,
+                alexandria::gpu::VulkanFormat::R32G32Sfloat,
                 std::mem::offset_of!(Vertex, position) as _,
             ),
             alexandria::gpu::VulkanVertexInputAttributeDescription::new(
                 1,
                 0,
-                alexandria::gpu::VulkanFormat::R32G32B32SFloat,
+                alexandria::gpu::VulkanFormat::R32G32B32Sfloat,
                 std::mem::offset_of!(Vertex, color) as _,
             ),
         ]

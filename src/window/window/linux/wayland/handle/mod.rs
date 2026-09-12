@@ -1,4 +1,6 @@
-use crate::window::{XdgTopLevel, XdgTopLevelDecoration, window::linux::wayland::WaylandEventHandler};
+use crate::window::{
+    XdgTopLevel, XdgTopLevelDecoration, window::linux::wayland::WaylandEventHandler,
+};
 
 mod deref;
 

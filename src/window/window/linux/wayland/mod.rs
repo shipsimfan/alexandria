@@ -1,6 +1,6 @@
+use crate::math::Vector2u;
 use event_handler::WaylandEventHandler;
 use handle::WindowHandle;
-use crate::math::Vector2u;
 
 mod event_handler;
 mod handle;
