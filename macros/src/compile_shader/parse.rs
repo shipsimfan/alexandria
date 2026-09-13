@@ -30,7 +30,7 @@ impl<'a> Parse<'a> for CompileShader<'a> {
                 "-target",
                 "spirv",
                 "-profile",
-                "spirv_1_4",
+                "spirv_1_5",
                 "-emit-spirv-directly",
                 "-fvk-use-entrypoint-name",
                 "-matrix-layout-row-major",
