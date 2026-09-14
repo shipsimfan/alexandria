@@ -7,7 +7,7 @@ impl NotifyInner {
     pub fn new(auto_reset: bool, initial_state: bool) -> win32::Result<NotifyInner> {
         try_get_last_error!(CreateEvent(
             null_mut(),
-            if auto_reset { TRUE } else { FALSE },
+            if auto_reset { FALSE } else { TRUE },
             if initial_state { TRUE } else { FALSE },
             null()
         ))

@@ -6,13 +6,16 @@ use vulkan::{VkFence, VkResult, VkSemaphore, khr_swapchain::VkAcquireNextImageIn
 
 impl<'surface> VulkanSwapchain<'surface> {
     /// Acquires the next available image from the swapchain
+    ///
+    /// If successful, this returns the index of the acquired image and a boolean indicating
+    /// whether the swapchain is suboptimal
     pub fn acquire_next_image(
         &mut self,
         timeout: u64,
         semaphore: Option<&mut VulkanSemaphore>,
         fence: Option<&mut VulkanFence>,
         device_mask: u32,
-    ) -> Result<Option<usize>> {
+    ) -> Result<Option<(usize, bool)>> {
         let acquire_info = VkAcquireNextImageInfoKhr {
             swapchain: self.handle,
             timeout,
@@ -30,8 +33,9 @@ impl<'surface> VulkanSwapchain<'surface> {
                 &mut image_index,
             )
         } {
-            VkResult::VkSuccess => Ok(Some(image_index as _)),
-            VkResult::VkSuboptimalKhr | VkResult::VkErrorOutOfDateKhr => Ok(None),
+            VkResult::VkSuccess => Ok(Some((image_index as _, false))),
+            VkResult::VkSuboptimalKhr => Ok(Some((image_index as _, true))),
+            VkResult::VkErrorOutOfDateKhr => Ok(None),
             vk => Err(Error::new_with(
                 "unable to acquire next swapchain image",
                 vk,

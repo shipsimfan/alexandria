@@ -38,7 +38,7 @@ impl<'surface> Swapchain<'surface> {
         frame.draw_fence.reset().unwrap();
 
         // Acquire the next image to render into
-        let image_index = match self
+        let (image_index, suboptimal) = match self
             .swapchain
             .acquire_next_image(u64::MAX, Some(&mut frame.acquire_image_semaphore), None, 1)
             .unwrap()
@@ -148,6 +148,6 @@ impl<'surface> Swapchain<'surface> {
             )
             .unwrap();
 
-        true
+        suboptimal
     }
 }
