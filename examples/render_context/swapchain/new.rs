@@ -11,11 +11,11 @@ use alexandria::{
     window::Window,
 };
 
-impl<'surface> Swapchain<'surface> {
+impl Swapchain {
     /// Create a new swapchain for the given surface and window
     pub fn new(
         render_context: &mut RenderContext,
-        surface: &'surface mut VulkanSurface,
+        surface: &mut VulkanSurface,
         window: &Window<()>,
     ) -> Self {
         let swapchain = render_context

@@ -10,7 +10,7 @@ use alexandria::{
     math::{Color3f, Linear, Vector2i, Vector2u},
 };
 
-impl<'surface> Swapchain<'surface> {
+impl Swapchain {
     /// Render a single blank frame
     #[allow(unused)]
     pub fn render_blank_frame(

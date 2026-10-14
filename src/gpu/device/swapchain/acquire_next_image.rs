@@ -4,7 +4,7 @@ use crate::{
 };
 use vulkan::{VkFence, VkResult, VkSemaphore, khr_swapchain::VkAcquireNextImageInfoKhr};
 
-impl<'surface> VulkanSwapchain<'surface> {
+impl VulkanSwapchain {
     /// Acquires the next available image from the swapchain
     ///
     /// If successful, this returns the index of the acquired image and a boolean indicating

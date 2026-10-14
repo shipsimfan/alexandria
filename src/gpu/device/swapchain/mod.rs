@@ -1,4 +1,4 @@
-use crate::gpu::{VulkanDevice, VulkanImage, VulkanSurface};
+use crate::gpu::{VulkanDevice, VulkanImage};
 use vulkan::khr_swapchain::VkSwapchainKhr;
 
 mod functions;
@@ -8,20 +8,16 @@ mod drop;
 mod get;
 mod nameable;
 mod new;
-mod unwrap_surface;
 
 pub(in crate::gpu::device) use functions::VulkanSwapchainFunctions;
 
 /// A swapchain used for presenting rendered images on window surfaces
-pub struct VulkanSwapchain<'surface> {
+pub struct VulkanSwapchain {
     /// The handle to the underlying swapchain
     handle: VkSwapchainKhr,
 
     /// The set of images that make up this swapchain
     images: Vec<VulkanImage>,
-
-    /// The surface this swapchain was created for
-    surface: Option<&'surface mut VulkanSurface>,
 
     /// The device that created this swapchain
     device: VulkanDevice,

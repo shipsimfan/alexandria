@@ -8,9 +8,9 @@ mod new;
 mod render_frame;
 
 /// The swapchain and image views
-pub struct Swapchain<'surface> {
+pub struct Swapchain {
     /// The swapchain to render to
-    swapchain: VulkanSwapchain<'surface>,
+    swapchain: VulkanSwapchain,
 
     /// The size of the swapchain
     size: Vector2u,

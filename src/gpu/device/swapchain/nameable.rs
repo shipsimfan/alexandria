@@ -1,7 +1,7 @@
 use crate::gpu::{VulkanNameable, VulkanSwapchain};
 use vulkan::VkObjectType;
 
-impl<'surface> VulkanNameable for VulkanSwapchain<'surface> {
+impl VulkanNameable for VulkanSwapchain {
     const OBJECT_TYPE: VkObjectType = VkObjectType::SwapchainKhr;
 
     fn handle(&self) -> u64 {

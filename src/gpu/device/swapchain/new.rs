@@ -14,11 +14,11 @@ use vulkan::{
     try_vulkan,
 };
 
-impl<'surface> VulkanSwapchain<'surface> {
+impl VulkanSwapchain {
     /// Create a new [`VulkanSwapchain`]
     pub(in crate::gpu::device) fn new(
         flags: VulkanSwapchainCreateFlags,
-        surface: &'surface mut VulkanSurface,
+        surface: &mut VulkanSurface,
 
         min_image_count: u32,
         image_format: VulkanFormat,
@@ -38,7 +38,7 @@ impl<'surface> VulkanSwapchain<'surface> {
         old_swapchain: Option<&mut VulkanSwapchain>,
 
         device: &VulkanDevice,
-    ) -> Result<VulkanSwapchain<'surface>> {
+    ) -> Result<VulkanSwapchain> {
         // Create swapchain
         let create_info = VkSwapchainCreateInfoKhr {
             flags: flags.into(),
@@ -97,7 +97,6 @@ impl<'surface> VulkanSwapchain<'surface> {
         Ok(VulkanSwapchain {
             handle,
             images,
-            surface: Some(surface),
             device: device.clone(),
         })
     }

@@ -11,14 +11,13 @@ use crate::{
 impl VulkanDevice {
     /// Create a new [`VulkanSwapchain`]
     pub fn create_swapchain<
-        'surface,
         F1: Into<VulkanSwapchainCreateFlags>,
         F2: Into<VulkanImageUsageFlags>,
     >(
         &self,
 
         flags: F1,
-        surface: &'surface mut VulkanSurface,
+        surface: &mut VulkanSurface,
 
         min_image_count: u32,
         image_format: VulkanFormat,
@@ -36,7 +35,7 @@ impl VulkanDevice {
         clipped: bool,
 
         old_swapchain: Option<&mut VulkanSwapchain>,
-    ) -> Result<VulkanSwapchain<'surface>> {
+    ) -> Result<VulkanSwapchain> {
         VulkanSwapchain::new(
             flags.into(),
             surface,

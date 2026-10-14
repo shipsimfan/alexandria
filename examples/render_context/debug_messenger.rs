@@ -63,6 +63,8 @@ mod debug_messenger {
 
 #[cfg(not(debug_assertions))]
 mod debug_messenger {
+    use alexandria::gpu::{GpuSubsystem, VulkanInstance, VulkanInstanceExtension};
+
     pub type DebugMessenger = ();
 
     /// Does this system have required Vulkan validation layers?

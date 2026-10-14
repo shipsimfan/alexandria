@@ -1,7 +1,7 @@
 use crate::gpu::{VulkanImage, VulkanSwapchain};
 use vulkan::khr_swapchain::VkSwapchainKhr;
 
-impl<'surface> VulkanSwapchain<'surface> {
+impl VulkanSwapchain {
     /// Get access to the images that make up this swapchain
     pub fn images(&self) -> &[VulkanImage] {
         &self.images
