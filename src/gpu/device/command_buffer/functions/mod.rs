@@ -2,9 +2,9 @@ use crate::FunctionSymbol;
 use vulkan::{
     VkAllocateCommandBuffers, VkBeginCommandBuffer, VkCmdBeginRendering, VkCmdBindDescriptorSets,
     VkCmdBindIndexBuffer, VkCmdBindPipeline, VkCmdBindVertexBuffers, VkCmdBlitImage,
-    VkCmdCopyBuffer, VkCmdDraw, VkCmdDrawIndexed, VkCmdEndRendering, VkCmdPipelineBarrier2,
-    VkCmdPushConstants, VkCmdSetScissor, VkCmdSetViewport, VkEndCommandBuffer,
-    VkFreeCommandBuffers,
+    VkCmdCopyBuffer, VkCmdDraw, VkCmdDrawIndexed, VkCmdEndRendering, VkCmdExecuteCommands,
+    VkCmdPipelineBarrier2, VkCmdPushConstants, VkCmdSetScissor, VkCmdSetViewport,
+    VkEndCommandBuffer, VkFreeCommandBuffers,
 };
 
 mod debug_utils;
@@ -69,6 +69,9 @@ pub(in crate::gpu::device) struct VulkanCommandBufferFunctions {
 
     /// The function to blit data from one image to another in a command buffer
     pub cmd_blit_image: FunctionSymbol<VkCmdBlitImage>,
+
+    /// The function to execute secondary command buffers within a primary command buffer
+    pub cmd_execute_commands: FunctionSymbol<VkCmdExecuteCommands>,
 
     /// The debug util functions for a command buffer
     debug_utils: Option<VulkanCommandBufferDebugUtilFunctions>,
