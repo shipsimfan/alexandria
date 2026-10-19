@@ -48,7 +48,7 @@ impl Swapchain {
         };
 
         // Actually render the scene
-        command_buffer.begin().unwrap();
+        command_buffer.begin(None).unwrap();
 
         let memory_barrier = VulkanImageMemoryBarrier::new(
             VulkanPipelineStageFlag::ColorAttachmentOutput,

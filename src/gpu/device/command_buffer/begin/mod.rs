@@ -1,10 +1,21 @@
 use crate::{Error, Result, gpu::VulkanCommandBuffer};
+use std::ptr::null;
 use vulkan::{VkCommandBufferBeginInfo, try_vulkan};
+
+mod inheritence_info;
+
+pub use inheritence_info::*;
 
 impl VulkanCommandBuffer {
     /// Start recording commands into this command buffer
-    pub fn begin(&mut self) -> Result<()> {
+    pub fn begin(
+        &mut self,
+        inheritence_info: Option<VulkanCommandBufferInheritanceInfo>,
+    ) -> Result<()> {
         let begin_info = VkCommandBufferBeginInfo {
+            inheritance_info: inheritence_info.as_ref().map_or(null(), |d| {
+                (d as *const VulkanCommandBufferInheritanceInfo).cast()
+            }),
             ..Default::default()
         };
 

@@ -379,7 +379,7 @@ fn copy_buffer(
 
     // Record the copy command in the command buffer
     let command_buffer = &mut command_pool[command_buffer_id];
-    command_buffer.begin().unwrap();
+    command_buffer.begin(None).unwrap();
     command_buffer.cmd_copy_buffer(
         src_buffer,
         dst_buffer,

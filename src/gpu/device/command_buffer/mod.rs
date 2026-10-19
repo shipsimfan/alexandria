@@ -28,6 +28,7 @@ mod new;
 
 pub(in crate::gpu::device) use functions::*;
 
+pub use begin::*;
 pub use cmd_begin_rendering::*;
 pub use cmd_blit_image::*;
 pub use cmd_copy_buffer::*;
