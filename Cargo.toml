@@ -1,5 +1,5 @@
 [workspace.package]
-version = "0.18.0"
+version = "0.18.1"
 authors = ["Lance Hart <me@lancehart.ca>"]
 edition = "2024"
 repository = "https://github.com/shipsimfan/alexandria"
@@ -32,6 +32,7 @@ alexandria-macros.workspace = true
 data-format = { git = "https://github.com/shipsimfan/lib-data-format", optional = true }
 time.git = "https://github.com/shipsimfan/lib-time"
 
+data-structures.git = "https://github.com/shipsimfan/lib-data-structures"
 dioptra = { git = "https://github.com/shipsimfan/lib-dioptra", features = [
     "vulkan",
 ] }
@@ -44,7 +45,6 @@ dioptra = { git = "https://github.com/shipsimfan/lib-dioptra", features = [
 win32.git = "https://github.com/shipsimfan/lib-win32"
 
 vulkan = { workspace = true, features = ["win32"] }
-
 
 [target.'cfg(target_os = "linux")'.dependencies]
 linux.git = "https://github.com/shipsimfan/lib-linux"

@@ -35,4 +35,5 @@ pub use misc::*;
 pub use notify::*;
 pub use shared_object::*;
 
+pub use data_structures::*;
 pub use dioptra as math;
