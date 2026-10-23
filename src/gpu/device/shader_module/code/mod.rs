@@ -8,6 +8,9 @@ mod new;
 
 /// The code describing a shader module for a Vulkan device
 pub struct VulkanShaderModuleCode<const N: usize> {
+    /// The name of the file the shader module was created from
+    file_name: &'static str,
+
     /// The entry point names of the shader module
     entry_points: &'static [&'static CStr],
 

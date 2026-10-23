@@ -7,6 +7,7 @@ impl<'a> ToTokens for CompileShader<'a> {
             attributes,
             visibility,
             identifier,
+            file_name,
             data,
             length,
             entry_points,
@@ -15,7 +16,7 @@ impl<'a> ToTokens for CompileShader<'a> {
         to_tokens! { generator
             #attributes
             #visibility const #identifier: ::alexandria::gpu::VulkanShaderModuleCode<#length> =
-                ::alexandria::gpu::VulkanShaderModuleCode::new(*#data, &[#entry_points]);
+                ::alexandria::gpu::VulkanShaderModuleCode::new(#file_name, &[#entry_points], *#data);
         }
     }
 }

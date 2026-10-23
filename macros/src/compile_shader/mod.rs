@@ -22,6 +22,9 @@ pub struct CompileShader<'a> {
     /// The name of the constant to generate
     identifier: Cow<'a, Identifier>,
 
+    /// The name of the file
+    file_name: Cow<'a, Literal>,
+
     /// The compiled SPIR-V binary data
     data: Literal,
 

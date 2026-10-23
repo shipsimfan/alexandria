@@ -65,6 +65,7 @@ impl<'a> Parse<'a> for CompileShader<'a> {
             attributes: input.attributes,
             visibility: input.visibility,
             identifier: input.identifier,
+            file_name: input.path,
             data: Literal::new(output.stdout.as_slice()),
             length: output.stdout.len(),
             entry_points,

@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "alexandria"
-version = "0.18.2"
+version = "0.19.0"
 dependencies = [
  "alexandria-macros",
  "data-format",
@@ -20,7 +20,7 @@ dependencies = [
 
 [[package]]
 name = "alexandria-macros"
-version = "0.18.2"
+version = "0.19.0"
 dependencies = [
  "proc-macro-util",
 ]
@@ -35,8 +35,8 @@ dependencies = [
 
 [[package]]
 name = "data-structures"
-version = "1.0.0"
-source = "git+https://github.com/shipsimfan/lib-data-structures#981664f8542738d9984a79a9036c298c893e6df5"
+version = "1.2.0"
+source = "git+https://github.com/shipsimfan/lib-data-structures#ce0122c3869d1deff5ebea0a1482b81e982ae24b"
 
 [[package]]
 name = "dioptra"
