@@ -2,11 +2,14 @@ use crate::gpu::VulkanDevice;
 use vulkan::VkSemaphore;
 
 mod functions;
+mod r#type;
 
 mod drop;
 mod get;
 mod nameable;
 mod new;
+
+pub use r#type::*;
 
 pub(in crate::gpu::device) use functions::*;
 

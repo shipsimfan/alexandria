@@ -1,11 +1,11 @@
 use crate::{
     Result,
-    gpu::{VulkanDevice, VulkanSemaphore},
+    gpu::{VulkanDevice, VulkanSemaphore, VulkanSemaphoreType},
 };
 
 impl VulkanDevice {
     /// Create a new [`VulkanSemaphore`]
-    pub fn create_semaphore(&self) -> Result<VulkanSemaphore> {
-        VulkanSemaphore::new(self)
+    pub fn create_semaphore(&self, r#type: VulkanSemaphoreType) -> Result<VulkanSemaphore> {
+        VulkanSemaphore::new(r#type, self)
     }
 }

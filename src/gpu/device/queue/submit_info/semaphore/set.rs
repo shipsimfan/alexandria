@@ -1,5 +1,8 @@
-use crate::gpu::{VulkanPipelineStageFlags, VulkanSemaphore, VulkanSemaphoreSubmitInfo};
-use std::ops::BitOrAssign;
+use crate::gpu::{
+    VulkanPipelineStageFlags, VulkanSemaphore, VulkanSemaphoreSubmitInfo,
+    VulkanTimelineSemaphoreSubmitInfo,
+};
+use std::{ops::BitOrAssign, ptr::null};
 
 impl<'a> VulkanSemaphoreSubmitInfo<'a> {
     /// Set the semaphore being submitted
@@ -32,6 +35,18 @@ impl<'a> VulkanSemaphoreSubmitInfo<'a> {
     /// Set the device index for this semaphore submit info
     pub fn set_device_index(mut self, device_index: u32) -> Self {
         self.inner.device_index = device_index;
+        self
+    }
+
+    /// Set the timeline semaphore info
+    pub fn set_timeline_info(
+        mut self,
+        timeline_info: Option<&'a VulkanTimelineSemaphoreSubmitInfo<'a>>,
+    ) -> Self {
+        self.inner.next = timeline_info.map_or_else(
+            || null(),
+            |info| (info as *const VulkanTimelineSemaphoreSubmitInfo<'a>).cast(),
+        );
         self
     }
 }
